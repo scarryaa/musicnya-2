@@ -1,9 +1,18 @@
 .main {
   position: fixed;
-  right: 90px;
+  right: 40px;
   bottom: 0;
-  top: 0;
+  top: var(--app-toolbar-height);
   left: 0;
   margin-bottom: var(--app-footer-height);
-  overflow-y: overlay;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    background-color: #191a1f;
+    z-index: 999;
+
+    &-thumb {
+      background-color: #40424d;
+    }
+  }
 }

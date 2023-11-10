@@ -30,12 +30,7 @@ export const LeftSidebar = ({ onWidthChange, showSidebar }: LeftSidebarProps) =>
   return (
     <div class={styles.leftSidebar} style={{ width: `${width()}px` }}>
       <div class={styles.leftSidebar__buttons}>
-        <LeftSidebarButton
-          text="Home"
-          sidebarWidth={width}
-          icon={faHouse}
-          href={'/home'}
-        />
+        <LeftSidebarButton text="Home" sidebarWidth={width} icon={faHouse} href={'/'} />
         <LeftSidebarButton
           text="Browse"
           sidebarWidth={width}
