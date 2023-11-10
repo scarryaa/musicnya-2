@@ -1,0 +1,12 @@
+.footer {
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: var(--app-footer-height);
+  backdrop-filter: blur(10px);
+  z-index: 100;
+  background: #2f3038;
+}

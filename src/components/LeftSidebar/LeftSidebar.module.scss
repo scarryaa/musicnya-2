@@ -1,0 +1,46 @@
+.leftSidebar {
+  width: var(--app-sidebar-width);
+  height: calc(100% - var(--app-footer-height));
+  background-color: #15161c;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  box-sizing: border-box;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  padding-top: 80px;
+  padding-inline: 10px;
+
+  &__handle {
+    width: 3px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    &:hover {
+      background-color: #353535;
+      cursor: col-resize;
+    }
+  }
+
+  .leftSidebar__buttons {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow-y: overlay;
+    overflow-x: hidden;
+    row-gap: 0.3rem;
+  }
+}
+
+@media screen and (max-height: 423px) {
+  .leftSidebar {
+    padding-inline: 0;
+  }
+
+  .leftSidebar__buttons {
+    vertical-align: center;
+  }
+}
