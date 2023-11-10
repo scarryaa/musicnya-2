@@ -21,3 +21,7 @@ body,
   background-color: #1e1f24;
   user-select: none;
 }
+
+.appContainer[right-drawer='true'] .main {
+  right: 200px !important;
+}

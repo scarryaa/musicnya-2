@@ -1,0 +1,9 @@
+.main {
+  position: fixed;
+  right: 90px;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  margin-bottom: var(--app-footer-height);
+  overflow-y: overlay;
+}
