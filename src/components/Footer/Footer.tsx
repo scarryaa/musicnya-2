@@ -1,3 +1,4 @@
+import { store } from '../../stores/store'
 import { NowPlayingTile } from '../NowPlayingTile/NowPlayingTile'
 import { MiscControls } from '../Player/MiscControls'
 import { Player } from '../Player/Player'
@@ -7,7 +8,7 @@ export const Footer = () => {
   return (
     <footer class={styles.footer}>
       <div class={styles.footer__left}>
-        <NowPlayingTile title="Now Playing" artist={'Artist'} />
+        <NowPlayingTile />
       </div>
       <div class={styles.footer__center}>
         <Player />

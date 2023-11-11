@@ -8,6 +8,15 @@
 
 .miscControls {
   display: flex;
+  flex-direction: row;
+  position: relative;
+
+  &__progress {
+    display: flex;
+    position: absolute;
+    left: -825%;
+    top: -15%;
+  }
 
   &__volume {
     width: 20px;
@@ -58,6 +67,14 @@
 
     &::-webkit-slider-thumb {
       opacity: 0;
+    }
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .miscControls {
+    &__progress {
+      display: none;
     }
   }
 }

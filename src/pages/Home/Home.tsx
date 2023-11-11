@@ -31,6 +31,12 @@ export const Home = () => {
                   src={item.relationships.contents.data[0].attributes.artwork.url
                     .replace('{w}x{h}', '100x100')
                     .replace('{f}', 'png')}
+                  onClick={() =>
+                    MusicKit.getInstance().setQueue({
+                      album: item.relationships.contents.data[0].id,
+                      startPlaying: true
+                    })
+                  }
                 />
               </div>
             )}
