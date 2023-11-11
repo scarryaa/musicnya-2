@@ -1,6 +1,18 @@
 import { createStore } from 'solid-js/store'
 
 export const [store, setStore] = createStore({
+  app: {
+    title: 'musicnya 2',
+    version: '1.0.0',
+    isDarkMode: localStorage.getItem('isDarkMode') === 'true' || false,
+    isMiniMode: localStorage.getItem('isMiniMode') === 'true' || false,
+    leftSidebarWidth: Number.parseInt(localStorage.getItem('leftSidebarWidth')) || 100,
+    rightSidebar: {
+      isExpanded: localStorage.getItem('rightSidebarExpanded') === 'true' || false,
+      width: localStorage.getItem('rightSidebarExpanded') === 'true' ? 250 : 40,
+      activePanel: ''
+    }
+  },
   progress: 0,
   duration: 0,
   currentTime: 0,

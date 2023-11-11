@@ -169,7 +169,7 @@ export class mkController {
 
     MusicKit.getInstance().addEventListener('playbackStateDidChange', e => {
       setStore('isPlaying', e.state === 2)
-      setStore('isPaused', e.state === 1)
+      setStore('isPaused', e.state === 3)
       setStore('isStopped', e.state === 0)
     })
 

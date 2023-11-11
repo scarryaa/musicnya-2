@@ -12,67 +12,20 @@ import {
   faTowerBroadcast,
   faUserGroup
 } from '@fortawesome/free-solid-svg-icons'
+import { setStore, store } from '../../stores/store'
 
-type LeftSidebarProps = {
-  onWidthChange: (newWidth: number) => void
-  showSidebar: boolean
-}
-
-export const LeftSidebar = ({ onWidthChange, showSidebar }: LeftSidebarProps) => {
-  const [width, setWidth] = createSignal(100)
-
-  createEffect(() => {
-    localStorage.getItem('leftSidebarWidth') &&
-      setWidth(Number(localStorage.getItem('leftSidebarWidth')))
-    onWidthChange(Number(localStorage.getItem('leftSidebarWidth')))
-  }, [onWidthChange])
-
+export const LeftSidebar = () => {
   return (
-    <div class={styles.leftSidebar} style={{ width: `${width()}px` }}>
+    <div class={styles.leftSidebar} style={{ width: `${store.app.leftSidebarWidth}px` }}>
       <div class={styles.leftSidebar__buttons}>
-        <LeftSidebarButton text="Home" sidebarWidth={width} icon={faHouse} href={'/'} />
-        <LeftSidebarButton
-          text="Browse"
-          sidebarWidth={width}
-          icon={faGlobe}
-          href={'/browse'}
-        />
-        <LeftSidebarButton
-          text="Radio"
-          sidebarWidth={width}
-          icon={faPodcast}
-          href={'/radio'}
-        />
-        <LeftSidebarButton
-          text="Recently Added"
-          sidebarWidth={width}
-          icon={faClock}
-          href={'/recent'}
-        />
-        <LeftSidebarButton
-          text="Songs"
-          sidebarWidth={width}
-          icon={faMusic}
-          href={'/songs'}
-        />
-        <LeftSidebarButton
-          text="Albums"
-          sidebarWidth={width}
-          icon={faRecordVinyl}
-          href={'/albums'}
-        />
-        <LeftSidebarButton
-          text="Artists"
-          sidebarWidth={width}
-          icon={faUserGroup}
-          href={'/artists'}
-        />
-        <LeftSidebarButton
-          text="Playlists"
-          sidebarWidth={width}
-          icon={faHeadphones}
-          href={'/playlists'}
-        />
+        <LeftSidebarButton text="Home" icon={faHouse} href={'/'} />
+        <LeftSidebarButton text="Browse" icon={faGlobe} href={'/browse'} />
+        <LeftSidebarButton text="Radio" icon={faPodcast} href={'/radio'} />
+        <LeftSidebarButton text="Recently Added" icon={faClock} href={'/recent'} />
+        <LeftSidebarButton text="Songs" icon={faMusic} href={'/songs'} />
+        <LeftSidebarButton text="Albums" icon={faRecordVinyl} href={'/albums'} />
+        <LeftSidebarButton text="Artists" icon={faUserGroup} href={'/artists'} />
+        <LeftSidebarButton text="Playlists" icon={faHeadphones} href={'/playlists'} />
       </div>
       <div
         class={styles.leftSidebar__handle}
@@ -81,8 +34,7 @@ export const LeftSidebar = ({ onWidthChange, showSidebar }: LeftSidebarProps) =>
             // If the mouse x-position is less than 120, snap to 60px, else calculate the new width with limits
             const newWidth = e.clientX < 120 ? 60 : Math.min(Math.max(e.clientX, 60), 200)
 
-            setWidth(newWidth)
-            onWidthChange(newWidth)
+            setStore('app', 'leftSidebarWidth', newWidth)
             localStorage.setItem('leftSidebarWidth', String(newWidth))
           }
 

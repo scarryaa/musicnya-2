@@ -1,90 +1,73 @@
-import { Accessor, createEffect, createSignal } from 'solid-js'
+import { createEffect, createSignal } from 'solid-js'
 import styles from './rightSidebar.module.scss'
-import { faClock, faFileLines } from '@fortawesome/free-regular-svg-icons'
-import {
-  faBars,
-  faGlobe,
-  faHeadphones,
-  faHouse,
-  faMusic,
-  faPodcast,
-  faQuoteRight,
-  faRecordVinyl,
-  faUserGroup
-} from '@fortawesome/free-solid-svg-icons'
+import { faBars, faQuoteRight } from '@fortawesome/free-solid-svg-icons'
 import { WindowButtons } from '../WindowButtons/WindowButtons'
 import { RightSidebarButton } from './RightSidebarButton'
+import { setStore, store } from '../../stores/store'
 
-type RightSidebarProps = {
-  expanded: Accessor<boolean>
-  setExpanded: (expanded: boolean) => void
-  onExpandedChange: (expanded: boolean) => void
-}
+export const RightSidebar = () => {
+  const handleLyricsClick = () => {
+    const expanded = store.app.rightSidebar.isExpanded
+    const activePanel = store.app.rightSidebar.activePanel
 
-export const RightSidebar = ({
-  expanded,
-  setExpanded,
-  onExpandedChange
-}: RightSidebarProps) => {
-  const [width, setWidth] = createSignal(250)
-  const [activePanel, setActivePanel] = createSignal('')
+    if (expanded && activePanel === 'lyrics') {
+      setStore('app', 'rightSidebar', {
+        isExpanded: false,
+        width: 40,
+        activePanel: ''
+      })
+    } else {
+      setStore('app', 'rightSidebar', {
+        isExpanded: true,
+        width: 250,
+        activePanel: 'lyrics'
+      })
+    }
+  }
 
-  createEffect(() => {
-    localStorage.getItem('rightSidebarExpanded') &&
-      setExpanded(Boolean(localStorage.getItem('rightSidebarExpanded')))
-    onExpandedChange(Boolean(localStorage.getItem('rightSidebarExpanded')))
-  }, [onExpandedChange])
+  const handleQueueClick = () => {
+    const expanded = store.app.rightSidebar.isExpanded
+    const activePanel = store.app.rightSidebar.activePanel
+
+    if (expanded && activePanel === 'queue') {
+      setStore('app', 'rightSidebar', {
+        isExpanded: false,
+        width: 40,
+        activePanel: ''
+      })
+    } else {
+      setStore('app', 'rightSidebar', {
+        isExpanded: true,
+        width: 250,
+        activePanel: 'queue'
+      })
+    }
+  }
 
   return (
     <div
       class={styles.rightSidebar}
-      style={{ width: expanded() ? `${width()}px` : '40px' }}
+      style={{ width: `${store.app.rightSidebar.width}px` }}
     >
       <div class={styles.rightSidebar__innerContainer}>
         <div class={styles.rightSidebar__windowButtons}>
           <WindowButtons />
         </div>
         <div class={styles.rightSidebar__buttons}>
-          <button
-            class={styles.rightSidebar__button}
-            onClick={() => {
-              if (expanded() && activePanel() === 'lyrics') {
-                setActivePanel('queue')
-              } else if (!expanded()) {
-                setExpanded(true)
-                setActivePanel('queue')
-              } else {
-                setExpanded(false)
-                setActivePanel('')
-              }
-            }}
-          >
+          <button class={styles.rightSidebar__button} onClick={handleQueueClick}>
             <RightSidebarButton icon={faBars} />
           </button>
-          <button
-            class={styles.rightSidebar__button}
-            onClick={() => {
-              if (expanded() && activePanel() === 'queue') {
-                setActivePanel('lyrics')
-              } else if (!expanded()) {
-                setExpanded(true)
-                setActivePanel('lyrics')
-              } else {
-                setExpanded(false)
-                setActivePanel('')
-              }
-            }}
-          >
+          <button class={styles.rightSidebar__button} onClick={handleLyricsClick}>
             <RightSidebarButton icon={faQuoteRight} />
           </button>
         </div>
         <div class={styles.rightSidebar__panel}>
-          {activePanel() === 'queue' && (
+          {store.app.rightSidebar.activePanel === 'queue' && (
             <div class={styles.rightSidebar__panel__queue}>
               <h1>Queue</h1>
             </div>
           )}
-          {activePanel() === 'lyrics' && (
+          {store.app.rightSidebar.activePanel === 'lyrics' && (
             <div class={styles.rightSidebar__panel__lyrics}>
               <h1>Lyrics</h1>
             </div>
