@@ -1,0 +1,63 @@
+:root {
+  --color-player-button: #e7e7e7;
+  --color-player-button-hover: #fff;
+  --color-player-button-active: #e1e1e1;
+  --vibrant-divider: rgba(235, 235, 245, 0.19);
+  --progress-color: #fff;
+}
+
+.miscControls {
+  display: flex;
+
+  &__volume {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+  }
+
+  &__button {
+    width: 20px;
+    height: 20px;
+    border-radius: var(--app-border-radius);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.3rem;
+    fill: var(--color-player-button);
+    color: var(--color-player-button);
+    cursor: default;
+
+    &:hover {
+      fill: var(--color-player-button-hover);
+      color: var(--color-player-button-hover);
+    }
+
+    &:active {
+      fill: var(--color-player-button-active);
+      color: var(--color-player-button-active);
+    }
+  }
+
+  &__volumeSlider {
+    -webkit-appearance: none;
+    appearance: none;
+    background: linear-gradient(
+      90deg,
+      var(--progress-color) var(--progress),
+      var(--vibrant-divider) var(--progress),
+      var(--vibrant-divider)
+    );
+    height: 5px;
+    border-radius: 10px;
+    margin-right: 100px;
+    width: 70px;
+
+    &::-webkit-slider-thumb {
+      opacity: 0;
+    }
+  }
+}

@@ -1,0 +1,45 @@
+.nowPlayingTile {
+  height: 100%;
+  width: auto;
+  display: flex;
+
+  .albumCover {
+    height: 70px;
+    width: 70px;
+    object-fit: cover;
+  }
+
+  .songInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100%;
+    width: 100%;
+    color: var(--color-white);
+    padding-left: 10px;
+
+    &__title {
+      font-size: 1rem;
+      font-weight: 600;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
+      &:hover {
+        cursor: default;
+        text-decoration: underline;
+      }
+    }
+
+    &__artist {
+      font-size: 0.8rem;
+      font-weight: 400;
+
+      &:hover {
+        cursor: default;
+        text-decoration: underline;
+      }
+    }
+  }
+}

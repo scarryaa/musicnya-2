@@ -4,12 +4,40 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
-    <title>Tauri + Solid App</title>
+    <title>musicnya 2</title>
+    <script src="https://jpillora.com/xhook/dist/xhook.min.js"></script>
+    <script src="https://js-cdn.music.apple.com/musickit/v3/amp/musickit.js"></script>
+    <script
+      async
+      src="https://js-cdn.music.apple.com/hls.js/2.141.0/hls.js/hls.js"
+    ></script>
+    <script>
+      xhook.before(function (request) {
+        if (!request || !request.url) {
+          console.error('Request or request.url is undefined:', request)
+          return
+        }
+
+        // Ensuring request.url is a string before calling includes()
+        if (typeof request.url === 'string') {
+          if (request.url.includes('hls')) {
+            request.url = 'http://localhost:8080/' + request.url
+          } else if (
+            request.url.includes('music.apple.com') ||
+            request.url.includes('https://amp-api.music.apple.com/v1/me/storefront') ||
+            request.url.includes('buy.itunes.apple.com') ||
+            request.url.includes('universal-activity-service')
+          ) {
+            request.url = 'http://localhost:8080/' + request.url
+          }
+        } else {
+        }
+      })
+    </script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
-
     <script src="/src/index.tsx" type="module"></script>
   </body>
 </html>

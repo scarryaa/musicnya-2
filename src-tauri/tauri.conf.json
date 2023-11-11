@@ -68,7 +68,8 @@
         "minHeight": 427,
         "resizable": true,
         "title": "musicnya 2",
-        "width": 800
+        "width": 800,
+        "minWidth": 500
       }
     ],
     "security": {

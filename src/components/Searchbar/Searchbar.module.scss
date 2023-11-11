@@ -1,0 +1,18 @@
+.searchbar {
+  width: 200px;
+  height: 30px;
+  outline: none;
+  padding-inline: 5px;
+  background-color: rgba(0, 0, 0, 0.2);
+  margin-inline: auto;
+  color: var(--color-white);
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+  margin: 5px;
+  border-bottom: 1px solid transparent;
+
+  &:focus {
+    border-bottom: 1px solid var(--app-primary-color);
+  }
+}

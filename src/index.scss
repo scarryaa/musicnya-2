@@ -3,14 +3,16 @@
 @tailwind utilities;
 
 :root {
-  --app-toolbar-height: 30px;
+  --app-toolbar-height: 40px;
   --app-sidebar-width: 200px;
   --app-border-radius: 8px;
-  --app-primary-color: #6ec7d2;
+  --app-primary-color: #7dadaf;
   --app-text-color: #000;
   --app-footer-height: 70px;
 
   --color-white: #f7f7f8;
+  --vibrant-divider: rgba(235, 235, 245, 0.19);
+  --progress-color: #fff;
 }
 
 html,
@@ -24,4 +26,8 @@ body,
 
 .appContainer[right-drawer='true'] .main {
   right: 250px !important;
+}
+
+.active {
+  background-color: #424242;
 }

@@ -24,8 +24,8 @@ export const WindowButtons = () => {
   }
 
   return (
-    <div data-tauri-drag-region class={styles.windowButtons}>
-      <div data-tauri-drag-region class={styles.windowButtonsFlexContainer}>
+    <div class={styles.windowButtons}>
+      <div class={styles.windowButtonsFlexContainer}>
         <div>
           <div class={styles.windowButton} id="titlebar-close" onClick={onClose}>
             <img src="https://api.iconify.design/mdi:close.svg" alt="close" />

@@ -20,6 +20,7 @@ export const LeftSidebarButton = ({
     <A
       class={styles.leftSidebarButton}
       href={href}
+      activeClass="active"
       style={{
         'justify-content': sidebarWidth() > 119 ? 'flex-start' : 'center'
       }}

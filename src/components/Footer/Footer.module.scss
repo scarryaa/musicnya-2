@@ -1,6 +1,6 @@
 .footer {
   color: #fff;
-  padding: 20px;
+  padding: 10px;
   text-align: center;
   position: fixed;
   bottom: 0;
@@ -9,4 +9,27 @@
   backdrop-filter: blur(10px);
   z-index: 100;
   background: #2f3038;
+  display: flex;
+
+  &__left {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: flex-start;
+    flex: 1;
+  }
+
+  &__right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex: 1;
+  }
+
+  &__center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+  }
 }
