@@ -20,7 +20,7 @@ render(
     <Router>
       <Routes>
         <Route path="/" component={App}>
-          <Route path="/" component={Home} />
+          <Route path="/home" component={Home} />
           <Route path="/browse" component={Browse} />
           <Route path="/radio" component={Radio} />
         </Route>

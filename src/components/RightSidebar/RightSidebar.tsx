@@ -1,9 +1,10 @@
 import { createEffect, createSignal } from 'solid-js'
 import styles from './rightSidebar.module.scss'
-import { faBars, faQuoteRight } from '@fortawesome/free-solid-svg-icons'
+import { faBars, faCog, faQuoteRight } from '@fortawesome/free-solid-svg-icons'
 import { WindowButtons } from '../WindowButtons/WindowButtons'
 import { RightSidebarButton } from './RightSidebarButton'
 import { setStore, store } from '../../stores/store'
+import { A } from '@solidjs/router'
 
 export const RightSidebar = () => {
   const handleLyricsClick = () => {
@@ -50,9 +51,11 @@ export const RightSidebar = () => {
       style={{ width: `${store.app.rightSidebar.width}px` }}
     >
       <div class={styles.rightSidebar__innerContainer}>
-        <div class={styles.rightSidebar__windowButtons}>
-          <WindowButtons />
-        </div>
+        {store.app.platform === 'win32' && (
+          <div class={styles.rightSidebar__windowButtons}>
+            <WindowButtons />
+          </div>
+        )}
         <div class={styles.rightSidebar__buttons}>
           <button class={styles.rightSidebar__button} onClick={handleQueueClick}>
             <RightSidebarButton icon={faBars} />
@@ -61,6 +64,12 @@ export const RightSidebar = () => {
             <RightSidebarButton icon={faQuoteRight} />
           </button>
         </div>
+        <A
+          href="/settings"
+          class={styles.rightSidebar__button + ' ' + styles.rightSidebar__buttonSettings}
+        >
+          <RightSidebarButton icon={faCog} />
+        </A>
         <div class={styles.rightSidebar__panel}>
           {store.app.rightSidebar.activePanel === 'queue' && (
             <div class={styles.rightSidebar__panel__queue}>

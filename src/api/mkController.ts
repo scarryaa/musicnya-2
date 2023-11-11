@@ -34,6 +34,15 @@ export class mkController {
     return MusicKit.getInstance()
   }
 
+  static authorize = async () => {
+    const instance = await mkController.getInstance()
+    if (instance) {
+      await instance.authorize()
+    } else {
+      console.error('Failed to authorize: MusicKit instance not available')
+    }
+  }
+
   static setVolume = async (volume: number) => {
     const instance = await mkController.getInstance()
     if (instance) {

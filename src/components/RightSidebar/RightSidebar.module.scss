@@ -11,6 +11,12 @@
   overflow-x: hidden;
   padding-top: 40px;
 
+  &__buttonSettings {
+    position: absolute;
+    bottom: 4px;
+    right: 5px;
+  }
+
   &__buttons {
     margin-top: 20px;
     position: absolute;

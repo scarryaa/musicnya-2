@@ -1,7 +1,6 @@
-import { createEffect, createSignal } from 'solid-js'
 import styles from './LeftSidebar.module.scss'
 import { LeftSidebarButton } from './LeftSidebarButton'
-import { faClock, faNoteSticky, faPlayCircle } from '@fortawesome/free-regular-svg-icons'
+import { faClock } from '@fortawesome/free-regular-svg-icons'
 import {
   faGlobe,
   faHeadphones,
@@ -9,16 +8,21 @@ import {
   faMusic,
   faPodcast,
   faRecordVinyl,
-  faTowerBroadcast,
   faUserGroup
 } from '@fortawesome/free-solid-svg-icons'
 import { setStore, store } from '../../stores/store'
+import { WindowButtons, WindowButtonsMac } from '../WindowButtons/WindowButtons'
 
 export const LeftSidebar = () => {
   return (
     <div class={styles.leftSidebar} style={{ width: `${store.app.leftSidebarWidth}px` }}>
+      {store.app.platform === 'darwin' && (
+        <div class={styles.leftSidebar__windowButtons}>
+          <WindowButtonsMac />
+        </div>
+      )}
       <div class={styles.leftSidebar__buttons}>
-        <LeftSidebarButton text="Home" icon={faHouse} href={'/'} />
+        <LeftSidebarButton text="Home" icon={faHouse} href={'/home'} />
         <LeftSidebarButton text="Browse" icon={faGlobe} href={'/browse'} />
         <LeftSidebarButton text="Radio" icon={faPodcast} href={'/radio'} />
         <LeftSidebarButton text="Recently Added" icon={faClock} href={'/recent'} />
