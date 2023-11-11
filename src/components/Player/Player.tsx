@@ -78,7 +78,11 @@ export const Player = () => {
           <Fa
             icon={faShuffle}
             size="1x"
-            color={store.shuffleMode ? 'var(--app-primary-color)' : 'var(--color-white)'}
+            color={
+              store.shuffleMode
+                ? 'var(--app-primary-color)'
+                : 'var(--color-player-button)'
+            }
           />
         </button>
         <button
@@ -94,7 +98,7 @@ export const Player = () => {
           <Fa
             icon={store.isPlaying ? faPauseCircle : faPlayCircle}
             size="2x"
-            color="var(--color-white)"
+            color="var(--color-player-button)"
           />
         </button>
         <button class={styles.player__controls__button} onClick={() => handleSkipNext()}>
@@ -104,7 +108,9 @@ export const Player = () => {
           <Fa
             icon={faRepeat}
             size="1x"
-            color={store.repeatMode ? 'var(--app-primary-color)' : 'var(--color-white)'}
+            color={
+              store.repeatMode ? 'var(--app-primary-color)' : 'var(--color-player-button)'
+            }
           />
         </button>
       </div>

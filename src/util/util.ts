@@ -13,4 +13,12 @@ export class Utils {
   ) => {
     return url.replace('{w}x{h}', `${size}x${size}`).replace('{f}', format)
   }
+
+  static setDarkMode = (darkMode: boolean) => {
+    document.documentElement.setAttribute('theme', darkMode ? 'dark' : 'light')
+  }
+
+  static disableContextMenu = () => {
+    document.addEventListener('contextmenu', event => event.preventDefault())
+  }
 }

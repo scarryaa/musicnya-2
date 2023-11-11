@@ -1,3 +1,13 @@
+:root {
+  --scrollbar-background-color: #e4e4e4;
+  --thumb-background-color: #c7c7c7;
+}
+
+:root[theme='dark'] {
+  --scrollbar-background-color: #191a1f;
+  --thumb-background-color: #40424d;
+}
+
 .main {
   position: fixed;
   right: 40px;
@@ -8,11 +18,11 @@
   overflow-y: auto;
 
   &::-webkit-scrollbar {
-    background-color: #191a1f;
+    background-color: var(--scrollbar-background-color);
     z-index: 999;
 
     &-thumb {
-      background-color: #40424d;
+      background-color: var(--thumb-background-color);
     }
   }
 }

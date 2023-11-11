@@ -24,7 +24,7 @@ export const LeftSidebarButton = ({ icon, href, text }: LeftSidebarButtonProps) 
         class={styles.leftSidebarButton__icon}
         icon={icon}
         size="lg"
-        color="var(--color-white)"
+        color="var(--color-sidebar-button)"
       />
       {store.app.leftSidebarWidth > 119 && (
         <span class={styles.leftSidebarButton__text}>{text}</span>

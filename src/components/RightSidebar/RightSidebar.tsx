@@ -65,6 +65,7 @@ export const RightSidebar = () => {
           </button>
         </div>
         <A
+          activeClass=""
           href="/settings"
           class={styles.rightSidebar__button + ' ' + styles.rightSidebar__buttonSettings}
         >

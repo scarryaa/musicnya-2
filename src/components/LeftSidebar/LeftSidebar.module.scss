@@ -1,7 +1,15 @@
+:root {
+  --color-sidebar-handle: #bdbdbd;
+}
+
+:root[theme='dark'] {
+  --color-sidebar-handle: #353535;
+}
+
 .leftSidebar {
   width: var(--app-sidebar-width);
   height: calc(100% - var(--app-footer-height));
-  background-color: #15161c;
+  background-color: var(--app-left-sidebar-background-color);
   position: fixed;
   top: 0;
   left: 0;
@@ -20,7 +28,7 @@
     right: 0;
 
     &:hover {
-      background-color: #353535;
+      background-color: var(--color-sidebar-handle);
       cursor: col-resize;
     }
   }

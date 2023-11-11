@@ -7,12 +7,15 @@ import { Topbar } from './components/Topbar/Topbar'
 import { store } from './stores/store'
 import { useLocation, useNavigate } from '@solidjs/router'
 import { mkController } from './api/mkController'
+import { Utils } from './util/util'
 
 const App: Component = () => {
   const location = useLocation()
   const navigate = useNavigate()
 
   createEffect(async () => {
+    Utils.setDarkMode(localStorage.getItem('darkMode') === 'true')
+    Utils.disableContextMenu()
     if (location.pathname === '/') {
       await mkController.authorize().then(() => {
         navigate('/home')

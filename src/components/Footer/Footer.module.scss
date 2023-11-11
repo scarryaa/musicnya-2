@@ -8,7 +8,7 @@
   height: var(--app-footer-height);
   backdrop-filter: blur(10px);
   z-index: 100;
-  background: #2f3038;
+  background: var(--app-footer-background-color);
   display: flex;
 
   &__left {

@@ -1,4 +1,12 @@
 :root {
+  --color-player-button: #000000;
+  --color-player-button-hover: #2c2c2c;
+  --color-player-button-active: #444444;
+  --vibrant-divider: rgba(0, 0, 0, 0.19);
+  --progress-color: #000000;
+}
+
+:root[theme='dark'] {
   --color-player-button: #e7e7e7;
   --color-player-button-hover: #fff;
   --color-player-button-active: #e1e1e1;
@@ -14,8 +22,9 @@
   &__progress {
     display: flex;
     position: absolute;
-    left: -825%;
+    left: -850%;
     top: -15%;
+    color: var(--app-text-color);
   }
 
   &__volume {

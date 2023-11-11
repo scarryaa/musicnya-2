@@ -6,6 +6,7 @@ import { Route, Router, Routes } from '@solidjs/router'
 import { Home } from './pages/Home/Home'
 import { Browse } from './pages/Browse/Browse'
 import { Radio } from './pages/Radio/Radio'
+import { Settings } from './pages/Settings/Settings'
 
 const root = document.getElementById('root')
 
@@ -23,6 +24,7 @@ render(
           <Route path="/home" component={Home} />
           <Route path="/browse" component={Browse} />
           <Route path="/radio" component={Radio} />
+          <Route path="/settings" component={Settings} />
         </Route>
       </Routes>
     </Router>
