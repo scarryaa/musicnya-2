@@ -54,25 +54,38 @@ export const Shelf = (props: ShelfProps) => {
   }
 
   const handleLeftClick = () => {
-    // scroll the shelf by the window width
-    mediaShelf.scrollBy({
-      left: -window.innerWidth + 176,
-      behavior: 'smooth'
-    })
+    for (let i = mediaShelf.children.length - 1; i >= 0; i--) {
+      const child = mediaShelf.children[i]
+      const rect = child.getBoundingClientRect()
+      const shelfRect = mediaShelf.getBoundingClientRect()
+
+      if (rect.left < shelfRect.left) {
+        const scrollDistance = rect.right - shelfRect.right
+
+        mediaShelf.scrollBy({
+          left: scrollDistance,
+          behavior: 'smooth'
+        })
+        break
+      }
+    }
   }
 
   const handleRightClick = () => {
-    // scroll the shelf by the window width
-    mediaShelf.scrollBy({
-      left: window.innerWidth - 176,
-      behavior: 'smooth'
-    })
+    for (let i = 0; i < mediaShelf.children.length; i++) {
+      const child = mediaShelf.children[i]
+      const rect = child.getBoundingClientRect()
+      const shelfRect = mediaShelf.getBoundingClientRect()
 
-    // hide the right arrow if we're at the end
-    if (mediaShelf.scrollLeft + mediaShelf.clientWidth === mediaShelf.scrollWidth) {
-      document
-        .querySelector(`.${styles.shelf__arrows__right}`)
-        ?.classList.add(styles.hidden)
+      if (rect.right > shelfRect.right) {
+        const scrollDistance = rect.left - shelfRect.left
+
+        mediaShelf.scrollBy({
+          left: scrollDistance,
+          behavior: 'smooth'
+        })
+        break
+      }
     }
   }
 
