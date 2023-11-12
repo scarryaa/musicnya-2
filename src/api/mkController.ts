@@ -52,6 +52,16 @@ export class mkController {
     }
   }
 
+  static playMediaItem = async (id: any, type: string) => {
+    const instance = await mkController.getInstance()
+    if (instance) {
+      instance.setQueue({ [type]: [id], startPlaying: true })
+      instance.play()
+    } else {
+      console.error('Failed to play media item: MusicKit instance not available')
+    }
+  }
+
   static play = async () => {
     const instance = await mkController.getInstance()
     if (instance) {

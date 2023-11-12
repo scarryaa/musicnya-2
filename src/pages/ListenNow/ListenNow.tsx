@@ -24,13 +24,21 @@ export const ListenNow = () => {
         </Match>
         <Match when={homeData.state === 'ready'}>
           <div class={styles.listenNow}>
-            <h1 className={styles.listenNow__header}>Listen Now</h1>
+            <h1 class={styles.listenNow__header}>Listen Now</h1>
             <For each={homeData().data}>
               {item => (
                 <Shelf header={item.attributes.title.stringForDisplay}>
                   <For each={item.relationships.contents.data}>
                     {mediaItem => (
                       <MediaItem
+                        id={mediaItem.id}
+                        type={mediaItem.type}
+                        title={mediaItem.attributes.name}
+                        artists={[
+                          mediaItem.attributes.artistName ||
+                            mediaItem.attributes.curatorName ||
+                            ' '
+                        ]}
                         src={Utils.formatArtworkUrl(
                           mediaItem.attributes.artwork.url,
                           200

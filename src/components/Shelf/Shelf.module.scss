@@ -18,10 +18,11 @@
     margin-top: 0.1rem;
     position: absolute;
     padding-left: 1.5rem;
-    bottom: calc(50%);
+    bottom: calc(50% + 1.5rem);
     left: 27px;
     width: 100%;
     filter: drop-shadow(0px 0px 3px #000000);
+    z-index: 999;
 
     :nth-child(1) {
       left: 0;
