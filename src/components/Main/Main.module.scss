@@ -16,6 +16,9 @@
   left: 0;
   margin-bottom: var(--app-footer-height);
   overflow-y: auto;
+  container-type: size;
+  container-name: main;
+  overflow-x: hidden;
 
   &::-webkit-scrollbar {
     background-color: var(--scrollbar-background-color);

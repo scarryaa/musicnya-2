@@ -1,11 +1,11 @@
 import { For, Match, Switch, createEffect } from 'solid-js'
 import { createHomeStore } from '../../stores/api-store'
-import styles from './Home.module.scss'
+import styles from './ListenNow.module.scss'
 import { MediaItem } from '../../components/MediaItem/MediaItem'
 import { Utils } from '../../util/util'
 import { Shelf } from '../../components/Shelf/Shelf'
 
-export const Home = () => {
+export const ListenNow = () => {
   const homeStore = createHomeStore()
   const homeData = homeStore()
 
@@ -14,7 +14,7 @@ export const Home = () => {
   })
 
   return (
-    <div class={styles.home}>
+    <div class={styles.listenNow}>
       <Switch fallback={<h1>Loading...</h1>}>
         <Match when={homeData.state === 'loading'}>
           <h1>Loading...</h1>
@@ -23,11 +23,11 @@ export const Home = () => {
           <h1>Error</h1>
         </Match>
         <Match when={homeData.state === 'ready'}>
-          <div class={styles.home}>
-            <h1>Home</h1>
+          <div class={styles.listenNow}>
+            <h1 className={styles.listenNow__header}>Listen Now</h1>
             <For each={homeData().data}>
               {item => (
-                <Shelf>
+                <Shelf header={item.attributes.title.stringForDisplay}>
                   <For each={item.relationships.contents.data}>
                     {mediaItem => (
                       <MediaItem

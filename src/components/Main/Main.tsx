@@ -1,7 +1,5 @@
-import { Outlet, Route, Routes } from '@solidjs/router'
-import { Home } from '../../pages/Home/Home'
+import { Outlet } from '@solidjs/router'
 import styles from './Main.module.scss'
-import { Accessor } from 'solid-js'
 import { store } from '../../stores/store'
 
 export const Main = () => {

@@ -1,2 +1,19 @@
 .mediaItem {
+  --size: 14cqw;
+  --minSize: 160px;
+  --maxSize: 200px;
+
+  user-select: none;
+
+  img {
+    width: var(--size);
+    height: var(--size);
+    max-width: var(--maxSize);
+    max-height: var(--maxSize);
+    min-width: var(--minSize);
+    min-height: var(--minSize);
+    object-fit: cover;
+    border-radius: var(--app-border-radius);
+    user-select: none;
+  }
 }

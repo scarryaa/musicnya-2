@@ -1,6 +1,6 @@
 import styles from './LeftSidebar.module.scss'
 import { LeftSidebarButton } from './LeftSidebarButton'
-import { faClock } from '@fortawesome/free-regular-svg-icons'
+import { faClock, faPlayCircle } from '@fortawesome/free-regular-svg-icons'
 import {
   faGlobe,
   faHeadphones,
@@ -23,6 +23,7 @@ export const LeftSidebar = () => {
       )}
       <div class={styles.leftSidebar__buttons}>
         <LeftSidebarButton text="Home" icon={faHouse} href={'/home'} />
+        <LeftSidebarButton text="Listen Now" icon={faPlayCircle} href={'/listen'} />
         <LeftSidebarButton text="Browse" icon={faGlobe} href={'/browse'} />
         <LeftSidebarButton text="Radio" icon={faPodcast} href={'/radio'} />
         <LeftSidebarButton text="Recently Added" icon={faClock} href={'/recent'} />

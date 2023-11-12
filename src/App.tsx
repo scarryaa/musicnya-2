@@ -1,4 +1,4 @@
-import { createSignal, type Component, createEffect } from 'solid-js'
+import { type Component, createEffect } from 'solid-js'
 import { LeftSidebar } from './components/LeftSidebar/LeftSidebar'
 import { Footer } from './components/Footer/Footer'
 import { Main } from './components/Main/Main'
@@ -8,6 +8,7 @@ import { store } from './stores/store'
 import { useLocation, useNavigate } from '@solidjs/router'
 import { mkController } from './api/mkController'
 import { Utils } from './util/util'
+import '@fontsource/inter'
 
 const App: Component = () => {
   const location = useLocation()

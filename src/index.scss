@@ -34,6 +34,7 @@ body,
   width: 100%;
   background-color: var(--app-background-color);
   user-select: none;
+  overflow-x: hidden;
 }
 
 .appContainer[right-drawer='true'] .main {
@@ -46,4 +47,8 @@ body,
 
 :root[theme='dark'] .active {
   background-color: #696969;
+}
+
+.hidden {
+  display: none;
 }
