@@ -16,6 +16,7 @@ export const [store, setStore] = createStore({
       activePanel: ''
     }
   },
+  countryCode: localStorage.getItem('countryCode') || 'us',
   progress: 0,
   duration: 0,
   currentTime: 0,

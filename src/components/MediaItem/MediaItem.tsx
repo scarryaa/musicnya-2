@@ -1,6 +1,5 @@
 import Fa from 'solid-fa'
 import styles from './MediaItem.module.scss'
-import { faPlayCircle } from '@fortawesome/free-regular-svg-icons'
 import { faEllipsisH, faPlay } from '@fortawesome/free-solid-svg-icons'
 import { mkController } from '../../api/mkController'
 import { A } from '@solidjs/router'

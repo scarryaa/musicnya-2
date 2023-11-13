@@ -8,6 +8,7 @@ import { Browse } from './pages/Browse/Browse'
 import { Radio } from './pages/Radio/Radio'
 import { Settings } from './pages/Settings/Settings'
 import { ListenNow } from './pages/ListenNow/ListenNow'
+import { Album } from './pages/Media/Album/Album'
 
 const root = document.getElementById('root')
 
@@ -27,6 +28,7 @@ render(
           <Route path="/browse" component={Browse} />
           <Route path="/radio" component={Radio} />
           <Route path="/settings" component={Settings} />
+          <Route path="/media/albums/:id" component={Album} />
         </Route>
       </Routes>
     </Router>

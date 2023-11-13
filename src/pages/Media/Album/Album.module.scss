@@ -1,0 +1,42 @@
+.album {
+  color: var(--app-text-color);
+  padding-inline: 1.5rem;
+  display: flex;
+  --size: 200px;
+
+  &__artwork {
+    border-radius: var(--app-border-radius);
+    width: var(--size);
+    height: var(--size);
+  }
+
+  &__info {
+    margin-left: 1.5rem;
+    padding-right: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-grow: 1;
+
+    &__title {
+      font-weight: 600;
+      font-size: 1.2rem;
+    }
+
+    &__artist {
+      font-weight: 500;
+      font-size: 0.9rem;
+      color: var(--app-primary-color);
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    &__genre {
+      font-weight: 500;
+      font-size: 0.8rem;
+      color: var(--app-text-light-color);
+    }
+  }
+}

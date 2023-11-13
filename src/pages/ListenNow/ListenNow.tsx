@@ -27,7 +27,7 @@ export const ListenNow = () => {
             <h1 class={styles.listenNow__header}>Listen Now</h1>
             <For each={homeData().data}>
               {item => (
-                <Shelf header={item.attributes.title.stringForDisplay}>
+                <Shelf header={item.attributes.title?.stringForDisplay}>
                   <For each={item.relationships.contents.data}>
                     {mediaItem => (
                       <MediaItem

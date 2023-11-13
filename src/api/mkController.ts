@@ -55,6 +55,7 @@ export class mkController {
   static playMediaItem = async (id: any, type: string) => {
     const instance = await mkController.getInstance()
     if (instance) {
+      console.log('Playing media item: ', type, id)
       instance.setQueue({ [type]: [id], startPlaying: true })
       instance.play()
     } else {

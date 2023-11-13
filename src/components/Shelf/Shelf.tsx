@@ -2,8 +2,6 @@ import { JSX, createEffect, createSignal, onMount } from 'solid-js'
 import styles from './Shelf.module.scss'
 import Fa from 'solid-fa'
 import {
-  faChevronLeft,
-  faChevronRight,
   faCircleChevronLeft,
   faCircleChevronRight
 } from '@fortawesome/free-solid-svg-icons'
@@ -103,7 +101,7 @@ export const Shelf = (props: ShelfProps) => {
           }
           onClick={handleLeftClick}
         >
-          <Fa icon={faCircleChevronLeft} size="lg" color="var(--app-text-color)" />
+          <Fa icon={faCircleChevronLeft} size="lg" color="var(--color-white)" />
         </div>
         <div
           class={
@@ -115,7 +113,7 @@ export const Shelf = (props: ShelfProps) => {
           }
           onClick={handleRightClick}
         >
-          <Fa icon={faCircleChevronRight} size="lg" color="var(--app-text-color)" />
+          <Fa icon={faCircleChevronRight} size="lg" color="var(--color-white)" />
         </div>
         <div class={styles.shelf__arrow}></div>
       </span>
