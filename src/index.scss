@@ -68,3 +68,7 @@ h2 {
   font-weight: 600;
   font-size: 1.5rem;
 }
+
+.expanded {
+  -webkit-line-clamp: unset !important;
+}

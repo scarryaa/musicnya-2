@@ -1,0 +1,9 @@
+.editorialNotes {
+  color: var(--editorial-notes-color);
+  margin-inline: 1.5rem;
+  margin-top: 1rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

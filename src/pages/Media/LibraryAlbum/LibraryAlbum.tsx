@@ -4,6 +4,7 @@ import { useParams } from '@solidjs/router'
 import { createAlbumStore } from '../../../stores/api-store'
 import { SongTable } from '../../../components/SongTable/SongTable'
 import { MediaInfo } from '../../../components/MediaInfo/MediaInfo'
+import { EditorialNotes } from '../../../components/EditorialNotes/EditorialNotes'
 
 export const LibraryAlbum = () => {
   // get params from router
@@ -21,6 +22,8 @@ export const LibraryAlbum = () => {
         <div class={styles.libraryAlbum}>
           <MediaInfo media={albumData().data[0]} />
         </div>
+
+        <EditorialNotes data={albumData().data[0].relationships.catalog.data[0]} />
 
         <SongTable
           tracks={albumData().data[0].relationships.tracks.data}
