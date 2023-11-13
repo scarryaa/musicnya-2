@@ -25,7 +25,7 @@ export const LibraryPlaylist = () => {
         </div>
 
         {playlistData().data[0].relationships.catalog.data[0].attributes.editorialNotes
-          .standard &&
+          ?.standard &&
           !store.app.media.hideEditorialNotes && (
             <EditorialNotes data={playlistData().data[0].relationships.catalog.data[0]} />
           )}

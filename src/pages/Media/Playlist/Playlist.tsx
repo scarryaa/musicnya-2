@@ -24,7 +24,7 @@ export const Playlist = () => {
           <MediaInfo media={playlistData().data[0]} />
         </div>
 
-        {playlistData().data[0].attributes.editorialNotes.standard &&
+        {playlistData().data[0].attributes.editorialNotes?.standard &&
           !store.app.media.hideEditorialNotes && (
             <EditorialNotes data={playlistData().data[0]} />
           )}

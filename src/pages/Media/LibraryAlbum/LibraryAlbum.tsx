@@ -25,7 +25,7 @@ export const LibraryAlbum = () => {
         </div>
 
         {albumData().data[0].relationships.catalog.data[0].attributes.editorialNotes
-          .standard &&
+          ?.standard &&
           !store.app.media.hideEditorialNotes && (
             <EditorialNotes data={albumData().data[0].relationships.catalog.data[0]} />
           )}

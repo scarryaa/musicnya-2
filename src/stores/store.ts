@@ -16,7 +16,9 @@ export const [store, setStore] = createStore({
       activePanel: ''
     },
     media: {
-      hideEditorialNotes: localStorage.getItem('hideEditorialNotes') === 'true' || false
+      hideEditorialNotes: localStorage.getItem('hideEditorialNotes') === 'true' || false,
+      expandEditorialNotes:
+        localStorage.getItem('expandEditorialNotes') === 'true' || false
     }
   },
   countryCode: localStorage.getItem('countryCode') || 'us',

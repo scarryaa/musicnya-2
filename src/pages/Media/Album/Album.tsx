@@ -24,7 +24,7 @@ export const Album = () => {
           <MediaInfo media={albumData().data[0]} />
         </div>
 
-        {albumData().data[0].attributes.editorialNotes.standard &&
+        {albumData().data[0].attributes.editorialNotes?.standard &&
           !store.app.media.hideEditorialNotes && (
             <EditorialNotes data={albumData().data[0]} />
           )}

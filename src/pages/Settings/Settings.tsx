@@ -23,6 +23,19 @@ export const Settings = () => {
     )
   }
 
+  const handleEditorialNotesExpandClick = () => {
+    setStore(
+      'app',
+      'media',
+      'expandEditorialNotes',
+      !store.app.media.expandEditorialNotes
+    )
+    localStorage.setItem(
+      'expandEditorialNotes',
+      store.app.media.expandEditorialNotes.toString()
+    )
+  }
+
   return (
     <div class={styles.settings}>
       <h1 class={styles.settings__title}>Settings</h1>
@@ -43,6 +56,14 @@ export const Settings = () => {
             type="checkbox"
             checked={store.app.media.hideEditorialNotes}
             onClick={handleEditorialNotesClick}
+          />
+        </div>
+        <div class={styles.settings__setting}>
+          <h3>Always expand editorial notes</h3>
+          <input
+            type="checkbox"
+            checked={store.app.media.expandEditorialNotes}
+            onClick={handleEditorialNotesExpandClick}
           />
         </div>
       </Accordion>
