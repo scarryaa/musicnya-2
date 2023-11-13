@@ -3,6 +3,7 @@ import { Utils } from '../../util/util'
 import { PrimaryButton } from '../PrimaryButton/PrimaryButton'
 import styles from './MediaInfo.module.scss'
 import { mkController } from '../../api/mkController'
+import musicNote from '../../assets/music_note.png'
 
 export const MediaInfo = ({ media }) => {
   const handlePlayClick = e => {
@@ -18,7 +19,14 @@ export const MediaInfo = ({ media }) => {
   return (
     <div class={styles.mediaInfo}>
       <img
-        src={Utils.formatArtworkUrl(media.attributes.artwork.url, 300)}
+        src={
+          media.attributes.artwork?.url
+            ? Utils.formatArtworkUrl(media?.attributes?.artwork?.url, 300)
+            : Utils.formatArtworkUrl(
+                media.relationships.tracks.data[0].attributes.artwork.url,
+                300
+              ) || musicNote
+        }
         class={styles.mediaInfo__artwork}
       />
       <div class={styles.mediaInfo__info}>
@@ -27,7 +35,7 @@ export const MediaInfo = ({ media }) => {
           <h2 class={styles.mediaInfo__info__text__artist}>
             {media.attributes.artistName || media.attributes.curatorName}
           </h2>
-          {media.type !== ('playlists' || 'library-playlists') && (
+          {media.type !== 'playlists' && media.type !== 'library-playlists' && (
             <h3 class={styles.mediaInfo__info__text__genre}>
               {media.attributes.genreNames[0]} •{' '}
               {media.attributes.releaseDate.slice(0, 4)}

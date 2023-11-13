@@ -21,14 +21,14 @@ export const SongTable = ({ tracks, type }) => {
             {(track, index) => (
               <tr onDblClick={() => mkController.playMediaItem(track.id, track.type)}>
                 <td class={styles.album__tracks__table__number}>
-                  <span>{track.attributes.trackNumber || index() + 1}</span>
+                  <span>{index() + 1}</span>
                   <div class={styles.album__tracks__table__number__playButton}>
                     <Fa icon={faPlay} size="1x" color="white" />
                   </div>
                 </td>
                 <td>
                   <div class={styles.album__tracks__table__title}>
-                    {type !== ('albums' || 'library-albums') && (
+                    {type !== 'albums' && type !== 'library-albums' && (
                       <div class={styles.album__tracks__table__title__albumCover}>
                         <img
                           src={Utils.formatArtworkUrl(track.attributes.artwork.url, 50)}
@@ -38,7 +38,7 @@ export const SongTable = ({ tracks, type }) => {
                     <div class={styles.album__tracks__table__title__name__artist}>
                       <span>{track.attributes.name}</span>
                       <div class={styles.album__tracks__table__artist}>
-                        {track.attributes.artistName || track.attributes.curatorName}
+                        {track.attributes.artistName}
                       </div>
                     </div>
                   </div>

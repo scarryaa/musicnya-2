@@ -4,6 +4,7 @@ import styles from './ListenNow.module.scss'
 import { MediaItem } from '../../components/MediaItem/MediaItem'
 import { Utils } from '../../util/util'
 import { Shelf } from '../../components/Shelf/Shelf'
+import musicNote from '../../assets/music_note.png'
 
 export const ListenNow = () => {
   const homeStore = createHomeStore()
@@ -40,7 +41,7 @@ export const ListenNow = () => {
                             ' '
                         ]}
                         src={Utils.formatArtworkUrl(
-                          mediaItem.attributes.artwork.url,
+                          mediaItem.attributes?.artwork?.url || musicNote,
                           200
                         )}
                       />
