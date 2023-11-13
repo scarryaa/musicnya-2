@@ -36,8 +36,14 @@ export const SongTable = ({ tracks, type }) => {
                       </div>
                     )}
                     <div class={styles.album__tracks__table__title__name__artist}>
-                      <span>{track.attributes.name}</span>
-                      <div class={styles.album__tracks__table__artist}>
+                      <span
+                        class={styles.album__tracks__table__title__name__artist__name}
+                      >
+                        {track.attributes.name}
+                      </span>
+                      <div
+                        class={styles.album__tracks__table__title__name__artist__artist}
+                      >
                         {track.attributes.artistName}
                       </div>
                     </div>

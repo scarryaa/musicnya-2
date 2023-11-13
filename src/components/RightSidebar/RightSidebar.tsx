@@ -58,10 +58,10 @@ export const RightSidebar = () => {
         )}
         <div class={styles.rightSidebar__buttons}>
           <button class={styles.rightSidebar__button} onClick={handleQueueClick}>
-            <RightSidebarButton icon={faBars} />
+            <RightSidebarButton tooltip="Queue" icon={faBars} />
           </button>
           <button class={styles.rightSidebar__button} onClick={handleLyricsClick}>
-            <RightSidebarButton icon={faQuoteRight} />
+            <RightSidebarButton tooltip="Lyrics" icon={faQuoteRight} />
           </button>
         </div>
         <A
@@ -69,7 +69,7 @@ export const RightSidebar = () => {
           href="/settings"
           class={styles.rightSidebar__button + ' ' + styles.rightSidebar__buttonSettings}
         >
-          <RightSidebarButton icon={faCog} />
+          <RightSidebarButton tooltip="Settings" icon={faCog} />
         </A>
         <div class={styles.rightSidebar__panel}>
           {store.app.rightSidebar.activePanel === 'queue' && (

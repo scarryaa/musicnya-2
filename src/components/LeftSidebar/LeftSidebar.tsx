@@ -11,9 +11,13 @@ import {
   faUserGroup
 } from '@fortawesome/free-solid-svg-icons'
 import { setStore, store } from '../../stores/store'
-import { WindowButtons, WindowButtonsMac } from '../WindowButtons/WindowButtons'
+import { WindowButtonsMac } from '../WindowButtons/WindowButtons'
+import Tooltip from '../Tooltip/Tooltip'
+import { createSignal } from 'solid-js'
 
 export const LeftSidebar = () => {
+  const [showTooltip, setShowTooltip] = createSignal(true)
+
   return (
     <div class={styles.leftSidebar} style={{ width: `${store.app.leftSidebarWidth}px` }}>
       {store.app.platform === 'darwin' && (
@@ -22,15 +26,50 @@ export const LeftSidebar = () => {
         </div>
       )}
       <div class={styles.leftSidebar__buttons}>
-        <LeftSidebarButton text="Home" icon={faHouse} href={'/home'} />
-        <LeftSidebarButton text="Listen Now" icon={faPlayCircle} href={'/listen'} />
-        <LeftSidebarButton text="Browse" icon={faGlobe} href={'/browse'} />
-        <LeftSidebarButton text="Radio" icon={faPodcast} href={'/radio'} />
-        <LeftSidebarButton text="Recently Added" icon={faClock} href={'/recent'} />
-        <LeftSidebarButton text="Songs" icon={faMusic} href={'/songs'} />
-        <LeftSidebarButton text="Albums" icon={faRecordVinyl} href={'/albums'} />
-        <LeftSidebarButton text="Artists" icon={faUserGroup} href={'/artists'} />
-        <LeftSidebarButton text="Playlists" icon={faHeadphones} href={'/playlists'} />
+        <LeftSidebarButton tooltip="Home" text="Home" icon={faHouse} href={'/home'} />
+        <LeftSidebarButton
+          tooltip="Listen Now"
+          text="Listen Now"
+          icon={faPlayCircle}
+          href={'/listen'}
+        />
+        <LeftSidebarButton
+          tooltip="Browse"
+          text="Browse"
+          icon={faGlobe}
+          href={'/browse'}
+        />
+        <LeftSidebarButton
+          tooltip="Radio"
+          text="Radio"
+          icon={faPodcast}
+          href={'/radio'}
+        />
+        <LeftSidebarButton
+          tooltip="Recently Added"
+          text="Recently Added"
+          icon={faClock}
+          href={'/recent'}
+        />
+        <LeftSidebarButton tooltip="Songs" text="Songs" icon={faMusic} href={'/songs'} />
+        <LeftSidebarButton
+          tooltip="Albums"
+          text="Albums"
+          icon={faRecordVinyl}
+          href={'/albums'}
+        />
+        <LeftSidebarButton
+          tooltip="Artists"
+          text="Artists"
+          icon={faUserGroup}
+          href={'/artists'}
+        />
+        <LeftSidebarButton
+          tooltip="Playlists"
+          text="Playlists"
+          icon={faHeadphones}
+          href={'/playlists'}
+        />
       </div>
       <div
         class={styles.leftSidebar__handle}

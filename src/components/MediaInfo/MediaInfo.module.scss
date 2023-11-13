@@ -53,3 +53,43 @@
     }
   }
 }
+
+@media screen and (max-width: 570px) {
+  .mediaInfo {
+    &__artwork {
+      width: 150px;
+      height: 150px;
+    }
+  }
+
+  .mediaInfo__info {
+    margin-left: 1rem;
+    padding-right: 1rem;
+
+    &__text {
+      &__title {
+        font-size: 1rem;
+      }
+
+      &__artist {
+        font-size: 0.8rem;
+      }
+
+      &__genre {
+        font-size: 0.7rem;
+      }
+    }
+  }
+
+  .mediaInfo__info__actions {
+    &__playButton {
+      padding: 0.5rem;
+      font-size: 0.8rem;
+    }
+
+    &__shuffleButton {
+      padding: 0.5rem;
+      font-size: 0.8rem;
+    }
+  }
+}
