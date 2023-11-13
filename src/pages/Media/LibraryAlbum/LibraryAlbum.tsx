@@ -23,7 +23,9 @@ export const LibraryAlbum = () => {
           <MediaInfo media={albumData().data[0]} />
         </div>
 
-        <EditorialNotes data={albumData().data[0].relationships.catalog.data[0]} />
+        {albumData().data[0].relationships.catalog.data[0].attributes.editorialNotes && (
+          <EditorialNotes data={albumData().data[0].relationships.catalog.data[0]} />
+        )}
 
         <SongTable
           tracks={albumData().data[0].relationships.tracks.data}

@@ -23,8 +23,10 @@ export const LibraryPlaylist = () => {
           <MediaInfo media={playlistData().data[0]} />
         </div>
 
-        <EditorialNotes data={playlistData().data[0].relationships.catalog.data[0]} />
-
+        {playlistData().data[0].relationships.catalog.data[0].attributes
+          .editorialNotes && (
+          <EditorialNotes data={playlistData().data[0].relationships.catalog.data[0]} />
+        )}
         <SongTable
           tracks={playlistData().data[0].relationships.tracks.data}
           type={playlistData().data[0].type}
