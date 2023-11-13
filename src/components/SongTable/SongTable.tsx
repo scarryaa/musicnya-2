@@ -23,7 +23,7 @@ export const SongTable = ({ tracks, type }) => {
                 <td class={styles.album__tracks__table__number}>
                   <span>{index() + 1}</span>
                   <div class={styles.album__tracks__table__number__playButton}>
-                    <Fa icon={faPlay} size="1x" color="white" />
+                    <Fa icon={faPlay} size="1x" color="var(--app-text-color)" />
                   </div>
                 </td>
                 <td>
@@ -49,7 +49,7 @@ export const SongTable = ({ tracks, type }) => {
                       {Utils.formatTime(track.attributes.durationInMillis / 1000)}
                     </span>
                     <div class={styles.album__tracks__table__time__moreButton}>
-                      <Fa icon={faEllipsisH} size="1x" color="white" />
+                      <Fa icon={faEllipsisH} size="1x" color="var(--app-text-color)" />
                     </div>
                   </div>
                 </td>

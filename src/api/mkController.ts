@@ -54,9 +54,22 @@ export class mkController {
 
   static playMediaItem = async (id: any, type: string) => {
     const instance = await mkController.getInstance()
+
+    const shouldStrip = type === 'stations'
+    const strippedType = shouldStrip ? 'station' : type
+
     if (instance) {
-      console.log('Playing media item: ', type, id)
-      instance.setQueue({ [type]: [id], startPlaying: true })
+      console.log('Playing media item: ', strippedType, id)
+      instance.setQueue({
+        [strippedType]: shouldStrip ? id : [id],
+        startPlaying: type === 'stations' ? false : true
+      })
+
+      // special case for stations, since they don't start playing automatically for some reason
+      if (type === 'stations') {
+        instance.play()
+      }
+
       instance.shuffleMode = 0
     } else {
       console.error('Failed to play media item: MusicKit instance not available')
@@ -66,9 +79,8 @@ export class mkController {
   static shufflePlayMediaItem = async (id: any, type: string) => {
     const instance = await mkController.getInstance()
     if (instance) {
-      console.log('Playing media item: ', type, id)
-      instance.setQueue({ [type]: [id], startPlaying: true })
       instance.shuffleMode = 1
+      this.playMediaItem(id, type)
     } else {
       console.error('Failed to play media item: MusicKit instance not available')
     }
@@ -189,12 +201,16 @@ export class mkController {
 
   static setUpEvents = () => {
     MusicKit.getInstance().addEventListener('mediaItemStateDidChange', e => {
+      console.log(e)
       setStore('currentTrack', {
         id: e.id,
         title: e.attributes.name,
         artist: e.attributes.artistName,
         album: e.attributes.albumName,
-        artwork: e.attributes.artwork.url
+        artwork: e.attributes.artwork.url,
+        type: e.type,
+        parentType: e.container.type,
+        parentID: e.container.id
       })
     })
 

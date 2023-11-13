@@ -34,6 +34,9 @@ export const [store, setStore] = createStore({
     title: '',
     artist: '',
     album: '',
-    artwork: ''
+    artwork: '',
+    type: '',
+    parentType: '',
+    parentID: ''
   }
 })

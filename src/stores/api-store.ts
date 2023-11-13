@@ -3,6 +3,23 @@ import * as config from '../../config.json'
 import { fetchRecommendations } from '../api/home'
 import { fetchAlbum, fetchLibraryAlbum } from '../api/album'
 import { fetchLibraryPlaylist, fetchPlaylist } from '../api/playlist'
+import { fetchStation } from '../api/station'
+
+export const createStationStore = () => {
+  return function (params: { id: string }) {
+    const [data] = createResource(
+      () => params.id,
+      async () =>
+        await fetchStation({
+          devToken: config.MusicKit.token,
+          musicUserToken: MusicKit.getInstance()?.musicUserToken,
+          id: params.id
+        })
+    )
+
+    return data
+  }
+}
 
 export const createHomeStore = () => {
   return function () {

@@ -16,8 +16,11 @@ export const Settings = () => {
 
   return (
     <div class={styles.settings}>
-      <div>dark mode</div>
-      <input type="checkbox" checked={store.app.isDarkMode} onClick={handleClick} />
+      <h1 class={styles.settings__title}>Settings</h1>
+      <div class={styles.settings__setting}>
+        <h2>dark mode</h2>
+        <input type="checkbox" checked={store.app.isDarkMode} onClick={handleClick} />
+      </div>
     </div>
   )
 }

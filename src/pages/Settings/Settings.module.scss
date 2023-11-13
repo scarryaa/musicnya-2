@@ -1,3 +1,15 @@
 .settings {
   color: var(--app-text-color);
+  padding-inline: 1.5rem;
+
+  &__title {
+    margin-bottom: 1rem;
+  }
+
+  &__setting {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
 }
