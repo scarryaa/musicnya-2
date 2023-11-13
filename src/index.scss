@@ -72,3 +72,8 @@ h2 {
 .expanded {
   -webkit-line-clamp: unset !important;
 }
+
+.accordion__content--open {
+  max-height: 500px !important;
+  opacity: 1 !important;
+}

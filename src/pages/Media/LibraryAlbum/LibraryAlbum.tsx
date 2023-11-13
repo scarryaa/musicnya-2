@@ -5,6 +5,7 @@ import { createAlbumStore } from '../../../stores/api-store'
 import { SongTable } from '../../../components/SongTable/SongTable'
 import { MediaInfo } from '../../../components/MediaInfo/MediaInfo'
 import { EditorialNotes } from '../../../components/EditorialNotes/EditorialNotes'
+import { store } from '../../../stores/store'
 
 export const LibraryAlbum = () => {
   // get params from router
@@ -23,9 +24,11 @@ export const LibraryAlbum = () => {
           <MediaInfo media={albumData().data[0]} />
         </div>
 
-        {albumData().data[0].relationships.catalog.data[0].attributes.editorialNotes && (
-          <EditorialNotes data={albumData().data[0].relationships.catalog.data[0]} />
-        )}
+        {albumData().data[0].relationships.catalog.data[0].attributes.editorialNotes
+          .standard &&
+          !store.app.media.hideEditorialNotes && (
+            <EditorialNotes data={albumData().data[0].relationships.catalog.data[0]} />
+          )}
 
         <SongTable
           tracks={albumData().data[0].relationships.tracks.data}

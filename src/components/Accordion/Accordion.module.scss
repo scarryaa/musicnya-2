@@ -1,0 +1,45 @@
+:root {
+  --color-accordion-background: #e4e4e4;
+  --color-accordion-hover: #f3f3f3;
+  --color-accordion-background: #e4e4e4;
+  --color-accordion-title-text: #444;
+}
+
+:root[theme='dark'] {
+  --color-accordion-background: #252525;
+  --color-accordion-hover: #363636;
+  --color-accordion-title-background: #252525;
+  --color-accordion-title-text: #fff;
+}
+
+.accordion {
+  background-color: var(--color-accordion-background);
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  overflow: hidden;
+  width: 100%;
+  transition: background-color 0.2s ease-in-out;
+
+  &__title {
+    background-color: var(--color-accordion-title-background);
+    color: var(--color-accordion-title-text);
+    padding: 18px;
+    position: relative;
+    text-align: left;
+    transition: background-color 0.2s ease-in-out;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    &:hover {
+      background-color: var(--color-accordion-hover);
+    }
+  }
+
+  &__content {
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out, opacity 0.3s ease-out;
+    max-height: 0;
+    opacity: 0;
+  }
+}

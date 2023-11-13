@@ -14,6 +14,9 @@ export const [store, setStore] = createStore({
       isExpanded: localStorage.getItem('rightSidebarExpanded') === 'true' || false,
       width: localStorage.getItem('rightSidebarExpanded') === 'true' ? 250 : 40,
       activePanel: ''
+    },
+    media: {
+      hideEditorialNotes: localStorage.getItem('hideEditorialNotes') === 'true' || false
     }
   },
   countryCode: localStorage.getItem('countryCode') || 'us',
