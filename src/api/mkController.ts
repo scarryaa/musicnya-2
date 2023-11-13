@@ -57,7 +57,18 @@ export class mkController {
     if (instance) {
       console.log('Playing media item: ', type, id)
       instance.setQueue({ [type]: [id], startPlaying: true })
-      instance.play()
+      instance.shuffleMode = 0
+    } else {
+      console.error('Failed to play media item: MusicKit instance not available')
+    }
+  }
+
+  static shufflePlayMediaItem = async (id: any, type: string) => {
+    const instance = await mkController.getInstance()
+    if (instance) {
+      console.log('Playing media item: ', type, id)
+      instance.setQueue({ [type]: [id], startPlaying: true })
+      instance.shuffleMode = 1
     } else {
       console.error('Failed to play media item: MusicKit instance not available')
     }
