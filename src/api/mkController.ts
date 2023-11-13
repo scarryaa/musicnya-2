@@ -56,7 +56,7 @@ export class mkController {
     const instance = await mkController.getInstance()
 
     const shouldStrip = type === 'stations'
-    const strippedType = shouldStrip ? 'station' : type
+    const strippedType = shouldStrip ? 'station' : type.replace('library-', '')
 
     if (instance) {
       console.log('Playing media item: ', strippedType, id)
@@ -231,5 +231,16 @@ export class mkController {
     MusicKit.getInstance().addEventListener('playbackTimeDidChange', e => {
       setStore('currentTime', e.currentPlaybackTime)
     })
+  }
+
+  static getPlaylists = async () => {
+    const instance = await mkController.getInstance()
+    if (instance) {
+      return await instance.api.v3.music('v1/me/library/playlists', {
+        limit: 100
+      })
+    } else {
+      console.error('Failed to get playlists: MusicKit instance not available')
+    }
   }
 }

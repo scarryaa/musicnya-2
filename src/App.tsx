@@ -4,7 +4,7 @@ import { Footer } from './components/Footer/Footer'
 import { Main } from './components/Main/Main'
 import { RightSidebar } from './components/RightSidebar/RightSidebar'
 import { Topbar } from './components/Topbar/Topbar'
-import { store } from './stores/store'
+import { setStore, store } from './stores/store'
 import { useLocation, useNavigate } from '@solidjs/router'
 import { mkController } from './api/mkController'
 import { Utils } from './util/util'
@@ -22,6 +22,18 @@ const App: Component = () => {
         navigate('/home')
       })
     }
+
+    const playlists = await mkController.getPlaylists()
+    setStore({
+      libraryPlaylists: playlists.data.data.filter(
+        playlist => playlist.attributes?.canEdit
+      ),
+      appleMusicPlaylists: playlists.data.data.filter(
+        playlist => !playlist.attributes?.canEdit
+      )
+    })
+
+    console.log(store.libraryPlaylists)
   })
 
   return (

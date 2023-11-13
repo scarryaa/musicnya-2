@@ -6,6 +6,7 @@ import Fa from 'solid-fa'
 import { faEllipsisH, faPause, faPlay } from '@fortawesome/free-solid-svg-icons'
 import { store } from '../../stores/store'
 import { faStar } from '@fortawesome/free-solid-svg-icons'
+import { A } from '@solidjs/router'
 
 export const SongTable = ({ tracks, type }) => {
   return (
@@ -15,6 +16,9 @@ export const SongTable = ({ tracks, type }) => {
           <tr>
             <th class={styles.album__tracks__table__number}>#</th>
             <th>Title</th>
+            {type !== 'albums' && type !== 'library-albums' && (
+              <th class={styles.album__tracks__table__album}>Album</th>
+            )}
             <th class={styles.album__tracks__table__time}>Time</th>
           </tr>
         </thead>
@@ -24,7 +28,7 @@ export const SongTable = ({ tracks, type }) => {
               <tr onDblClick={() => mkController.playMediaItem(track.id, track.type)}>
                 <td class={styles.album__tracks__table__number}>
                   <span class={styles.album__tracks__table__number__popularity}>
-                    {track.meta.popularity > 0.7 && (
+                    {type === 'albums' && track.meta.popularity > 0.7 && (
                       <Fa icon={faStar} color="var(--app-text-color)" size="xs" />
                     )}
                   </span>
@@ -68,6 +72,26 @@ export const SongTable = ({ tracks, type }) => {
                     </div>
                   </div>
                 </td>
+                {type !== 'albums' && type !== 'library-albums' && (
+                  <td>
+                    <A
+                      class={styles.album__tracks__table__album}
+                      href={
+                        type === 'library-playlists'
+                          ? `/media/albums/${
+                              track.relationships.catalog.data?.[0].attributes?.url
+                                ?.split('/')?.[6]
+                                ?.split('?')?.[0]
+                            }`
+                          : `/media/albums/${
+                              track?.attributes?.url?.split('/')?.[6]?.split('?')?.[0]
+                            }`
+                      }
+                    >
+                      {track.attributes.albumName}
+                    </A>
+                  </td>
+                )}
                 <td>
                   <div class={styles.album__tracks__table__time}>
                     <span>

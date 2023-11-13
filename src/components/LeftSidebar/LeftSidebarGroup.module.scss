@@ -1,0 +1,44 @@
+:root {
+  --left-sidebar-group-header-hover-color: rgba(0, 0, 0, 0.1);
+  --left-sidebar-group-header-text-color: #bebebe;
+}
+
+:root[theme='dark'] {
+  --left-sidebar-group-header-hover-color: rgba(255, 255, 255, 0.1);
+  --left-sidebar-group-header-text-color: #bebebe;
+}
+
+.leftSidebarGroup {
+  margin-bottom: 0.2rem;
+  color: var(--left-sidebar-group-header-text-color);
+  padding-inline: 0.2rem;
+
+  &__header {
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: var(--app-border-radius);
+    padding: 0.2rem 0.4rem;
+
+    &__title {
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      width: 100%;
+      padding-right: 0.3rem;
+    }
+
+    &:hover {
+      background-color: var(--left-sidebar-group-header-hover-color);
+    }
+  }
+
+  &__children {
+    margin-top: 0.5rem;
+    margin-left: 0.5rem;
+    padding-left: 0.5rem;
+    border-left: 1px solid var(--app-border-color);
+  }
+}

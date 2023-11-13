@@ -8,44 +8,69 @@ import { Accessor, createMemo } from 'solid-js'
 
 type LeftSidebarButtonProps = {
   icon: IconDefinition
-  href: string
   text: string
+  href: string
   tooltip?: string
   showTooltip?: Accessor<boolean>
+  isLink?: boolean
 }
 
 export const LeftSidebarButton = ({
   icon,
-  href,
   text,
+  href,
   tooltip,
-  showTooltip
+  showTooltip,
+  isLink = true
 }: LeftSidebarButtonProps) => {
   const computedShowTooltip = createMemo(() => {
     return store.app.leftSidebarWidth < 61
   })
 
+  const buttonLink = (
+    <A
+      class={styles.leftSidebarButton}
+      href={href}
+      activeClass="active"
+      style={{
+        'justify-content': store.app.leftSidebarWidth > 119 ? 'flex-start' : 'center'
+      }}
+    >
+      <Fa
+        class={styles.leftSidebarButton__icon}
+        icon={icon}
+        size="lg"
+        color="var(--color-sidebar-button)"
+      />
+      {store.app.leftSidebarWidth > 119 && (
+        <span class={styles.leftSidebarButton__text}>{text}</span>
+      )}
+    </A>
+  )
+
+  const buttonNonLink = (
+    <div
+      class={styles.leftSidebarButton}
+      style={{
+        'justify-content': store.app.leftSidebarWidth > 119 ? 'flex-start' : 'center'
+      }}
+    >
+      <Fa
+        class={styles.leftSidebarButton__icon}
+        icon={icon}
+        size="lg"
+        color="var(--color-sidebar-button)"
+      />
+      {store.app.leftSidebarWidth > 119 && (
+        <span class={styles.leftSidebarButton__text}>{text}</span>
+      )}
+    </div>
+  )
+
   return (
     // @ts-ignore
     <div use:Tooltip={['right', tooltip, computedShowTooltip]}>
-      <A
-        class={styles.leftSidebarButton}
-        href={href}
-        activeClass="active"
-        style={{
-          'justify-content': store.app.leftSidebarWidth > 119 ? 'flex-start' : 'center'
-        }}
-      >
-        <Fa
-          class={styles.leftSidebarButton__icon}
-          icon={icon}
-          size="lg"
-          color="var(--color-sidebar-button)"
-        />
-        {store.app.leftSidebarWidth > 119 && (
-          <span class={styles.leftSidebarButton__text}>{text}</span>
-        )}
-      </A>
+      {isLink ? buttonLink : buttonNonLink}
     </div>
   )
 }

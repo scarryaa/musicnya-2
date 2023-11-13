@@ -1,9 +1,13 @@
 :root {
   --color-sidebar-handle: #bdbdbd;
+  --color-scrollbar-background: rgba(0, 0, 0, 0.4);
+  --color-scrollbar-thumb: rgba(255, 255, 255, 0.4);
 }
 
 :root[theme='dark'] {
-  --color-sidebar-handle: #353535;
+  --color-sidebar-handle: #5e5e5e;
+  --color-scrollbar-background: #222222;
+  --color-scrollbar-thumb: #41424c;
 }
 
 .leftSidebar {
@@ -18,7 +22,7 @@
   overflow-y: hidden;
   overflow-x: hidden;
   padding-top: 80px;
-  padding-inline: 10px;
+  padding-left: 10px;
 
   &__handle {
     width: 3px;
@@ -39,7 +43,21 @@
     flex-direction: column;
     overflow-y: overlay;
     overflow-x: hidden;
-    row-gap: 0.3rem;
+
+    &__inner {
+      padding-right: 10px;
+      &::-webkit-scrollbar {
+        background-color: var(--color-scrollbar-background);
+        z-index: 999;
+        width: 8px;
+        border-radius: 4px;
+
+        &-thumb {
+          background-color: var(--color-scrollbar-thumb);
+          border-radius: 4px;
+        }
+      }
+    }
   }
 }
 

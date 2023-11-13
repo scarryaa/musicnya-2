@@ -1,16 +1,17 @@
 :root {
   --color-sidebar-button: #000000;
-  --color-sidebar-button-hover: #bdbdbd;
-  --color-sidebar-button-active: #a3a3a3;
+  --color-sidebar-button-hover: rgba(0, 0, 0, 0.1);
+  --color-sidebar-button-active: rgba(0, 0, 0, 0.2);
 }
 
 :root[theme='dark'] {
   --color-sidebar-button: #fff;
-  --color-sidebar-button-hover: #696969;
-  --color-sidebar-button-active: #5e5e5e;
+  --color-sidebar-button-hover: rgba(255, 255, 255, 0.1);
+  --color-sidebar-button-active: rgba(255, 255, 255, 0.2);
 }
 
 .leftSidebarButton {
+  font-size: 0.9rem;
   width: 100%;
   height: 30px;
   border-radius: var(--app-border-radius);
@@ -18,6 +19,7 @@
   justify-content: flex-start;
   align-items: center;
   padding: 0.3rem;
+  margin-bottom: 0.1rem;
 
   &:hover {
     background-color: var(--color-sidebar-button-hover);

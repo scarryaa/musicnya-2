@@ -17,6 +17,9 @@
   --app-footer-background-color: #f4f4f4;
   --app-searchbar-background-color: #bdbdbd;
   --app-text-light-color: #838383;
+  --app-active-color: rgba(0, 0, 0, 0.2);
+  --app-scrollbar-background-color: #e4e4e4;
+  --app-scrollbar-thumb-background-color: #c7c7c7;
 
   --color-white: #f7f7f8;
 }
@@ -30,6 +33,9 @@
   --app-searchbar-background-color: #f4f4f4;
   --app-text-color: #fff;
   --app-text-light-color: #838383;
+  --app-active-color: rgba(255, 255, 255, 0.2);
+  --app-scrollbar-background-color: #222222;
+  --app-scrollbar-thumb-background-color: #41424c;
 }
 
 html,
@@ -48,11 +54,7 @@ body,
 }
 
 .active {
-  background-color: #bdbdbd;
-}
-
-:root[theme='dark'] .active {
-  background-color: #696969;
+  background-color: var(--app-active-color) !important;
 }
 
 .hidden {
@@ -76,4 +78,16 @@ h2 {
 .accordion__content--open {
   max-height: 500px !important;
   opacity: 1 !important;
+}
+
+::-webkit-scrollbar {
+  background-color: var(--app-scrollbar-background-color);
+  z-index: 999;
+  width: 8px;
+  border-radius: 4px;
+
+  &-thumb {
+    background-color: var(--app-scrollbar-thumb-background-color);
+    border-radius: 4px;
+  }
 }

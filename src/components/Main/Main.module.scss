@@ -19,13 +19,4 @@
   container-type: size;
   container-name: main;
   overflow-x: hidden;
-
-  &::-webkit-scrollbar {
-    background-color: var(--scrollbar-background-color);
-    z-index: 999;
-
-    &-thumb {
-      background-color: var(--thumb-background-color);
-    }
-  }
 }

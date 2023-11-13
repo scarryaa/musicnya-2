@@ -66,6 +66,21 @@
       }
     }
 
+    &__album {
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      width: 100%;
+      max-width: max-content;
+      margin-right: 1rem;
+
+      &:hover {
+        cursor: default;
+        text-decoration: underline;
+      }
+    }
+
     &__number {
       padding-left: 1.5rem;
       position: relative;
@@ -104,6 +119,7 @@
       align-items: center;
       flex-shrink: 0;
       gap: 1rem;
+      padding-right: 1rem;
 
       &__name__artist {
         &__name {
@@ -120,7 +136,7 @@
           font-weight: 500;
           font-size: 0.9rem;
           color: var(--app-text-light-color);
-          padding-bottom: 0.4rem;
+          padding-bottom: 0.2rem;
           display: -webkit-box;
           -webkit-line-clamp: 1;
           -webkit-box-orient: vertical;
