@@ -9,6 +9,7 @@ import {
 interface ShelfProps extends JSX.HTMLAttributes<HTMLDivElement> {
   children: JSX.Element | JSX.Element[]
   header: string
+  topMargin?: boolean
 }
 
 export const Shelf = (props: ShelfProps) => {
@@ -117,7 +118,7 @@ export const Shelf = (props: ShelfProps) => {
         </div>
         <div class={styles.shelf__arrow}></div>
       </span>
-      <div>
+      <div style={props.topMargin ? 'margin-top: 0.5rem' : ''}>
         <div>
           <div class={styles.shelf__inner} ref={mediaShelf}>
             {props.children}
