@@ -48,7 +48,7 @@
           display: flex;
         }
 
-        .album__tracks__table__number span {
+        .album__tracks__table__number__number {
           visibility: hidden;
         }
 
@@ -67,12 +67,25 @@
     }
 
     &__number {
-      padding-left: 1rem;
+      padding-left: 1.5rem;
       position: relative;
+
+      &__popularity {
+        position: absolute;
+        top: 14px;
+        left: -2px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        padding: 1rem;
+        width: 2rem;
+        height: 2rem;
+      }
 
       &__playButton {
         top: 14px;
-        left: 8px;
+        left: 14px;
         position: absolute;
         display: flex;
         justify-content: center;
