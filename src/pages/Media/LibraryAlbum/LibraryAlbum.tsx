@@ -6,6 +6,7 @@ import { SongTable } from '../../../components/SongTable/SongTable'
 import { MediaInfo } from '../../../components/MediaInfo/MediaInfo'
 import { EditorialNotes } from '../../../components/EditorialNotes/EditorialNotes'
 import { store } from '../../../stores/store'
+import { LoadingSpinner } from '../../../components/LoadingSpinner/LoadingSpinner'
 
 export const LibraryAlbum = () => {
   // get params from router
@@ -18,7 +19,7 @@ export const LibraryAlbum = () => {
   })
 
   return (
-    <Switch fallback={<h1>Loading...</h1>}>
+    <Switch fallback={<LoadingSpinner />}>
       <Match when={albumData.state === 'ready'}>
         <div class={styles.libraryAlbum}>
           <MediaInfo media={albumData().data[0]} />

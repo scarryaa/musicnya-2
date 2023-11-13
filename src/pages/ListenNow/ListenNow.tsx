@@ -5,6 +5,7 @@ import { MediaItem } from '../../components/MediaItem/MediaItem'
 import { Utils } from '../../util/util'
 import { Shelf } from '../../components/Shelf/Shelf'
 import musicNote from '../../assets/music_note.png'
+import { LoadingSpinner } from '../../components/LoadingSpinner/LoadingSpinner'
 
 export const ListenNow = () => {
   const homeStore = createHomeStore()
@@ -16,9 +17,9 @@ export const ListenNow = () => {
 
   return (
     <div class={styles.listenNow}>
-      <Switch fallback={<h1>Loading...</h1>}>
+      <Switch fallback={<LoadingSpinner />}>
         <Match when={homeData.state === 'loading'}>
-          <h1>Loading...</h1>
+          <LoadingSpinner />
         </Match>
         <Match when={homeData.state === 'error'}>
           <h1>Error</h1>

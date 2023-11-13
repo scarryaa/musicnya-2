@@ -4,6 +4,7 @@ import styles from './Home.module.scss'
 import { MediaItem } from '../../components/MediaItem/MediaItem'
 import { Utils } from '../../util/util'
 import { Shelf } from '../../components/Shelf/Shelf'
+import { LoadingSpinner } from '../../components/LoadingSpinner/LoadingSpinner'
 
 export const Home = () => {
   const homeStore = createHomeStore()
@@ -15,9 +16,9 @@ export const Home = () => {
 
   return (
     <div class={styles.home}>
-      <Switch fallback={<h1>Loading...</h1>}>
+      <Switch fallback={<LoadingSpinner />}>
         <Match when={homeData.state === 'loading'}>
-          <h1>Loading...</h1>
+          <LoadingSpinner />
         </Match>
         <Match when={homeData.state === 'error'}>
           <h1>Error</h1>

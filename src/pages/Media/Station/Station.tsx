@@ -3,6 +3,7 @@ import styles from './Station.module.scss'
 import { useParams } from '@solidjs/router'
 import { MediaInfo } from '../../../components/MediaInfo/MediaInfo'
 import { createStationStore } from '../../../stores/api-store'
+import { LoadingSpinner } from '../../../components/LoadingSpinner/LoadingSpinner'
 
 export const Station = () => {
   // get params from router
@@ -15,7 +16,7 @@ export const Station = () => {
   })
 
   return (
-    <Switch fallback={<h1>Loading...</h1>}>
+    <Switch fallback={<LoadingSpinner />}>
       <Match when={stationData.state === 'ready'}>
         <div class={styles.station}>
           <MediaInfo media={stationData().data[0]} />
