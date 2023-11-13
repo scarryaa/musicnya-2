@@ -2,6 +2,7 @@ import { createResource } from 'solid-js'
 import * as config from '../../config.json'
 import { fetchRecommendations } from '../api/home'
 import { fetchAlbum, fetchLibraryAlbum } from '../api/album'
+import { fetchLibraryPlaylist, fetchPlaylist } from '../api/playlist'
 
 export const createHomeStore = () => {
   return function () {
@@ -34,6 +35,29 @@ export const createAlbumStore = () => {
           musicUserToken: MusicKit.getInstance()?.musicUserToken,
           id: params.id
         })
+    )
+
+    return data
+  }
+}
+
+export const createPlaylistStore = () => {
+  return function (params: { id: string }) {
+    const [data] = createResource<
+      any,
+      {
+        devToken: string
+        musicUserToken: string
+        id: string
+      },
+      string
+    >(
+      {
+        devToken: config.MusicKit.token,
+        musicUserToken: MusicKit.getInstance()?.musicUserToken,
+        id: params.id
+      },
+      params.id.substring(0, 2) === 'pl' ? fetchPlaylist : fetchLibraryPlaylist
     )
 
     return data

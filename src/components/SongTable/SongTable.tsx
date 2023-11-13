@@ -5,7 +5,7 @@ import { mkController } from '../../api/mkController'
 import Fa from 'solid-fa'
 import { faEllipsisH, faPlay } from '@fortawesome/free-solid-svg-icons'
 
-export const SongTable = ({ tracks }) => {
+export const SongTable = ({ tracks, type }) => {
   return (
     <div class={styles.album__tracks}>
       <table class={styles.album__tracks__table}>
@@ -18,20 +18,29 @@ export const SongTable = ({ tracks }) => {
         </thead>
         <tbody>
           <For each={tracks}>
-            {track => (
+            {(track, index) => (
               <tr onDblClick={() => mkController.playMediaItem(track.id, track.type)}>
                 <td class={styles.album__tracks__table__number}>
-                  <span>{track.attributes.trackNumber}</span>
+                  <span>{track.attributes.trackNumber || index() + 1}</span>
                   <div class={styles.album__tracks__table__number__playButton}>
                     <Fa icon={faPlay} size="1x" color="white" />
                   </div>
                 </td>
                 <td>
                   <div class={styles.album__tracks__table__title}>
-                    {track.attributes.name}
-                  </div>
-                  <div class={styles.album__tracks__table__artist}>
-                    {track.attributes.artistName}
+                    {type !== ('albums' || 'library-albums') && (
+                      <div class={styles.album__tracks__table__title__albumCover}>
+                        <img
+                          src={Utils.formatArtworkUrl(track.attributes.artwork.url, 50)}
+                        />
+                      </div>
+                    )}
+                    <div class={styles.album__tracks__table__title__name__artist}>
+                      <span>{track.attributes.name}</span>
+                      <div class={styles.album__tracks__table__artist}>
+                        {track.attributes.artistName || track.attributes.curatorName}
+                      </div>
+                    </div>
                   </div>
                 </td>
                 <td>

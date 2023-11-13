@@ -1,11 +1,11 @@
 import { Match, Switch, createEffect } from 'solid-js'
-import styles from './Album.module.scss'
+import styles from './LibraryAlbum.module.scss'
 import { useParams } from '@solidjs/router'
 import { createAlbumStore } from '../../../stores/api-store'
 import { SongTable } from '../../../components/SongTable/SongTable'
 import { MediaInfo } from '../../../components/MediaInfo/MediaInfo'
 
-export const Album = () => {
+export const LibraryAlbum = () => {
   // get params from router
   const params = useParams<{ id: string }>()
   const albumStore = createAlbumStore()
@@ -18,13 +18,13 @@ export const Album = () => {
   return (
     <Switch fallback={<h1>Loading...</h1>}>
       <Match when={albumData.state === 'ready'}>
-        <div class={styles.album}>
+        <div class={styles.libraryAlbum}>
           <MediaInfo media={albumData().data[0]} />
         </div>
 
         <SongTable
-          type={albumData().data[0].type}
           tracks={albumData().data[0].relationships.tracks.data}
+          type={albumData().data[0].type}
         />
       </Match>
     </Switch>

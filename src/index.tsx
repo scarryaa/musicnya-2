@@ -9,6 +9,9 @@ import { Radio } from './pages/Radio/Radio'
 import { Settings } from './pages/Settings/Settings'
 import { ListenNow } from './pages/ListenNow/ListenNow'
 import { Album } from './pages/Media/Album/Album'
+import { LibraryAlbum } from './pages/Media/LibraryAlbum/LibraryAlbum'
+import { Playlist } from './pages/Media/Playlist/Playlist'
+import { LibraryPlaylist } from './pages/Media/LibraryPlaylist/LibraryPlaylist'
 
 const root = document.getElementById('root')
 
@@ -29,6 +32,9 @@ render(
           <Route path="/radio" component={Radio} />
           <Route path="/settings" component={Settings} />
           <Route path="/media/albums/:id" component={Album} />
+          <Route path="/media/library-albums/:id" component={LibraryAlbum} />
+          <Route path="/media/playlists/:id" component={Playlist} />
+          <Route path="/media/library-playlists/:id" component={LibraryPlaylist} />
         </Route>
       </Routes>
     </Router>

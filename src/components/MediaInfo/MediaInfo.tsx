@@ -25,11 +25,14 @@ export const MediaInfo = ({ media }) => {
         <div class={styles.mediaInfo__info__text}>
           <h1 class={styles.mediaInfo__info__text__title}>{media.attributes.name}</h1>
           <h2 class={styles.mediaInfo__info__text__artist}>
-            {media.attributes.artistName}
+            {media.attributes.artistName || media.attributes.curatorName}
           </h2>
-          <h3 class={styles.mediaInfo__info__text__genre}>
-            {media.attributes.genreNames[0]} • {media.attributes.releaseDate.slice(0, 4)}
-          </h3>
+          {media.type !== ('playlists' || 'library-playlists') && (
+            <h3 class={styles.mediaInfo__info__text__genre}>
+              {media.attributes.genreNames[0]} •{' '}
+              {media.attributes.releaseDate.slice(0, 4)}
+            </h3>
+          )}
         </div>
         <div class={styles.mediaInfo__info__actions}>
           <PrimaryButton
