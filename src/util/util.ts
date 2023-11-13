@@ -21,4 +21,8 @@ export class Utils {
   static disableContextMenu = () => {
     document.addEventListener('contextmenu', event => event.preventDefault())
   }
+
+  static parseSelectedDefaultPage = (selection: string) => {
+    return selection.replace('Listen Now', 'listen').toLowerCase()
+  }
 }

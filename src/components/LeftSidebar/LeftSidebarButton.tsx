@@ -11,7 +11,7 @@ type LeftSidebarButtonProps = {
   text: string
   href: string
   tooltip?: string
-  showTooltip?: Accessor<boolean>
+  showTooltip?: boolean
   isLink?: boolean
 }
 
@@ -69,7 +69,7 @@ export const LeftSidebarButton = ({
 
   return (
     // @ts-ignore
-    <div use:Tooltip={['right', tooltip, computedShowTooltip]}>
+    <div use:Tooltip={['right', tooltip, showTooltip || computedShowTooltip]}>
       {isLink ? buttonLink : buttonNonLink}
     </div>
   )

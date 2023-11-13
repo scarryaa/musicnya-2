@@ -110,6 +110,7 @@ export const LeftSidebar = () => {
               text={playlist.attributes.name}
               icon={faHeadphones}
               href={`media/playlists/${playlist.id}`}
+              showTooltip={true}
             />
           )}
         </For>
@@ -135,6 +136,7 @@ export const LeftSidebar = () => {
               text={playlist.attributes.name}
               icon={faHeadphones}
               href={`media/library-playlists/${playlist.id}`}
+              showTooltip={true}
             />
           )}
         </For>

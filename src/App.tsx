@@ -17,11 +17,10 @@ const App: Component = () => {
   createEffect(async () => {
     Utils.setDarkMode(localStorage.getItem('darkMode') === 'true')
     Utils.disableContextMenu()
-    if (location.pathname === '/') {
-      await mkController.authorize().then(() => {
-        navigate('/home')
-      })
-    }
+    await mkController.authorize().then(() => {
+      console.log(Utils.parseSelectedDefaultPage(store.app.general.defaultPage))
+      navigate(Utils.parseSelectedDefaultPage(store.app.general.defaultPage))
+    })
 
     const playlists = await mkController.getPlaylists()
     setStore({

@@ -17,7 +17,7 @@ let tooltip
 let portal = (
   <div
     ref={tooltip}
-    role="window"
+    role="tooltip"
     aria-label="tooltip text"
     onMouseOver={() => {
       local.open = true

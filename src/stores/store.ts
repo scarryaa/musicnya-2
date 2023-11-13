@@ -15,6 +15,9 @@ export const [store, setStore] = createStore({
       width: localStorage.getItem('rightSidebarExpanded') === 'true' ? 250 : 40,
       activePanel: ''
     },
+    general: {
+      defaultPage: localStorage.getItem('defaultPage') || 'home'
+    },
     media: {
       hideEditorialNotes: localStorage.getItem('hideEditorialNotes') === 'true' || false,
       expandEditorialNotes:

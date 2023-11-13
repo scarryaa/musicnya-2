@@ -19,10 +19,10 @@ export const ListenNow = () => {
   return (
     <div class={styles.listenNow}>
       <Switch fallback={<LoadingSpinner />}>
-        <Match when={homeData.state === 'loading'}>
+        <Match when={homeData.state === 'pending'}>
           <LoadingSpinner />
         </Match>
-        <Match when={homeData.state === 'error'}>
+        <Match when={homeData.state === 'errored'}>
           <h1>Error</h1>
         </Match>
         <Match when={homeData.state === 'ready'}>

@@ -28,7 +28,7 @@ render(
       <Routes>
         <Route path="/" component={App}>
           <Route path="/home" component={Home} />
-          <Route path="listen" component={ListenNow} />
+          <Route path="/listen" component={ListenNow} />
           <Route path="/browse" component={Browse} />
           <Route path="/radio" component={Radio} />
           <Route path="/settings" component={Settings} />

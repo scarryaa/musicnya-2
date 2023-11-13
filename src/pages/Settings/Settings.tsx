@@ -1,8 +1,19 @@
+import { createSignal } from 'solid-js'
 import { Accordion } from '../../components/Accordion/Accordion'
+import { Select } from '../../components/Select/Select'
 import { setStore, store } from '../../stores/store'
 import styles from './Settings.module.scss'
 
 export const Settings = () => {
+  const defaultPageOptions = ['Home', 'Listen Now', 'Browse', 'Radio', 'Search']
+  const [selectedOption, setSelectedOption] = createSignal(store.app.general.defaultPage)
+
+  const handleSelect = (option: string) => {
+    setSelectedOption(option)
+    setStore('app', 'general', 'defaultPage', option)
+    localStorage.setItem('defaultPage', option)
+  }
+
   const handleDarkModeClick = () => {
     setStore('app', 'isDarkMode', !store.app.isDarkMode)
 
@@ -39,6 +50,16 @@ export const Settings = () => {
   return (
     <div class={styles.settings}>
       <h1 class={styles.settings__title}>Settings</h1>
+      <Accordion title="General">
+        <div class={styles.settings__setting}>
+          <h3>Default page</h3>
+          <Select
+            options={defaultPageOptions}
+            selected={selectedOption}
+            onSelectedChange={handleSelect}
+          />
+        </div>
+      </Accordion>
       <Accordion title="Visual">
         <div class={styles.settings__setting}>
           <h3>Enable dark mode</h3>

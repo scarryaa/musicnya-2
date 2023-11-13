@@ -1,0 +1,64 @@
+:root {
+  --select-background-color: #fff;
+  --select-background-hover-color: rgb(238, 64, 64) 0;
+  --select-border-color: #ccc;
+  --select-border-radius: 4px;
+  --select-border-width: 1px;
+  --select-color: #000;
+}
+
+:root[theme='dark'] {
+  --select-background-color: #222;
+  --select-background-hover-color: #333;
+  --select-border-color: #333;
+  --select-color: #fff;
+}
+
+.select {
+  width: 150px;
+
+  &__selected {
+    padding: 10px;
+    border: 1px solid var(--select-border-color);
+    border-radius: var(--select-border-radius);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__options {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    width: 150px;
+    padding: 2px;
+    background: var(--select-background-color);
+    border: 1px solid var(--select-border-color);
+    z-index: 1000;
+    border-radius: var(--select-border-radius);
+    filter: drop-shadow(0 0 0.75rem rgba(0, 0, 0, 0.2));
+
+    &__option {
+      color: var(--select-color);
+      padding: 5px 10px;
+      z-index: 1001;
+      border-radius: var(--select-border-radius);
+
+      &:hover {
+        background-color: var(--select-background-hover-color) !important;
+      }
+    }
+  }
+}
+
+.focused {
+  background-color: var(--select-background-hover-color) !important;
+  outline: none;
+}
+
+.selected {
+  color: var(--app-primary-color);
+  background-color: transparent;
+}
