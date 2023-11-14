@@ -56,7 +56,6 @@ export const [store, setStore] = createStore({
   isAuthorized: false,
   shuffleMode: localStorage.getItem('shuffleMode') === 'true' || false,
   repeatMode: localStorage.getItem('repeatMode') === 'true' || false,
-  appleMusicPlaylists: [],
   libraryPlaylists: [],
   currentTrack: {
     id: '',

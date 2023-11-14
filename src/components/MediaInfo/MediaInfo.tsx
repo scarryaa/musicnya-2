@@ -20,10 +20,10 @@ export const MediaInfo = ({ media }) => {
     <div class={styles.mediaInfo}>
       <img
         src={
-          media.attributes.artwork?.url
-            ? Utils.formatArtworkUrl(media?.attributes?.artwork?.url, 300)
+          media().attributes.artwork?.url
+            ? Utils.formatArtworkUrl(media()?.attributes?.artwork?.url, 300)
             : Utils.formatArtworkUrl(
-                media.relationships.tracks.data[0].attributes.artwork.url,
+                media().relationships.tracks.data[0].attributes.artwork.url,
                 300
               ) || musicNote
         }
@@ -31,16 +31,16 @@ export const MediaInfo = ({ media }) => {
       />
       <div class={styles.mediaInfo__info}>
         <div class={styles.mediaInfo__info__text}>
-          <h1 class={styles.mediaInfo__info__text__title}>{media.attributes.name}</h1>
+          <h1 class={styles.mediaInfo__info__text__title}>{media().attributes.name}</h1>
           <h2 class={styles.mediaInfo__info__text__artist}>
-            {media.attributes.artistName || media.attributes.curatorName}
+            {media().attributes.artistName || media().attributes.curatorName}
           </h2>
-          {media.type !== 'playlists' &&
-            media.type !== 'library-playlists' &&
-            media.type !== 'stations' && (
+          {media().type !== 'playlists' &&
+            media().type !== 'library-playlists' &&
+            media().type !== 'stations' && (
               <h3 class={styles.mediaInfo__info__text__genre}>
-                {media.attributes.genreNames[0]} •{' '}
-                {media.attributes.releaseDate.slice(0, 4)}
+                {media().attributes.genreNames[0]} •{' '}
+                {media().attributes.releaseDate.slice(0, 4)}
               </h3>
             )}
         </div>

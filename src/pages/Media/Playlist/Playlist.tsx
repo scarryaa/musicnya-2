@@ -1,39 +1,41 @@
-import { Match, Switch, createEffect } from 'solid-js'
-import styles from './Playlist.module.scss'
 import { useParams } from '@solidjs/router'
-import { createPlaylistStore } from '../../../stores/api-store'
-import { SongTable } from '../../../components/SongTable/SongTable'
-import { MediaInfo } from '../../../components/MediaInfo/MediaInfo'
+import { Match, Switch, createEffect, createSignal } from 'solid-js'
 import { EditorialNotes } from '../../../components/EditorialNotes/EditorialNotes'
-import { store } from '../../../stores/store'
 import { LoadingSpinner } from '../../../components/LoadingSpinner/LoadingSpinner'
+import { MediaInfo } from '../../../components/MediaInfo/MediaInfo'
+import { SongTable } from '../../../components/SongTable/SongTable'
+import { createPlaylistStore } from '../../../stores/api-store'
+import { store } from '../../../stores/store'
+import styles from './Playlist.module.scss'
 
 export const Playlist = () => {
-  // get params from router
   const params = useParams<{ id: string }>()
   const playlistStore = createPlaylistStore()
   const playlistData = playlistStore(params)
 
+  const [currentPlaylist, setCurrentPlaylist] = createSignal(null)
+
   createEffect(() => {
-    console.log(playlistData())
-  })
+    const data = playlistData()
+    if (data && data.data && data.data.length > 0) {
+      setCurrentPlaylist(data.data[0])
+    }
+    console.log(params.id)
+  }, [params.id, playlistData()])
 
   return (
     <Switch fallback={<LoadingSpinner />}>
-      <Match when={playlistData.state === 'ready'}>
+      <Match when={playlistData.state === 'ready' && currentPlaylist()}>
         <div class={styles.playlist}>
-          <MediaInfo media={playlistData().data[0]} />
+          <MediaInfo media={currentPlaylist} />
         </div>
 
-        {playlistData().data[0].attributes.editorialNotes?.standard &&
+        {currentPlaylist().attributes.editorialNotes?.standard &&
           !store.app.media.hideEditorialNotes && (
-            <EditorialNotes data={playlistData().data[0]} />
+            <EditorialNotes data={currentPlaylist} />
           )}
 
-        <SongTable
-          tracks={playlistData().data[0].relationships.tracks.data}
-          type={playlistData().data[0].type}
-        />
+        <SongTable data={currentPlaylist} />
       </Match>
     </Switch>
   )

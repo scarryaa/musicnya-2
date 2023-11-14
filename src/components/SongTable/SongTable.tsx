@@ -1,4 +1,4 @@
-import { For } from 'solid-js'
+import { For, createEffect, createSignal, onCleanup } from 'solid-js'
 import styles from './SongTable.module.scss'
 import { Utils } from '../../util/util'
 import { mkController } from '../../api/mkController'
@@ -8,7 +8,53 @@ import { store } from '../../stores/store'
 import { faStar } from '@fortawesome/free-solid-svg-icons'
 import { A } from '@solidjs/router'
 
-export const SongTable = ({ tracks, type }) => {
+export const SongTable = ({ data }) => {
+  const [sentinel, setSentinel] = createSignal(null)
+  const [tracks, setTracks] = createSignal(null)
+  const [isFetchingComplete, setIsFetchingComplete] = createSignal(false)
+
+  createEffect(() => {
+    setTracks(data().relationships.tracks.data)
+
+    if (data().relationships.tracks.data.length < 100) {
+      setIsFetchingComplete(true)
+    }
+  }, [data])
+
+  const observer = new IntersectionObserver(
+    entries => {
+      if (entries[0].isIntersecting && !isFetchingComplete()) {
+        mkController.fetchMoreTracks(data().id, data().type, tracks().length).then(
+          res => {
+            if (res && res.data) {
+              setTracks([...tracks(), ...res.data])
+              if (res.data.length < 100) {
+                setIsFetchingComplete(true)
+                observer.disconnect()
+              }
+            }
+          },
+          err => {
+            console.error(err)
+            setIsFetchingComplete(true)
+          }
+        )
+      }
+    },
+    { rootMargin: '100px' }
+  )
+  createEffect(() => {
+    if (sentinel()) {
+      observer.observe(sentinel())
+    }
+  })
+
+  onCleanup(() => {
+    if (sentinel()) {
+      observer.unobserve(sentinel())
+    }
+  })
+
   return (
     <div class={styles.album__tracks}>
       <table class={styles.album__tracks__table}>
@@ -16,19 +62,19 @@ export const SongTable = ({ tracks, type }) => {
           <tr>
             <th class={styles.album__tracks__table__number}>#</th>
             <th>Title</th>
-            {type !== 'albums' && type !== 'library-albums' && (
+            {data().type !== 'albums' && data().type !== 'library-albums' && (
               <th class={styles.album__tracks__table__album}>Album</th>
             )}
             <th class={styles.album__tracks__table__time}>Time</th>
           </tr>
         </thead>
         <tbody>
-          <For each={tracks}>
+          <For each={tracks()}>
             {(track, index) => (
               <tr onDblClick={() => mkController.playMediaItem(track.id, track.type)}>
                 <td class={styles.album__tracks__table__number}>
                   <span class={styles.album__tracks__table__number__popularity}>
-                    {type === 'albums' && track.meta.popularity > 0.7 && (
+                    {data().type === 'albums' && track.meta.popularity > 0.7 && (
                       <Fa icon={faStar} color="var(--app-text-color)" size="xs" />
                     )}
                   </span>
@@ -45,7 +91,7 @@ export const SongTable = ({ tracks, type }) => {
                 </td>
                 <td>
                   <div class={styles.album__tracks__table__title}>
-                    {type !== 'albums' && type !== 'library-albums' && (
+                    {data().type !== 'albums' && data().type !== 'library-albums' && (
                       <div class={styles.album__tracks__table__title__albumCover}>
                         <img
                           src={Utils.formatArtworkUrl(track.attributes.artwork.url, 50)}
@@ -72,14 +118,14 @@ export const SongTable = ({ tracks, type }) => {
                     </div>
                   </div>
                 </td>
-                {type !== 'albums' && type !== 'library-albums' && (
+                {data().type !== 'albums' && data().type !== 'library-albums' && (
                   <td>
                     <A
                       class={styles.album__tracks__table__album}
                       href={
-                        type === 'library-playlists'
+                        data().type === 'library-playlists'
                           ? `/media/albums/${
-                              track.relationships.catalog.data?.[0].attributes?.url
+                              track.relationships?.catalog?.data?.[0].attributes?.url
                                 ?.split('/')?.[6]
                                 ?.split('?')?.[0]
                             }`
@@ -107,6 +153,7 @@ export const SongTable = ({ tracks, type }) => {
           </For>
         </tbody>
       </table>
+      <div ref={setSentinel} style={{ height: '1px' }}></div>
     </div>
   )
 }

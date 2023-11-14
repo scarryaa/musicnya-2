@@ -279,6 +279,47 @@ export class mkController {
     }
   }
 
+  static addToPlaylist = async (id: string, type: string, playlistID: string) => {
+    const instance = await mkController.getInstance()
+    const strippedType = type.replace('library-', '')
+
+    if (instance) {
+      const tracks = await fetch(
+        type.includes('library-')
+          ? `https://amp-api.music.apple.com/v1/me/library/${strippedType}/${id}/tracks?l=en-US&platform=web&limit=100`
+          : `https://amp-api.music.apple.com/v1/catalog/us/${strippedType}/${id}/tracks?l=en-US&platform=web&limit=100`,
+        {
+          headers: {
+            authorization: `Bearer ${config.MusicKit.token}`,
+            'music-user-token': config.MusicKit.musicUserToken
+          }
+        }
+      ).then(response => response.json())
+
+      const response = await fetch(
+        `https://amp-api.music.apple.com/v1/me/library/playlists/${playlistID}/tracks?l=en-US&platform=web`,
+        {
+          method: 'POST',
+          headers: {
+            authorization: `Bearer ${config.MusicKit.token}`,
+            'music-user-token': config.MusicKit.musicUserToken
+          },
+          body: JSON.stringify({
+            data: tracks.data.map((track: any) => {
+              return {
+                id: track.id,
+                type: track.type
+              }
+            })
+          })
+        }
+      )
+      return response
+    } else {
+      console.error('Failed to add to playlist: MusicKit instance not available')
+    }
+  }
+
   static checkIfInLibrary = async (id: string, type: string) => {
     const instance = await mkController.getInstance()
     type = type.replace('library-', '')
@@ -316,6 +357,28 @@ export class mkController {
       return response.json()
     } else {
       console.error('Failed to check if loved: MusicKit instance not available')
+    }
+  }
+
+  static getShareLink = async (id: string, type: string) => {
+    const instance = await mkController.getInstance()
+    const strippedType = type.replace('library-', '')
+
+    if (instance) {
+      const response = await fetch(
+        type.includes('library-')
+          ? `https://amp-api.music.apple.com/v1/me/library/${strippedType}/${id}/catalog?fields=url`
+          : `https://amp-api.music.apple.com/v1/catalog/us/${type}/${id}?l=en-US&platform=web&fields=url`,
+        {
+          headers: {
+            authorization: `Bearer ${config.MusicKit.token}`,
+            'music-user-token': config.MusicKit.musicUserToken
+          }
+        }
+      )
+      return response.json()
+    } else {
+      console.error('Failed to get share link: MusicKit instance not available')
     }
   }
 
@@ -425,6 +488,28 @@ export class mkController {
     }
   }
 
+  static fetchMoreTracks = async (id: string, type: string, offset: number) => {
+    const instance = await mkController.getInstance()
+    const strippedType = type.replace('library-', '')
+
+    if (instance) {
+      const response = await fetch(
+        type.includes('library-')
+          ? `https://amp-api.music.apple.com/v1/me/library/playlists/${id}/tracks?offset=0&l=en-US&platform=web&limit=100&include=albums`
+          : `https://amp-api.music.apple.com/v1/catalog/us/${strippedType}/${id}/tracks?offset=${offset}&l=en-US&platform=web&limit=100&art[url]=f&extend=editorialArtwork,editorialVideo,extendedAssetUrls,offers&fields[artists]=name,url&fields[curators]=name&fields[record-labels]=name,url&include=record-labels,artists&include[music-videos]=artists&include=albums,catalog&include[playlists]=curator&include[songs]=artists,composers,albums&l=en-US&meta[albums:tracks]=popularity&platform=web&views=appears-on,audio-extras,more-by-artist,other-versions,related-videos,video-extras,you-might-also-like`,
+        {
+          headers: {
+            authorization: `Bearer ${config.MusicKit.token}`,
+            'music-user-token': config.MusicKit.musicUserToken
+          }
+        }
+      )
+      return response.json()
+    } else {
+      console.error('Failed to fetch more tracks: MusicKit instance not available')
+    }
+  }
+
   static setUpEvents = () => {
     MusicKit.getInstance().addEventListener('mediaItemStateDidChange', e => {
       console.log(e)
@@ -457,6 +542,18 @@ export class mkController {
     MusicKit.getInstance().addEventListener('playbackTimeDidChange', e => {
       setStore('currentTime', e.currentPlaybackTime)
     })
+  }
+
+  static getTracksForPlaylist = async (id: string) => {
+    const instance = await mkController.getInstance()
+    if (instance) {
+      return await instance.api.v3.music(`v1/me/library/playlists/${id}/tracks`, {
+        limit: 100,
+        include: 'albums,catalog'
+      })
+    } else {
+      console.error('Failed to get tracks for playlist: MusicKit instance not available')
+    }
   }
 
   static getPlaylists = async () => {

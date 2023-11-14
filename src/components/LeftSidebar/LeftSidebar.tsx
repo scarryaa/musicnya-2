@@ -103,13 +103,15 @@ export const LeftSidebar = () => {
         />
       </LeftSidebarGroup>
       <LeftSidebarGroup title="Apple Music Playlists">
-        <For each={store.appleMusicPlaylists}>
+        <For
+          each={store.libraryPlaylists.filter(playlist => !playlist.attributes.canEdit)}
+        >
           {playlist => (
             <LeftSidebarButton
               tooltip={playlist.attributes.name}
               text={playlist.attributes.name}
               icon={faHeadphones}
-              href={`media/playlists/${playlist.id}`}
+              href={`media/library-playlists/${playlist.id}`}
               showTooltip={true}
             />
           )}
@@ -129,7 +131,9 @@ export const LeftSidebar = () => {
           icon={faList}
           href="/library/playlists"
         />
-        <For each={store.libraryPlaylists}>
+        <For
+          each={store.libraryPlaylists.filter(playlist => playlist.attributes.canEdit)}
+        >
           {playlist => (
             <LeftSidebarButton
               tooltip={playlist.attributes.name}

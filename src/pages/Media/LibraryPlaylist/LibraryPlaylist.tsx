@@ -1,40 +1,34 @@
-import { Match, Switch, createEffect } from 'solid-js'
-import styles from './LibraryPlaylist.module.scss'
 import { useParams } from '@solidjs/router'
-import { createPlaylistStore } from '../../../stores/api-store'
-import { SongTable } from '../../../components/SongTable/SongTable'
+import { createSignal, createEffect, Show } from 'solid-js'
 import { MediaInfo } from '../../../components/MediaInfo/MediaInfo'
-import { EditorialNotes } from '../../../components/EditorialNotes/EditorialNotes'
+import { SongTable } from '../../../components/SongTable/SongTable'
 import { store } from '../../../stores/store'
-import { LoadingSpinner } from '../../../components/LoadingSpinner/LoadingSpinner'
+import styles from './LibraryPlaylist.module.scss'
 
 export const LibraryPlaylist = () => {
-  // get params from router
   const params = useParams<{ id: string }>()
-  const playlistStore = createPlaylistStore()
-  const playlistData = playlistStore(params)
+  const [playlistData, setPlaylistData] = createSignal(null)
+  let playlistPage: HTMLDivElement = undefined as unknown as HTMLDivElement
 
   createEffect(() => {
-    console.log(playlistData())
-  })
+    let newPlaylistData = store.libraryPlaylists.find(
+      playlist => playlist.id === params.id
+    )
+
+    setPlaylistData(newPlaylistData)
+  }, [params.id])
+
+  createEffect(() => {
+    // scroll to top of page
+    if (playlistPage) playlistPage.scrollTop = 0
+  }, [playlistData(), params.id, playlistPage])
 
   return (
-    <Switch fallback={<LoadingSpinner />}>
-      <Match when={playlistData.state === 'ready'}>
-        <div class={styles.libraryPlaylist}>
-          <MediaInfo media={playlistData().data[0]} />
-        </div>
-
-        {playlistData().data[0].relationships.catalog.data[0].attributes.editorialNotes
-          ?.standard &&
-          !store.app.media.hideEditorialNotes && (
-            <EditorialNotes data={playlistData().data[0].relationships.catalog.data[0]} />
-          )}
-        <SongTable
-          tracks={playlistData().data[0].relationships.tracks.data}
-          type={playlistData().data[0].type}
-        />
-      </Match>
-    </Switch>
+    <Show when={playlistData()}>
+      <div class={styles.libraryPlaylist} ref={playlistPage}>
+        <MediaInfo media={playlistData} />
+      </div>
+      <SongTable data={playlistData} />
+    </Show>
   )
 }
