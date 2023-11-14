@@ -3,6 +3,8 @@ import styles from './MediaItem.module.scss'
 import { faEllipsisH, faPlay } from '@fortawesome/free-solid-svg-icons'
 import { mkController } from '../../api/mkController'
 import { A } from '@solidjs/router'
+import { createSignal } from 'solid-js'
+import { contextMenu, handleContextMenu, handleMoreClick } from './MediaItemContextMenu'
 
 export const MediaItem = ({
   src,
@@ -17,18 +19,37 @@ export const MediaItem = ({
   type: string
   id: string
 }) => {
+  const [isLoved, setIsLoved] = createSignal(false)
+  const [inLibrary, setInLibrary] = createSignal(type.includes('library'))
+  const [isDisliked, setIsDisliked] = createSignal(false)
+  const [contextMenuItems, setContextMenuItems] = createSignal(
+    contextMenu(id, type, isLoved(), inLibrary(), isDisliked())
+  )
+
   const handlePlayClick = e => {
     e.preventDefault()
     mkController.playMediaItem(id, type)
   }
 
-  const handleMoreClick = e => {
-    e.preventDefault()
-    console.log('more')
-  }
-
   return (
-    <div class={styles.mediaItem}>
+    <div
+      class={styles.mediaItem}
+      onContextMenu={e =>
+        handleContextMenu(
+          e,
+          id,
+          type,
+          isLoved,
+          setIsLoved,
+          inLibrary,
+          setInLibrary,
+          isDisliked,
+          setIsDisliked,
+          contextMenuItems,
+          setContextMenuItems
+        )
+      }
+    >
       <div class={styles.mediaItem__inner}>
         <div class={styles.mediaItem__inner__artwork}>
           <A
@@ -48,7 +69,21 @@ export const MediaItem = ({
             </div>
             <div
               class={styles.mediaItem__inner__artwork__overlay__moreButton}
-              onClick={handleMoreClick}
+              onClick={e =>
+                handleMoreClick(
+                  e,
+                  id,
+                  type,
+                  isLoved,
+                  setIsLoved,
+                  inLibrary,
+                  setInLibrary,
+                  isDisliked,
+                  setIsDisliked,
+                  contextMenuItems,
+                  setContextMenuItems
+                )
+              }
             >
               <Fa
                 icon={faEllipsisH}

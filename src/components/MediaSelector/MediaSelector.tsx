@@ -36,10 +36,10 @@ export const MediaSelector = ({ item }: { item: any }) => {
               <MediaItem
                 id={mediaItem.id}
                 type={mediaItem.type}
-                title={mediaItem.attributes.name}
+                title={mediaItem.attributes?.name}
                 artists={[
-                  mediaItem.attributes.artistName ||
-                    mediaItem.attributes.curatorName ||
+                  mediaItem.attributes?.artistName ||
+                    mediaItem.attributes?.curatorName ||
                     ' '
                 ]}
                 src={Utils.formatArtworkUrl(

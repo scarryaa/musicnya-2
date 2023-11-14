@@ -13,6 +13,7 @@ import { LibraryAlbum } from './pages/Media/LibraryAlbum/LibraryAlbum'
 import { Playlist } from './pages/Media/Playlist/Playlist'
 import { LibraryPlaylist } from './pages/Media/LibraryPlaylist/LibraryPlaylist'
 import { Station } from './pages/Media/Station/Station'
+import { Search } from './pages/Search/Search'
 
 const root = document.getElementById('root')
 
@@ -36,7 +37,8 @@ render(
           <Route path="/media/library-albums/:id" component={LibraryAlbum} />
           <Route path="/media/playlists/:id" component={Playlist} />
           <Route path="/media/library-playlists/:id" component={LibraryPlaylist} />
-          <Route path="media/stations/:id" component={Station} />
+          <Route path="/media/stations/:id" component={Station} />
+          <Route path="/search" component={Search} />
         </Route>
       </Routes>
     </Router>

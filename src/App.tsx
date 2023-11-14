@@ -9,12 +9,15 @@ import { useLocation, useNavigate } from '@solidjs/router'
 import { mkController } from './api/mkController'
 import { Utils } from './util/util'
 import '@fontsource/inter'
+import { ContextMenu } from './components/ContextMenu/ContextMenu'
 
 const App: Component = () => {
   const location = useLocation()
   const navigate = useNavigate()
 
   createEffect(async () => {
+    setStore('app', 'navigate', () => navigate)
+
     Utils.setDarkMode(localStorage.getItem('darkMode') === 'true')
     Utils.disableContextMenu()
     await mkController.authorize().then(() => {
@@ -42,6 +45,7 @@ const App: Component = () => {
       <RightSidebar />
       <Main />
       <Footer />
+      <ContextMenu />
     </div>
   )
 }

@@ -6,6 +6,7 @@ export const [store, setStore] = createStore({
     title: 'musicnya 2',
     version: '1.0.0',
     platform: await platform(),
+    navigate: null,
     isMaximized: false,
     isDarkMode: localStorage.getItem('darkMode') === 'true' || false,
     isMiniMode: localStorage.getItem('miniMode') === 'true' || false,
@@ -22,6 +23,24 @@ export const [store, setStore] = createStore({
       hideEditorialNotes: localStorage.getItem('hideEditorialNotes') === 'true' || false,
       expandEditorialNotes:
         localStorage.getItem('expandEditorialNotes') === 'true' || false
+    },
+    contextMenu: {
+      x: -10000,
+      y: -10000,
+      items: [],
+      open: false,
+      id: '',
+      type: '',
+      display: 'block'
+    },
+    subContextMenu: {
+      x: -10000,
+      y: -10000,
+      items: [],
+      open: false,
+      id: '',
+      type: '',
+      display: 'block'
     }
   },
   countryCode: localStorage.getItem('countryCode') || 'us',

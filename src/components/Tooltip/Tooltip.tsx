@@ -73,7 +73,6 @@ export default function Tooltip(related, at, wrap) {
   at = at ? at() : ''
   onMount(() => {
     if (Array.isArray(at)) {
-      console.log(at)
       if (at.length === 1) {
         title = at[0]
         at = 'top'
