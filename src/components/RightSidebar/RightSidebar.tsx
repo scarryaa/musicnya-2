@@ -5,6 +5,7 @@ import { WindowButtons } from '../WindowButtons/WindowButtons'
 import { RightSidebarButton } from './RightSidebarButton'
 import { setStore, store } from '../../stores/store'
 import { A } from '@solidjs/router'
+import { Overlay } from './RightSidebarOverlay'
 
 export const RightSidebar = () => {
   const [screenWidth, setScreenWidth] = createSignal(window.innerWidth)
@@ -102,44 +103,49 @@ export const RightSidebar = () => {
   }
 
   return (
-    <div
-      class={styles.rightSidebar}
-      style={{ width: `${store.app.rightSidebar.width}px` }}
-    >
-      <div class={styles.rightSidebar__innerContainer}>
-        {store.app.platform === 'win32' && (
-          <div class={styles.rightSidebar__windowButtons}>
-            <WindowButtons />
+    <>
+      <div
+        class={styles.rightSidebar}
+        style={{ width: `${store.app.rightSidebar.width}px` }}
+      >
+        <div class={styles.rightSidebar__innerContainer}>
+          {store.app.platform === 'win32' && (
+            <div class={styles.rightSidebar__windowButtons}>
+              <WindowButtons />
+            </div>
+          )}
+          <div class={styles.rightSidebar__buttons}>
+            <button class={styles.rightSidebar__button} onClick={handleQueueClick}>
+              <RightSidebarButton tooltip="Queue" icon={faBars} />
+            </button>
+            <button class={styles.rightSidebar__button} onClick={handleLyricsClick}>
+              <RightSidebarButton tooltip="Lyrics" icon={faQuoteRight} />
+            </button>
           </div>
-        )}
-        <div class={styles.rightSidebar__buttons}>
-          <button class={styles.rightSidebar__button} onClick={handleQueueClick}>
-            <RightSidebarButton tooltip="Queue" icon={faBars} />
-          </button>
-          <button class={styles.rightSidebar__button} onClick={handleLyricsClick}>
-            <RightSidebarButton tooltip="Lyrics" icon={faQuoteRight} />
-          </button>
-        </div>
-        <A
-          activeClass=""
-          href="/settings"
-          class={styles.rightSidebar__button + ' ' + styles.rightSidebar__buttonSettings}
-        >
-          <RightSidebarButton tooltip="Settings" icon={faCog} />
-        </A>
-        <div class={styles.rightSidebar__panel}>
-          {store.app.rightSidebar.activePanel === 'queue' && (
-            <div class={styles.rightSidebar__panel__queue}>
-              <h1>Queue</h1>
-            </div>
-          )}
-          {store.app.rightSidebar.activePanel === 'lyrics' && (
-            <div class={styles.rightSidebar__panel__lyrics}>
-              <h1>Lyrics</h1>
-            </div>
-          )}
+          <A
+            activeClass=""
+            href="/settings"
+            class={
+              styles.rightSidebar__button + ' ' + styles.rightSidebar__buttonSettings
+            }
+          >
+            <RightSidebarButton tooltip="Settings" icon={faCog} />
+          </A>
+          <div class={styles.rightSidebar__panel}>
+            {store.app.rightSidebar.activePanel === 'queue' && (
+              <div class={styles.rightSidebar__panel__queue}>
+                <h1>Queue</h1>
+              </div>
+            )}
+            {store.app.rightSidebar.activePanel === 'lyrics' && (
+              <div class={styles.rightSidebar__panel__lyrics}>
+                <h1>Lyrics</h1>
+              </div>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+      {screenWidth() < 680 && store.app.rightSidebar.width > 40 && <Overlay />}
+    </>
   )
 }
