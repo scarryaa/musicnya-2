@@ -7,23 +7,35 @@ import { faEllipsisH, faPause, faPlay } from '@fortawesome/free-solid-svg-icons'
 import { store } from '../../stores/store'
 import { faStar } from '@fortawesome/free-solid-svg-icons'
 import { A } from '@solidjs/router'
+import { LoadingSpinner } from '../LoadingSpinner/LoadingSpinner'
+import { SongTableSkeleton } from '../Skeletons/SongTableSkeleton'
 
 export const SongTable = ({ data }) => {
   const [sentinel, setSentinel] = createSignal(null)
   const [tracks, setTracks] = createSignal(null)
   const [isFetchingComplete, setIsFetchingComplete] = createSignal(false)
+  const [isFetching, setIsFetching] = createSignal(false)
 
   createEffect(() => {
     setTracks(data().relationships.tracks.data)
 
     if (data().relationships.tracks.data.length < 100) {
+      console.log('setIsFetchingComplete')
       setIsFetchingComplete(true)
+    } else {
+      console.log('setIsFetchingComplete false')
+      setIsFetchingComplete(false)
+    }
+
+    if (sentinel()) {
+      observer.observe(sentinel())
     }
   }, [data])
 
   const observer = new IntersectionObserver(
     entries => {
       if (entries[0].isIntersecting && !isFetchingComplete()) {
+        setIsFetching(true)
         mkController.fetchMoreTracks(data().id, data().type, tracks().length).then(
           res => {
             if (res && res.data) {
@@ -32,22 +44,19 @@ export const SongTable = ({ data }) => {
                 setIsFetchingComplete(true)
                 observer.disconnect()
               }
+              setIsFetching(false)
             }
           },
           err => {
             console.error(err)
             setIsFetchingComplete(true)
+            setIsFetching(false)
           }
         )
       }
     },
     { rootMargin: '100px' }
   )
-  createEffect(() => {
-    if (sentinel()) {
-      observer.observe(sentinel())
-    }
-  })
 
   onCleanup(() => {
     if (sentinel()) {
@@ -153,6 +162,7 @@ export const SongTable = ({ data }) => {
           </For>
         </tbody>
       </table>
+      {isFetching() && <SongTableSkeleton />}
       <div ref={setSentinel} style={{ height: '1px' }}></div>
     </div>
   )

@@ -33,7 +33,9 @@ export const MediaInfo = ({ media }) => {
         <div class={styles.mediaInfo__info__text}>
           <h1 class={styles.mediaInfo__info__text__title}>{media().attributes.name}</h1>
           <h2 class={styles.mediaInfo__info__text__artist}>
-            {media().attributes.artistName || media().attributes.curatorName}
+            {media().attributes.artistName ||
+              media().attributes.curatorName ||
+              media().relationships.catalog.data[0].attributes.curatorName}
           </h2>
           {media().type !== 'playlists' &&
             media().type !== 'library-playlists' &&
