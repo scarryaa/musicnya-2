@@ -30,7 +30,7 @@ export const Album = () => {
         </div>
 
         {currentAlbum().attributes.editorialNotes?.standard &&
-          !store.app.media.hideEditorialNotes && <EditorialNotes data={currentAlbum()} />}
+          !store.app.media.hideEditorialNotes && <EditorialNotes data={currentAlbum} />}
         <SongTable data={currentAlbum} />
       </Match>
     </Switch>

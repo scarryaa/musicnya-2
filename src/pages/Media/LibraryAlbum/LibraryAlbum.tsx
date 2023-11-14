@@ -31,9 +31,7 @@ export const LibraryAlbum = () => {
 
         {currentAlbum().relationships.catalog.data[0].attributes.editorialNotes
           ?.standard &&
-          !store.app.media.hideEditorialNotes && (
-            <EditorialNotes data={currentAlbum().relationships.catalog.data[0]} />
-          )}
+          !store.app.media.hideEditorialNotes && <EditorialNotes data={currentAlbum} />}
 
         <SongTable data={currentAlbum} />
       </Match>

@@ -16,7 +16,14 @@ export const EditorialNotes = ({ data }) => {
   return (
     <div
       class={styles.editorialNotes}
-      innerHTML={data.attributes.editorialNotes.standard.replace(/\n/g, '<br />')}
+      innerHTML={
+        data().type.includes('library-')
+          ? data().relationships.catalog.data[0].attributes.editorialNotes.standard.replace(
+              /\n/g,
+              '<br />'
+            )
+          : data().attributes.editorialNotes.standard.replace(/\n/g, '<br />')
+      }
       onClick={handleEditorialNotesClick}
       ref={expandedRef}
     ></div>

@@ -560,7 +560,8 @@ export class mkController {
     const instance = await mkController.getInstance()
     if (instance) {
       return await instance.api.v3.music('v1/me/library/playlists', {
-        limit: 100
+        limit: 100,
+        include: 'catalog'
       })
     } else {
       console.error('Failed to get playlists: MusicKit instance not available')

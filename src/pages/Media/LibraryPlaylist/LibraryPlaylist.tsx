@@ -4,6 +4,7 @@ import { MediaInfo } from '../../../components/MediaInfo/MediaInfo'
 import { SongTable } from '../../../components/SongTable/SongTable'
 import { store } from '../../../stores/store'
 import styles from './LibraryPlaylist.module.scss'
+import { EditorialNotes } from '../../../components/EditorialNotes/EditorialNotes'
 
 export const LibraryPlaylist = () => {
   const params = useParams<{ id: string }>()
@@ -16,19 +17,19 @@ export const LibraryPlaylist = () => {
     )
 
     setPlaylistData(newPlaylistData)
+    playlistPage.scrollTop = 0
   }, [params.id])
 
-  createEffect(() => {
-    // scroll to top of page
-    if (playlistPage) playlistPage.scrollTop = 0
-  }, [playlistData(), params.id, playlistPage])
-
   return (
-    <Show when={playlistData()}>
-      <div class={styles.libraryPlaylist} ref={playlistPage}>
+    <div class={styles.libraryPlaylist} ref={playlistPage}>
+      <Show when={playlistData()}>
         <MediaInfo media={playlistData} />
-      </div>
-      <SongTable data={playlistData} />
-    </Show>
+
+        {playlistData().relationships.catalog.data[0].attributes.editorialNotes
+          ?.standard &&
+          !store.app.media.hideEditorialNotes && <EditorialNotes data={playlistData} />}
+        <SongTable data={playlistData} />
+      </Show>
+    </div>
   )
 }
