@@ -1,56 +1,112 @@
-import { For } from 'solid-js'
+import { For, createEffect } from 'solid-js'
 import styles from './MediaSelector.module.scss'
 import { MediaItem } from '../MediaItem/MediaItem'
+import { MediaItemGlass } from '../MediaItemGlass/MediaItemGlass'
+import { Shelf } from '../Shelf/Shelf'
 import { Utils } from '../../util/util'
 import musicNote from '../../assets/music_note.png'
-import { Shelf } from '../Shelf/Shelf'
-import { MediaItemGlass } from '../MediaItemGlass/MediaItemGlass'
+import { EditorialItem } from '../EditorialItem/EditorialItem'
+import { LinkItem } from '../LinkItem/LinkItem'
 
-export const MediaSelector = ({ item }: { item: any }) => {
-  return (
-    <div style={styles.mediaSelector}>
-      <Shelf
-        header={item.attributes.title?.stringForDisplay}
-        topMargin={item.attributes.display.kind !== 'MusicNotesHeroShelf'}
-      >
-        {item.attributes.display?.kind &&
-        item.attributes.display.kind === 'MusicNotesHeroShelf' ? (
-          <For each={item.relationships.contents.data}>
-            {mediaItem => (
-              <MediaItemGlass
-                reason={mediaItem?.meta?.reason?.stringForDisplay}
-                id={mediaItem.id}
-                type={mediaItem.type}
-                title={mediaItem.attributes.name}
-                artists={[mediaItem.attributes.artistName]}
-                src={Utils.formatArtworkUrl(
-                  mediaItem.attributes?.artwork?.url || musicNote,
-                  200
-                )}
-              />
-            )}
-          </For>
-        ) : (
-          <For each={item.relationships.contents.data}>
-            {mediaItem => (
-              <MediaItem
-                id={mediaItem.id}
-                type={mediaItem.type}
-                title={mediaItem.attributes?.name}
-                artists={[
-                  mediaItem.attributes?.artistName ||
-                    mediaItem.attributes?.curatorName ||
-                    ' '
-                ]}
-                src={Utils.formatArtworkUrl(
-                  mediaItem.attributes?.artwork?.url || musicNote,
-                  200
-                )}
-              />
-            )}
-          </For>
-        )}
-      </Shelf>
-    </div>
+export const MediaSelector = ({ item }) => {
+  const isMusicNotesHeroShelf = item.attributes?.display?.kind === 'MusicNotesHeroShelf'
+  const childType = item.relationships?.children?.data?.[0]?.type
+  const editorialElementKind = item.attributes?.editorialElementKind
+
+  createEffect(() => {
+    console.log(item)
+  })
+
+  const renderItem = mediaItem => {
+    return renderMediaItem(mediaItem, childType, isMusicNotesHeroShelf)
+  }
+
+  const renderShelf = data => (
+    <Shelf header={item.attributes.name} topMargin={!isMusicNotesHeroShelf}>
+      <For each={data}>{renderItem}</For>
+    </Shelf>
   )
+
+  function renderMediaItem(mediaItem, childType, isMusicNotesHeroShelf) {
+    const commonProps = {
+      id: mediaItem.id,
+      type: mediaItem.type,
+      title: mediaItem.attributes?.name,
+      src: Utils.formatArtworkUrl(mediaItem.attributes?.artwork?.url || musicNote, 200)
+    }
+
+    if (isMusicNotesHeroShelf) {
+      return (
+        <MediaItemGlass
+          {...commonProps}
+          reason={mediaItem?.meta?.reason?.stringForDisplay}
+          artists={[mediaItem.attributes.artistName]}
+        />
+      )
+    }
+
+    switch (mediaItem?.attributes?.editorialElementKind) {
+      case '386':
+      case '394':
+        return <div>child</div>
+      case '336':
+      case '339':
+        return (
+          <For each={mediaItem.relationships.contents.data}>
+            {childItem => renderMediaItem(childItem, childType, isMusicNotesHeroShelf)}
+          </For>
+        )
+      default:
+        break
+    }
+
+    switch (mediaItem.type) {
+      case 'songs':
+        return <div>song</div>
+      case 'uploaded-videos':
+        return <div>uploaded video</div>
+      case 'music-videos':
+        return <div>music video</div>
+      default:
+        break
+    }
+
+    if (childType === 'editorial-elements') {
+      return <EditorialItem item={mediaItem} />
+    }
+
+    return (
+      <MediaItem
+        {...commonProps}
+        artists={[
+          mediaItem.attributes?.artistName || mediaItem.attributes?.curatorName || ' '
+        ]}
+      />
+    )
+  }
+
+  switch (editorialElementKind) {
+    case '316':
+    case '385':
+    case '323':
+      return renderShelf(item.relationships.children.data)
+    case '326':
+    case '387':
+    case '327':
+      return renderShelf(item.relationships.contents.data)
+    case '322':
+    case '391':
+      return <For each={item.attributes.links}>{item => <LinkItem item={item} />}</For>
+    default:
+      return (
+        <div class={styles.mediaSelector}>
+          <Shelf
+            header={item.attributes.title?.stringForDisplay}
+            topMargin={item.attributes?.display?.kind !== 'MusicNotesHeroShelf'}
+          >
+            <For each={item.relationships.contents.data}>{renderItem}</For>
+          </Shelf>
+        </div>
+      )
+  }
 }

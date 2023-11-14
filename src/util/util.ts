@@ -11,7 +11,10 @@ export class Utils {
     size: number,
     format: 'png' | 'jpg' | 'webp' = 'png'
   ) => {
-    return url.replace('{w}x{h}', `${size}x${size}`).replace('{f}', format)
+    return url
+      .replace('{w}x{h}', `${size}x${size}`)
+      .replace('{f}', format)
+      .replace('{c}', '')
   }
 
   static setDarkMode = (darkMode: boolean) => {

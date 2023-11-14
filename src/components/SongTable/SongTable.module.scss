@@ -68,7 +68,14 @@
     }
 
     &__album {
-      A {
+      max-width: max-content;
+
+      &:hover {
+        cursor: default;
+      }
+
+      .album__tracks__table__album__link {
+        font-size: 0.9rem;
         display: -webkit-box;
         -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
@@ -76,11 +83,12 @@
         width: 100%;
         max-width: max-content;
         margin-right: 1rem;
-      }
+        color: var(--app-text-light-color);
 
-      &:hover {
-        cursor: default;
-        text-decoration: underline;
+        &:hover {
+          cursor: default;
+          text-decoration: underline;
+        }
       }
     }
 

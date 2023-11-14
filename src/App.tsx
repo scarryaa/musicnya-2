@@ -54,6 +54,7 @@ const App: Component = () => {
 
     // Fetch playlists and their tracks in the background
     fetchPlaylistsAndTracks()
+    setStore('app', 'navigate', () => navigate)
   })
 
   return (

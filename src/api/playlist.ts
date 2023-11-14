@@ -12,7 +12,7 @@ export const fetchPlaylist = async ({
   offset?: number
 }) => {
   return await fetch(
-    `https://amp-api.music.apple.com/v1/catalog/${store.countryCode}/playlists/${id}?art[url]=f&extend=editorialArtwork,editorialVideo,offers,trackCount&fields[albums]=name,artwork,playParams,url&fields[apple-curators]=name,url&fields[artists]=name,artwork,url&fields[curators]=name,url&fields[songs]=name,artistName,curatorName,composerName,artwork,playParams,contentRating,albumName,url,durationInMillis,audioTraits,extendedAssetUrls&include=tracks,curator&include[music-videos]=artists&include[songs]=artists&l=en-US&limit[tracks]=100&limit[view.contributors]=15&limit[view.featured-artists]=15&limit[view.more-by-curator]=15&omit[resource]=autos&platform=web&views=contributors,featured-artists,more-by-curator`,
+    `https://amp-api.music.apple.com/v1/catalog/${store.countryCode}/playlists/${id}?art[url]=f&extend=editorialArtwork,editorialVideo,offers,trackCount&fields[albums]=name,artwork,playParams,url&fields[apple-curators]=name,url&fields[artists]=name,artwork,url&fields[curators]=name,url&fields[songs]=name,artistName,curatorName,composerName,artwork,playParams,contentRating,albumName,url,durationInMillis,audioTraits,extendedAssetUrls&include=tracks,curator&include[music-videos]=artists&include[songs]=artists&l=en-US&limit[tracks]=100&limit[view.contributors]=15&limit[view.featured-artists]=15&limit[view.more-by-curator]=15&omit[resource]=autos&platform=web&views=contributors,featured-artists,more-by-curator&extend=editorialArtwork,editorialVideo,offers,trackCount`,
     {
       headers: {
         authorization: `Bearer ${devToken}`,

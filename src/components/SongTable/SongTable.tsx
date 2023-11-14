@@ -15,6 +15,11 @@ export const SongTable = ({ data }) => {
   const [tracks, setTracks] = createSignal(null)
   const [isFetchingComplete, setIsFetchingComplete] = createSignal(false)
   const [isFetching, setIsFetching] = createSignal(false)
+  const rowHeight = 55
+  const totalTracks = data().attributes.trackCount
+  const [remainingTracks, setRemainingTracks] = createSignal(
+    totalTracks - tracks()?.length ?? 0
+  )
 
   createEffect(() => {
     setTracks(data().relationships.tracks.data)
@@ -34,7 +39,7 @@ export const SongTable = ({ data }) => {
 
   const observer = new IntersectionObserver(
     entries => {
-      if (entries[0].isIntersecting && !isFetchingComplete()) {
+      if (entries[0].isIntersecting && !isFetchingComplete() && !isFetching()) {
         setIsFetching(true)
         mkController.fetchMoreTracks(data().id, data().type, tracks().length).then(
           res => {
@@ -44,6 +49,7 @@ export const SongTable = ({ data }) => {
                 setIsFetchingComplete(true)
                 observer.disconnect()
               }
+              setRemainingTracks(totalTracks - tracks().length)
               setIsFetching(false)
             }
           },
@@ -152,6 +158,7 @@ export const SongTable = ({ data }) => {
                 {data().type !== 'albums' && data().type !== 'library-albums' && (
                   <td class={styles.album__tracks__table__album}>
                     <A
+                      class={styles.album__tracks__table__album__link}
                       href={
                         data().type === 'library-playlists'
                           ? `/media/albums/${
@@ -183,8 +190,8 @@ export const SongTable = ({ data }) => {
           </For>
         </tbody>
       </table>
-      {isFetching() && <SongTableSkeleton />}
       <div ref={setSentinel} style={{ height: '1px' }}></div>
+      {isFetching() && <SongTableSkeleton />}
     </div>
   )
 }

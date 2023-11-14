@@ -60,6 +60,121 @@ export const contextMenu = (id, type, isLoved, inLibrary, isDisliked) =>
           }
         }
       ]
+    : type.includes('playlists')
+    ? [
+        {
+          icon: faPlus,
+          action: () => {},
+          isQuickAction: true,
+          tooltip: 'Add to Library',
+          disabled: true
+        },
+        {
+          icon: faHeart,
+          action: () => {},
+          isQuickAction: true,
+          tooltip: 'Love',
+          disabled: true
+        },
+        {
+          icon: faThumbsDown,
+          action: () => {},
+          isQuickAction: true,
+          tooltip: 'Dislike',
+          disabled: true
+        },
+        {
+          icon: faIndent,
+          action: () => {
+            mkController.playNext(id, type)
+          },
+          isQuickAction: true,
+          tooltip: 'Play Next'
+        },
+        {
+          icon: faOutdent,
+          action: () => {
+            mkController.playLater(id, type)
+          },
+          isQuickAction: true,
+          tooltip: 'Play Last'
+        },
+        {
+          icon: faHeadphones,
+          isQuickAction: false,
+          label: 'Add to Playlist',
+          hasSubMenu: true,
+          onMouseOver: () => {
+            const playlists = store.libraryPlaylists.map(playlist => {
+              return {
+                icon: faHeadphones,
+                action: () => {
+                  mkController.addToPlaylist(id, type, playlist.id)
+                },
+                isQuickAction: false,
+                label: playlist.attributes.name,
+                onMouseOver: () => {
+                  setStore('app', 'subContextMenu', {
+                    open: true,
+                    id: id,
+                    type: type
+                  })
+                }
+              }
+            })
+
+            setStore('app', 'subContextMenu', {
+              x: 0,
+              y: 35,
+              items: playlists,
+              open: true,
+              id: id,
+              type: type
+            })
+          }
+        },
+        {
+          icon: faShuffle,
+          action: () => {
+            mkController.shufflePlayMediaItem(id, type)
+          },
+          isQuickAction: false,
+          label: 'Shuffle',
+          onMouseOver: () => {
+            setStore('app', 'subContextMenu', {
+              open: false
+            })
+          }
+        },
+        {
+          icon: faShare,
+          action: async () => {
+            await mkController.getShareLink(id, type).then(async data => {
+              await navigator.clipboard.writeText(data.data[0].attributes.url)
+            })
+          },
+          isQuickAction: false,
+          label: 'Share',
+          onMouseOver: () => {
+            setStore('app', 'subContextMenu', {
+              open: false
+            })
+          }
+        },
+        {
+          icon: faInfoCircle,
+          action: () => {
+            console.log('last')
+          },
+          isQuickAction: false,
+          label: 'Properties',
+          onMouseOver: () => {
+            setStore('app', 'subContextMenu', {
+              open: false
+            })
+          }
+        }
+      ]
     : [
         {
           icon: faPlus,

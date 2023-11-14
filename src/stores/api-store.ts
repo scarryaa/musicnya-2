@@ -4,6 +4,7 @@ import { fetchRecommendations } from '../api/home'
 import { fetchAlbum, fetchLibraryAlbum } from '../api/album'
 import { fetchLibraryPlaylist, fetchPlaylist } from '../api/playlist'
 import { fetchStation } from '../api/station'
+import { fetchBrowse } from '../api/browse'
 
 export const createStationStore = () => {
   return function (params: { id: string }) {
@@ -36,6 +37,27 @@ export const createHomeStore = () => {
         musicUserToken: config.MusicKit.musicUserToken
       },
       fetchRecommendations
+    )
+
+    return data
+  }
+}
+
+export const createBrowseStore = () => {
+  return function () {
+    const [data] = createResource<
+      any,
+      {
+        devToken: string
+        musicUserToken: string
+      },
+      string
+    >(
+      {
+        devToken: config.MusicKit.token,
+        musicUserToken: MusicKit.getInstance()?.musicUserToken
+      },
+      fetchBrowse
     )
 
     return data

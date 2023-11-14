@@ -17,7 +17,8 @@ export const LibraryPlaylist = () => {
     )
 
     setPlaylistData(newPlaylistData)
-    playlistPage.scrollTop = 0
+
+    document.querySelector('.main')?.scrollTo(0, 0)
   }, [params.id])
 
   return (

@@ -10,7 +10,7 @@ export const fetchAlbum = async ({
   id: string
 }) => {
   return await fetch(
-    `https://amp-api.music.apple.com/v1/catalog/${store.countryCode}/albums/${id}?art[url]=f&extend=editorialArtwork,editorialVideo,extendedAssetUrls,offers&fields[artists]=name,url&fields[curators]=name&fields[record-labels]=name,url&include=record-labels,artists&include[music-videos]=artists&include[playlists]=curator&include[songs]=artists,composers,albums&l=en-US&meta[albums:tracks]=popularity&platform=web&views=appears-on,audio-extras,more-by-artist,other-versions,related-videos,video-extras,you-might-also-like`,
+    `https://amp-api.music.apple.com/v1/catalog/${store.countryCode}/albums/${id}?art[url]=f&extend=editorialArtwork,editorialVideo,trackCount,extendedAssetUrls,offers&fields[artists]=name,url&fields[curators]=name&fields[record-labels]=name,url&include=record-labels,artists&include[music-videos]=artists&include[playlists]=curator&include[songs]=artists,composers,albums&l=en-US&meta[albums:tracks]=popularity&platform=web&views=appears-on,audio-extras,more-by-artist,other-versions,related-videos,video-extras,you-might-also-like`,
     {
       headers: {
         authorization: `Bearer ${devToken}`,
