@@ -9,7 +9,7 @@
 }
 
 .album__tracks {
-  padding: 1.5rem;
+  padding-top: 1.5rem;
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -181,6 +181,87 @@
         top: -6px;
         right: 10px;
         display: none;
+      }
+    }
+  }
+}
+
+@container main (max-width: 540px) {
+  th {
+    .album__tracks__table__album {
+      display: none;
+    }
+  }
+
+  td {
+    .album__tracks__table__album {
+      display: none;
+    }
+  }
+
+  .album__tracks {
+    padding: 1rem;
+
+    &__table {
+      th {
+        font-size: 0.8rem;
+      }
+
+      &__album {
+        display: none;
+      }
+
+      &__number {
+        font-size: 0.8rem;
+
+        &__popularity {
+          top: 12px;
+          left: -1px;
+          padding: 0.5rem;
+          width: 1.5rem;
+          height: 1.5rem;
+        }
+
+        &__playButton {
+          top: 12px;
+          left: 16px;
+          padding: 0.5rem;
+          width: 1.5rem;
+          height: 1.5rem;
+        }
+      }
+
+      &__title {
+        &__name__artist {
+          &__name {
+            font-size: 0.8rem;
+          }
+
+          &__artist {
+            font-size: 0.7rem;
+          }
+        }
+
+        &__albumCover {
+          img {
+            width: 30px;
+            height: 30px;
+            min-width: 30px;
+            min-height: 30px;
+          }
+        }
+      }
+
+      &__time {
+        font-size: 0.7rem;
+
+        &__moreButton {
+          top: -4px;
+          right: 8px;
+          padding: 0.5rem;
+          width: 1.5rem;
+          height: 1.5rem;
+        }
       }
     }
   }

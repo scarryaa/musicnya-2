@@ -15,8 +15,9 @@ import {
 import { setStore, store } from '../../stores/store'
 import { WindowButtonsMac } from '../WindowButtons/WindowButtons'
 import Tooltip from '../Tooltip/Tooltip'
-import { For, createSignal } from 'solid-js'
+import { For, Show, createSignal } from 'solid-js'
 import { LeftSidebarGroup } from './LeftSidebarGroup'
+import { LeftSidebarButtonSkeleton } from '../Skeletons/LeftSidebarButtonSkeleton'
 
 export const LeftSidebar = () => {
   const smallSidebarButtons = (
@@ -103,6 +104,11 @@ export const LeftSidebar = () => {
         />
       </LeftSidebarGroup>
       <LeftSidebarGroup title="Apple Music Playlists">
+        <Show when={store.libraryPlaylists.length === 0}>
+          <LeftSidebarButtonSkeleton />
+          <LeftSidebarButtonSkeleton />
+          <LeftSidebarButtonSkeleton />
+        </Show>
         <For
           each={store.libraryPlaylists.filter(playlist => !playlist.attributes.canEdit)}
         >
@@ -131,6 +137,11 @@ export const LeftSidebar = () => {
           icon={faList}
           href="/library/playlists"
         />
+        <Show when={store.libraryPlaylists.length === 0}>
+          <LeftSidebarButtonSkeleton />
+          <LeftSidebarButtonSkeleton />
+          <LeftSidebarButtonSkeleton />
+        </Show>
         <For
           each={store.libraryPlaylists.filter(playlist => playlist.attributes.canEdit)}
         >

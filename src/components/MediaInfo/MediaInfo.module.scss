@@ -54,7 +54,7 @@
   }
 }
 
-@media screen and (max-width: 570px) {
+@container main (max-width: 540px) {
   .mediaInfo {
     &__artwork {
       width: 150px;
@@ -90,6 +90,46 @@
     &__shuffleButton {
       padding: 0.5rem;
       font-size: 0.8rem;
+    }
+  }
+}
+
+@container main (max-width: 360px) {
+  .mediaInfo {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mediaInfo__artwork {
+    width: 100%;
+    height: 100%;
+  }
+
+  .mediaInfo__info__text__artist {
+    margin-inline: auto;
+  }
+
+  .mediaInfo__info {
+    margin-left: 0;
+    padding-right: 0;
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    &__actions {
+      margin-top: 0.5rem;
+
+      &__playButton {
+        margin-right: 0;
+        margin-bottom: 1rem;
+        margin-right: 0.5rem;
+      }
+
+      &__shuffleButton {
+        margin-bottom: 1rem;
+      }
     }
   }
 }
