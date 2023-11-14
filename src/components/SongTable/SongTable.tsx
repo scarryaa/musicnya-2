@@ -128,9 +128,8 @@ export const SongTable = ({ data }) => {
                   </div>
                 </td>
                 {data().type !== 'albums' && data().type !== 'library-albums' && (
-                  <td>
+                  <td class={styles.album__tracks__table__album}>
                     <A
-                      class={styles.album__tracks__table__album}
                       href={
                         data().type === 'library-playlists'
                           ? `/media/albums/${

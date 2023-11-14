@@ -7,41 +7,97 @@ import { setStore, store } from '../../stores/store'
 import { A } from '@solidjs/router'
 
 export const RightSidebar = () => {
-  const handleLyricsClick = () => {
-    const expanded = store.app.rightSidebar.isExpanded
-    const activePanel = store.app.rightSidebar.activePanel
+  const [screenWidth, setScreenWidth] = createSignal(window.innerWidth)
 
-    if (expanded && activePanel === 'lyrics') {
-      setStore('app', 'rightSidebar', {
-        isExpanded: false,
-        width: 40,
-        activePanel: ''
-      })
+  createEffect(() => {
+    const handleResize = () => {
+      setScreenWidth(window.innerWidth)
+      if (screenWidth() < 680) {
+        setStore('app', 'rightSidebar', {
+          isExpanded: false,
+          width: store.app.rightSidebar ? store.app.rightSidebar.width : 40
+        })
+      } else {
+        setStore('app', 'rightSidebar', {
+          isExpanded: store.app.rightSidebar.width > 40,
+          width: store.app.rightSidebar.width
+        })
+      }
+    }
+
+    window.addEventListener('resize', handleResize)
+    handleResize()
+
+    return () => window.removeEventListener('resize', handleResize)
+  })
+
+  const handleLyricsClick = () => {
+    if (screenWidth() >= 680) {
+      const expanded = store.app.rightSidebar.isExpanded
+      const activePanel = store.app.rightSidebar.activePanel
+
+      if (expanded && activePanel === 'lyrics') {
+        setStore('app', 'rightSidebar', {
+          isExpanded: false,
+          width: 40,
+          activePanel: ''
+        })
+      } else {
+        setStore('app', 'rightSidebar', {
+          isExpanded: true,
+          width: 250,
+          activePanel: 'lyrics'
+        })
+      }
     } else {
-      setStore('app', 'rightSidebar', {
-        isExpanded: true,
-        width: 250,
-        activePanel: 'lyrics'
-      })
+      if (store.app.rightSidebar.activePanel === 'lyrics') {
+        setStore('app', 'rightSidebar', {
+          isExpanded: false,
+          width: 40,
+          activePanel: ''
+        })
+      } else {
+        setStore('app', 'rightSidebar', {
+          isExpanded: false,
+          width: 250,
+          activePanel: 'lyrics'
+        })
+      }
     }
   }
 
   const handleQueueClick = () => {
-    const expanded = store.app.rightSidebar.isExpanded
-    const activePanel = store.app.rightSidebar.activePanel
+    if (screenWidth() >= 680) {
+      const expanded = store.app.rightSidebar.isExpanded
+      const activePanel = store.app.rightSidebar.activePanel
 
-    if (expanded && activePanel === 'queue') {
-      setStore('app', 'rightSidebar', {
-        isExpanded: false,
-        width: 40,
-        activePanel: ''
-      })
+      if (expanded && activePanel === 'queue') {
+        setStore('app', 'rightSidebar', {
+          isExpanded: false,
+          width: 40,
+          activePanel: ''
+        })
+      } else {
+        setStore('app', 'rightSidebar', {
+          isExpanded: true,
+          width: 250,
+          activePanel: 'queue'
+        })
+      }
     } else {
-      setStore('app', 'rightSidebar', {
-        isExpanded: true,
-        width: 250,
-        activePanel: 'queue'
-      })
+      if (store.app.rightSidebar.activePanel === 'queue') {
+        setStore('app', 'rightSidebar', {
+          isExpanded: false,
+          width: 40,
+          activePanel: ''
+        })
+      } else {
+        setStore('app', 'rightSidebar', {
+          isExpanded: false,
+          width: 250,
+          activePanel: 'queue'
+        })
+      }
     }
   }
 
