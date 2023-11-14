@@ -235,6 +235,17 @@ export class mkController {
     }
   }
 
+  static setQueue = async (id: any, type: string, index: number) => {
+    const instance = await mkController.getInstance()
+    if (instance) {
+      instance.setQueue({ startWith: index, [type]: [id] }).then(() => {
+        instance.play()
+      })
+    } else {
+      console.error('Failed to set queue: MusicKit instance not available')
+    }
+  }
+
   // api
 
   static addToLibrary = async (id: string, type: string) => {

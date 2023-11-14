@@ -15,6 +15,7 @@
   gap: 1rem;
   color: var(--app-text-color);
   border-radius: var(--app-border-radius);
+  padding: 1.5rem;
 
   &__table {
     overflow: hidden;
@@ -89,7 +90,7 @@
 
       &__popularity {
         position: absolute;
-        top: 14px;
+        top: 12px;
         left: -2px;
         display: flex;
         justify-content: center;
@@ -101,7 +102,7 @@
       }
 
       &__playButton {
-        top: 14px;
+        top: 12px;
         left: 14px;
         position: absolute;
         display: flex;
@@ -132,6 +133,23 @@
           overflow: hidden;
           width: 100%;
           max-width: max-content;
+
+          &__explicit__text {
+            font-weight: 500;
+            font-size: 0.8rem;
+            color: var(--app-text-light-color);
+            padding-bottom: 0.2rem;
+            padding-left: 0.2rem;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            width: 100%;
+            max-width: max-content;
+
+            &:hover {
+              text-decoration: underline;
+            }
+          }
         }
 
         &__artist {
@@ -202,7 +220,8 @@
   }
 
   .album__tracks {
-    padding: 1rem;
+    padding: 0rem;
+    padding-top: 1.5rem;
 
     &__table {
       th {
@@ -217,7 +236,7 @@
         font-size: 0.8rem;
 
         &__popularity {
-          top: 12px;
+          top: 10px;
           left: -1px;
           padding: 0.5rem;
           width: 1.5rem;

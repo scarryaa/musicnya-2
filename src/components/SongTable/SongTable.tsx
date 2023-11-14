@@ -80,7 +80,9 @@ export const SongTable = ({ data }) => {
         <tbody>
           <For each={tracks()}>
             {(track, index) => (
-              <tr onDblClick={() => mkController.playMediaItem(track.id, track.type)}>
+              <tr
+                onDblClick={() => mkController.setQueue(data().id, data().type, index())}
+              >
                 <td class={styles.album__tracks__table__number}>
                   <span class={styles.album__tracks__table__number__popularity}>
                     {data().type === 'albums' && track.meta.popularity > 0.7 && (
@@ -90,7 +92,10 @@ export const SongTable = ({ data }) => {
                   <span class={styles.album__tracks__table__number__number}>
                     {index() + 1}
                   </span>
-                  <div class={styles.album__tracks__table__number__playButton}>
+                  <div
+                    class={styles.album__tracks__table__number__playButton}
+                    onClick={() => mkController.setQueue(data().id, data().type, index())}
+                  >
                     {track.id === store.currentTrack.id ? (
                       <Fa icon={faPause} size="1x" color="var(--app-primary-color)" />
                     ) : (
@@ -118,6 +123,23 @@ export const SongTable = ({ data }) => {
                         }}
                       >
                         {track.attributes.name}
+                        {(track.relationships.catalog?.data?.[0]?.attributes
+                          .contentRating === 'explicit' ||
+                          track.attributes.contentRating === 'explicit') && (
+                          <span
+                            class={
+                              styles.album__tracks__table__title__name__artist__name__explicit
+                            }
+                          >
+                            <small
+                              class={
+                                styles.album__tracks__table__title__name__artist__name__explicit__text
+                              }
+                            >
+                              E
+                            </small>
+                          </span>
+                        )}
                       </span>
                       <div
                         class={styles.album__tracks__table__title__name__artist__artist}

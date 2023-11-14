@@ -21,9 +21,11 @@ export const LibraryPlaylist = () => {
   }, [params.id])
 
   return (
-    <div class={styles.libraryPlaylist} ref={playlistPage}>
+    <div ref={playlistPage}>
       <Show when={playlistData()}>
-        <MediaInfo media={playlistData} />
+        <div class={styles.libraryPlaylist}>
+          <MediaInfo media={playlistData} />
+        </div>
 
         {playlistData().relationships.catalog.data[0].attributes.editorialNotes
           ?.standard &&

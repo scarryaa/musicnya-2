@@ -7,3 +7,15 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+@container main (max-width: 360px) {
+  .editorialNotes {
+    font-size: 0.8rem;
+  }
+}
+
+@container main (max-width: 540px) {
+  .editorialNotes {
+    font-size: 0.9rem;
+  }
+}
