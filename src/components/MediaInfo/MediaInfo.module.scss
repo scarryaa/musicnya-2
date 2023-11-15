@@ -8,6 +8,11 @@
     height: var(--size);
   }
 
+  &__artwork__video {
+    aspect-ratio: 1.7;
+    border-radius: var(--app-border-radius);
+  }
+
   &__info {
     margin-left: 1.5rem;
     padding-right: 1.5rem;
@@ -58,6 +63,11 @@
   .mediaInfo {
     &__artwork {
       width: 150px;
+      height: 150px;
+    }
+
+    &__artwork__video {
+      width: 250px;
       height: 150px;
     }
   }

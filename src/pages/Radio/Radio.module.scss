@@ -1,3 +1,11 @@
 .radio {
-  padding-bottom: 1000px;
+  font-family: 'Inter', sans-serif;
+  color: var(--app-text-color);
+
+  &__header {
+    padding-left: 1.5rem;
+    font-weight: 600;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
 }

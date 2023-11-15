@@ -1,7 +1,20 @@
+import Fa from 'solid-fa'
 import { Utils } from '../../util/util'
 import styles from './EditorialItem.module.scss'
+import { faPlay } from '@fortawesome/free-solid-svg-icons'
+import { mkController } from '../../api/mkController'
+import { A } from '@solidjs/router'
 
 export const EditorialItem = ({ item }) => {
+  const childType =
+    item.relationships?.children?.data?.[0]?.type ||
+    item.relationships?.contents?.data?.[0]?.type
+  const isCuratorType =
+    (item.attributes?.editorialElementKind === '320' && item.attributes.link) ||
+    item.relationships?.contents?.data?.[0]?.type === 'apple-curators'
+
+  console.log(item)
+
   return (
     <div class={styles.editorialItem}>
       <div>
@@ -23,7 +36,39 @@ export const EditorialItem = ({ item }) => {
         )}
       </div>
       <div class={styles.editorialItem__image__container}>
-        <div class={styles.editorialItem__image__container__overlay}></div>
+        <div class={styles.editorialItem__image__container__gradient}></div>
+        <A
+          class={styles.editorialItem__image__container__overlay}
+          href={
+            isCuratorType
+              ? `/curator/${item.id}`
+              : `/media/${childType}/${item.relationships?.contents?.data?.[0]?.id}`
+          }
+        >
+          {!isCuratorType && (
+            <div
+              class={styles.editorialItem__image__container__overlay__playButton}
+              onClick={e => {
+                e.preventDefault()
+                e.stopPropagation()
+                mkController.playMediaItem(
+                  item.relationships.contents.data[0].id,
+                  childType
+                )
+              }}
+            >
+              <Fa icon={faPlay} size="1x" />
+            </div>
+          )}
+        </A>
+        <div class={styles.editorialItem__image__container__blurb__container}>
+          <span class={styles.editorialItem__image__container__blurb__container__blurb}>
+            {
+              item.relationships?.contents?.data?.[0]?.attributes?.plainEditorialNotes
+                ?.short
+            }
+          </span>
+        </div>
         <img
           class={styles.editorialItem__image__container__image}
           src={Utils.formatArtworkUrl(

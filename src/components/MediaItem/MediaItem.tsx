@@ -25,6 +25,7 @@ export const MediaItem = ({
   const [contextMenuItems, setContextMenuItems] = createSignal(
     contextMenu(id, type, isLoved(), inLibrary(), isDisliked())
   )
+  const isAppleCurator = type === 'apple-curators'
 
   const handlePlayClick = e => {
     e.preventDefault()
@@ -53,20 +54,27 @@ export const MediaItem = ({
       <div class={styles.mediaItem__inner}>
         <div class={styles.mediaItem__inner__artwork}>
           <A
-            class={styles.mediaItem__inner__artwork__overlay}
+            class={
+              `${styles.mediaItem__inner__artwork__overlay}` +
+              (isAppleCurator
+                ? ` ${styles.mediaItem__inner__artwork__overlay__appleCurator}`
+                : '')
+            }
             href={`/media/${type}/${id}`}
           >
-            <div
-              class={styles.mediaItem__inner__artwork__overlay__playButton}
-              onClick={handlePlayClick}
-            >
-              <Fa
-                icon={faPlay}
-                size="1x"
-                color="white"
-                class={styles.mediaItem__inner__artwork__overlay__playButton__icon}
-              />
-            </div>
+            {!isAppleCurator && (
+              <div
+                class={styles.mediaItem__inner__artwork__overlay__playButton}
+                onClick={handlePlayClick}
+              >
+                <Fa
+                  icon={faPlay}
+                  size="1x"
+                  color="white"
+                  class={styles.mediaItem__inner__artwork__overlay__playButton__icon}
+                />
+              </div>
+            )}
             <div
               class={styles.mediaItem__inner__artwork__overlay__moreButton}
               onClick={e =>

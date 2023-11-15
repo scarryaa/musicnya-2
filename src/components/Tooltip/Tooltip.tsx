@@ -25,6 +25,7 @@ let portal = (
     }}
     onMouseOut={close}
     style={`
+            pointer-events: none;
             position: fixed;
             z-index: 2147483646;
             top: var(--y);

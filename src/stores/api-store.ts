@@ -5,6 +5,8 @@ import { fetchAlbum, fetchLibraryAlbum } from '../api/album'
 import { fetchLibraryPlaylist, fetchPlaylist } from '../api/playlist'
 import { fetchStation } from '../api/station'
 import { fetchBrowse } from '../api/browse'
+import { fetchRadio } from '../api/radio'
+import { fetchVideo } from '../api/video'
 
 export const createStationStore = () => {
   return function (params: { id: string }) {
@@ -12,6 +14,22 @@ export const createStationStore = () => {
       () => params.id,
       async () =>
         await fetchStation({
+          devToken: config.MusicKit.token,
+          musicUserToken: MusicKit.getInstance()?.musicUserToken,
+          id: params.id
+        })
+    )
+
+    return data
+  }
+}
+
+export const createVideoStore = () => {
+  return function (params: { id: string }) {
+    const [data] = createResource(
+      () => params.id,
+      async () =>
+        await fetchVideo({
           devToken: config.MusicKit.token,
           musicUserToken: MusicKit.getInstance()?.musicUserToken,
           id: params.id
@@ -58,6 +76,27 @@ export const createBrowseStore = () => {
         musicUserToken: MusicKit.getInstance()?.musicUserToken
       },
       fetchBrowse
+    )
+
+    return data
+  }
+}
+
+export const createRadioStore = () => {
+  return function () {
+    const [data] = createResource<
+      any,
+      {
+        devToken: string
+        musicUserToken: string
+      },
+      string
+    >(
+      {
+        devToken: config.MusicKit.token,
+        musicUserToken: MusicKit.getInstance()?.musicUserToken
+      },
+      fetchRadio
     )
 
     return data

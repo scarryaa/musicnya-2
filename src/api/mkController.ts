@@ -238,6 +238,7 @@ export class mkController {
   static setQueue = async (id: any, type: string, index: number) => {
     console.log(id, type, index)
     const instance = await mkController.getInstance()
+    instance.shuffleMode = 0
     if (instance) {
       instance.setQueue({ startWith: index, [type]: [id] }).then(() => {
         instance.play()
@@ -553,6 +554,10 @@ export class mkController {
 
     MusicKit.getInstance().addEventListener('playbackTimeDidChange', e => {
       setStore('currentTime', e.currentPlaybackTime)
+    })
+
+    MusicKit.getInstance().addEventListener('shuffleModeDidChange', e => {
+      setStore('shuffleMode', e.shuffleMode === 1)
     })
   }
 

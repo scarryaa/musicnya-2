@@ -91,7 +91,9 @@ export const SongTable = ({ data }) => {
               <tr
                 onDblClick={() => mkController.setQueue(data().id, data().type, index())}
                 class={
-                  !track.attributes.releaseDate && data().type.includes('albums')
+                  data().type === 'albums' &&
+                  track.attributes.offers?.length === 1 &&
+                  track.attributes.offers?.[0]?.type === 'preorder'
                     ? styles.album__tracks__table__row__unreleased
                     : styles.album__tracks__table__row
                 }
@@ -199,15 +201,25 @@ export const SongTable = ({ data }) => {
       </table>
       <div ref={setSentinel} style={{ height: '1px' }}></div>
       {isFetching() && <SongTableSkeleton />}
-      <span class={styles.album__tracks__trackCount}>
-        {data().attributes.trackCount || data().relationships.tracks.data.length} tracks
-        {', '}
-        {Utils.formatTimeHours(
-          data()
-            .relationships.tracks.data.filter(track => track.attributes.durationInMillis)
-            .reduce((a, b) => a + b.attributes.durationInMillis, 0) / 1000
+      <div>
+        {data().type.includes('albums') && (
+          <span class={styles.album__tracks__releaseDate}>
+            {Utils.formatDate(data().attributes.releaseDate)}
+          </span>
         )}
-      </span>
+        <div class={styles.album__tracks__trackCount}>
+          {data().attributes.trackCount || data().relationships.tracks.data.length} tracks
+          {', '}
+          {Utils.formatTimeHours(
+            data()
+              .relationships.tracks.data.filter(
+                track => track.attributes.durationInMillis
+              )
+              .reduce((a, b) => a + b.attributes.durationInMillis, 0) / 1000
+          )}
+        </div>
+        <div class={styles.album__tracks__copyright}>{data().attributes.copyright}</div>
+      </div>
     </div>
   )
 }

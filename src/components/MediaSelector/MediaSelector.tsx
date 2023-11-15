@@ -7,6 +7,9 @@ import { Utils } from '../../util/util'
 import musicNote from '../../assets/music_note.png'
 import { EditorialItem } from '../EditorialItem/EditorialItem'
 import { LinkItem } from '../LinkItem/LinkItem'
+import { EditorialItemSmall } from '../EditorialItemSmall/EditorialItemSmall'
+import { SongItem } from '../SongItem/SongItem'
+import { VideoItem } from '../VideoItem/VideoItem'
 
 export const MediaSelector = ({ item }) => {
   const isMusicNotesHeroShelf = item.attributes?.display?.kind === 'MusicNotesHeroShelf'
@@ -48,7 +51,7 @@ export const MediaSelector = ({ item }) => {
     switch (mediaItem?.attributes?.editorialElementKind) {
       case '386':
       case '394':
-        return <div>child</div>
+        return <EditorialItemSmall item={mediaItem} />
       case '336':
       case '339':
         return (
@@ -62,11 +65,11 @@ export const MediaSelector = ({ item }) => {
 
     switch (mediaItem.type) {
       case 'songs':
-        return <div>song</div>
+        return <SongItem item={mediaItem} />
       case 'uploaded-videos':
-        return <div>uploaded video</div>
+        return <VideoItem item={mediaItem} />
       case 'music-videos':
-        return <div>music video</div>
+        return <VideoItem item={mediaItem} />
       default:
         break
     }
@@ -101,6 +104,8 @@ export const MediaSelector = ({ item }) => {
           <For each={item.attributes.links}>{item => <LinkItem item={item} />}</For>
         </div>
       )
+    case '332':
+      return null
     default:
       return (
         <div class={styles.mediaSelector}>
@@ -108,7 +113,7 @@ export const MediaSelector = ({ item }) => {
             header={item.attributes.title?.stringForDisplay}
             topMargin={item.attributes?.display?.kind !== 'MusicNotesHeroShelf'}
           >
-            <For each={item.relationships.contents.data}>{renderItem}</For>
+            <For each={item.relationships?.contents?.data}>{renderItem}</For>
           </Shelf>
         </div>
       )

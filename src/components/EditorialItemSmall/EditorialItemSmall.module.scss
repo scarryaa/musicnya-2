@@ -1,0 +1,57 @@
+.editorialItemSmall {
+  &:hover {
+    .editorialItemSmall__imageContainer__overlay {
+      opacity: 1;
+    }
+  }
+
+  &__title {
+    font-size: 0.8rem;
+    margin-top: 0.4rem;
+  }
+
+  &__imageContainer {
+    position: relative;
+
+    &__overlay {
+      cursor: default;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      position: absolute;
+      top: 0;
+      left: 0;
+      border-radius: var(--app-border-radius);
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      align-items: flex-end;
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out;
+      padding: 0.6rem 0.5rem;
+
+      &__moreButton {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(0, 0, 0, 0.5);
+        border-radius: 50%;
+        padding: 1rem;
+        width: 2rem;
+        height: 2rem;
+        transition: background-color 0.2s ease-in-out;
+
+        &:hover {
+          background-color: var(--app-primary-color);
+        }
+      }
+    }
+
+    &__image {
+      min-width: 14rem;
+      min-height: 8rem;
+      object-fit: cover;
+      border-radius: var(--app-border-radius);
+    }
+  }
+}

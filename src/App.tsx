@@ -9,6 +9,7 @@ import { RightSidebar } from './components/RightSidebar/RightSidebar'
 import { Topbar } from './components/Topbar/Topbar'
 import { setStore, store } from './stores/store'
 import { Utils } from './util/util'
+import '@fontsource/inter'
 
 const App: Component = () => {
   const navigate = useNavigate()

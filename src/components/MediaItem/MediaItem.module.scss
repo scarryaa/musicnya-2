@@ -47,6 +47,10 @@
         transition: opacity 0.2s ease-in-out;
         padding: 0.6rem 0.5rem;
 
+        &__appleCurator {
+          justify-content: flex-end;
+        }
+
         &:hover {
           cursor: default;
         }
