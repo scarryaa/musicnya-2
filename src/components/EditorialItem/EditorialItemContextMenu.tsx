@@ -151,9 +151,7 @@ const updateContextMenu = async (
     ? true
     : libraryResponse.data[0]?.attributes?.inLibrary
 
-  const newId = type.includes('library')
-    ? id
-    : libraryResponse.data[0]?.relationships?.library?.data?.[0].id
+  const newId = libraryResponse.data[0]?.relationships?.library?.data?.[0]?.id ?? id
 
   if (type.includes('stations')) {
     const isLovedState = await mkController
