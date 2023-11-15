@@ -22,8 +22,18 @@ export const EditorialItem = ({ item }) => {
   const [isLoved, setIsLoved] = createSignal(false)
   const [isDisliked, setIsDisliked] = createSignal(false)
   const [inLibrary, setInLibrary] = createSignal(false)
+  const [isStation, setIsStation] = createSignal(childType === 'stations')
+  const [isPlaylist, setIsPlaylist] = createSignal(childType === 'playlists')
   const [contextMenuItems, setContextMenuItems] = createSignal(
-    contextMenu(childId, childType, isLoved(), inLibrary(), isDisliked())
+    contextMenu(
+      childId,
+      childType,
+      isLoved(),
+      inLibrary(),
+      isDisliked(),
+      isStation(),
+      isPlaylist()
+    )
   )
 
   console.log(item)
@@ -45,7 +55,11 @@ export const EditorialItem = ({ item }) => {
               inLibrary,
               setInLibrary,
               contextMenuItems,
-              setContextMenuItems
+              setContextMenuItems,
+              isStation,
+              setIsStation,
+              isPlaylist,
+              setIsPlaylist
             )
       }
     >

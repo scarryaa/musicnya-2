@@ -512,6 +512,7 @@ export const handleMoreClick = (
   })
 
   e.preventDefault()
+  e.stopPropagation()
 
   updateContextMenu(
     id,
