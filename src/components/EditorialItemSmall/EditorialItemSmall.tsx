@@ -70,33 +70,41 @@ export const EditorialItemSmall = ({ item }) => {
       <div class={styles.editorialItemSmall__imageContainer}>
         <A
           class={styles.editorialItemSmall__imageContainer__overlay}
-          href={item.attributes?.link?.url || '#'}
+          href={item.attributes?.link?.url || '/media/a'}
         >
           {showMoreButton && (
             <div
               class={styles.editorialItemSmall__imageContainer__overlay__moreButton}
-              onClick={e => {
-                e.stopImmediatePropagation()
-                e.preventDefault()
-                e.stopPropagation()
-                handleMoreClick(
-                  e,
-                  childId,
-                  childType,
-                  isLoved,
-                  setIsLoved,
-                  isDisliked,
-                  setIsDisliked,
-                  inLibrary,
-                  setInLibrary,
-                  contextMenuItems,
-                  setContextMenuItems,
-                  isStation,
-                  setIsStation,
-                  isPlaylist,
-                  setIsPlaylist
-                )
-              }}
+              onClick={
+                isCuratorType
+                  ? e => {
+                      e.preventDefault()
+                      e.stopPropagation()
+                      e.stopImmediatePropagation()
+                    }
+                  : e => {
+                      e.stopImmediatePropagation()
+                      e.preventDefault()
+                      e.stopPropagation()
+                      handleMoreClick(
+                        e,
+                        childId,
+                        childType,
+                        isLoved,
+                        setIsLoved,
+                        isDisliked,
+                        setIsDisliked,
+                        inLibrary,
+                        setInLibrary,
+                        contextMenuItems,
+                        setContextMenuItems,
+                        isStation,
+                        setIsStation,
+                        isPlaylist,
+                        setIsPlaylist
+                      )
+                    }
+              }
             >
               <Fa icon={faEllipsisH} size="1x" />
             </div>

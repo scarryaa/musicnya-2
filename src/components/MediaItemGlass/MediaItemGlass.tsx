@@ -1,11 +1,19 @@
+import { faPlay, faEllipsisH } from '@fortawesome/free-solid-svg-icons'
 import { A } from '@solidjs/router'
-import styles from './MediaItemGlass.module.scss'
-import { faEllipsisH, faPlay } from '@fortawesome/free-solid-svg-icons'
 import Fa from 'solid-fa'
-import { For } from 'solid-js'
+import { createSignal, For } from 'solid-js'
 import { mkController } from '../../api/mkController'
+import { contextMenu, handleContextMenu } from './MediaItemGlassContextMenu'
+import styles from './MediaItemGlass.module.scss'
 
 export const MediaItemGlass = ({ src, title, artists, type, id, reason }) => {
+  const [isLoved, setIsLoved] = createSignal(false)
+  const [inLibrary, setInLibrary] = createSignal(type.includes('library'))
+  const [isDisliked, setIsDisliked] = createSignal(false)
+  const [contextMenuItems, setContextMenuItems] = createSignal(
+    contextMenu(id, type, isLoved(), inLibrary(), isDisliked())
+  )
+
   const handlePlayClick = e => {
     e.preventDefault()
     mkController.playMediaItem(id, type)
@@ -17,7 +25,25 @@ export const MediaItemGlass = ({ src, title, artists, type, id, reason }) => {
   }
 
   return (
-    <A class={styles.mediaItemGlass} href={`/media/${type}/${id}`}>
+    <A
+      class={styles.mediaItemGlass}
+      href={`/media/${type}/${id}`}
+      onContextMenu={e =>
+        handleContextMenu(
+          e,
+          id,
+          type,
+          isLoved,
+          setIsLoved,
+          inLibrary,
+          setInLibrary,
+          isDisliked,
+          setIsDisliked,
+          contextMenuItems,
+          setContextMenuItems
+        )
+      }
+    >
       <span class={styles.mediaItemGlass__reason}>{reason}</span>
       <div class={styles.mediaItemGlass__inner}>
         <div class={styles.mediaItemGlass__inner__artwork}>
