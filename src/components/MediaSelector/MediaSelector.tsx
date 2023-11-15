@@ -92,6 +92,7 @@ export const MediaSelector = ({ item }) => {
     case '316':
     case '385':
     case '323':
+      if (item.attributes?.name === 'Chart Set') return null
       return renderShelf(item.relationships.children.data)
     case '326':
     case '387':
@@ -106,6 +107,7 @@ export const MediaSelector = ({ item }) => {
       )
     case '332':
       return null
+
     default:
       return (
         <div class={styles.mediaSelector}>
