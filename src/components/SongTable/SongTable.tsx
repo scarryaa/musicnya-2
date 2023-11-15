@@ -22,11 +22,9 @@ export const SongTable = ({ data }) => {
 
   createEffect(() => {
     setTracks(data().relationships.tracks.data)
+    console.log(data().relationships)
 
-    if (
-      data().relationships.tracks.data.length < 100 ||
-      !data().relationships.tracks.next
-    ) {
+    if (data().relationships.tracks.data.length < 100) {
       console.log('setIsFetchingComplete')
       setIsFetchingComplete(true)
     } else {
@@ -171,7 +169,7 @@ export const SongTable = ({ data }) => {
                       href={
                         data().type === 'library-playlists'
                           ? `/media/albums/${
-                              track.relationships?.catalog?.data?.[0].attributes?.url
+                              track.relationships?.catalog?.data?.[0]?.attributes?.url
                                 ?.split('/')?.[6]
                                 ?.split('?')?.[0]
                             }`

@@ -530,8 +530,8 @@ export class mkController {
     if (instance) {
       const response = await fetch(
         type.includes('library-')
-          ? `https://amp-api.music.apple.com/v1/me/library/playlists/${id}/tracks?offset=${offset}&l=en-US&platform=web&limit=101&include=albums,catalog`
-          : `https://amp-api.music.apple.com/v1/catalog/us/playlists/${id}/tracks?offset=${offset}&l=en-US&platform=web&limit=101&include=albums`,
+          ? `https://amp-api.music.apple.com/v1/me/library/playlists/${id}/tracks?offset=${offset}&l=en-US&platform=web&limit=100&include=albums,catalog`
+          : `https://amp-api.music.apple.com/v1/catalog/us/playlists/${id}/tracks?offset=${offset}&l=en-US&platform=web&limit=100&include=albums`,
         {
           headers: {
             authorization: `Bearer ${config.MusicKit.token}`,

@@ -364,6 +364,10 @@ const updateContextMenu = async (
     isCurator()
   )
 
+  if (isCurator()) {
+    return
+  }
+
   const libraryResponse = await mkController.checkIfInLibrary(id, type).then(data => data)
 
   const inLibraryState = type.includes('library')

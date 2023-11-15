@@ -12,6 +12,7 @@ import { SongItem } from '../SongItem/SongItem'
 import { VideoItem } from '../VideoItem/VideoItem'
 import { EditorialItemLarge } from '../EditorialItemLarge/EditorialItemLarge'
 import { store } from '../../stores/store'
+import { CuratorItem } from '../CuratorItem/CuratorItem'
 
 export const MediaSelector = ({ item }) => {
   const isMusicNotesHeroShelf = item.attributes?.display?.kind === 'MusicNotesHeroShelf'
@@ -79,6 +80,8 @@ export const MediaSelector = ({ item }) => {
         return <VideoItem item={mediaItem} />
       case 'music-videos':
         return <VideoItem item={mediaItem} />
+      case 'apple-curators':
+        return <CuratorItem item={mediaItem} />
       default:
         break
     }
