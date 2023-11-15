@@ -10,9 +10,11 @@ import { LinkItem } from '../LinkItem/LinkItem'
 import { EditorialItemSmall } from '../EditorialItemSmall/EditorialItemSmall'
 import { SongItem } from '../SongItem/SongItem'
 import { VideoItem } from '../VideoItem/VideoItem'
+import { EditorialItemLarge } from '../EditorialItemLarge/EditorialItemLarge'
 
 export const MediaSelector = ({ item }) => {
   const isMusicNotesHeroShelf = item.attributes?.display?.kind === 'MusicNotesHeroShelf'
+  const isMusicSuperHeroShelf = item.attributes?.display?.kind === 'MusicSuperHeroShelf'
   const childType = item.relationships?.children?.data?.[0]?.type
   const editorialElementKind = item.attributes?.editorialElementKind
 
@@ -48,7 +50,13 @@ export const MediaSelector = ({ item }) => {
       )
     }
 
+    if (isMusicSuperHeroShelf) {
+      return <EditorialItemLarge item={mediaItem} />
+    }
+
     switch (mediaItem?.attributes?.editorialElementKind) {
+      case '316':
+        return <div>hello</div>
       case '386':
       case '394':
         return <EditorialItemSmall item={mediaItem} />

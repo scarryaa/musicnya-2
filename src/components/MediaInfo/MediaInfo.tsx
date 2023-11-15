@@ -17,7 +17,7 @@ export const MediaInfo = ({ media }) => {
     mkController.shufflePlayMediaItem(media.id, media.type)
   }
 
-  if (media().type === 'uploaded-videos' || media.type() === 'music-videos') {
+  if (media().type === 'uploaded-videos' || media().type === 'music-videos') {
     return (
       <div class={styles.mediaInfo}>
         <img

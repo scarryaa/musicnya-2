@@ -201,7 +201,7 @@ export const SongTable = ({ data }) => {
       </table>
       <div ref={setSentinel} style={{ height: '1px' }}></div>
       {isFetching() && <SongTableSkeleton />}
-      <div>
+      <div class={styles.album__tracks__info}>
         {data().type.includes('albums') && (
           <span class={styles.album__tracks__releaseDate}>
             {Utils.formatDate(data().attributes.releaseDate)}
