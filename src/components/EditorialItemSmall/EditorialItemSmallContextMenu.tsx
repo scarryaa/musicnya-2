@@ -21,9 +21,41 @@ export const contextMenu = (
   isInLibrary,
   isDisliked,
   isStation,
-  isPlaylist
+  isPlaylist,
+  isCurator
 ) =>
-  isStation
+  isCurator
+    ? [
+        {
+          icon: faShare,
+          action: async () => {
+            await mkController.getShareLink(id, type).then(async data => {
+              await navigator.clipboard.writeText(data.data[0].attributes.url)
+            })
+          },
+          isQuickAction: false,
+          label: 'Share',
+          onMouseOver: () => {
+            setStore('app', 'subContextMenu', {
+              open: false
+            })
+          }
+        },
+        {
+          icon: faInfoCircle,
+          action: () => {
+            console.log('last')
+          },
+          isQuickAction: false,
+          label: 'Properties',
+          onMouseOver: () => {
+            setStore('app', 'subContextMenu', {
+              open: false
+            })
+          }
+        }
+      ]
+    : isStation
     ? [
         {
           icon: faHeart,
@@ -331,7 +363,9 @@ const updateContextMenu = async (
   isStation,
   setIsStation,
   isPlaylist,
-  setIsPlaylist
+  setIsPlaylist,
+  isCurator,
+  setIsCurator
 ) => {
   // Update context menu after resolving fetches
   let updatedItems = contextMenu(
@@ -341,8 +375,13 @@ const updateContextMenu = async (
     inLibrary(),
     isDisliked(),
     isStation(),
-    isPlaylist()
+    isPlaylist(),
+    isCurator()
   )
+
+  if (isCurator) {
+    return
+  }
 
   const libraryResponse = await mkController.checkIfInLibrary(id, type).then(data => data)
 
@@ -440,7 +479,9 @@ export const handleContextMenu = async (
   isStation: () => boolean,
   setIsStation: (value: boolean) => void,
   isPlaylist: () => boolean,
-  setIsPlaylist: (value: boolean) => void
+  setIsPlaylist: (value: boolean) => void,
+  isCurator: () => boolean,
+  setIsCurator: (value: boolean) => void
 ) => {
   // Open the context menu immediately with disabled items
   setStore('app', 'contextMenu', {
@@ -477,7 +518,9 @@ export const handleContextMenu = async (
     isStation,
     setIsStation,
     isPlaylist,
-    setIsPlaylist
+    setIsPlaylist,
+    isCurator,
+    setIsCurator
   )
 }
 
@@ -496,7 +539,9 @@ export const handleMoreClick = (
   isStation: () => boolean,
   setIsStation: (value: boolean) => void,
   isPlaylist: () => boolean,
-  setIsPlaylist: (value: boolean) => void
+  setIsPlaylist: (value: boolean) => void,
+  isCurator: () => boolean,
+  setIsCurator: (value: boolean) => void
 ) => {
   e.preventDefault()
   e.stopPropagation()
@@ -527,6 +572,8 @@ export const handleMoreClick = (
     isStation,
     setIsStation,
     isPlaylist,
-    setIsPlaylist
+    setIsPlaylist,
+    isCurator,
+    setIsCurator
   )
 }

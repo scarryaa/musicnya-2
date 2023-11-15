@@ -3,7 +3,11 @@ import { A } from '@solidjs/router'
 import Fa from 'solid-fa'
 import { createSignal, For } from 'solid-js'
 import { mkController } from '../../api/mkController'
-import { contextMenu, handleContextMenu } from './MediaItemGlassContextMenu'
+import {
+  contextMenu,
+  handleContextMenu,
+  handleMoreClick
+} from './MediaItemGlassContextMenu'
 import styles from './MediaItemGlass.module.scss'
 
 export const MediaItemGlass = ({ src, title, artists, type, id, reason }) => {
@@ -17,11 +21,6 @@ export const MediaItemGlass = ({ src, title, artists, type, id, reason }) => {
   const handlePlayClick = e => {
     e.preventDefault()
     mkController.playMediaItem(id, type)
-  }
-
-  const handleMoreClick = e => {
-    e.preventDefault()
-    console.log('more')
   }
 
   return (
@@ -61,7 +60,23 @@ export const MediaItemGlass = ({ src, title, artists, type, id, reason }) => {
             </div>
             <div
               class={styles.mediaItemGlass__inner__artwork__overlay__moreButton}
-              onClick={handleMoreClick}
+              onClick={e => {
+                e.preventDefault()
+                e.stopPropagation()
+                handleMoreClick(
+                  e,
+                  id,
+                  type,
+                  isLoved,
+                  setIsLoved,
+                  isDisliked,
+                  setIsDisliked,
+                  inLibrary,
+                  setInLibrary,
+                  contextMenuItems,
+                  setContextMenuItems
+                )
+              }}
             >
               <Fa
                 icon={faEllipsisH}

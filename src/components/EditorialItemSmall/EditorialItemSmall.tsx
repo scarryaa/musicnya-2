@@ -30,6 +30,7 @@ export const EditorialItemSmall = ({ item }) => {
   const [inLibrary, setInLibrary] = createSignal(false)
   const [isStation, setIsStation] = createSignal(childType === 'stations')
   const [isPlaylist, setIsPlaylist] = createSignal(childType === 'playlists')
+  const [isCurator, setIsCurator] = createSignal(isCuratorType)
   const [contextMenuItems, setContextMenuItems] = createSignal(
     contextMenu(
       childId,
@@ -38,7 +39,8 @@ export const EditorialItemSmall = ({ item }) => {
       inLibrary(),
       isDisliked(),
       isStation(),
-      isPlaylist()
+      isPlaylist(),
+      isCurator()
     )
   )
 
@@ -46,25 +48,25 @@ export const EditorialItemSmall = ({ item }) => {
     <div
       class={styles.editorialItemSmall}
       onContextMenu={e =>
-        isCuratorType
-          ? null
-          : handleContextMenu(
-              e,
-              childId,
-              childType,
-              isLoved,
-              setIsLoved,
-              isDisliked,
-              setIsDisliked,
-              inLibrary,
-              setInLibrary,
-              contextMenuItems,
-              setContextMenuItems,
-              isStation,
-              setIsStation,
-              isPlaylist,
-              setIsPlaylist
-            )
+        handleContextMenu(
+          e,
+          childId,
+          childType,
+          isLoved,
+          setIsLoved,
+          isDisliked,
+          setIsDisliked,
+          inLibrary,
+          setInLibrary,
+          contextMenuItems,
+          setContextMenuItems,
+          isStation,
+          setIsStation,
+          isPlaylist,
+          setIsPlaylist,
+          isCurator,
+          setIsCurator
+        )
       }
     >
       <div class={styles.editorialItemSmall__imageContainer}>
@@ -75,36 +77,30 @@ export const EditorialItemSmall = ({ item }) => {
           {showMoreButton && (
             <div
               class={styles.editorialItemSmall__imageContainer__overlay__moreButton}
-              onClick={
-                isCuratorType
-                  ? e => {
-                      e.preventDefault()
-                      e.stopPropagation()
-                      e.stopImmediatePropagation()
-                    }
-                  : e => {
-                      e.stopImmediatePropagation()
-                      e.preventDefault()
-                      e.stopPropagation()
-                      handleMoreClick(
-                        e,
-                        childId,
-                        childType,
-                        isLoved,
-                        setIsLoved,
-                        isDisliked,
-                        setIsDisliked,
-                        inLibrary,
-                        setInLibrary,
-                        contextMenuItems,
-                        setContextMenuItems,
-                        isStation,
-                        setIsStation,
-                        isPlaylist,
-                        setIsPlaylist
-                      )
-                    }
-              }
+              onClick={e => {
+                e.stopImmediatePropagation()
+                e.preventDefault()
+                e.stopPropagation()
+                handleMoreClick(
+                  e,
+                  childId,
+                  childType,
+                  isLoved,
+                  setIsLoved,
+                  isDisliked,
+                  setIsDisliked,
+                  inLibrary,
+                  setInLibrary,
+                  contextMenuItems,
+                  setContextMenuItems,
+                  isStation,
+                  setIsStation,
+                  isPlaylist,
+                  setIsPlaylist,
+                  isCurator,
+                  setIsCurator
+                )
+              }}
             >
               <Fa icon={faEllipsisH} size="1x" />
             </div>

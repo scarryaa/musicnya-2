@@ -24,6 +24,7 @@ export const EditorialItem = ({ item }) => {
   const [inLibrary, setInLibrary] = createSignal(false)
   const [isStation, setIsStation] = createSignal(childType === 'stations')
   const [isPlaylist, setIsPlaylist] = createSignal(childType === 'playlists')
+  const [isCurator, setIsCurator] = createSignal(isCuratorType)
   const [contextMenuItems, setContextMenuItems] = createSignal(
     contextMenu(
       childId,
@@ -32,7 +33,8 @@ export const EditorialItem = ({ item }) => {
       inLibrary(),
       isDisliked(),
       isStation(),
-      isPlaylist()
+      isPlaylist(),
+      isCurator()
     )
   )
 
@@ -42,25 +44,25 @@ export const EditorialItem = ({ item }) => {
     <div
       class={styles.editorialItem}
       onContextMenu={e =>
-        isCuratorType
-          ? null
-          : handleContextMenu(
-              e,
-              childId,
-              childType,
-              isLoved,
-              setIsLoved,
-              isDisliked,
-              setIsDisliked,
-              inLibrary,
-              setInLibrary,
-              contextMenuItems,
-              setContextMenuItems,
-              isStation,
-              setIsStation,
-              isPlaylist,
-              setIsPlaylist
-            )
+        handleContextMenu(
+          e,
+          childId,
+          childType,
+          isLoved,
+          setIsLoved,
+          isDisliked,
+          setIsDisliked,
+          inLibrary,
+          setInLibrary,
+          contextMenuItems,
+          setContextMenuItems,
+          isStation,
+          setIsStation,
+          isPlaylist,
+          setIsPlaylist,
+          isCurator,
+          setIsCurator
+        )
       }
     >
       <div>
