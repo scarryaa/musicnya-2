@@ -3,10 +3,20 @@
   flex-direction: column;
   justify-content: space-between;
   flex: 50%;
+  display: flex;
 
   &__designBadge {
     color: var(--app-text-light-color);
     font-size: 0.75rem;
+  }
+
+  &__title {
+    line-height: 1.2rem;
+  }
+
+  &__subtitle {
+    line-height: 1.5rem;
+    color: var(--app-text-light-color);
   }
 
   &__image__container {
@@ -22,6 +32,7 @@
         cursor: default;
       }
     }
+
     &__image {
       border-radius: var(--app-border-radius);
       object-fit: cover;

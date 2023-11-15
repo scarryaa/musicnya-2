@@ -7,7 +7,6 @@ import { faEllipsisH, faPause, faPlay } from '@fortawesome/free-solid-svg-icons'
 import { store } from '../../stores/store'
 import { faStar } from '@fortawesome/free-solid-svg-icons'
 import { A } from '@solidjs/router'
-import { LoadingSpinner } from '../LoadingSpinner/LoadingSpinner'
 import { SongTableSkeleton } from '../Skeletons/SongTableSkeleton'
 
 export const SongTable = ({ data }) => {
@@ -24,7 +23,10 @@ export const SongTable = ({ data }) => {
   createEffect(() => {
     setTracks(data().relationships.tracks.data)
 
-    if (data().relationships.tracks.data.length < 100) {
+    if (
+      data().relationships.tracks.data.length < 100 ||
+      !data().relationships.tracks.next
+    ) {
       console.log('setIsFetchingComplete')
       setIsFetchingComplete(true)
     } else {
@@ -88,6 +90,11 @@ export const SongTable = ({ data }) => {
             {(track, index) => (
               <tr
                 onDblClick={() => mkController.setQueue(data().id, data().type, index())}
+                class={
+                  !track.attributes.releaseDate && data().type.includes('albums')
+                    ? styles.album__tracks__table__row__unreleased
+                    : styles.album__tracks__table__row
+                }
               >
                 <td class={styles.album__tracks__table__number}>
                   <span class={styles.album__tracks__table__number__popularity}>
@@ -192,6 +199,15 @@ export const SongTable = ({ data }) => {
       </table>
       <div ref={setSentinel} style={{ height: '1px' }}></div>
       {isFetching() && <SongTableSkeleton />}
+      <span class={styles.album__tracks__trackCount}>
+        {data().attributes.trackCount || data().relationships.tracks.data.length} tracks
+        {', '}
+        {Utils.formatTimeHours(
+          data()
+            .relationships.tracks.data.filter(track => track.attributes.durationInMillis)
+            .reduce((a, b) => a + b.attributes.durationInMillis, 0) / 1000
+        )}
+      </span>
     </div>
   )
 }

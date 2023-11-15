@@ -236,6 +236,7 @@ export class mkController {
   }
 
   static setQueue = async (id: any, type: string, index: number) => {
+    console.log(id, type, index)
     const instance = await mkController.getInstance()
     if (instance) {
       instance.setQueue({ startWith: index, [type]: [id] }).then(() => {
@@ -506,8 +507,8 @@ export class mkController {
     if (instance) {
       const response = await fetch(
         type.includes('library-')
-          ? `https://amp-api.music.apple.com/v1/me/library/playlists/${id}/tracks?offset=${offset}&l=en-US&platform=web&limit=100&include=albums,catalog`
-          : `https://amp-api.music.apple.com/v1/catalog/us/${strippedType}/${id}/tracks?offset=${offset}&l=en-US&platform=web&limit=100&art[url]=f&extend=editorialArtwork,editorialVideo,extendedAssetUrls,offers&fields[artists]=name,url&fields[curators]=name&fields[record-labels]=name,url&include=record-labels,artists&include[music-videos]=artists&include=albums,catalog&include[playlists]=curator&include[songs]=artists,composers,albums&l=en-US&meta[albums:tracks]=popularity&platform=web&views=appears-on,audio-extras,more-by-artist,other-versions,related-videos,video-extras,you-might-also-like`,
+          ? `https://amp-api.music.apple.com/v1/me/library/playlists/${id}/tracks?offset=${offset}&l=en-US&platform=web&limit=101&include=albums,catalog`
+          : `https://amp-api.music.apple.com/v1/catalog/us/playlists/${id}/tracks?offset=${offset}&l=en-US&platform=web&limit=101&include=albums`,
         {
           headers: {
             authorization: `Bearer ${config.MusicKit.token}`,

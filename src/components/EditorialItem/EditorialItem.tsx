@@ -2,8 +2,6 @@ import { Utils } from '../../util/util'
 import styles from './EditorialItem.module.scss'
 
 export const EditorialItem = ({ item }) => {
-  console.log(item)
-
   return (
     <div class={styles.editorialItem}>
       <div>
@@ -34,7 +32,9 @@ export const EditorialItem = ({ item }) => {
               item.relationships.contents.data[0]?.attributes.editorialArtwork
                 ?.superHeroWide?.url ||
               item.attributes.artwork?.url,
-            1000
+            1000,
+            'webp',
+            'none'
           )}
           alt=""
         />

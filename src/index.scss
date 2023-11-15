@@ -96,3 +96,12 @@ h2 {
   opacity: 0.5;
   pointer-events: none;
 }
+
+.linkItemContainer {
+  display: flex;
+  gap: 1rem;
+  flex-direction: row;
+  flex-wrap: wrap;
+  flex: 1;
+  padding: 1.5rem;
+}

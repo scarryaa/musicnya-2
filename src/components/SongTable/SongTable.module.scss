@@ -17,6 +17,22 @@
   border-radius: var(--app-border-radius);
   padding: 1.5rem;
 
+  &__table__row__unreleased {
+    opacity: 0.5;
+    pointer-events: none !important;
+
+    .album__tracks__table__time {
+      display: none;
+    }
+  }
+
+  &__trackCount {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--app-text-light-color);
+    padding-bottom: 0.5rem;
+  }
+
   &__table {
     overflow: hidden;
     border-collapse: separate;

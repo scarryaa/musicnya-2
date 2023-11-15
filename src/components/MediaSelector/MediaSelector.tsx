@@ -32,7 +32,7 @@ export const MediaSelector = ({ item }) => {
       id: mediaItem.id,
       type: mediaItem.type,
       title: mediaItem.attributes?.name,
-      src: Utils.formatArtworkUrl(mediaItem.attributes?.artwork?.url || musicNote, 200)
+      src: Utils.formatArtworkUrl(mediaItem.attributes?.artwork?.url || musicNote, 400)
     }
 
     if (isMusicNotesHeroShelf) {
@@ -96,7 +96,11 @@ export const MediaSelector = ({ item }) => {
       return renderShelf(item.relationships.contents.data)
     case '322':
     case '391':
-      return <For each={item.attributes.links}>{item => <LinkItem item={item} />}</For>
+      return (
+        <div class="linkItemContainer">
+          <For each={item.attributes.links}>{item => <LinkItem item={item} />}</For>
+        </div>
+      )
     default:
       return (
         <div class={styles.mediaSelector}>

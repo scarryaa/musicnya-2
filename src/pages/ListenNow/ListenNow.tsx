@@ -1,10 +1,6 @@
 import { For, Match, Switch, createEffect } from 'solid-js'
 import { createHomeStore } from '../../stores/api-store'
 import styles from './ListenNow.module.scss'
-import { MediaItem } from '../../components/MediaItem/MediaItem'
-import { Utils } from '../../util/util'
-import { Shelf } from '../../components/Shelf/Shelf'
-import musicNote from '../../assets/music_note.png'
 import { LoadingSpinner } from '../../components/LoadingSpinner/LoadingSpinner'
 import { MediaSelector } from '../../components/MediaSelector/MediaSelector'
 

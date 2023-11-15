@@ -20,6 +20,7 @@ export const Album = () => {
     if (data && data.data && data.data.length > 0) {
       setCurrentAlbum(data.data[0])
     }
+    console.log(currentAlbum())
   })
 
   return (

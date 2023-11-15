@@ -1,0 +1,30 @@
+:root {
+  --link-background-color: #dadada;
+  --link-background-color-hover: #c0c0c0;
+}
+
+:root[theme='dark'] {
+  --link-background-color: #222222;
+  --link-background-color-hover: #444444;
+}
+
+.linkItem {
+  display: flex;
+  padding: 1rem;
+  border-radius: var(--app-border-radius);
+  background-color: var(--link-background-color);
+  max-width: max-content;
+  transition: background-color 0.2s ease-in-out;
+
+  &:hover {
+    background-color: var(--link-background-color-hover);
+  }
+
+  &__arrow {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 1rem;
+  }
+}
