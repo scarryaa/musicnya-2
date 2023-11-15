@@ -52,17 +52,35 @@ export class mkController {
     }
   }
 
-  static playMediaItem = async (id: any, type: string) => {
+  static playMediaItem = async (
+    id: any,
+    type: string,
+    array = true,
+    shouldShuffle = false
+  ) => {
     const instance = await mkController.getInstance()
 
     const shouldStrip = type === 'stations'
-    const strippedType = shouldStrip ? 'station' : type.replace('library-', '')
+    const isUploadedVideo = type === 'uploaded-videos'
+    const isMusicVideo = type === 'music-videos'
+    let strippedType = shouldStrip ? 'station' : type.replace('library-', '')
+
+    if (isUploadedVideo) {
+      strippedType = 'uploadedVideos'
+      array = true
+    }
+
+    if (isMusicVideo) {
+      strippedType = 'musicVideos'
+      array = false
+    }
 
     if (instance) {
       console.log('Playing media item: ', strippedType, id)
       instance.setQueue({
-        [strippedType]: shouldStrip ? id : [id],
-        startPlaying: type === 'stations' ? false : true
+        [strippedType]: shouldStrip ? id : array ? [id] : id,
+        startPlaying: type === 'stations' ? false : true,
+        startWith: shouldShuffle ? Math.floor(Math.random() * 100) : 0
       })
 
       // special case for stations, since they don't start playing automatically for some reason
@@ -70,7 +88,10 @@ export class mkController {
         instance.play()
       }
 
-      instance.shuffleMode = 0
+      if (!shouldShuffle) {
+        instance.shuffleMode = 0
+        setStore('shuffleMode', false)
+      }
     } else {
       console.error('Failed to play media item: MusicKit instance not available')
     }
@@ -115,8 +136,9 @@ export class mkController {
   static shufflePlayMediaItem = async (id: any, type: string) => {
     const instance = await mkController.getInstance()
     if (instance) {
-      instance.shuffleMode = 1
-      this.playMediaItem(id, type)
+      MusicKit.getInstance().shuffleMode = 1
+      setStore('shuffleMode', true)
+      this.playMediaItem(id, type, true, true)
     } else {
       console.error('Failed to play media item: MusicKit instance not available')
     }

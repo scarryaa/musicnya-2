@@ -9,12 +9,12 @@ export const MediaInfo = ({ media }) => {
   console.log(media())
   const handlePlayClick = e => {
     e.preventDefault()
-    mkController.playMediaItem(media.id, media.type)
+    mkController.playMediaItem(media().id, media().type)
   }
 
   const handleShuffleClick = e => {
     e.preventDefault()
-    mkController.shufflePlayMediaItem(media.id, media.type)
+    mkController.shufflePlayMediaItem(media().id, media().type)
   }
 
   if (media().type === 'uploaded-videos' || media().type === 'music-videos') {

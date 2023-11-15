@@ -4,19 +4,51 @@ import styles from './EditorialItem.module.scss'
 import { faPlay } from '@fortawesome/free-solid-svg-icons'
 import { mkController } from '../../api/mkController'
 import { A } from '@solidjs/router'
+import { contextMenu, handleContextMenu } from './EditorialItemContextMenu'
+import { createSignal } from 'solid-js'
 
 export const EditorialItem = ({ item }) => {
+  console.log(item)
   const childType =
     item.relationships?.children?.data?.[0]?.type ||
     item.relationships?.contents?.data?.[0]?.type
   const isCuratorType =
     (item.attributes?.editorialElementKind === '320' && item.attributes.link) ||
     item.relationships?.contents?.data?.[0]?.type === 'apple-curators'
+  const childId =
+    item.relationships?.children?.data?.[0]?.id ||
+    item.relationships?.contents?.data?.[0]?.id
+
+  const [isLoved, setIsLoved] = createSignal(false)
+  const [isDisliked, setIsDisliked] = createSignal(false)
+  const [inLibrary, setInLibrary] = createSignal(false)
+  const [contextMenuItems, setContextMenuItems] = createSignal(
+    contextMenu(childId, childType, isLoved(), inLibrary(), isDisliked())
+  )
 
   console.log(item)
 
   return (
-    <div class={styles.editorialItem}>
+    <div
+      class={styles.editorialItem}
+      onContextMenu={e =>
+        isCuratorType
+          ? null
+          : handleContextMenu(
+              e,
+              childId,
+              childType,
+              isLoved,
+              setIsLoved,
+              isDisliked,
+              setIsDisliked,
+              inLibrary,
+              setInLibrary,
+              contextMenuItems,
+              setContextMenuItems
+            )
+      }
+    >
       <div>
         <span class={styles.editorialItem__designBadge}>
           {item.attributes.designBadge}
@@ -53,7 +85,8 @@ export const EditorialItem = ({ item }) => {
                 e.stopPropagation()
                 mkController.playMediaItem(
                   item.relationships.contents.data[0].id,
-                  childType
+                  childType,
+                  item.relationships.contents.data[0]
                 )
               }}
             >

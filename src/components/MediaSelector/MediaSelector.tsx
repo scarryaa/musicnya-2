@@ -11,6 +11,7 @@ import { EditorialItemSmall } from '../EditorialItemSmall/EditorialItemSmall'
 import { SongItem } from '../SongItem/SongItem'
 import { VideoItem } from '../VideoItem/VideoItem'
 import { EditorialItemLarge } from '../EditorialItemLarge/EditorialItemLarge'
+import { store } from '../../stores/store'
 
 export const MediaSelector = ({ item }) => {
   const isMusicNotesHeroShelf = item.attributes?.display?.kind === 'MusicNotesHeroShelf'
@@ -108,14 +109,20 @@ export const MediaSelector = ({ item }) => {
       return renderShelf(item.relationships.contents.data)
     case '322':
     case '391':
-      return (
-        <div class="linkItemContainer">
-          <For each={item.attributes.links}>{item => <LinkItem item={item} />}</For>
-        </div>
-      )
+      if (store.app.media.hideLinkTiles) {
+        return null
+      } else {
+        return (
+          <div class="linkItemContainer">
+            <For each={item.attributes.links}>{item => <LinkItem item={item} />}</For>
+          </div>
+        )
+      }
+
     case '332':
       return null
-
+    case '488':
+      return null
     default:
       return (
         <div class={styles.mediaSelector}>

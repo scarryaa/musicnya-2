@@ -105,23 +105,25 @@ export const contextMenu = (id, type, isLoved, inLibrary, isDisliked) =>
           label: 'Add to Playlist',
           hasSubMenu: true,
           onMouseOver: () => {
-            const playlists = store.libraryPlaylists.map(playlist => {
-              return {
-                icon: faHeadphones,
-                action: () => {
-                  mkController.addToPlaylist(id, type, playlist.id)
-                },
-                isQuickAction: false,
-                label: playlist.attributes.name,
-                onMouseOver: () => {
-                  setStore('app', 'subContextMenu', {
-                    open: true,
-                    id: id,
-                    type: type
-                  })
+            const playlists = store.libraryPlaylists
+              .filter(playlist => playlist.attributes.canEdit)
+              .map(playlist => {
+                return {
+                  icon: faHeadphones,
+                  action: () => {
+                    mkController.addToPlaylist(id, type, playlist.id)
+                  },
+                  isQuickAction: false,
+                  label: playlist.attributes.name,
+                  onMouseOver: () => {
+                    setStore('app', 'subContextMenu', {
+                      open: true,
+                      id: id,
+                      type: type
+                    })
+                  }
                 }
-              }
-            })
+              })
 
             setStore('app', 'subContextMenu', {
               x: 0,
@@ -219,23 +221,25 @@ export const contextMenu = (id, type, isLoved, inLibrary, isDisliked) =>
           label: 'Add to Playlist',
           hasSubMenu: true,
           onMouseOver: () => {
-            const playlists = store.libraryPlaylists.map(playlist => {
-              return {
-                icon: faHeadphones,
-                action: () => {
-                  mkController.addToPlaylist(id, type, playlist.id)
-                },
-                isQuickAction: false,
-                label: playlist.attributes.name,
-                onMouseOver: () => {
-                  setStore('app', 'subContextMenu', {
-                    open: true,
-                    id: id,
-                    type: type
-                  })
+            const playlists = store.libraryPlaylists
+              .filter(playlist => playlist.attributes.canEdit)
+              .map(playlist => {
+                return {
+                  icon: faHeadphones,
+                  action: () => {
+                    mkController.addToPlaylist(id, type, playlist.id)
+                  },
+                  isQuickAction: false,
+                  label: playlist.attributes.name,
+                  onMouseOver: () => {
+                    setStore('app', 'subContextMenu', {
+                      open: true,
+                      id: id,
+                      type: type
+                    })
+                  }
                 }
-              }
-            })
+              })
 
             setStore('app', 'subContextMenu', {
               x: 0,

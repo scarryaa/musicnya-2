@@ -3,17 +3,26 @@ import { Utils } from '../../util/util'
 import styles from './VideoItem.module.scss'
 import { faEllipsisH, faPlay } from '@fortawesome/free-solid-svg-icons'
 import { A } from '@solidjs/router'
+import { mkController } from '../../api/mkController'
 
 export const VideoItem = ({ item }) => {
+  const handlePlayClick = e => {
+    e.preventDefault()
+    mkController.playMediaItem(item.id, item.type)
+  }
+
   return (
     <A class={styles.videoItem} href={`/media/videos/${item.id}`}>
       <div class={styles.videoItem__thumbnail}>
         <div class={styles.videoItem__thumbnail__overlay}>
-          <div class={styles.videoItem__thumbnail__overlay__playButton}>
-            <Fa icon={faPlay} size="1x" />
+          <div
+            class={styles.videoItem__thumbnail__overlay__playButton}
+            onClick={handlePlayClick}
+          >
+            <Fa icon={faPlay} size="1x" color="var(--color-white)" />
           </div>
           <div class={styles.videoItem__thumbnail__overlay__moreButton}>
-            <Fa icon={faEllipsisH} size="1x" />
+            <Fa icon={faEllipsisH} size="1x" color="var(--color-white)" />
           </div>
         </div>
         <img

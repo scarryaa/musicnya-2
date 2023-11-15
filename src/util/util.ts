@@ -59,7 +59,6 @@ export class Utils {
     return url
       .replace('{w}x{h}', `${size}x${size}`)
       .replace('{f}', format)
-      .replace('sr', '')
       .replace('{c}', crop === 'none' ? '' : crop)
   }
 

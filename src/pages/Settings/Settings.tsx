@@ -34,6 +34,11 @@ export const Settings = () => {
     )
   }
 
+  const handleHideLinkTilesClick = () => {
+    setStore('app', 'media', 'hideLinkTiles', !store.app.media.hideLinkTiles)
+    localStorage.setItem('hideLinkTiles', store.app.media.hideLinkTiles.toString())
+  }
+
   const handleEditorialNotesExpandClick = () => {
     setStore(
       'app',
@@ -57,6 +62,14 @@ export const Settings = () => {
             options={defaultPageOptions}
             selected={selectedOption}
             onSelectedChange={handleSelect}
+          />
+        </div>
+        <div class={styles.settings__setting}>
+          <h3>Hide link tiles</h3>
+          <input
+            type="checkbox"
+            checked={store.app.media.hideLinkTiles}
+            onClick={handleHideLinkTilesClick}
           />
         </div>
       </Accordion>

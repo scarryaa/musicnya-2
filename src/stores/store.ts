@@ -22,7 +22,8 @@ export const [store, setStore] = createStore({
     media: {
       hideEditorialNotes: localStorage.getItem('hideEditorialNotes') === 'true' || false,
       expandEditorialNotes:
-        localStorage.getItem('expandEditorialNotes') === 'true' || false
+        localStorage.getItem('expandEditorialNotes') === 'true' || false,
+      hideLinkTiles: localStorage.getItem('hideLinkTiles') === 'true' || false
     },
     contextMenu: {
       x: -10000,
