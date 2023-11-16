@@ -8,7 +8,6 @@ import { contextMenu, handleContextMenu } from './EditorialItemContextMenu'
 import { createSignal } from 'solid-js'
 
 export const EditorialItem = ({ item }) => {
-  console.log(item)
   const childType =
     item.relationships?.children?.data?.[0]?.type ||
     item.relationships?.contents?.data?.[0]?.type
@@ -37,8 +36,6 @@ export const EditorialItem = ({ item }) => {
       isCurator()
     )
   )
-
-  console.log(item)
 
   return (
     <div

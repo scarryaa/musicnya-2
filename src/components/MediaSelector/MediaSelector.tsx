@@ -20,10 +20,6 @@ export const MediaSelector = ({ item }) => {
   const childType = item.relationships?.children?.data?.[0]?.type
   const editorialElementKind = item.attributes?.editorialElementKind
 
-  createEffect(() => {
-    console.log(item)
-  })
-
   const renderItem = mediaItem => {
     return renderMediaItem(mediaItem, childType, isMusicNotesHeroShelf)
   }

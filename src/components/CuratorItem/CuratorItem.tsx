@@ -11,9 +11,9 @@ export const CuratorItem = ({ item }) => {
     contextMenu(item.id, item.type)
   )
 
-  console.log(item)
   return (
     <A
+      activeClass=""
       class={styles.curatorItem}
       href="#"
       onContextMenu={e => handleContextMenu(e, item.id, item.type, contextMenuItems)}
@@ -30,7 +30,10 @@ export const CuratorItem = ({ item }) => {
         <img src={Utils.formatArtworkUrl(item.attributes.artwork.url, 300, 'webp')} />
       </div>
       <div class={styles.curatorItem__info}>
-        <div class={styles.curatorItem__name}>{item.name}</div>
+        <div class={styles.curatorItem__info__name}>{item.attributes.name}</div>
+        <div class={styles.curatorItem__info__curator}>
+          {item.attributes.showHostName}
+        </div>
       </div>
     </A>
   )

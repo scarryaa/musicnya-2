@@ -1,0 +1,66 @@
+.skeletonItem {
+  --size: 14cqw;
+  --maxSize: 14rem;
+  --minSize: 12rem;
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  width: var(--size);
+  max-width: var(--maxSize);
+  min-width: var(--minSize);
+  height: var(--size);
+  max-height: var(--maxSize);
+  min-height: var(--minSize);
+
+  animation: shimmer 1.2s linear infinite forwards;
+}
+
+.skeletonArtwork {
+  width: 200px;
+}
+
+.skeletonText {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.skeletonTitle,
+.skeletonArtist {
+  height: 10px;
+  background-color: var(--skeleton-background-color);
+  border-radius: 2px;
+
+  &:last-child {
+    width: 60%;
+  }
+}
+
+.skeletonTitle {
+  width: 80%;
+}
+
+.skeletonArtist {
+  width: 40%;
+}
+
+// Shimmer effect
+@keyframes shimmer {
+  0% {
+    background-position: -40rem 0;
+  }
+  100% {
+    background-position: 40rem 0;
+  }
+}
+
+[class*='skeleton'] {
+  background: linear-gradient(
+    to right,
+    var(--skeleton-background-color) 4%,
+    var(--skeleton-background-color-2) 25%,
+    var(--skeleton-background-color) 36%
+  );
+  background-size: 1000px 104px;
+  position: relative;
+}

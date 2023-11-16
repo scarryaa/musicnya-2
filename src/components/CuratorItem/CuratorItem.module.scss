@@ -5,13 +5,43 @@
 
   display: flex;
   flex-direction: column;
+  border-radius: var(--app-border-radius);
+  cursor: default;
 
   &:hover .curatorItem__image__overlay {
     opacity: 1;
   }
 
+  &__info {
+    &__name {
+      font-size: 0.9rem;
+      font-weight: 500;
+      margin-top: 0.4rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      width: 100%;
+      max-width: max-content;
+      cursor: default;
+    }
+
+    &__curator {
+      color: #a0a0a0;
+      font-size: 0.8rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      width: 100%;
+      max-width: max-content;
+    }
+  }
+
   &__image {
     position: relative;
+    border-radius: var(--app-border-radius);
+
     img {
       border-radius: var(--app-border-radius);
       position: relative;

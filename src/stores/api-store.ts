@@ -1,4 +1,4 @@
-import { createResource } from 'solid-js'
+import { createEffect, createResource, createSignal } from 'solid-js'
 import * as config from '../../config.json'
 import { fetchRecommendations } from '../api/home'
 import { fetchAlbum, fetchLibraryAlbum } from '../api/album'
@@ -7,6 +7,7 @@ import { fetchStation } from '../api/station'
 import { fetchBrowse } from '../api/browse'
 import { fetchRadio } from '../api/radio'
 import { fetchVideo } from '../api/video'
+import { fetchRecentlyAdded } from '../api/recentlyAdded'
 
 export const createStationStore = () => {
   return function (params: { id: string }) {
@@ -37,6 +38,40 @@ export const createVideoStore = () => {
     )
 
     return data
+  }
+}
+
+export const createRecentlyAddedStore = () => {
+  return function () {
+    const [resourceData, { refetch }] = createResource<
+      any,
+      {
+        devToken: string
+        musicUserToken: string
+      },
+      string
+    >(
+      {
+        devToken: config.MusicKit.token,
+        musicUserToken: MusicKit.getInstance()?.musicUserToken
+      },
+      fetchRecentlyAdded
+    )
+
+    const [fullData, setFullData] = createSignal([])
+
+    createEffect(() => {
+      const data = resourceData()
+      if (data) {
+        setFullData(data.data)
+      }
+    })
+
+    const appendData = newData => {
+      setFullData(currentData => [...currentData, ...newData])
+    }
+
+    return { data: fullData, appendData, refetch }
   }
 }
 
