@@ -22,7 +22,8 @@ export const EditorialNotes = ({ data }) => {
               /\n/g,
               '<br />'
             )
-          : data().attributes.editorialNotes.standard.replace(/\n/g, '<br />')
+          : data().attributes?.editorialNotes?.standard?.replace(/\n/g, '<br />') ??
+            data().attributes?.editorialNotes?.short?.replace(/\n/g, '<br />')
       }
       onClick={handleEditorialNotesClick}
       ref={expandedRef}

@@ -52,6 +52,19 @@ export const Settings = () => {
     )
   }
 
+  const handleDisableAnimatedArtworkClick = () => {
+    setStore(
+      'app',
+      'media',
+      'disableAnimatedArtwork',
+      !store.app.media.disableAnimatedArtwork
+    )
+    localStorage.setItem(
+      'disableAnimatedArtwork',
+      store.app.media.disableAnimatedArtwork.toString()
+    )
+  }
+
   return (
     <div class={styles.settings}>
       <h1 class={styles.settings__title}>Settings</h1>
@@ -98,6 +111,14 @@ export const Settings = () => {
             type="checkbox"
             checked={store.app.media.expandEditorialNotes}
             onClick={handleEditorialNotesExpandClick}
+          />
+        </div>
+        <div class={styles.settings__setting}>
+          <h3>Disable animated artwork</h3>
+          <input
+            type="checkbox"
+            checked={store.app.media.disableAnimatedArtwork}
+            onClick={handleDisableAnimatedArtworkClick}
           />
         </div>
       </Accordion>

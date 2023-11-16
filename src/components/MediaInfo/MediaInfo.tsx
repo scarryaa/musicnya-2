@@ -4,7 +4,8 @@ import { PrimaryButton } from '../PrimaryButton/PrimaryButton'
 import styles from './MediaInfo.module.scss'
 import { mkController } from '../../api/mkController'
 import musicNote from '../../assets/music_note.png'
-import { createEffect } from 'solid-js'
+import { createEffect, onCleanup } from 'solid-js'
+import { store } from '../../stores/store'
 
 export const MediaInfo = ({ media }) => {
   console.log(media())
@@ -18,9 +19,20 @@ export const MediaInfo = ({ media }) => {
     mkController.shufflePlayMediaItem(media().id, media().type)
   }
 
+  const handleBlur = () => {
+    var video = document.getElementById('video')
+    video.pause()
+  }
+
+  const handleFocus = () => {
+    var video = document.getElementById('video')
+    video.play()
+  }
+
   createEffect(() => {
     if (
       window.Hls.isSupported() &&
+      !store.app.media.disableAnimatedArtwork &&
       media()?.attributes?.editorialVideo?.motionDetailSquare?.video
     ) {
       var video = document.getElementById('video')
@@ -34,7 +46,15 @@ export const MediaInfo = ({ media }) => {
       hls.on(window.Hls.Events.MANIFEST_PARSED, function () {
         video.play()
       })
+
+      window.addEventListener('blur', handleBlur)
+      window.addEventListener('focus', handleFocus)
     }
+  })
+
+  onCleanup(() => {
+    window.removeEventListener('blur', handleBlur)
+    window.removeEventListener('focus', handleFocus)
   })
 
   if (media().type === 'uploaded-videos' || media().type === 'music-videos') {

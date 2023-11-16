@@ -30,7 +30,8 @@ export const Album = () => {
           <MediaInfo media={currentAlbum} />
         </div>
 
-        {currentAlbum().attributes.editorialNotes?.standard &&
+        {(currentAlbum().attributes.editorialNotes?.standard ||
+          currentAlbum().attributes.editorialNotes?.short) &&
           !store.app.media.hideEditorialNotes && <EditorialNotes data={currentAlbum} />}
         <SongTable data={currentAlbum} />
       </Match>
