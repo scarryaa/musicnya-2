@@ -563,6 +563,24 @@ export class mkController {
     }
   }
 
+  static getAlbums = async (offset: string) => {
+    const instance = await mkController.getInstance()
+    if (instance) {
+      const response = await fetch(
+        `https://amp-api.music.apple.com/v1/me/library/albums?l=en-US&platform=web&extend=artistUrl&limit=100&art%5Bf%5D=url&include=catalog&offset=${offset}`,
+        {
+          headers: {
+            authorization: `Bearer ${config.MusicKit.token}`,
+            'music-user-token': config.MusicKit.musicUserToken
+          }
+        }
+      )
+      return response.json()
+    } else {
+      console.error('Failed to get albums: MusicKit instance not available')
+    }
+  }
+
   static setUpEvents = () => {
     MusicKit.getInstance().addEventListener('mediaItemStateDidChange', e => {
       console.log(e)

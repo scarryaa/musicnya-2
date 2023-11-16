@@ -1,13 +1,12 @@
 import { createSignal, createEffect, onCleanup, Switch, Match, For } from 'solid-js'
 import { mkController } from '../../api/mkController'
-import { LoadingSpinner } from '../../components/LoadingSpinner/LoadingSpinner'
 import { MediaItem } from '../../components/MediaItem/MediaItem'
 import { Utils } from '../../util/util'
-import styles from './RecentlyAdded.module.scss'
+import styles from './Albums.module.scss'
 import musicNote from '../../assets/music_note.png'
 import { MediaItemSkeleton } from '../../components/Skeletons/MediaItemSkeleton'
 
-export const RecentlyAdded = () => {
+export const Albums = () => {
   const [data, setData] = createSignal([])
   const [sentinel, setSentinel] = createSignal(null)
   const [fetchingData, setFetchingData] = createSignal(false)
@@ -18,7 +17,7 @@ export const RecentlyAdded = () => {
     if (fetchingData()) return
     setFetchingData(true)
     mkController
-      .getRecentlyAdded(data()?.length.toString())
+      .getAlbums(data()?.length.toString())
       .then(newData => {
         setData([...data(), ...newData.data])
         if (newData.data.length < 25) {
@@ -56,9 +55,9 @@ export const RecentlyAdded = () => {
 
   return (
     <div>
-      <div class={styles.recentlyAdded}>
-        <h1 class={styles.recentlyAdded__header}>Recently Added</h1>
-        <div class={styles.recentlyAdded__content}>
+      <div class={styles.albums}>
+        <h1 class={styles.albums__header}>Albums</h1>
+        <div class={styles.albums__content}>
           <For each={data()}>
             {item => (
               <MediaItem

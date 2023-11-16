@@ -17,6 +17,7 @@ import { Search } from './pages/Search/Search'
 import { Video } from './pages/Media/Video/Video'
 import { NotFound } from './components/NotFound/NotFound'
 import { RecentlyAdded } from './pages/RecentlyAdded/RecentlyAdded'
+import { Albums } from './pages/Albums/Albums'
 
 const root = document.getElementById('root')
 
@@ -44,6 +45,7 @@ render(
           <Route path="/media/videos/:id" component={Video} />
           <Route path="/search" component={Search} />
           <Route path="/recent" component={RecentlyAdded} />
+          <Route path="/albums" component={Albums} />
           <Route path="*" component={NotFound} />
         </Route>
       </Routes>
