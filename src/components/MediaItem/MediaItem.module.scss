@@ -123,8 +123,17 @@
         width: 100%;
         max-width: max-content;
 
-        &:hover {
-          text-decoration: underline;
+        &__year {
+          cursor: default;
+          text-decoration: none !important;
+        }
+
+        &__link {
+          cursor: default;
+
+          &:hover {
+            text-decoration: underline;
+          }
         }
       }
     }

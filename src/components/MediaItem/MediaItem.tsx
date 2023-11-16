@@ -11,13 +11,17 @@ export const MediaItem = ({
   title,
   artists,
   type,
-  id
+  id,
+  artistId,
+  releaseYear
 }: {
   src: string
   title?: string
   artists: string[]
   type: string
   id: string
+  artistId: string
+  releaseYear?: number
 }) => {
   const [isLoved, setIsLoved] = createSignal(false)
   const [inLibrary, setInLibrary] = createSignal(type.includes('library'))
@@ -106,7 +110,20 @@ export const MediaItem = ({
         <div class={styles.mediaItem__inner__info}>
           <div class={styles.mediaItem__inner__info__title}>{title}</div>
           <div class={styles.mediaItem__inner__info__artists}>
-            <div>{artists.join(', ')}</div>
+            {releaseYear && (
+              <span class={styles.mediaItem__inner__info__artists__year}>
+                {releaseYear}
+              </span>
+            )}
+            {artists !== null && (
+              <A
+                activeClass=""
+                class={styles.mediaItem__inner__info__artists__link}
+                href={`/media/artists/${artistId}`}
+              >
+                {artists.join(', ')}
+              </A>
+            )}
           </div>
         </div>
       </div>

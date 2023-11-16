@@ -29,12 +29,14 @@ export const SongItem = ({ item }) => {
         </div>
         <div class={styles.songItem__info}>
           <A
+            activeClass=""
             class={styles.songItem__info__title}
             href={`/media/albums/${item.relationships?.albums?.data?.[0].id}`}
           >
             {item.attributes.name}
           </A>
           <A
+            activeClass=""
             class={styles.songItem__info__artist}
             href={`/media/artists/${item.relationships?.artists?.data?.[0].id}`}
           >

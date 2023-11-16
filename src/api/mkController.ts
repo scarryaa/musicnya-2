@@ -272,6 +272,46 @@ export class mkController {
 
   // api
 
+  static favoriteArtist = async (id: string) => {
+    const instance = await mkController.getInstance()
+
+    if (instance) {
+      const response = await fetch(
+        `https://amp-api.music.apple.com/v1/me/favorites?l=en-US&platform=web&art[url]=f&ids[artists]=${id}`,
+        {
+          method: 'POST',
+          headers: {
+            authorization: `Bearer ${config.MusicKit.token}`,
+            'music-user-token': config.MusicKit.musicUserToken
+          }
+        }
+      )
+      return response
+    } else {
+      console.error('Failed to toggle artist favorite: MusicKit instance not available')
+    }
+  }
+
+  static unfavoriteArtist = async (id: string) => {
+    const instance = await mkController.getInstance()
+
+    if (instance) {
+      const response = await fetch(
+        `https://amp-api.music.apple.com/v1/me/favorites?l=en-US&platform=web&ids[artists]=${id}`,
+        {
+          method: 'DELETE',
+          headers: {
+            authorization: `Bearer ${config.MusicKit.token}`,
+            'music-user-token': config.MusicKit.musicUserToken
+          }
+        }
+      )
+      return response
+    } else {
+      console.error('Failed to toggle artist favorite: MusicKit instance not available')
+    }
+  }
+
   static addToLibrary = async (id: string, type: string) => {
     const instance = await mkController.getInstance()
     type = type.replace('library-', '')

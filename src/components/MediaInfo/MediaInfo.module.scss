@@ -75,7 +75,7 @@
     }
 
     &__artwork__video {
-      width: 250px;
+      width: 150px;
       height: 150px;
     }
   }
@@ -91,6 +91,7 @@
 
       &__artist {
         font-size: 0.8rem;
+        cursor: default;
       }
 
       &__genre {
@@ -103,11 +104,13 @@
     &__playButton {
       padding: 0.5rem;
       font-size: 0.8rem;
+      cursor: default;
     }
 
     &__shuffleButton {
       padding: 0.5rem;
       font-size: 0.8rem;
+      cursor: default;
     }
   }
 }
@@ -150,4 +153,8 @@
       }
     }
   }
+}
+
+.mediaInfo__info__text__artist {
+  cursor: default;
 }

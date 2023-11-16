@@ -8,6 +8,7 @@ import { fetchBrowse } from '../api/browse'
 import { fetchRadio } from '../api/radio'
 import { fetchVideo } from '../api/video'
 import { fetchRecentlyAdded } from '../api/recentlyAdded'
+import { fetchArtist } from '../api/artist'
 
 export const createStationStore = () => {
   return function (params: { id: string }) {
@@ -132,6 +133,22 @@ export const createRadioStore = () => {
         musicUserToken: MusicKit.getInstance()?.musicUserToken
       },
       fetchRadio
+    )
+
+    return data
+  }
+}
+
+export const createArtistStore = () => {
+  return function (params: { id: string }) {
+    const [data] = createResource(
+      () => params.id,
+      async () =>
+        await fetchArtist({
+          devToken: config.MusicKit.token,
+          musicUserToken: MusicKit.getInstance()?.musicUserToken,
+          id: params.id
+        })
     )
 
     return data

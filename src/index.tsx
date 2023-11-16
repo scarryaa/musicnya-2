@@ -18,6 +18,7 @@ import { Video } from './pages/Media/Video/Video'
 import { NotFound } from './components/NotFound/NotFound'
 import { RecentlyAdded } from './pages/RecentlyAdded/RecentlyAdded'
 import { Albums } from './pages/Albums/Albums'
+import { Artist } from './pages/Media/Artist/Artist'
 
 const root = document.getElementById('root')
 
@@ -43,6 +44,7 @@ render(
           <Route path="/media/library-playlists/:id" component={LibraryPlaylist} />
           <Route path="/media/stations/:id" component={Station} />
           <Route path="/media/videos/:id" component={Video} />
+          <Route path="media/artists/:id" component={Artist} />
           <Route path="/search" component={Search} />
           <Route path="/recent" component={RecentlyAdded} />
           <Route path="/albums" component={Albums} />

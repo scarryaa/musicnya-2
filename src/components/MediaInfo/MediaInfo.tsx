@@ -6,6 +6,7 @@ import { mkController } from '../../api/mkController'
 import musicNote from '../../assets/music_note.png'
 import { createEffect, onCleanup } from 'solid-js'
 import { store } from '../../stores/store'
+import { A } from '@solidjs/router'
 
 export const MediaInfo = ({ media }) => {
   console.log(media())
@@ -144,11 +145,19 @@ export const MediaInfo = ({ media }) => {
           <div class={styles.mediaInfo__info__text}>
             <h1 class={styles.mediaInfo__info__text__title}>{media().attributes.name}</h1>
             {media().type !== 'stations' && (
-              <h2 class={styles.mediaInfo__info__text__artist}>
+              <A
+                activeClass=""
+                class={styles.mediaInfo__info__text__artist}
+                href={
+                  media().attributes.curatorName
+                    ? `/media/curators/${media().relationships?.curator?.data?.[0]?.id}`
+                    : `/media/artists/${media().relationships?.artists?.data?.[0]?.id}`
+                }
+              >
                 {media().attributes.artistName ||
                   media().attributes.curatorName ||
                   media().relationships?.catalog?.data?.[0]?.attributes?.curatorName}
-              </h2>
+              </A>
             )}
             {media().type !== 'playlists' &&
               media().type !== 'library-playlists' &&

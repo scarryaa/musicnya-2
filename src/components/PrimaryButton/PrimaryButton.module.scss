@@ -9,6 +9,7 @@
   flex-direction: row;
   align-items: center;
   transition: background-color 0.2s ease-in-out;
+  cursor: default;
 
   &__icon {
     margin-right: 0.5rem;

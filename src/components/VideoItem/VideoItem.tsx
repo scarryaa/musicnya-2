@@ -26,7 +26,15 @@ export const VideoItem = ({ item }) => {
           </div>
         </div>
         <img
-          src={Utils.formatArtworkUrl(item.attributes.artwork.url, 300, 'webp', 'none')}
+          src={Utils.formatArtworkUrl(
+            item.attributes?.editorialArtwork?.subscriptionHero?.url ||
+              item.attributes?.editorialArtwork?.contentLogo?.url ||
+              item.attributes?.editorialArtwork?.fullscreenBackground?.url ||
+              item.attributes.artwork.url,
+            300,
+            'webp',
+            'none'
+          )}
         />
       </div>
       <div class={styles.videoItem__info}>
