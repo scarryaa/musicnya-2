@@ -4,6 +4,7 @@ import { PrimaryButton } from '../PrimaryButton/PrimaryButton'
 import styles from './MediaInfo.module.scss'
 import { mkController } from '../../api/mkController'
 import musicNote from '../../assets/music_note.png'
+import { createEffect } from 'solid-js'
 
 export const MediaInfo = ({ media }) => {
   console.log(media())
@@ -16,6 +17,25 @@ export const MediaInfo = ({ media }) => {
     e.preventDefault()
     mkController.shufflePlayMediaItem(media().id, media().type)
   }
+
+  createEffect(() => {
+    if (
+      window.Hls.isSupported() &&
+      media()?.attributes?.editorialVideo?.motionDetailSquare?.video
+    ) {
+      var video = document.getElementById('video')
+      var hls = new window.Hls()
+      hls.loadSource(media().attributes?.editorialVideo?.motionDetailSquare?.video, {
+        appData: {
+          serviceName: 'web-static-video'
+        }
+      })
+      hls.attachMedia(video)
+      hls.on(window.Hls.Events.MANIFEST_PARSED, function () {
+        video.play()
+      })
+    }
+  })
 
   if (media().type === 'uploaded-videos' || media().type === 'music-videos') {
     return (
@@ -86,6 +106,9 @@ export const MediaInfo = ({ media }) => {
   } else {
     return (
       <div class={styles.mediaInfo}>
+        {media()?.attributes?.editorialVideo?.motionDetailSquare?.video && (
+          <video id="video" class={styles.mediaInfo__artwork__video} loop={true} />
+        )}
         <img
           src={
             media().attributes.artwork?.url

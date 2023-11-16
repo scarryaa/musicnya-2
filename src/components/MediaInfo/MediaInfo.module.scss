@@ -3,14 +3,22 @@
   display: flex;
 
   &__artwork {
+    position: relative;
     border-radius: var(--app-border-radius);
     width: var(--size);
     height: var(--size);
   }
 
   &__artwork__video {
-    aspect-ratio: 1.7;
     border-radius: var(--app-border-radius);
+    width: var(--size);
+    height: var(--size);
+    position: absolute;
+    top: 0;
+    left: 1.5rem;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
   }
 
   &__info {
