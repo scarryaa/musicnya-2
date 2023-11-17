@@ -259,6 +259,12 @@
     padding-top: 1.5rem;
 
     &__info {
+      > * {
+        font-size: 0.8rem;
+      }
+    }
+
+    &__info {
       padding-left: 0.2rem;
     }
 

@@ -29,6 +29,7 @@
     position: relative;
 
     &__overlay {
+      border-radius: var(--app-border-radius);
       position: absolute;
       opacity: 0;
       background-color: rgba(0, 0, 0, 0.5);

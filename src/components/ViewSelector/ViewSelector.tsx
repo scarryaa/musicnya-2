@@ -1,4 +1,5 @@
 import { Utils } from '../../util/util'
+import { ArtistItem } from '../ArtistItem/ArtistItem'
 import { MediaItem } from '../MediaItem/MediaItem'
 import { SongItem } from '../SongItem/SongItem'
 import { VideoItem } from '../VideoItem/VideoItem'
@@ -6,7 +7,7 @@ import { VideoItem } from '../VideoItem/VideoItem'
 export const ViewSelector = ({ item, title }) => {
   switch (item.type) {
     case 'artists':
-      return <div>artist</div>
+      return <ArtistItem item={item} />
     case 'albums':
       return (
         <MediaItem

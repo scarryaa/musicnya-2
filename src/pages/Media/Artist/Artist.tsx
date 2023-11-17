@@ -83,7 +83,7 @@ export const Artist = () => {
                 class={styles.artist__artwork__info__playButton}
                 onClick={handlePlayClick}
               >
-                <Fa icon={faPlay} size="lg" />
+                <Fa icon={faPlay} size="lg" color="var(--color-white)" />
               </button>
               <h1 class={styles.artist__artwork__info__title}>
                 {currentArtist().attributes.name}
@@ -93,10 +93,14 @@ export const Artist = () => {
                   class={styles.artist__artwork__info__actions__button}
                   onClick={handleFavoriteClick}
                 >
-                  <Fa icon={isFavorited() ? faStar : faStarSolid} size="1x" />
+                  <Fa
+                    icon={isFavorited() ? faStar : faStarSolid}
+                    size="1x"
+                    color="var(--color-white)"
+                  />
                 </button>
                 <button class={styles.artist__artwork__info__actions__button}>
-                  <Fa icon={faEllipsisH} size="1x" />
+                  <Fa icon={faEllipsisH} size="1x" color="var(--color-white)" />
                 </button>
               </div>
             </div>
