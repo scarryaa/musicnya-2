@@ -1,3 +1,11 @@
+:root {
+  --editorial-notes-color: #78787a;
+}
+
+:root[data-theme='dark'] {
+  --editorial-notes-color: #b3b3b9;
+}
+
 .editorialNotes {
   color: var(--editorial-notes-color);
   margin-inline: 1.5rem;

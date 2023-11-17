@@ -1,3 +1,11 @@
+:root {
+  --artwork-background-color: #e0e0e0;
+}
+
+:root[theme='dark'] {
+  --artwork-background-color: #000000;
+}
+
 .artist {
   color: var(--app-text-color);
   --height: 60cqh;
@@ -9,7 +17,7 @@
     aspect-ratio: 1;
     object-fit: cover;
     width: 100%;
-    background-color: #141414;
+    background-color: var(--artwork-background-color);
 
     &__gradient {
       position: absolute;
@@ -26,6 +34,7 @@
       max-width: 1000px;
       margin-left: auto;
       margin-right: auto;
+      display: none;
     }
 
     &__info {
@@ -127,4 +136,8 @@
       }
     }
   }
+}
+
+.loaded {
+  display: flex;
 }

@@ -5,6 +5,7 @@ import { SongItem } from '../SongItem/SongItem'
 import { VideoItem } from '../VideoItem/VideoItem'
 
 export const ViewSelector = ({ item, title }) => {
+  console.log(item)
   switch (item.type) {
     case 'artists':
       return <ArtistItem item={item} />
