@@ -26,7 +26,13 @@ export const LibraryAlbum = () => {
     <Switch fallback={<LoadingSpinner />}>
       <Match when={albumData.state === 'ready' && currentAlbum()}>
         <div class={styles.libraryAlbum}>
-          <MediaInfo media={currentAlbum} />
+          <MediaInfo
+            media={currentAlbum}
+            artistId={
+              currentAlbum().relationships.artists.data[0].relationships?.catalog?.data[0]
+                .id
+            }
+          />
         </div>
 
         {currentAlbum().relationships.catalog.data[0].attributes.editorialNotes

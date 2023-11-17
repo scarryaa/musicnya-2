@@ -61,6 +61,9 @@ export const Albums = () => {
           <For each={data()}>
             {item => (
               <MediaItem
+                artistId={item.relationships?.catalog?.data?.[0]?.attributes.artistUrl
+                  .split('/')
+                  .pop()}
                 artists={[item.attributes.artistName]}
                 id={item.id}
                 src={Utils.formatArtworkUrl(

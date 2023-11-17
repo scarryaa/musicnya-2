@@ -8,7 +8,7 @@ import { createEffect, onCleanup } from 'solid-js'
 import { store } from '../../stores/store'
 import { A } from '@solidjs/router'
 
-export const MediaInfo = ({ media }) => {
+export const MediaInfo = ({ media, artistId }) => {
   console.log(media())
   const handlePlayClick = e => {
     e.preventDefault()
@@ -151,9 +151,12 @@ export const MediaInfo = ({ media }) => {
                 activeClass=""
                 class={styles.mediaInfo__info__text__artist}
                 href={
-                  media().attributes.curatorName
+                  media().attributes.curatorName &&
+                  media().relationships?.curator?.data?.[0]?.id
                     ? `/media/curators/${media().relationships?.curator?.data?.[0]?.id}`
-                    : `/media/artists/${media().relationships?.artists?.data?.[0]?.id}`
+                    : artistId === null
+                    ? `#`
+                    : `/media/artists/${artistId}`
                 }
               >
                 {media().attributes.artistName ||

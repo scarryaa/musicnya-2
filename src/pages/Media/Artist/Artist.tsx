@@ -14,6 +14,7 @@ import { MediaItem } from '../../../components/MediaItem/MediaItem'
 import { ViewSelector } from '../../../components/ViewSelector/ViewSelector'
 import { ArtistInfoPane } from '../../../components/ArtistInfoPane/ArtistInfoPane'
 import { RelatedArtistsPane } from '../../../components/RelatedArtistsPane/RelatedArtistsPane'
+import { contextMenu, handleMoreClick } from './ArtistContextMenu'
 
 export const Artist = () => {
   const params = useParams<{ id: string }>()
@@ -23,11 +24,13 @@ export const Artist = () => {
   const [currentArtist, setCurrentArtist] = createSignal(null)
   const [isFavorited, setIsFavorited] = createSignal(false)
   const [currentArtistBanner, setCurrentArtistBanner] = createSignal(null)
+  const [contextMenuItems, setContextMenuItems] = createSignal(null)
 
   createEffect(() => {
     setCurrentArtistBanner(null)
     const data = artistData()
     if (data && data.data && data.data.length > 0) {
+      setContextMenuItems(contextMenu(data.data[0].id, data.data[0].type, isFavorited))
       setCurrentArtist(data.data[0])
       setIsFavorited(data.data[0].attributes.inFavorites)
       setCurrentArtistBanner(
@@ -56,7 +59,9 @@ export const Artist = () => {
   }
 
   const handlePlayClick = () => {
-    mkController.setQueue(currentArtist().id, 'artists', 0)
+    mkController.setStationQueue(currentArtist().id).then(() => {
+      MusicKit.getInstance().play()
+    })
   }
 
   const handleFavoriteClick = () => {
@@ -110,7 +115,20 @@ export const Artist = () => {
                     color="var(--color-white)"
                   />
                 </button>
-                <button class={styles.artist__artwork__info__actions__button}>
+                <button
+                  class={styles.artist__artwork__info__actions__button}
+                  onClick={e =>
+                    handleMoreClick(
+                      e,
+                      currentArtist().id,
+                      currentArtist().type,
+                      isFavorited,
+                      setIsFavorited,
+                      contextMenuItems,
+                      setContextMenuItems
+                    )
+                  }
+                >
                   <Fa icon={faEllipsisH} size="1x" color="var(--color-white)" />
                 </button>
               </div>

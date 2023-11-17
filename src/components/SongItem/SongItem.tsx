@@ -8,7 +8,7 @@ import Tooltip from '../Tooltip/Tooltip'
 import { createSignal } from 'solid-js'
 import { contextMenu, handleMoreClick } from './SongItemContextMenu'
 
-export const SongItem = ({ item }) => {
+export const SongItem = ({ item, album, albumId }) => {
   const [inLibrary, setInLibrary] = createSignal(false)
   const [checkedInLibrary, setCheckedInLibrary] = createSignal(false)
   const [libraryId, setLibraryId] = createSignal(null)
@@ -108,13 +108,24 @@ export const SongItem = ({ item }) => {
           >
             {item.attributes.name}
           </A>
-          <A
-            activeClass=""
-            class={styles.songItem__info__artist}
-            href={`/media/artists/${item.relationships?.artists?.data?.[0].id}`}
-          >
-            {item.attributes.artistName}
-          </A>
+          {albumId && (
+            <A
+              activeClass=""
+              class={styles.songItem__info__artist}
+              href={`/media/albums/${item.relationships?.albums?.data?.[0].id}`}
+            >
+              {item.attributes.albumName}
+            </A>
+          )}
+          {!albumId && (
+            <A
+              activeClass=""
+              class={styles.songItem__info__artist}
+              href={`/media/artists/${item.relationships?.artists?.data?.[0].id}`}
+            >
+              {item.attributes.artistName}
+            </A>
+          )}
         </div>
       </div>
       <div class={styles.songItem__actions}>

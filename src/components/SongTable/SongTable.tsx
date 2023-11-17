@@ -20,6 +20,16 @@ export const SongTable = ({ data }) => {
   const [remainingTracks, setRemainingTracks] = createSignal(
     totalTracks - tracks()?.length ?? 0
   )
+  const [trackCount, setTrackCount] = createSignal(
+    data().attributes.trackCount || data().relationships.tracks.data.length
+  )
+  const [duration, setDuration] = createSignal(
+    Utils.formatTimeHours(
+      data()
+        .relationships.tracks.data.filter(track => track.attributes.durationInMillis)
+        .reduce((a, b) => a + b.attributes.durationInMillis, 0) / 1000
+    )
+  )
 
   createEffect(() => {
     setTracks(data().relationships.tracks.data)
@@ -50,6 +60,15 @@ export const SongTable = ({ data }) => {
                 setIsFetchingComplete(true)
                 observer.disconnect()
               }
+              setTrackCount(tracks().length)
+              setDuration(
+                Utils.formatTimeHours(
+                  tracks()
+                    .filter(track => track.attributes.durationInMillis)
+                    .reduce((a, b) => a + b.attributes.durationInMillis, 0) / 1000
+                )
+              )
+
               setRemainingTracks(totalTracks - tracks().length)
               setIsFetching(false)
             }
@@ -101,15 +120,9 @@ export const SongTable = ({ data }) => {
           </span>
         )}
         <div class={styles.album__tracks__trackCount}>
-          {data().attributes.trackCount || data().relationships.tracks.data.length} tracks
+          {trackCount()} tracks
           {', '}
-          {Utils.formatTimeHours(
-            data()
-              .relationships.tracks.data.filter(
-                track => track.attributes.durationInMillis
-              )
-              .reduce((a, b) => a + b.attributes.durationInMillis, 0) / 1000
-          )}
+          {duration()}
         </div>
         <div class={styles.album__tracks__copyright}>{data().attributes.copyright}</div>
       </div>

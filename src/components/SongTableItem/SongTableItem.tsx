@@ -19,6 +19,7 @@ export const SongTableItem = ({ track, data, index }) => {
   const [contextMenuItems, setContextMenuItems] = createSignal(
     contextMenu(track.id, 'songs', isLoved(), inLibrary(), isDisliked())
   )
+  console.log(track)
 
   return (
     <tr
@@ -96,9 +97,21 @@ export const SongTableItem = ({ track, data, index }) => {
                 </span>
               )}
             </span>
-            <div class={styles.songTableItem__title__name__artist__artist}>
+            <A
+              class={styles.songTableItem__title__name__artist__artist}
+              href={
+                data().type === 'library-albums'
+                  ? `/media/artists/${
+                      data().relationships?.catalog?.data?.[0]?.relationships?.artists
+                        ?.data?.[0]?.id
+                    }`
+                  : data().type === 'library-playlists'
+                  ? `/media/artists/${track.relationships.catalog.data[0].relationships.artists.data[0].id}`
+                  : `/media/artists/${track.relationships?.artists?.data?.[0]?.id}`
+              }
+            >
               {track.attributes.artistName}
-            </div>
+            </A>
           </div>
         </div>
       </td>

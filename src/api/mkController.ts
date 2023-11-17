@@ -1,5 +1,5 @@
 import * as config from '../../config.json'
-import { setStore } from '../stores/store'
+import { setStore, store } from '../stores/store'
 
 export class mkController {
   static isInitialized: boolean
@@ -311,6 +311,18 @@ export class mkController {
       return response
     } else {
       console.error('Failed to toggle artist favorite: MusicKit instance not available')
+    }
+  }
+
+  static setStationQueue = async (id: string) => {
+    const instance = await mkController.getInstance()
+
+    if (instance) {
+      instance.setStationQueue({ artist: [id] }).then(() => {
+        instance.play()
+      })
+    } else {
+      console.error('Failed to set station queue: MusicKit instance not available')
     }
   }
 
@@ -708,6 +720,24 @@ export class mkController {
     }
   }
 
+  static getArtist = async (id: string) => {
+    const instance = await mkController.getInstance()
+    if (instance) {
+      const response = await fetch(
+        `https://amp-api.music.apple.com/v1/catalog/${store.countryCode}/artists/${id}?l=en-US&platform=web&views=featured-release,full-albums,appears-on-albums,featured-albums,featured-on-albums,singles,compilation-albums,live-albums,latest-release,top-music-videos,similar-artists,top-songs,playlists,more-to-see&extend=centeredFullscreenBackground,artistBio,bornOrFormed,editorialArtwork,editorialVideo,isGroup,origin,inFavorites,hero&extend[playlists]=trackCount&include[songs]=albums&fields[albums]=artistName,artistUrl,artwork,contentRating,editorialArtwork,editorialVideo,name,playParams,releaseDate,url,trackCount&limit[artists:top-songs]=20&art[url]=f`,
+        {
+          headers: {
+            authorization: `Bearer ${MusicKit.getInstance().developerToken}`,
+            'music-user-token': MusicKit.getInstance().musicUserToken
+          }
+        }
+      )
+      return response.json()
+    } else {
+      console.error('Failed to get artist: MusicKit instance not available')
+    }
+  }
+
   static setUpEvents = () => {
     MusicKit.getInstance().addEventListener('mediaItemStateDidChange', e => {
       console.log(e)
@@ -751,7 +781,7 @@ export class mkController {
     if (instance) {
       return await instance.api.v3.music(`v1/me/library/playlists/${id}/tracks`, {
         limit: 100,
-        include: 'albums,catalog'
+        include: 'catalog,artists'
       })
     } else {
       console.error('Failed to get tracks for playlist: MusicKit instance not available')
@@ -763,7 +793,7 @@ export class mkController {
     if (instance) {
       return await instance.api.v3.music('v1/me/library/playlists', {
         limit: 100,
-        include: 'catalog'
+        include: 'catalog,artists,[tracks]=artists'
       })
     } else {
       console.error('Failed to get playlists: MusicKit instance not available')

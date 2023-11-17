@@ -22,7 +22,13 @@ export const ViewSelector = ({ item, title }) => {
         />
       )
     case 'songs':
-      return <SongItem item={item} />
+      return (
+        <SongItem
+          item={item}
+          album={item.attributes.albumName}
+          albumId={item.relationships?.albums.data[0].id}
+        />
+      )
     case 'playlists':
       return (
         <MediaItem
