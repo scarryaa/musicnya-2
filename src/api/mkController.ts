@@ -272,6 +272,28 @@ export class mkController {
 
   // api
 
+  static checkIfArtistIsFavorite = async (id: string) => {
+    const instance = await mkController.getInstance()
+
+    if (instance) {
+      const response = await fetch(
+        `https://amp-api.music.apple.com/v1/me/favorites?l=en-US&platform=web&ids[artists]=${id}`,
+        {
+          headers: {
+            authorization: `Bearer ${config.MusicKit.token}`,
+            'music-user-token': config.MusicKit.musicUserToken
+          },
+          cache: 'no-cache'
+        }
+      )
+      return response.json()
+    } else {
+      console.error(
+        'Failed to check if artist is favorite: MusicKit instance not available'
+      )
+    }
+  }
+
   static favoriteArtist = async (id: string) => {
     const instance = await mkController.getInstance()
 
@@ -351,6 +373,35 @@ export class mkController {
       return response
     } else {
       console.error('Failed to remove from library: MusicKit instance not available')
+    }
+  }
+
+  static addTrackToPlaylist = async (id: string, type: string, playlistID: string) => {
+    const instance = await mkController.getInstance()
+    const strippedType = type.replace('library-', '')
+
+    if (instance) {
+      const response = await fetch(
+        `https://amp-api.music.apple.com/v1/me/library/playlists/${playlistID}/tracks?l=en-US&platform=web`,
+        {
+          method: 'POST',
+          headers: {
+            authorization: `Bearer ${config.MusicKit.token}`,
+            'music-user-token': config.MusicKit.musicUserToken
+          },
+          body: JSON.stringify({
+            data: [
+              {
+                id,
+                type: strippedType
+              }
+            ]
+          })
+        }
+      )
+      return response
+    } else {
+      console.error('Failed to add track to playlist: MusicKit instance not available')
     }
   }
 
@@ -524,6 +575,42 @@ export class mkController {
       return response
     } else {
       console.error('Failed to love: MusicKit instance not available')
+    }
+  }
+
+  static getAlbumFromMediaItem = async (id: string, type: string) => {
+    const instance = await mkController.getInstance()
+    const strippedType = type.replace('library-', '')
+    if (instance) {
+      const response = await fetch(
+        type.includes('library-')
+          ? `https://amp-api.music.apple.com/v1/me/library/${strippedType}/${id}/albums?l=en-US&platform=web&fields=url,artwork,name`
+          : `https://amp-api.music.apple.com/v1/catalog/us/${strippedType}/${id}/albums?l=en-US&platform=web&fields=url,artwork,name`,
+        {
+          headers: {
+            authorization: `Bearer ${config.MusicKit.token}`,
+            'music-user-token': config.MusicKit.musicUserToken
+          }
+        }
+      ).then(response => response.json())
+
+      if (type.includes('library-')) {
+        const response2 = await fetch(
+          `https://amp-api.music.apple.com/v1/me/library/albums/${response.data[0].id}/catalog?l=en-US&platform=web&fields=url`,
+          {
+            headers: {
+              authorization: `Bearer ${config.MusicKit.token}`,
+              'music-user-token': config.MusicKit.musicUserToken
+            }
+          }
+        )
+
+        return response2.json()
+      }
+
+      return response
+    } else {
+      console.error('Failed to get album: MusicKit instance not available')
     }
   }
 

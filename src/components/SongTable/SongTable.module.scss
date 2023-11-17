@@ -29,15 +29,6 @@
     color: var(--app-text-light-color);
   }
 
-  &__table__row__unreleased {
-    opacity: 0.5;
-    pointer-events: none !important;
-
-    .album__tracks__table__time {
-      display: none;
-    }
-  }
-
   &__trackCount {
     font-size: 0.9rem;
     font-weight: 500;
@@ -69,26 +60,6 @@
     }
 
     tbody tr {
-      &:hover {
-        background-color: var(--table-hover-color) !important;
-
-        .album__tracks__table__number__playButton {
-          display: flex;
-        }
-
-        .album__tracks__table__number__number {
-          visibility: hidden;
-        }
-
-        .album__tracks__table__time__moreButton {
-          display: flex;
-        }
-
-        .album__tracks__table__time span {
-          visibility: hidden;
-        }
-      }
-
       &:nth-child(even) {
         background-color: var(--table-even-color);
       }
@@ -100,55 +71,11 @@
       &:hover {
         cursor: default;
       }
-
-      .album__tracks__table__album__link {
-        font-size: 0.9rem;
-        display: -webkit-box;
-        -webkit-line-clamp: 1;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-        width: 100%;
-        max-width: max-content;
-        margin-right: 1rem;
-        color: var(--app-text-light-color);
-
-        &:hover {
-          cursor: default;
-          text-decoration: underline;
-        }
-      }
     }
 
     &__number {
       padding-left: 1.5rem;
       position: relative;
-
-      &__popularity {
-        position: absolute;
-        top: 12px;
-        left: -2px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 50%;
-        padding: 1rem;
-        width: 2rem;
-        height: 2rem;
-      }
-
-      &__playButton {
-        top: 12px;
-        left: 14px;
-        position: absolute;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 50%;
-        padding: 1rem;
-        width: 2rem;
-        height: 2rem;
-        display: none;
-      }
     }
 
     &__title {
@@ -158,63 +85,6 @@
       flex-shrink: 0;
       gap: 1rem;
       padding-right: 1rem;
-
-      &__name__artist {
-        &__name {
-          padding-top: 0.4rem;
-          display: -webkit-box;
-          -webkit-line-clamp: 1;
-          -webkit-box-orient: vertical;
-          overflow: hidden;
-          width: 100%;
-          max-width: max-content;
-
-          &__explicit__text {
-            font-weight: 500;
-            font-size: 0.8rem;
-            color: var(--app-text-light-color);
-            padding-bottom: 0.2rem;
-            padding-left: 0.2rem;
-            -webkit-line-clamp: 1;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            width: 100%;
-            max-width: max-content;
-
-            &:hover {
-              text-decoration: underline;
-            }
-          }
-        }
-
-        &__artist {
-          font-weight: 500;
-          font-size: 0.9rem;
-          color: var(--app-text-light-color);
-          padding-bottom: 0.2rem;
-          display: -webkit-box;
-          -webkit-line-clamp: 1;
-          -webkit-box-orient: vertical;
-          overflow: hidden;
-          width: 100%;
-          max-width: max-content;
-
-          &:hover {
-            text-decoration: underline;
-          }
-        }
-      }
-
-      &__albumCover {
-        img {
-          width: 40px;
-          height: 40px;
-          min-width: 40px;
-          min-height: 40px;
-          border-radius: var(--app-border-radius);
-          object-fit: cover;
-        }
-      }
     }
 
     &__time {
@@ -223,32 +93,12 @@
       color: var(--app-text-light-color);
       text-align: right;
       position: relative;
-
-      &__moreButton {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 50%;
-        padding: 1rem;
-        width: 2rem;
-        height: 2rem;
-        position: absolute;
-        top: -6px;
-        right: 10px;
-        display: none;
-      }
     }
   }
 }
 
 @container main (max-width: 540px) {
   th {
-    .album__tracks__table__album {
-      display: none;
-    }
-  }
-
-  td {
     .album__tracks__table__album {
       display: none;
     }
@@ -275,59 +125,6 @@
 
       &__album {
         display: none;
-      }
-
-      &__number {
-        font-size: 0.8rem;
-
-        &__popularity {
-          top: 10px;
-          left: -1px;
-          padding: 0.5rem;
-          width: 1.5rem;
-          height: 1.5rem;
-        }
-
-        &__playButton {
-          top: 12px;
-          left: 16px;
-          padding: 0.5rem;
-          width: 1.5rem;
-          height: 1.5rem;
-        }
-      }
-
-      &__title {
-        &__name__artist {
-          &__name {
-            font-size: 0.8rem;
-          }
-
-          &__artist {
-            font-size: 0.7rem;
-          }
-        }
-
-        &__albumCover {
-          img {
-            width: 30px;
-            height: 30px;
-            min-width: 30px;
-            min-height: 30px;
-          }
-        }
-      }
-
-      &__time {
-        font-size: 0.7rem;
-
-        &__moreButton {
-          top: -4px;
-          right: 8px;
-          padding: 0.5rem;
-          width: 1.5rem;
-          height: 1.5rem;
-        }
       }
     }
   }

@@ -110,6 +110,12 @@
     &__addToLibrary {
       display: none;
       margin-right: 0.8rem;
+
+      &__disabled {
+        cursor: default;
+        opacity: 0.5;
+        pointer-events: none;
+      }
     }
 
     &__moreButton {

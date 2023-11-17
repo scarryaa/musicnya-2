@@ -1,7 +1,7 @@
 .skeletonItem {
   --size: 14cqw;
-  --maxSize: 14rem;
-  --minSize: 12rem;
+  --minSize: 160px;
+  --maxSize: 200px;
   display: flex;
   position: relative;
   flex-direction: column;
@@ -11,25 +11,37 @@
   height: var(--size);
   max-height: var(--maxSize);
   min-height: var(--minSize);
+  border-radius: var(--app-border-radius);
 
   animation: shimmer 1.2s linear infinite forwards;
 }
 
 .skeletonArtwork {
-  width: 200px;
+  position: relative;
+  width: var(--size);
+  height: var(--size);
+  max-width: var(--maxSize);
+  max-height: var(--maxSize);
+  min-width: var(--minSize);
+  min-height: var(--minSize);
+  object-fit: cover;
+  border-radius: var(--app-border-radius);
+  user-select: none;
 }
 
 .skeletonText {
+  margin-top: 10px;
   display: flex;
   flex-direction: column;
   gap: 10px;
+  border-radius: var(--app-border-radius);
 }
 
 .skeletonTitle,
 .skeletonArtist {
   height: 10px;
   background-color: var(--skeleton-background-color);
-  border-radius: 2px;
+  border-radius: var(--app-border-radius);
 
   &:last-child {
     width: 60%;
