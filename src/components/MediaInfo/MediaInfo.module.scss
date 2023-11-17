@@ -1,6 +1,7 @@
 .mediaInfo {
   --size: 200px;
   display: flex;
+  position: relative;
 
   &__artwork {
     position: relative;
@@ -15,7 +16,7 @@
     height: var(--size);
     position: absolute;
     top: 0;
-    left: 1.5rem;
+    left: 0rem;
     right: 0;
     bottom: 0;
     z-index: 1;
@@ -77,6 +78,7 @@
     &__artwork__video {
       width: 150px;
       height: 150px;
+      border-radius: var(--app-border-radius);
     }
   }
 
@@ -121,9 +123,22 @@
     flex-direction: column;
   }
 
-  .mediaInfo__artwork {
+  .mediaInfo__artwork__container {
+    position: relative;
     width: 100%;
     height: 100%;
+
+    .mediaInfo__artwork {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .mediaInfo__artwork__video {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: var(--app-border-radius);
   }
 
   .mediaInfo__info__text__artist {

@@ -127,20 +127,22 @@ export const MediaInfo = ({ media }) => {
   } else {
     return (
       <div class={styles.mediaInfo}>
-        {media()?.attributes?.editorialVideo?.motionDetailSquare?.video && (
-          <video id="video" class={styles.mediaInfo__artwork__video} loop={true} />
-        )}
-        <img
-          src={
-            media().attributes.artwork?.url
-              ? Utils.formatArtworkUrl(media()?.attributes?.artwork?.url, 300)
-              : Utils.formatArtworkUrl(
-                  media().relationships.tracks.data[0].attributes.artwork.url,
-                  300
-                ) || musicNote
-          }
-          class={styles.mediaInfo__artwork}
-        />
+        <div class={styles.mediaInfo__artwork__container}>
+          <img
+            src={
+              media().attributes.artwork?.url
+                ? Utils.formatArtworkUrl(media()?.attributes?.artwork?.url, 300)
+                : Utils.formatArtworkUrl(
+                    media().relationships.tracks.data[0].attributes.artwork.url,
+                    300
+                  ) || musicNote
+            }
+            class={styles.mediaInfo__artwork}
+          />
+          {media()?.attributes?.editorialVideo?.motionDetailSquare?.video && (
+            <video id="video" class={styles.mediaInfo__artwork__video} loop={true} />
+          )}
+        </div>
         <div class={styles.mediaInfo__info}>
           <div class={styles.mediaInfo__info__text}>
             <h1 class={styles.mediaInfo__info__text__title}>{media().attributes.name}</h1>
