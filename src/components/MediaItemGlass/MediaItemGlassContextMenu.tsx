@@ -419,8 +419,14 @@ export const handleContextMenu = async (
   // Open the context menu immediately with disabled items
   setStore('app', 'contextMenu', {
     open: true,
-    x: e.clientX,
-    y: e.clientY,
+    x:
+      e.clientX + 150 >
+      (store.app.rightSidebar.isExpanded
+        ? window.innerWidth - 300
+        : window.innerWidth - 50)
+        ? e.clientX - 160
+        : e.clientX,
+    y: e.clientY + 200 > window.innerHeight ? e.clientY - 200 : e.clientY,
     items: contextMenuItems(),
     id: id,
     type: type,
@@ -469,8 +475,14 @@ export const handleMoreClick = (
   // Open the context menu immediately with disabled items
   setStore('app', 'contextMenu', {
     open: true,
-    x: e.clientX,
-    y: e.clientY,
+    x:
+      e.clientX + 150 >
+      (store.app.rightSidebar.isExpanded
+        ? window.innerWidth - 500
+        : window.innerWidth - 50)
+        ? e.clientX - 160
+        : e.clientX,
+    y: e.clientY + 200 > window.innerHeight ? e.clientY - 200 : e.clientY,
     items: contextMenuItems(),
     id: id,
     type: type,
