@@ -6,10 +6,37 @@ import { store } from '../../stores/store'
 import { Utils } from '../../util/util'
 import styles from './SongTableItem.module.scss'
 import { createSignal } from 'solid-js'
+import {
+  contextMenu,
+  handleContextMenu,
+  handleMoreClick
+} from './SongTableItemContextMenu'
 
 export const SongTableItem = ({ track, data, index }) => {
+  const [isLoved, setIsLoved] = createSignal(false)
+  const [isDisliked, setIsDisliked] = createSignal(false)
+  const [inLibrary, setInLibrary] = createSignal(false)
+  const [contextMenuItems, setContextMenuItems] = createSignal(
+    contextMenu(track.id, 'songs', isLoved(), inLibrary(), isDisliked())
+  )
+
   return (
     <tr
+      onContextMenu={e =>
+        handleContextMenu(
+          e,
+          track.id,
+          'songs',
+          isLoved,
+          setIsLoved,
+          inLibrary,
+          setInLibrary,
+          isDisliked,
+          setIsDisliked,
+          contextMenuItems,
+          setContextMenuItems
+        )
+      }
       onDblClick={() => mkController.setQueue(data().id, data().type, index)}
       class={
         data().type === 'albums' &&
@@ -98,7 +125,24 @@ export const SongTableItem = ({ track, data, index }) => {
       <td>
         <div class={styles.songTableItem__time}>
           <span>{Utils.formatTime(track.attributes.durationInMillis / 1000)}</span>
-          <div class={styles.songTableItem__time__moreButton}>
+          <div
+            class={styles.songTableItem__time__moreButton}
+            onClick={e =>
+              handleMoreClick(
+                e,
+                track.id,
+                'songs',
+                isLoved,
+                setIsLoved,
+                inLibrary,
+                setInLibrary,
+                isDisliked,
+                setIsDisliked,
+                contextMenuItems,
+                setContextMenuItems
+              )
+            }
+          >
             <Fa icon={faEllipsisH} size="1x" color="var(--app-text-color)" />
           </div>
         </div>

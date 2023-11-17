@@ -164,6 +164,10 @@ const updateContextMenu = async (
   // Update context menu after resolving fetches
   let updatedItems = contextMenu(id, type, isLoved(), inLibrary(), isDisliked())
 
+  const newId = await mkController.checkIfInLibrary(id, type).then(data => {
+    return data.data[0]?.relationships?.library?.data?.[0]?.id
+  })
+
   const inLibraryState = type.includes('library')
     ? true
     : await mkController
@@ -200,7 +204,7 @@ const updateContextMenu = async (
     updatedItems[0].icon = inLibraryState ? faMinus : faPlus
     updatedItems[0].action = () =>
       inLibraryState
-        ? mkController.removeFromLibrary(id, type)
+        ? mkController.removeFromLibrary(newId, type)
         : mkController.addToLibrary(id, type)
     updatedItems[0].tooltip = inLibraryState ? 'Remove from Library' : 'Add to Library'
     updatedItems[0].disabled = false
