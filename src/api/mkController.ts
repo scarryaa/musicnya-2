@@ -4,6 +4,7 @@ import { setStore, store } from '../stores/store'
 export class mkController {
   static isInitialized: boolean
   static isErrored: boolean
+  static isAuthorized: boolean
 
   static getInstance = async () => {
     if (!mkController.isInitialized) {
@@ -19,6 +20,7 @@ export class mkController {
         .then(music => {
           music.authorize().then(() => {
             console.log('Authorized')
+            mkController.isAuthorized = true
             mkController.setUpEvents()
           })
 
@@ -37,7 +39,13 @@ export class mkController {
   static authorize = async () => {
     const instance = await mkController.getInstance()
     if (instance) {
-      await instance.authorize()
+      try {
+        await instance.authorize()
+      } catch (e) {
+        mkController.isErrored = true
+        mkController.isAuthorized = false
+        console.error('Failed to authorize: ', e)
+      }
     } else {
       console.error('Failed to authorize: MusicKit instance not available')
     }
@@ -46,7 +54,15 @@ export class mkController {
   static setVolume = async (volume: number) => {
     const instance = await mkController.getInstance()
     if (instance) {
-      instance.volume = volume
+      try {
+        if (volume > 100) {
+          throw new Error('Volume cannot be greater than 100')
+        }
+
+        instance.volume = volume
+      } catch (e) {
+        console.error('Error setting volume: ', e)
+      }
     } else {
       console.error('Failed to set volume: MusicKit instance not available')
     }
@@ -60,40 +76,44 @@ export class mkController {
   ) => {
     const instance = await mkController.getInstance()
 
-    const shouldStrip = type === 'stations'
-    const isUploadedVideo = type === 'uploaded-videos'
-    const isMusicVideo = type === 'music-videos'
-    let strippedType = shouldStrip ? 'station' : type.replace('library-', '')
+    try {
+      const shouldStrip = type === 'stations'
+      const isUploadedVideo = type === 'uploaded-videos'
+      const isMusicVideo = type === 'music-videos'
+      let strippedType = shouldStrip ? 'station' : type.replace('library-', '')
 
-    if (isUploadedVideo) {
-      strippedType = 'uploadedVideos'
-      array = true
-    }
-
-    if (isMusicVideo) {
-      strippedType = 'musicVideos'
-      array = false
-    }
-
-    if (instance) {
-      console.log('Playing media item: ', strippedType, id)
-      instance.setQueue({
-        [strippedType]: shouldStrip ? id : array ? [id] : id,
-        startPlaying: type === 'stations' ? false : true,
-        startWith: shouldShuffle ? Math.floor(Math.random() * 100) : 0
-      })
-
-      // special case for stations, since they don't start playing automatically for some reason
-      if (type === 'stations') {
-        instance.play()
+      if (isUploadedVideo) {
+        strippedType = 'uploadedVideos'
+        array = true
       }
 
-      if (!shouldShuffle) {
-        instance.shuffleMode = 0
-        setStore('shuffleMode', false)
+      if (isMusicVideo) {
+        strippedType = 'musicVideos'
+        array = false
       }
-    } else {
-      console.error('Failed to play media item: MusicKit instance not available')
+
+      if (instance) {
+        console.log('Playing media item: ', strippedType, id)
+        instance.setQueue({
+          [strippedType]: shouldStrip ? id : array ? [id] : id,
+          startPlaying: type === 'stations' ? false : true,
+          startWith: shouldShuffle ? Math.floor(Math.random() * 100) : 0
+        })
+
+        // special case for stations, since they don't start playing automatically for some reason
+        if (type === 'stations') {
+          instance.play()
+        }
+
+        if (!shouldShuffle) {
+          instance.shuffleMode = 0
+          setStore('shuffleMode', false)
+        }
+      } else {
+        console.error('Failed to play media item: MusicKit instance not available')
+      }
+    } catch (error) {
+      console.error('Error playing media item: ', error)
     }
   }
 
@@ -503,18 +523,22 @@ export class mkController {
     const strippedType = type.replace('library-', '')
 
     if (instance) {
-      const response = await fetch(
-        type.includes('library-')
-          ? `https://amp-api.music.apple.com/v1/me/library/${strippedType}/${id}/catalog?fields=url`
-          : `https://amp-api.music.apple.com/v1/catalog/us/${type}/${id}?l=en-US&platform=web&fields=url`,
-        {
-          headers: {
-            authorization: `Bearer ${config.MusicKit.token}`,
-            'music-user-token': config.MusicKit.musicUserToken
+      try {
+        const response = await fetch(
+          type.includes('library-')
+            ? `https://amp-api.music.apple.com/v1/me/library/${strippedType}/${id}/catalog?fields=url`
+            : `https://amp-api.music.apple.com/v1/catalog/us/${type}/${id}?l=en-US&platform=web&fields=url`,
+          {
+            headers: {
+              authorization: `Bearer ${config.MusicKit.token}`,
+              'music-user-token': config.MusicKit.musicUserToken
+            }
           }
-        }
-      )
-      return response.json()
+        )
+        return response.json()
+      } catch (error) {
+        console.error('Error fetching share link: ', error)
+      }
     } else {
       console.error('Failed to get share link: MusicKit instance not available')
     }

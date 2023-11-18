@@ -1,11 +1,11 @@
 import { createStore } from 'solid-js/store'
-import { platform } from '@tauri-apps/api/os'
+import { TauriService } from '../api/tauri'
 
 export const [store, setStore] = createStore({
   app: {
     title: 'musicnya 2',
     version: '1.0.0',
-    platform: await platform(),
+    platform: 'unknown',
     navigate: null,
     isMaximized: false,
     isDarkMode: localStorage.getItem('darkMode') === 'true' || false,
@@ -71,3 +71,10 @@ export const [store, setStore] = createStore({
     parentID: ''
   }
 })
+
+async function initializeStore() {
+  const platformInfo = await TauriService.getPlatformInfo()
+  setStore('app', 'platform', platformInfo)
+}
+
+initializeStore()
