@@ -31,7 +31,9 @@ export const [store, setStore] = createStore({
       items: [],
       index: 0,
       shuffle: false,
-      repeat: false
+      repeat: false,
+      nextUpIndex: 0,
+      remainingStartIndex: 1
     },
     contextMenu: {
       x: -10000,

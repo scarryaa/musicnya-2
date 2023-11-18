@@ -5,6 +5,7 @@
 
   --queue-scrollbar-background-color: rgba(255, 255, 255, 0.2);
   --queue-scrollbar-thumb-background-color: rgba(255, 255, 255, 0.4);
+  --queue-drag-border-color: rgba(255, 255, 255, 0.6);
 }
 
 :root[theme='dark'] {
@@ -46,6 +47,10 @@
   &__queue {
     padding-inline: 1rem;
     margin-block: 0.2rem;
+  }
+
+  &__item {
+    border: 2px solid transparent;
   }
 
   &__header {
@@ -98,4 +103,12 @@
       }
     }
   }
+}
+
+.dropTargetTop {
+  border-top: 2px solid var(--queue-drag-border-color);
+}
+
+.dropTargetBottom {
+  border-bottom: 2px solid var(--queue-drag-border-color);
 }

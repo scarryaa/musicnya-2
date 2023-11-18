@@ -346,6 +346,25 @@ export class mkController {
     }
   }
 
+  static moveQueueItem = async (from: number, to: number) => {
+    const instance = await mkController.getInstance()
+
+    if (instance) {
+      instance.queue._queueItems.splice(
+        to,
+        0,
+        instance.queue._queueItems.splice(from, 1)[0]
+      )
+      instance.queue._reindex()
+
+      setStore('app', 'queue', {
+        items: instance.queue.items
+      })
+    } else {
+      console.error('Failed to move queue item: MusicKit instance not available')
+    }
+  }
+
   static unfavoriteArtist = async (id: string) => {
     const instance = await mkController.getInstance()
 
@@ -777,9 +796,22 @@ export class mkController {
       })
     })
 
+    MusicKit.getInstance().addEventListener('nowPlayingItemDidChange', e => {
+      setStore('app', 'queue', {
+        index: MusicKit.getInstance().queue.position,
+        nextUpIndex: MusicKit.getInstance().queue.position + 1,
+        remainingStartIndex: MusicKit.getInstance().queue.position + 1
+      })
+      console.log(store.app.queue.nextUpIndex)
+      console.log(MusicKit.getInstance().queue.position)
+    })
+
     MusicKit.getInstance().addEventListener('queueItemsDidChange', e => {
       setStore('app', 'queue', {
-        items: e
+        items: e,
+        index: store.app.queue.index,
+        nextUpIndex: MusicKit.getInstance().queue.position + 1,
+        remainingStartIndex: store.app.queue.remainingStartIndex
       })
     })
 
