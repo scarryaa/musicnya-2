@@ -120,6 +120,7 @@
         overflow: hidden;
         width: 100%;
         max-width: max-content;
+        cursor: default;
 
         &:hover {
           text-decoration: underline;
@@ -175,7 +176,7 @@
       font-size: 0.8rem;
 
       &__popularity {
-        top: 10px;
+        top: 12px;
         left: -1px;
         padding: 0.5rem;
         width: 1.5rem;

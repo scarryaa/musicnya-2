@@ -13,7 +13,9 @@ export const MediaItem = ({
   type,
   id,
   artistId,
-  releaseYear
+  releaseYear,
+  curator,
+  curatorId
 }: {
   src: string
   title?: string
@@ -22,6 +24,8 @@ export const MediaItem = ({
   id: string
   artistId: string
   releaseYear?: number
+  curator?: string
+  curatorId?: string
 }) => {
   const [isLoved, setIsLoved] = createSignal(false)
   const [inLibrary, setInLibrary] = createSignal(type.includes('library'))
@@ -124,6 +128,18 @@ export const MediaItem = ({
                 {artists.join(', ')}
               </A>
             )}
+            {curator &&
+              (curatorId ? (
+                <A
+                  activeClass=""
+                  class={styles.mediaItem__inner__info__curator_link}
+                  href={`/media/artists/${curatorId}`}
+                >
+                  {curator}
+                </A>
+              ) : (
+                <span class={styles.mediaItem__inner__info__curator}>{curator}</span>
+              ))}
           </div>
         </div>
       </div>

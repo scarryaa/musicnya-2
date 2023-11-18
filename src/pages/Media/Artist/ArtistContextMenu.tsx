@@ -19,7 +19,7 @@ export const contextMenu = (id, type, isFavorited) => [
     disabled: false
   },
   {
-    icon: faStar,
+    icon: faStarSolid,
     action: () => {},
     isQuickAction: true,
     tooltip: 'Favorite',
