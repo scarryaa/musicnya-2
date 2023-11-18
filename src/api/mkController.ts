@@ -777,6 +777,12 @@ export class mkController {
       })
     })
 
+    MusicKit.getInstance().addEventListener('queueItemsDidChange', e => {
+      setStore('app', 'queue', {
+        items: e
+      })
+    })
+
     MusicKit.getInstance().addEventListener('playbackStateDidChange', e => {
       setStore('isPlaying', e.state === 2)
       setStore('isPaused', e.state === 3)

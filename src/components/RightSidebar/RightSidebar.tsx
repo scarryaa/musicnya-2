@@ -6,6 +6,7 @@ import { RightSidebarButton } from './RightSidebarButton'
 import { setStore, store } from '../../stores/store'
 import { A } from '@solidjs/router'
 import { Overlay } from './RightSidebarOverlay'
+import { Queue } from '../Queue/Queue'
 
 export const RightSidebar = () => {
   const [screenWidth, setScreenWidth] = createSignal(window.innerWidth)
@@ -132,11 +133,7 @@ export const RightSidebar = () => {
             <RightSidebarButton tooltip="Settings" icon={faCog} />
           </A>
           <div class={styles.rightSidebar__panel}>
-            {store.app.rightSidebar.activePanel === 'queue' && (
-              <div class={styles.rightSidebar__panel__queue}>
-                <h1>Queue</h1>
-              </div>
-            )}
+            {store.app.rightSidebar.activePanel === 'queue' && <Queue />}
             {store.app.rightSidebar.activePanel === 'lyrics' && (
               <div class={styles.rightSidebar__panel__lyrics}>
                 <h1>Lyrics</h1>

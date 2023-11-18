@@ -27,6 +27,12 @@ export const [store, setStore] = createStore({
       disableAnimatedArtwork:
         localStorage.getItem('disableAnimatedArtwork') === 'true' || false
     },
+    queue: {
+      items: [],
+      index: 0,
+      shuffle: false,
+      repeat: false
+    },
     contextMenu: {
       x: -10000,
       y: -10000,

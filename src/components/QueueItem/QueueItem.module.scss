@@ -1,0 +1,59 @@
+:root {
+  --queue-button-background-color: transparent;
+  --queue-button-hover-background-color: rgba(255, 255, 255, 0.15);
+  --queue-button-active-background-color: rgba(255, 255, 255, 0.25);
+}
+
+:root[theme='dark'] {
+  --queue-button-background-color: transparent;
+  --queue-button-hover-background-color: rgba(255, 255, 255, 0.15);
+  --queue-button-active-background-color: rgba(255, 255, 255, 0.25);
+}
+
+.queueItem {
+  display: flex;
+  padding: 0.5rem;
+  padding-inline: 1rem;
+  flex-direction: row;
+
+  &:hover {
+    background-color: var(--queue-button-hover-background-color);
+  }
+
+  &:active {
+    background-color: var(--queue-button-active-background-color);
+  }
+
+  &__artwork {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--app-border-radius);
+    background-size: cover;
+    background-position: center;
+  }
+
+  &__info {
+    margin-left: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 140px;
+
+    &__title {
+      font-size: 0.9rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    &__artist {
+      margin-top: -0.3rem;
+      font-size: 0.8rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+  }
+}

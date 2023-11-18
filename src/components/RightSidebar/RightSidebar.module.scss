@@ -1,3 +1,13 @@
+:root {
+  --queue-scrollbar-background-color: #e4e4e4;
+  --queue-scrollbar-thumb-background-color: #c7c7c7;
+}
+
+:root[theme='dark'] {
+  --queue-scrollbar-background-color: #949494;
+  --queue-scrollbar-thumb-background-color: #3946ce;
+}
+
 .rightSidebar {
   width: var(--app-sidebar-width);
   height: calc(100% - var(--app-footer-height));
@@ -7,9 +17,15 @@
   right: 0;
   z-index: 1000;
   box-sizing: border-box;
-  overflow-y: hidden;
-  overflow-x: hidden;
+  overflow: hidden;
   padding-top: 40px;
+
+  &__innerContainer {
+    height: calc(100vh - var(--app-footer-height) - 1.3rem);
+    overflow: visible;
+    padding-right: 5px;
+    position: relative;
+  }
 
   &__buttonSettings {
     position: absolute;
@@ -34,11 +50,23 @@
     display: flex;
     flex-direction: column;
     height: 100%;
-    overflow-y: overlay;
     overflow-x: hidden;
     row-gap: 0.3rem;
     position: relative;
     margin-top: -20px;
     z-index: 1;
+    overflow-y: hidden;
+
+    ::-webkit-scrollbar {
+      background-color: var(--queue-scrollbar-background-color) !important;
+      z-index: 999;
+      width: 8px;
+      border-radius: 4px;
+
+      &-thumb {
+        background-color: var(--queue-scrollbar-thumb-background-color) !important;
+        border-radius: 4px;
+      }
+    }
   }
 }
