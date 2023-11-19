@@ -1,3 +1,5 @@
+import { store } from '../stores/store'
+
 export class Utils {
   static formatTime = (time: number) => {
     // format time to mm:ss from ms
@@ -72,5 +74,69 @@ export class Utils {
 
   static parseSelectedDefaultPage = (selection: string) => {
     return selection.replace('Listen Now', 'listen').toLowerCase()
+  }
+
+  static stripWrittenBy = (lyrics: string) => {
+    const writtenByRegex = /<songwriter>.*?<\/songwriter>/gs
+    const writtenBy = lyrics.match(writtenByRegex)?.[0].replace(/<\/?[^>]+(>|$)/g, '')
+    return writtenBy
+  }
+
+  static parseTTMLtoJS(ttmlString: string) {
+    const parser = new DOMParser()
+    const xmlDoc = parser.parseFromString(ttmlString, 'text/xml')
+
+    const divElements = xmlDoc.getElementsByTagName('div')
+    const scriptArray = []
+
+    Array.from(divElements).forEach(div => {
+      const begin = div.getAttribute('begin')
+      const end = div.getAttribute('end')
+
+      const pElements = div.getElementsByTagName('p')
+      const lines = []
+
+      Array.from(pElements).forEach(p => {
+        const lineBegin = p.getAttribute('begin')
+        const lineEnd = p.getAttribute('end')
+        const text = p.textContent
+
+        lines.push({
+          begin: lineBegin,
+          end: lineEnd,
+          text: text.trim()
+        })
+      })
+
+      scriptArray.push({
+        begin: begin,
+        end: end,
+        lines: lines
+      })
+    })
+
+    return scriptArray
+  }
+
+  static getLyricsBeginning = (lyrics: string) => {
+    // get content of first <div begin=""> tag
+    const beginRegex = /<div begin=".*?">/gs
+    const begin = lyrics.match(beginRegex)?.[0].split('"')[1]
+    return begin
+  }
+
+  static timecodeToMs = timecode => {
+    if (!timecode) return 0
+    const parts = timecode.toString().split(':')
+    const seconds = parts.pop()
+    const minutes = parts.length > 0 ? parseInt(parts.pop(), 10) : 0
+    const hours = parts.length > 0 ? parseInt(parts.pop(), 10) : 0
+
+    // Split seconds and milliseconds
+    const [secs, millis] = seconds.split('.')
+    const totalSeconds = parseInt(secs, 10) + minutes * 60 + hours * 3600
+    const totalMillis = millis ? parseInt(millis, 10) : 0
+
+    return totalSeconds * 1000 + totalMillis
   }
 }

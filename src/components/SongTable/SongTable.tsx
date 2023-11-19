@@ -23,6 +23,7 @@ export const SongTable = ({ data }) => {
   const [trackCount, setTrackCount] = createSignal(
     data().attributes.trackCount || data().relationships.tracks.data.length
   )
+  console.log(data())
   const [duration, setDuration] = createSignal(
     Utils.formatTimeHours(
       data()
@@ -70,8 +71,9 @@ export const SongTable = ({ data }) => {
               )
 
               setRemainingTracks(totalTracks - tracks().length)
-              setIsFetching(false)
             }
+            setIsFetching(false)
+            setIsFetchingComplete(true)
           },
           err => {
             console.error(err)

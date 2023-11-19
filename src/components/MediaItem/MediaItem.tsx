@@ -5,6 +5,7 @@ import { mkController } from '../../api/mkController'
 import { A } from '@solidjs/router'
 import { createSignal } from 'solid-js'
 import { contextMenu, handleContextMenu, handleMoreClick } from './MediaItemContextMenu'
+import Tooltip from '../Tooltip/Tooltip'
 
 export const MediaItem = ({
   src,
@@ -112,7 +113,12 @@ export const MediaItem = ({
           <img src={src} />
         </div>
         <div class={styles.mediaItem__inner__info}>
-          <div class={styles.mediaItem__inner__info__title}>{title}</div>
+          <div
+            class={styles.mediaItem__inner__info__title}
+            use:Tooltip={['bottom', title, true, 500]}
+          >
+            {title}
+          </div>
           <div class={styles.mediaItem__inner__info__artists}>
             {releaseYear && (
               <span class={styles.mediaItem__inner__info__artists__year}>
@@ -125,7 +131,9 @@ export const MediaItem = ({
                 class={styles.mediaItem__inner__info__artists__link}
                 href={`/media/artists/${artistId}`}
               >
-                {artists.join(', ')}
+                <span use:Tooltip={['bottom', artists.join(', '), true, 500]}>
+                  {artists.join(', ')}
+                </span>
               </A>
             )}
             {curator &&
@@ -135,10 +143,15 @@ export const MediaItem = ({
                   class={styles.mediaItem__inner__info__curator_link}
                   href={`/media/artists/${curatorId}`}
                 >
-                  {curator}
+                  <span use:Tooltip={['bottom', curator, true, 500]}>{curator}</span>
                 </A>
               ) : (
-                <span class={styles.mediaItem__inner__info__curator}>{curator}</span>
+                <span
+                  use:Tooltip={['bottom', curator, true, 500]}
+                  class={styles.mediaItem__inner__info__curator}
+                >
+                  {curator}
+                </span>
               ))}
           </div>
         </div>

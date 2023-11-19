@@ -1,5 +1,6 @@
 import * as config from '../../config.json'
 import { setStore, store } from '../stores/store'
+import { Utils } from '../util/util'
 
 export class mkController {
   static isInitialized: boolean
@@ -310,6 +311,24 @@ export class mkController {
   }
 
   // api
+
+  static getLyrics = async (id: string) => {
+    const instance = await mkController.getInstance()
+    if (instance) {
+      const response = await fetch(
+        `https://amp-api.music.apple.com/v1/catalog/us/songs/${id}/lyrics?l=en-US&platform=web`,
+        {
+          headers: {
+            authorization: `Bearer ${MusicKit.getInstance().developerToken}`,
+            'music-user-token': MusicKit.getInstance().musicUserToken
+          }
+        }
+      )
+      return response.json()
+    } else {
+      console.error('Failed to get lyrics: MusicKit instance not available')
+    }
+  }
 
   static checkIfArtistIsFavorite = async (id: string) => {
     const instance = await mkController.getInstance()
@@ -765,7 +784,7 @@ export class mkController {
       const response = await fetch(
         type.includes('library-')
           ? `https://amp-api.music.apple.com/v1/me/library/playlists/${id}/tracks?offset=${offset}&l=en-US&platform=web&limit=100&include=albums,catalog`
-          : `https://amp-api.music.apple.com/v1/catalog/us/playlists/${id}/tracks?offset=${offset}&l=en-US&platform=web&limit=100&include=albums`,
+          : `https://amp-api.music.apple.com/v1/catalog/us/playlists/${id}/tracks?offset=${offset}&l=en-US&platform=web&limit=100&include=artists`,
         {
           headers: {
             authorization: `Bearer ${config.MusicKit.token}`,
@@ -855,8 +874,11 @@ export class mkController {
   }
 
   static setUpEvents = () => {
-    MusicKit.getInstance().addEventListener('mediaItemStateDidChange', e => {
-      console.log(e)
+    MusicKit.getInstance().addEventListener('mediaItemStateDidChange', async e => {
+      const rawLyricsData = await this.getLyrics(e.id).then((response: any) => {
+        return response.data[0].attributes.ttml
+      })
+
       setStore('currentTrack', {
         id: e.id,
         title: e.attributes.name,
@@ -865,8 +887,15 @@ export class mkController {
         artwork: e.attributes.artwork.url,
         type: e.type,
         parentType: e.container.type,
-        parentID: e.container.id
+        parentID: e.container.id,
+        lyrics: {
+          lyricsArray: Utils.parseTTMLtoJS(rawLyricsData),
+          writtenBy: Utils.stripWrittenBy(rawLyricsData),
+          begin: Utils.getLyricsBeginning(rawLyricsData)
+        }
       })
+
+      console.log(store.currentTrack.lyrics.lyricsArray)
     })
 
     MusicKit.getInstance().addEventListener('nowPlayingItemDidChange', e => {
@@ -875,8 +904,6 @@ export class mkController {
         nextUpIndex: MusicKit.getInstance().queue.position + 1,
         remainingStartIndex: MusicKit.getInstance().queue.position + 1
       })
-      console.log(store.app.queue.nextUpIndex)
-      console.log(MusicKit.getInstance().queue.position)
     })
 
     MusicKit.getInstance().addEventListener('queueItemsDidChange', e => {

@@ -54,7 +54,7 @@ export const fetchMoreTracks = async ({
     })
     .catch(e => {
       console.error(e)
-      return e
+      throw e
     })
 }
 

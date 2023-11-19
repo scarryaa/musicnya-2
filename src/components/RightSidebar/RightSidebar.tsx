@@ -7,6 +7,7 @@ import { setStore, store } from '../../stores/store'
 import { A } from '@solidjs/router'
 import { Overlay } from './RightSidebarOverlay'
 import { Queue } from '../Queue/Queue'
+import { Lyrics } from '../Lyrics/Lyrics'
 
 export const RightSidebar = () => {
   const [screenWidth, setScreenWidth] = createSignal(window.innerWidth)
@@ -134,11 +135,7 @@ export const RightSidebar = () => {
           </A>
           <div class={styles.rightSidebar__panel}>
             {store.app.rightSidebar.activePanel === 'queue' && <Queue />}
-            {store.app.rightSidebar.activePanel === 'lyrics' && (
-              <div class={styles.rightSidebar__panel__lyrics}>
-                <h1>Lyrics</h1>
-              </div>
-            )}
+            {store.app.rightSidebar.activePanel === 'lyrics' && <Lyrics />}
           </div>
         </div>
       </div>

@@ -78,7 +78,14 @@ export const [store, setStore] = createStore({
     artwork: '',
     type: '',
     parentType: '',
-    parentID: ''
+    parentID: '',
+    lyrics: {
+      lyricsArray: [],
+      writtenBy: '',
+      begin: ''
+    },
+    duration: 0,
+    currentTime: 0
   }
 })
 

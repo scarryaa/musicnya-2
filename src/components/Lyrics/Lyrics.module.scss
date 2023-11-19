@@ -1,0 +1,71 @@
+.lyrics {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: calc(100vh - var(--app-footer-height) - 1.3rem);
+  padding-inline: 1rem;
+  overflow-y: overlay;
+
+  :not(.activeLyric) {
+    span {
+      color: rgba(255, 255, 255, 0.5);
+    }
+  }
+
+  &__content {
+    &__ellipsis,
+    &__text {
+      color: #fff;
+      font-size: 1rem;
+      line-height: 1.5;
+      font-weight: 700;
+      font-family: 'Inter';
+      padding-right: 1rem;
+      font-size: clamp(14px, 10cqw, 22px);
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      text-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+
+      > * {
+        font-family: 'Inter';
+
+        > * {
+          margin-block: 1rem;
+        }
+      }
+    }
+
+    &__writtenBy {
+      color: #fff !important;
+      filter: none !important;
+      font-size: 0.8rem;
+      font-weight: bold;
+      margin-top: 1rem;
+      font-family: 'Inter';
+      text-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+
+      &__text {
+        filter: none !important;
+        color: #fff !important;
+        font-size: 0.8rem;
+        font-weight: 400;
+      }
+    }
+
+    &:last-child {
+      padding-bottom: 2rem;
+    }
+  }
+}
+
+.blur {
+  span {
+    filter: blur(1px);
+  }
+}
+
+.activeLyric {
+  color: #fff !important;
+  opacity: 1 !important;
+  filter: none !important;
+}
