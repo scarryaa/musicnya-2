@@ -59,7 +59,7 @@ export const Artist = () => {
   }
 
   const handlePlayClick = () => {
-    mkController.setStationQueue(currentArtist().id).then(() => {
+    mkController.setStationQueue(currentArtist().id, 'artists').then(() => {
       MusicKit.getInstance().play()
     })
   }

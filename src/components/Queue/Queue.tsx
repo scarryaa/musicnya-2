@@ -6,6 +6,7 @@ import Fa from 'solid-fa'
 import { faInfinity } from '@fortawesome/free-solid-svg-icons'
 import { mkController } from '../../api/mkController'
 import { Utils } from '../../util/util'
+import Tooltip from '../Tooltip/Tooltip'
 
 export const Queue = () => {
   const [queueItems, setQueueItems] = createSignal(store.app.queue.items)
@@ -78,12 +79,34 @@ export const Queue = () => {
     setDropTarget(null)
   }
 
+  const handleClearClick = () => {
+    mkController.clearQueue()
+  }
+
+  const handleAutoplayClick = () => {
+    mkController.toggleAutoplay(!store.app.queue.autoplay)
+    localStorage.setItem('autoplay', JSON.stringify(!store.app.queue.autoplay))
+  }
+
   return (
     <div class={styles.queue}>
       <div class={styles.queue__header}>
-        <button class={styles.queue__header__clear}>Clear</button>
-        <button class={styles.queue__header__autoplayButton}>
-          <Fa icon={faInfinity} />
+        <button class={styles.queue__header__clear} onClick={handleClearClick}>
+          Clear
+        </button>
+        <button
+          class={styles.queue__header__autoplayButton}
+          onClick={handleAutoplayClick}
+          use:Tooltip={['bottom', 'Toggle Autoplay']}
+        >
+          <Fa
+            icon={faInfinity}
+            color={
+              store.app.queue.autoplay
+                ? 'var(--queue-autoplay-enabled-color)'
+                : 'var(--color-black)'
+            }
+          />
         </button>
       </div>
 
@@ -123,7 +146,10 @@ export const Queue = () => {
                       'sr'
                     )}
                   >
-                    <QueueItem item={item} />
+                    <QueueItem
+                      item={item}
+                      index={index() + store.app.queue.remainingStartIndex}
+                    />
                   </div>
                 )}
               </For>

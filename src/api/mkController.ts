@@ -22,6 +22,8 @@ export class mkController {
             console.log('Authorized')
             mkController.isAuthorized = true
             mkController.setUpEvents()
+            music.autoplayEnabled = store.app.queue.autoplay
+            music._autoplayEnabled = store.app.queue.autoplay
           })
 
           config.MusicKit.musicUserToken = music.musicUserToken
@@ -334,15 +336,26 @@ export class mkController {
     }
   }
 
-  static setStationQueue = async (id: string) => {
+  static setStationQueue = async (id: string, type: string) => {
     const instance = await mkController.getInstance()
 
+    const strippedType = type.substring(0, type.length - 1)
     if (instance) {
-      instance.setStationQueue({ artist: [id] }).then(() => {
+      instance.setStationQueue({ [strippedType]: [id] }).then(() => {
         instance.play()
       })
     } else {
       console.error('Failed to set station queue: MusicKit instance not available')
+    }
+  }
+
+  static clearQueue = async () => {
+    const instance = await mkController.getInstance()
+
+    if (instance) {
+      instance.clearQueue()
+    } else {
+      console.error('Failed to clear queue: MusicKit instance not available')
     }
   }
 
@@ -461,6 +474,28 @@ export class mkController {
     const strippedType = type.replace('library-', '')
 
     if (instance) {
+      if (type === 'songs') {
+        const response = await fetch(
+          `https://amp-api.music.apple.com/v1/me/library/playlists/${playlistID}/tracks?l=en-US&platform=web`,
+          {
+            method: 'POST',
+            headers: {
+              authorization: `Bearer ${config.MusicKit.token}`,
+              'music-user-token': config.MusicKit.musicUserToken
+            },
+            body: JSON.stringify({
+              data: [
+                {
+                  id,
+                  type: strippedType
+                }
+              ]
+            })
+          }
+        )
+        return response
+      }
+
       const tracks = await fetch(
         type.includes('library-')
           ? `https://amp-api.music.apple.com/v1/me/library/${strippedType}/${id}/tracks?l=en-US&platform=web&limit=100`
@@ -778,6 +813,27 @@ export class mkController {
       return response.json()
     } else {
       console.error('Failed to get artist: MusicKit instance not available')
+    }
+  }
+
+  static toggleAutoplay = async (autoplay: boolean) => {
+    const instance = await mkController.getInstance()
+    if (instance) {
+      setStore('app', 'queue', 'autoplay', autoplay)
+      instance.autoplayEnabled = autoplay
+      instance._autoplayEnabled = autoplay
+      console.log(instance.autoplayEnabled)
+    } else {
+      console.error('Failed to toggle autoplay: MusicKit instance not available')
+    }
+  }
+
+  static changeToIndex = async (index: number) => {
+    const instance = await mkController.getInstance()
+    if (instance) {
+      instance.changeToMediaAtIndex(index)
+    } else {
+      console.error('Failed to change to index: MusicKit instance not available')
     }
   }
 

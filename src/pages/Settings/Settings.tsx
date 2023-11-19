@@ -6,12 +6,22 @@ import styles from './Settings.module.scss'
 
 export const Settings = () => {
   const defaultPageOptions = ['Home', 'Listen Now', 'Browse', 'Radio', 'Search']
+  const tooltipDelayOptions = ['0', '250', '500', '750', '1000']
   const [selectedOption, setSelectedOption] = createSignal(store.app.general.defaultPage)
+  const [selectedTooltipDelayOption, setSelectedTooltipDelayOption] = createSignal(
+    store.app.general.tooltipDelay.toString()
+  )
 
   const handleSelect = (option: string) => {
     setSelectedOption(option)
     setStore('app', 'general', 'defaultPage', option)
     localStorage.setItem('defaultPage', option)
+  }
+
+  const handleTooltipDelaySelect = (option: string) => {
+    setSelectedTooltipDelayOption(option)
+    setStore('app', 'general', 'tooltipDelay', parseInt(option))
+    localStorage.setItem('tooltipDelay', option)
   }
 
   const handleDarkModeClick = () => {
@@ -70,7 +80,7 @@ export const Settings = () => {
       <h1 class={styles.settings__title}>Settings</h1>
       <Accordion title="General">
         <div class={styles.settings__setting}>
-          <h3>Default page</h3>
+          <span>Default page</span>
           <Select
             options={defaultPageOptions}
             selected={selectedOption}
@@ -78,17 +88,25 @@ export const Settings = () => {
           />
         </div>
         <div class={styles.settings__setting}>
-          <h3>Hide link tiles</h3>
+          <span>Hide link tiles</span>
           <input
             type="checkbox"
             checked={store.app.media.hideLinkTiles}
             onClick={handleHideLinkTilesClick}
           />
         </div>
+        <div class={styles.settings__setting}>
+          <span>Tooltip show delay (where applicable)</span>
+          <Select
+            options={tooltipDelayOptions}
+            selected={selectedTooltipDelayOption}
+            onSelectedChange={handleTooltipDelaySelect}
+          />
+        </div>
       </Accordion>
       <Accordion title="Visual">
         <div class={styles.settings__setting}>
-          <h3>Enable dark mode</h3>
+          <span>Enable dark mode</span>
           <input
             type="checkbox"
             checked={store.app.isDarkMode}
@@ -98,7 +116,7 @@ export const Settings = () => {
       </Accordion>
       <Accordion title="Media Page">
         <div class={styles.settings__setting}>
-          <h3>Always hide editorial notes</h3>
+          <span>Always hide editorial notes</span>
           <input
             type="checkbox"
             checked={store.app.media.hideEditorialNotes}
@@ -106,7 +124,7 @@ export const Settings = () => {
           />
         </div>
         <div class={styles.settings__setting}>
-          <h3>Always expand editorial notes</h3>
+          <span>Always expand editorial notes</span>
           <input
             type="checkbox"
             checked={store.app.media.expandEditorialNotes}
@@ -114,7 +132,7 @@ export const Settings = () => {
           />
         </div>
         <div class={styles.settings__setting}>
-          <h3>Disable animated artwork</h3>
+          <span>Disable animated artwork</span>
           <input
             type="checkbox"
             checked={store.app.media.disableAnimatedArtwork}

@@ -12,7 +12,7 @@ export const contextMenu = (id, type, isFavorited) => [
   {
     icon: faSatelliteDish,
     action: () => {
-      mkController.setStationQueue(id)
+      mkController.setStationQueue(id, 'artists')
     },
     isQuickAction: true,
     tooltip: 'Create Station',

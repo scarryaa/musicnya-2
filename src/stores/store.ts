@@ -17,7 +17,8 @@ export const [store, setStore] = createStore({
       activePanel: ''
     },
     general: {
-      defaultPage: localStorage.getItem('defaultPage') || 'home'
+      defaultPage: localStorage.getItem('defaultPage') || 'home',
+      tooltipDelay: Number.parseInt(localStorage.getItem('tooltipDelay')) ?? 500
     },
     media: {
       hideEditorialNotes: localStorage.getItem('hideEditorialNotes') === 'true' || false,
@@ -28,6 +29,7 @@ export const [store, setStore] = createStore({
         localStorage.getItem('disableAnimatedArtwork') === 'true' || false
     },
     queue: {
+      autoplay: localStorage.getItem('autoplay') === 'true' || false,
       items: [],
       index: 0,
       shuffle: false,

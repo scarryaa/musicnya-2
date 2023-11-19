@@ -6,7 +6,7 @@ import { A } from '@solidjs/router'
 import { mkController } from '../../api/mkController'
 import Tooltip from '../Tooltip/Tooltip'
 import { createSignal } from 'solid-js'
-import { contextMenu, handleMoreClick } from './SongItemContextMenu'
+import { contextMenu, handleContextMenu, handleMoreClick } from './SongItemContextMenu'
 
 export const SongItem = ({ item, album, albumId }) => {
   const [inLibrary, setInLibrary] = createSignal(false)
@@ -67,7 +67,7 @@ export const SongItem = ({ item, album, albumId }) => {
       class={styles.songItem}
       onMouseEnter={handleMouseOver}
       onContextMenu={e =>
-        handleMoreClick(
+        handleContextMenu(
           e,
           item.id,
           'songs',

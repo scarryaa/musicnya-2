@@ -13,6 +13,8 @@ let local = createMutable({
 })
 
 // create container
+let tooltipDelay = 0
+let openTimeoutId
 let tooltip
 let portal = (
   <div
@@ -80,6 +82,12 @@ export default function Tooltip(related, at, wrap) {
       } else {
         title = at[1]
         showTooltip = at[2]
+        tooltipDelay =
+          typeof at[3] === 'number'
+            ? at[3]
+            : typeof at[4] === 'number'
+            ? at[4]
+            : tooltipDelay
         at = at[0]
       }
     } else {
@@ -89,14 +97,15 @@ export default function Tooltip(related, at, wrap) {
   })
 
   function open() {
-    update(related, at, title, wrap, showTooltip)
-
-    if (typeof showTooltip === 'function' ? showTooltip() : true) {
-      local.open = true
-      tooltip.style.setProperty('display', 'block')
-      tooltip.style.setProperty('opacity', '1')
-      tooltip.style.setProperty('transform', 'translateY(0)')
-    }
+    openTimeoutId = setTimeout(() => {
+      update(related, at, title, wrap, showTooltip)
+      if (typeof showTooltip === 'function' ? showTooltip() : true) {
+        local.open = true
+        tooltip.style.setProperty('display', 'block')
+        tooltip.style.setProperty('opacity', '1')
+        tooltip.style.setProperty('transform', 'translateY(0)')
+      }
+    }, tooltipDelay)
   }
 
   related.addEventListener('mouseover', open)
@@ -118,6 +127,7 @@ function closeListener(e) {
 addEventListener('blur', closeListener)
 
 function close() {
+  clearTimeout(openTimeoutId)
   local.open = false
   tooltip.style.setProperty('opacity', '0')
   tooltip.style.setProperty('transform', 'translateY(-10px)')

@@ -9,7 +9,8 @@ import {
   faInfoCircle,
   faMinus,
   faHeart as faHeartSolid,
-  faThumbsDown as faThumbsDownSolid
+  faThumbsDown as faThumbsDownSolid,
+  faSatelliteDish
 } from '@fortawesome/free-solid-svg-icons'
 import { mkController } from '../../api/mkController'
 import { store, setStore } from '../../stores/store'
@@ -98,6 +99,20 @@ export const contextMenu = (id, type, isLoved, inLibrary, isDisliked) => [
     },
     isQuickAction: false,
     label: 'Go to Artist',
+    onMouseOver: () => {
+      setStore('app', 'subContextMenu', {
+        open: false
+      })
+    }
+  },
+  {
+    icon: faSatelliteDish,
+    action: () => {
+      mkController.setStationQueue(id, 'songs')
+    },
+    isQuickAction: false,
+    label: 'Create Station',
+    disabled: false,
     onMouseOver: () => {
       setStore('app', 'subContextMenu', {
         open: false

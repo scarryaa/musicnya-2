@@ -42,9 +42,9 @@
       justify-self: flex-start;
       text-align: left;
       max-width: 100%;
+      cursor: default;
 
       &:hover {
-        cursor: default;
         text-decoration: underline;
       }
     }
