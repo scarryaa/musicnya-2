@@ -14,7 +14,7 @@ export const QueueItem = ({ item, index }) => {
   const [isDisliked, setIsDisliked] = createSignal(false)
   const [inLibrary, setInLibrary] = createSignal(false)
   const [contextMenuItems, setContextMenuItems] = createSignal(
-    contextMenu(item.id, 'songs', isLoved(), inLibrary(), isDisliked())
+    contextMenu(item.id, 'songs', isLoved(), inLibrary(), isDisliked(), index)
   )
 
   const handleDoubleClick = e => {
@@ -73,7 +73,8 @@ export const QueueItem = ({ item, index }) => {
           isDisliked,
           setIsDisliked,
           contextMenuItems,
-          setContextMenuItems
+          setContextMenuItems,
+          index
         )
       }
     >

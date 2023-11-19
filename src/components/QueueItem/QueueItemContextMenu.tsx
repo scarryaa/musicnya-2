@@ -10,12 +10,13 @@ import {
   faMinus,
   faHeart as faHeartSolid,
   faThumbsDown as faThumbsDownSolid,
-  faSatelliteDish
+  faSatelliteDish,
+  faX
 } from '@fortawesome/free-solid-svg-icons'
 import { mkController } from '../../api/mkController'
 import { store, setStore } from '../../stores/store'
 
-export const contextMenu = (id, type, isLoved, inLibrary, isDisliked) =>
+export const contextMenu = (id, type, isLoved, inLibrary, isDisliked, index) =>
   type.includes('stations')
     ? [
         {
@@ -204,6 +205,15 @@ export const contextMenu = (id, type, isLoved, inLibrary, isDisliked) =>
           tooltip: 'Play Last'
         },
         {
+          icon: faX,
+          action: () => {
+            mkController.removeFromQueue(id)
+          },
+          isQuickAction: false,
+          disabled: false,
+          label: 'Remove from Queue'
+        },
+        {
           icon: faHeadphones,
           isQuickAction: false,
           label: 'Add to Playlist',
@@ -324,10 +334,11 @@ const updateContextMenu = async (
   setContextMenuItems,
   setInLibrary,
   setIsLoved,
-  setIsDisliked
+  setIsDisliked,
+  index
 ) => {
   // Update context menu after resolving fetches
-  let updatedItems = contextMenu(id, type, isLoved(), inLibrary(), isDisliked())
+  let updatedItems = contextMenu(id, type, isLoved(), inLibrary(), isDisliked(), index)
 
   const inLibraryState = type.includes('library')
     ? true
@@ -419,7 +430,8 @@ export const handleContextMenu = async (
   isDisliked: () => boolean,
   setIsDisliked: (value: boolean) => void,
   contextMenuItems: () => any,
-  setContextMenuItems: (value: any) => void
+  setContextMenuItems: (value: any) => void,
+  index
 ) => {
   // Open the context menu immediately with disabled items
   setStore('app', 'contextMenu', {
@@ -458,7 +470,8 @@ export const handleContextMenu = async (
     setContextMenuItems,
     setInLibrary,
     setIsLoved,
-    setIsDisliked
+    setIsDisliked,
+    index
   )
 }
 
@@ -473,7 +486,8 @@ export const handleMoreClick = (
   isDisliked: () => boolean,
   setIsDisliked: (value: boolean) => void,
   contextMenuItems: () => any,
-  setContextMenuItems: (value: any) => void
+  setContextMenuItems: (value: any) => void,
+  index
 ) => {
   e.preventDefault()
   e.stopPropagation()
@@ -505,6 +519,7 @@ export const handleMoreClick = (
     setContextMenuItems,
     setInLibrary,
     setIsLoved,
-    setIsDisliked
+    setIsDisliked,
+    index
   )
 }

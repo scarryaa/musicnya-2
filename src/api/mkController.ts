@@ -292,6 +292,23 @@ export class mkController {
     }
   }
 
+  static removeFromQueue = async (id: number) => {
+    console.log('removing from queue: ', id)
+    const instance = await mkController.getInstance()
+    if (instance) {
+      setStore('app', 'queue', {
+        items: store.app.queue.items.filter((item: any) => item.id !== id)
+      })
+      instance.queue._queueItems = instance.queue._queueItems.filter(
+        (item: any) => item.item.id !== id
+      )
+
+      instance.queue._reindex()
+    } else {
+      console.error('Failed to remove from queue: MusicKit instance not available')
+    }
+  }
+
   // api
 
   static checkIfArtistIsFavorite = async (id: string) => {

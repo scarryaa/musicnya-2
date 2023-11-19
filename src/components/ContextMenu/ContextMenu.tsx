@@ -69,7 +69,7 @@ export function ContextMenu(): JSX.Element {
                   item.disabled ? 'disabled' : ''
                 }`}
                 onclick={!item.disabled ? item.action : undefined}
-                use:Tooltip={['bottom', item.tooltip]}
+                use:Tooltip={['bottom', item.tooltip, true, 0]}
                 aria-disabled={item.disabled}
               >
                 <Fa icon={item.icon} size="1x" color="var(--app-text-color)" />

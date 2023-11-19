@@ -58,6 +58,7 @@
         }
       }
     }
+
     img {
       border-radius: var(--app-border-radius);
       width: 100%;
@@ -70,6 +71,9 @@
   }
 
   &__info {
+    position: relative;
+    max-width: 100%;
+
     &__title {
       margin-top: 0.3rem;
       font-size: 0.8rem;
@@ -77,8 +81,8 @@
       -webkit-line-clamp: 1;
       -webkit-box-orient: vertical;
       overflow: hidden;
-      max-width: max-content;
-      width: 100%;
+      width: max-content;
+      max-width: 100%;
     }
   }
 }
