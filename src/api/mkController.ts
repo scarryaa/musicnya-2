@@ -281,7 +281,6 @@ export class mkController {
   }
 
   static setQueue = async (id: any, type: string, index: number) => {
-    console.log(id, type, index)
     const instance = await mkController.getInstance()
     instance.shuffleMode = 0
     if (instance) {
@@ -890,12 +889,10 @@ export class mkController {
         parentID: e.container.id,
         lyrics: {
           lyricsArray: Utils.parseTTMLtoJS(rawLyricsData),
-          writtenBy: Utils.stripWrittenBy(rawLyricsData),
+          writtenByArray: Utils.stripWrittenBy(rawLyricsData),
           begin: Utils.getLyricsBeginning(rawLyricsData)
         }
       })
-
-      console.log(store.currentTrack.lyrics.lyricsArray)
     })
 
     MusicKit.getInstance().addEventListener('nowPlayingItemDidChange', e => {

@@ -22,10 +22,9 @@ export const Lyrics = () => {
   )
 
   createEffect(() => {
-    lyricsPane.querySelectorAll('.lyric-line').forEach(line => {
+    lyricsPane?.querySelectorAll('.lyric-line').forEach(line => {
       line.addEventListener('click', e => {
         const begin = e.target.getAttribute('data-begin')
-        console.log(begin)
         mkController.seekToTime(Utils.timecodeToMs(begin) / 1000)
       })
 
@@ -63,14 +62,14 @@ export const Lyrics = () => {
         }}
       >
         <div class={styles.lyrics__content}>
-          {store.currentTime <= store.currentTrack.lyrics.begin && (
+          {store.currentTime.toString() <= store.currentTrack.lyrics.begin && (
             <p class={styles.lyrics__content__ellipsis}>...</p>
           )}
           <div class={styles.lyrics__content__text} innerHTML={innerHTML()} />
           <div class={styles.lyrics__content__writtenBy}>
             <p>Written by:</p>
             <span class={styles.lyrics__content__writtenBy__text}>
-              {store.currentTrack.lyrics.writtenBy}
+              {store.currentTrack.lyrics.writtenByArray.join(', ')}
             </span>
           </div>
         </div>

@@ -78,7 +78,11 @@ export class Utils {
 
   static stripWrittenBy = (lyrics: string) => {
     const writtenByRegex = /<songwriter>.*?<\/songwriter>/gs
-    const writtenBy = lyrics.match(writtenByRegex)?.[0].replace(/<\/?[^>]+(>|$)/g, '')
+    let writtenBy = lyrics.match(writtenByRegex).map(written => written.trim())
+
+    // remove <songwriter> tags from all lyrics
+    writtenBy = writtenBy?.map(written => written.replace(/<\/?songwriter>/g, ''))
+
     return writtenBy
   }
 

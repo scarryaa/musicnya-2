@@ -81,7 +81,7 @@ export const [store, setStore] = createStore({
     parentID: '',
     lyrics: {
       lyricsArray: [],
-      writtenBy: '',
+      writtenByArray: [],
       begin: ''
     },
     duration: 0,
