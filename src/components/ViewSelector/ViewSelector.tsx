@@ -16,7 +16,13 @@ export const ViewSelector = ({ item, title }) => {
           artists={null}
           releaseYear={item.attributes.releaseDate.slice(0, 4)}
           id={item.id}
-          src={Utils.formatArtworkUrl(item.attributes.artwork.url, 300, 'webp', 'sr')}
+          src={Utils.formatArtworkUrl(
+            item.attributes.artwork.url,
+            300,
+            300,
+            'webp',
+            'sr'
+          )}
           title={item.attributes.name}
           type="albums"
         />
@@ -35,7 +41,13 @@ export const ViewSelector = ({ item, title }) => {
           artistId={null}
           artists={[item.attributes.artistName ?? item.attributes.curatorName]}
           id={item.id}
-          src={Utils.formatArtworkUrl(item.attributes.artwork.url, 300, 'webp', 'sr')}
+          src={Utils.formatArtworkUrl(
+            item.attributes.artwork.url,
+            300,
+            300,
+            'webp',
+            'sr'
+          )}
           title={item.attributes.name}
           type="playlists"
         />

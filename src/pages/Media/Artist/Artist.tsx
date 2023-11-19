@@ -38,6 +38,7 @@ export const Artist = () => {
           data.data[0].attributes.editorialArtwork.url ||
             data.data[0].attributes.artwork.url,
           500,
+          500,
           'webp',
           'none'
         )

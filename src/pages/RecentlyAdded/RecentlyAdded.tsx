@@ -66,6 +66,7 @@ export const RecentlyAdded = () => {
                 id={item.id}
                 src={Utils.formatArtworkUrl(
                   item.attributes?.artwork?.url || musicNote,
+                  400,
                   400
                 )}
                 title={item.attributes.name}

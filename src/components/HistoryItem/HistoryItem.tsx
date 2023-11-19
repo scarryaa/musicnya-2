@@ -88,7 +88,7 @@ export const HistoryItem = ({ item, index }) => {
         </div>
         <img
           class={styles.historyItem__artwork__container__artwork}
-          src={Utils.formatArtworkUrl(item.attributes.artwork.url, 40, 'webp', 'sr')}
+          src={Utils.formatArtworkUrl(item.attributes.artwork.url, 40, 40, 'webp', 'sr')}
         />
       </div>
       <div class={styles.historyItem__info}>

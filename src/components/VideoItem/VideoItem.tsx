@@ -32,6 +32,7 @@ export const VideoItem = ({ item }) => {
               item.attributes?.editorialArtwork?.fullscreenBackground?.url ||
               item.attributes.artwork.url,
             300,
+            300,
             'webp',
             'none'
           )}

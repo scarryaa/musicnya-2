@@ -16,7 +16,7 @@ export const Modal = () => {
 
     // wait for the animation to finish
     setTimeout(() => {
-      setStore('app', 'modal', 'open', false)
+      setStore('app', 'modal', { open: false, type: '', id: '' })
       modalContent?.classList.remove(styles['--popOut'])
       modalOverlay?.classList.remove(styles['--fadeOut'])
     }, 200)
@@ -43,9 +43,7 @@ export const Modal = () => {
             {store.app.modal.type === 'curators' && (
               <Curator curatorId={store.app.modal.id} />
             )}
-            {store.app.modal.type === 'playlists' && (
-              <Playlist playlistId={store.app.modal.id} />
-            )}
+            {store.app.modal.type === 'playlists' && <Playlist />}
             {store.app.modal.type === 'albums' && <Album albumId={store.app.modal.id} />}
           </div>
         </div>

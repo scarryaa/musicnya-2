@@ -9,7 +9,7 @@ export const ArtistItem = ({ item }) => {
         <div class={styles.artistItem__artwork__container__overlay}></div>
         <img
           class={styles.artistItem__artwork__container__artwork}
-          src={Utils.formatArtworkUrl(item.attributes.artwork.url, 200, 'webp')}
+          src={Utils.formatArtworkUrl(item.attributes.artwork.url, 200, 200, 'webp')}
         />
       </div>
       <div class={styles.artistItem__name}>{item.attributes.name}</div>

@@ -89,7 +89,7 @@ export const QueueItem = ({ item, index }) => {
         </div>
         <img
           class={styles.queueItem__artwork__container__artwork}
-          src={Utils.formatArtworkUrl(item.attributes.artwork.url, 40, 'webp', 'sr')}
+          src={Utils.formatArtworkUrl(item.attributes.artwork.url, 40, 40, 'webp', 'sr')}
         />
       </div>
       <div class={styles.queueItem__info}>

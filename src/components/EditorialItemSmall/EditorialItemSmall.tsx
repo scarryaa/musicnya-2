@@ -112,6 +112,7 @@ export const EditorialItemSmall = ({ item }) => {
               item.relationships?.contents?.data?.[0]?.attributes?.editorialArtwork
                 ?.subscriptionHero?.url,
             1000,
+            1000,
             'webp',
             'none'
           )}

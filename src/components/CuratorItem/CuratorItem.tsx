@@ -28,7 +28,9 @@ export const CuratorItem = ({ item }) => {
             <Fa icon={faEllipsisH} size="1x" color="white" />
           </div>
         </div>
-        <img src={Utils.formatArtworkUrl(item.attributes.artwork.url, 300, 'webp')} />
+        <img
+          src={Utils.formatArtworkUrl(item.attributes.artwork.url, 300, 300, 'webp')}
+        />
       </div>
       <div class={styles.curatorItem__info}>
         <div class={styles.curatorItem__info__name}>{item.attributes.name}</div>

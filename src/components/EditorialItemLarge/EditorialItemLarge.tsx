@@ -85,6 +85,7 @@ export const EditorialItemLarge = ({ item }) => {
               editorialCard
             ].editorialArtwork.superHeroWide.url.replace('sr', ''),
             1000,
+            1000,
             'webp',
             'none'
           )}

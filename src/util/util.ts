@@ -54,12 +54,13 @@ export class Utils {
 
   static formatArtworkUrl = (
     url: string,
-    size: number,
+    width: number,
+    height: number = width,
     format: 'png' | 'jpg' | 'webp' = 'webp',
     crop: 'sr' | 'cc' | 'none' = 'sr'
   ) => {
     return url
-      .replace('{w}x{h}', `${size}x${size}`)
+      .replace('{w}x{h}', `${width}x${height}`)
       .replace('{f}', format)
       .replace('{c}', crop === 'none' ? '' : crop)
   }

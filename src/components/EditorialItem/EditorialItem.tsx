@@ -124,6 +124,7 @@ export const EditorialItem = ({ item }) => {
                 ?.superHeroWide?.url ||
               item.attributes.artwork?.url,
             1000,
+            1000,
             'webp',
             'none'
           )}

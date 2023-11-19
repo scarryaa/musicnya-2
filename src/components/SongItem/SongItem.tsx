@@ -97,7 +97,13 @@ export const SongItem = ({ item, album, albumId }) => {
         </div>
         <div class={styles.songItem__artwork}>
           <img
-            src={Utils.formatArtworkUrl(item.attributes.artwork.url, 50, 'webp', 'sr')}
+            src={Utils.formatArtworkUrl(
+              item.attributes.artwork.url,
+              50,
+              50,
+              'webp',
+              'sr'
+            )}
           />
         </div>
         <div class={styles.songItem__info}>

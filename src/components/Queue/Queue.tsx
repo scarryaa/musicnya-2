@@ -142,6 +142,7 @@ export const Queue = () => {
                     data-img={Utils.formatArtworkUrl(
                       item.attributes.artwork.url,
                       40,
+                      40,
                       'webp',
                       'sr'
                     )}
