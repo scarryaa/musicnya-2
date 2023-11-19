@@ -1,0 +1,11 @@
+.history {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: calc(100vh - var(--app-footer-height) - 3.3rem);
+
+  &__inner {
+    height: 100%;
+    overflow-y: overlay;
+  }
+}

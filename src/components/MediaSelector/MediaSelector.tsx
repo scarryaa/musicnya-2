@@ -89,8 +89,6 @@ export const MediaSelector = ({ item }) => {
       return <EditorialItem item={mediaItem} />
     }
 
-    console.log(mediaItem)
-
     return (
       <MediaItem
         {...commonProps}

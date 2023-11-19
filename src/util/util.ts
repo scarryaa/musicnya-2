@@ -126,6 +126,7 @@ export class Utils {
     // get content of first <div begin=""> tag
     const beginRegex = /<div begin=".*?">/gs
     const begin = lyrics.match(beginRegex)?.[0].split('"')[1]
+    console.log(begin)
     return begin
   }
 

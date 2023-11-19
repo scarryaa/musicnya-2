@@ -45,7 +45,7 @@ export const Lyrics = () => {
         line.classList.remove(styles['activeLyric'])
       }
     })
-  })
+  }, [store.currentTime, store.currentTrack.lyrics.lyricsArray])
 
   return (
     store.currentTrack.lyrics.lyricsArray.length > 0 && (
@@ -62,10 +62,27 @@ export const Lyrics = () => {
         }}
       >
         <div class={styles.lyrics__content}>
-          {store.currentTime.toString() <= store.currentTrack.lyrics.begin && (
-            <p class={styles.lyrics__content__ellipsis}>...</p>
+          {store.currentTime <=
+            Utils.timecodeToMs(store.currentTrack.lyrics.lyricsArray[0].begin) / 1000 && (
+            <>
+              <p class={styles.lyrics__content__ellipsis}>...</p>
+              <br />
+            </>
           )}
-          <div class={styles.lyrics__content__text} innerHTML={innerHTML()} />
+          <div
+            class={styles.lyrics__content__text}
+            innerHTML={store.currentTrack.lyrics.lyricsArray
+              .map((script, index) => {
+                const linesHTML = script.lines
+                  .map(
+                    (line, lineIndex) =>
+                      `<span id="lyric-${index}-${lineIndex}" data-begin="${line.begin}" data-end="${line.end}" class="lyric-line">${line.text}</span><br/><br/>`
+                  )
+                  .join('')
+                return `<div id="script-${index}">${linesHTML}</div>`
+              })
+              .join('')}
+          />
           <div class={styles.lyrics__content__writtenBy}>
             <p>Written by:</p>
             <span class={styles.lyrics__content__writtenBy__text}>

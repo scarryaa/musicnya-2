@@ -16,7 +16,8 @@ export class mkController {
           name: 'Music',
           build: '1.0.0'
         },
-        sourceType: 24
+        sourceType: 24,
+        suppressErrorDialog: true
       })
         .then(music => {
           music.authorize().then(() => {
@@ -310,6 +311,24 @@ export class mkController {
   }
 
   // api
+
+  static getHistory = async () => {
+    const instance = await mkController.getInstance()
+    if (instance) {
+      const response = await fetch(
+        `https://amp-api.music.apple.com/v1/me/recent/played/tracks?l=en-US&platform=web`,
+        {
+          headers: {
+            authorization: `Bearer ${MusicKit.getInstance().developerToken}`,
+            'music-user-token': MusicKit.getInstance().musicUserToken
+          }
+        }
+      )
+      return response.json()
+    } else {
+      console.error('Failed to get history: MusicKit instance not available')
+    }
+  }
 
   static getLyrics = async (id: string) => {
     const instance = await mkController.getInstance()
