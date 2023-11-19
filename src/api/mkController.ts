@@ -313,6 +313,46 @@ export class mkController {
 
   // api
 
+  static getItemInfo = async (id: string, type: string) => {
+    const instance = await mkController.getInstance()
+
+    if (instance) {
+      const response = await fetch(
+        `https://amp-api.music.apple.com/v1/catalog/us/${type}/${id}?l=en-US&l=en-US&platform=web&include=audio-analysis,genres,artists,albums,library&extend=editorialArtwork,editorialVideo`,
+        {
+          headers: {
+            authorization: `Bearer ${MusicKit.getInstance().developerToken}`,
+            'music-user-token': MusicKit.getInstance().musicUserToken
+          }
+        }
+      )
+      return response.json()
+    } else {
+      console.error('Failed to get item info: MusicKit instance not available')
+    }
+  }
+
+  static getItemCredits = async (id: string, type: string) => {
+    const instance = await mkController.getInstance()
+    const strippedType = type.replace('library-', '')
+    if (instance) {
+      const response = await fetch(
+        type.includes('library-')
+          ? `https://amp-api.music.apple.com/v1/me/library/${strippedType}/${id}/credits?l=en-US&platform=web`
+          : `https://amp-api.music.apple.com/v1/catalog/us/${strippedType}/${id}/credits?l=en-US&platform=web`,
+        {
+          headers: {
+            authorization: `Bearer ${MusicKit.getInstance().developerToken}`,
+            'music-user-token': MusicKit.getInstance().musicUserToken
+          }
+        }
+      )
+      return response.json()
+    } else {
+      console.error('Failed to get item credits: MusicKit instance not available')
+    }
+  }
+
   static getHistory = async () => {
     const instance = await mkController.getInstance()
     if (instance) {

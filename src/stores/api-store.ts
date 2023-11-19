@@ -139,6 +139,29 @@ export const createRadioStore = () => {
   }
 }
 
+export const createModalPlaylistStore = () => {
+  return function (params: { id: string }) {
+    const [data] = createResource<
+      any,
+      {
+        devToken: string
+        musicUserToken: string
+        id: string
+      },
+      string
+    >(
+      {
+        devToken: config.MusicKit.token,
+        musicUserToken: MusicKit.getInstance()?.musicUserToken,
+        id: params.id
+      },
+      fetchPlaylist
+    )
+
+    return data
+  }
+}
+
 export const createArtistStore = () => {
   return function (params: { id: string }) {
     const [data] = createResource(

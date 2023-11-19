@@ -12,7 +12,6 @@ import {
 
 export const EditorialItemSmall = ({ item }) => {
   const showMoreButton = !item.attributes?.link?.label
-  console.log(item)
 
   const isCuratorType =
     item.attributes?.link ||

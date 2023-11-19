@@ -1,2 +1,49 @@
+:root {
+  --playlist-border-color: #424242;
+}
+
+:root[theme='dark'] {
+  --playlist-border-color: #424242;
+}
+
 .playlist {
+  width: 100%;
+  height: 100%;
+  position: relative;
+
+  &__header {
+    width: 100%;
+    padding: 1rem;
+  }
+
+  &__details {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow-y: overlay;
+
+    &__header {
+      margin-bottom: 0.5rem;
+    }
+
+    &__subheader {
+      margin-bottom: 0.2rem;
+    }
+
+    &__subsubheader {
+      margin-bottom: 0rem;
+    }
+
+    &__description {
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+    }
+
+    &__grouping {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
 }
