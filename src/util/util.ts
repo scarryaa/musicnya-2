@@ -64,6 +64,20 @@ export class Utils {
       .replace('{c}', crop === 'none' ? '' : crop)
   }
 
+  static debounce(func, wait) {
+    let timeout
+
+    return function executedFunction(...args) {
+      const later = () => {
+        clearTimeout(timeout)
+        func(...args)
+      }
+
+      clearTimeout(timeout)
+      timeout = setTimeout(later, wait)
+    }
+  }
+
   static setDarkMode = (darkMode: boolean) => {
     document.documentElement.setAttribute('theme', darkMode ? 'dark' : 'light')
   }
@@ -126,7 +140,6 @@ export class Utils {
     // get content of first <div begin=""> tag
     const beginRegex = /<div begin=".*?">/gs
     const begin = lyrics.match(beginRegex)?.[0].split('"')[1]
-    console.log(begin)
     return begin
   }
 

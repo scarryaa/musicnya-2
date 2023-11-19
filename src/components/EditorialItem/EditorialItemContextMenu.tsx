@@ -29,7 +29,11 @@ export const contextMenu = (
         {
           icon: faInfoCircle,
           action: () => {
-            console.log('last')
+            setStore('app', 'modal', {
+              open: true,
+              type: 'curators',
+              id: id
+            })
           },
           isQuickAction: false,
           label: 'Properties',
@@ -74,7 +78,11 @@ export const contextMenu = (
         {
           icon: faInfoCircle,
           action: () => {
-            console.log('last')
+            setStore('app', 'modal', {
+              open: true,
+              type: 'stations',
+              id: id
+            })
           },
           isQuickAction: false,
           label: 'Properties',
@@ -191,7 +199,11 @@ export const contextMenu = (
         {
           icon: faInfoCircle,
           action: () => {
-            console.log('last')
+            setStore('app', 'modal', {
+              open: true,
+              type: 'playlists',
+              id: id
+            })
           },
           isQuickAction: false,
           label: 'Properties',
@@ -323,7 +335,11 @@ export const contextMenu = (
         {
           icon: faInfoCircle,
           action: () => {
-            console.log('last')
+            setStore('app', 'modal', {
+              open: true,
+              type: 'albums',
+              id: id
+            })
           },
           isQuickAction: false,
           label: 'Properties',

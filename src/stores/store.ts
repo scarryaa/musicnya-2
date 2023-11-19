@@ -16,6 +16,12 @@ export const [store, setStore] = createStore({
       width: localStorage.getItem('rightSidebarExpanded') === 'true' ? 250 : 40,
       activePanel: ''
     },
+    wroteToDb: false,
+    modal: {
+      open: false,
+      type: '',
+      id: ''
+    },
     general: {
       defaultPage: localStorage.getItem('defaultPage') || 'home',
       tooltipDelay: Number.parseInt(localStorage.getItem('tooltipDelay')) ?? 500

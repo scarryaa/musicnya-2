@@ -11,6 +11,7 @@ export const CuratorItem = ({ item }) => {
     contextMenu(item.id, item.type)
   )
 
+  //TODO add page for this
   return (
     <A
       activeClass=""

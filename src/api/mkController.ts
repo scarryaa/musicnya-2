@@ -1,4 +1,5 @@
 import * as config from '../../config.json'
+import { addSong, getDB, increasePlayCount } from '../db/db'
 import { setStore, store } from '../stores/store'
 import { Utils } from '../util/util'
 
@@ -920,6 +921,8 @@ export class mkController {
         nextUpIndex: MusicKit.getInstance().queue.position + 1,
         remainingStartIndex: MusicKit.getInstance().queue.position + 1
       })
+
+      setStore('app', 'wroteToDb', false)
     })
 
     MusicKit.getInstance().addEventListener('queueItemsDidChange', e => {
@@ -945,8 +948,18 @@ export class mkController {
       setStore('progress', e.progress * 100)
     })
 
-    MusicKit.getInstance().addEventListener('playbackTimeDidChange', e => {
+    MusicKit.getInstance().addEventListener('playbackTimeDidChange', async e => {
       setStore('currentTime', e.currentPlaybackTime)
+
+      if (store.currentTime > 5 && !store.app.wroteToDb) {
+        increasePlayCount({
+          id: store.currentTrack.id,
+          artist: store.currentTrack.artist,
+          playCount: 1,
+          title: store.currentTrack.title
+        })
+        setStore('app', 'wroteToDb', true)
+      }
     })
 
     MusicKit.getInstance().addEventListener('shuffleModeDidChange', e => {

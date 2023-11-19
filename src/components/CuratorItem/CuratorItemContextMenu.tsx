@@ -21,7 +21,7 @@ export const contextMenu = (id, type) => [
   {
     icon: faInfoCircle,
     action: () => {
-      console.log('last')
+      store.app.modal.open = true
     },
     isQuickAction: false,
     label: 'Properties',

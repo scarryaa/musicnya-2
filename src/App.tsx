@@ -10,9 +10,12 @@ import { Topbar } from './components/Topbar/Topbar'
 import { setStore, store } from './stores/store'
 import { Utils } from './util/util'
 import '@fontsource/inter'
+import { initDB } from './db/db'
+import { Modal } from './components/Modals/Modal'
 
 const App: Component = () => {
   const navigate = useNavigate()
+  initDB()
 
   const fetchPlaylistsAndTracks = async () => {
     try {
@@ -66,6 +69,7 @@ const App: Component = () => {
       <Main />
       <Footer />
       <ContextMenu />
+      <Modal />
     </div>
   )
 }
