@@ -121,7 +121,7 @@ export const SongItem = ({ item, album, albumId }) => {
             <A
               activeClass=""
               class={styles.songItem__info__artist}
-              href={`/media/artists/${item.relationships?.artists?.data?.[0].id}`}
+              href={`/media/artists/${item.relationships?.artists?.data?.[0]?.id}`}
             >
               {item.attributes.artistName}
             </A>

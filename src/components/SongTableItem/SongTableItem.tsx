@@ -97,21 +97,39 @@ export const SongTableItem = ({ track, data, index }) => {
                 </span>
               )}
             </span>
-            <A
+            <span
               class={styles.songTableItem__title__name__artist__artist}
-              href={
+              onClick={() => {
                 data().type === 'library-albums'
-                  ? `/media/artists/${
-                      data().relationships?.catalog?.data?.[0]?.relationships?.artists
-                        ?.data?.[0]?.id
-                    }`
+                  ? store.app.navigate(
+                      `/media/artists/${
+                        data().relationships?.catalog?.data?.[0]?.relationships?.artists
+                          ?.data?.[0]?.id
+                      }`
+                    )
                   : data().type === 'library-playlists'
-                  ? `/media/artists/${track.relationships.catalog.data[0].relationships.artists.data[0].id}`
-                  : `/media/artists/${track.relationships?.artists?.data?.[0]?.id}`
-              }
+                  ? mkController
+                      .getArtistFromMediaItem(
+                        track.relationships?.catalog?.data?.[0].id,
+                        'songs'
+                      )
+                      .then(
+                        res => {
+                          if (res) {
+                            store.app.navigate(`/media/artists/${res.data[0].id}`)
+                          }
+                        },
+                        err => {
+                          console.error(err)
+                        }
+                      )
+                  : store.app.navigate(
+                      `/media/artists/${track.relationships?.artists?.data?.[0]?.id}`
+                    )
+              }}
             >
               {track.attributes.artistName}
-            </A>
+            </span>
           </div>
         </div>
       </td>
