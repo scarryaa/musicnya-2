@@ -8,7 +8,7 @@ import {
   fetchLibraryAlbumDetailed
 } from '../api/album'
 import { fetchLibraryPlaylist, fetchPlaylist } from '../api/playlist'
-import { fetchStation } from '../api/station'
+import { fetchStation, fetchStationDetailed } from '../api/station'
 import { fetchBrowse } from '../api/browse'
 import { fetchRadio } from '../api/radio'
 import { fetchVideo } from '../api/video'
@@ -140,6 +140,29 @@ export const createRadioStore = () => {
         musicUserToken: MusicKit.getInstance()?.musicUserToken
       },
       fetchRadio
+    )
+
+    return data
+  }
+}
+
+export const createModalStationStore = () => {
+  return function (params: { id: string }) {
+    const [data] = createResource<
+      any,
+      {
+        devToken: string
+        musicUserToken: string
+        id: string
+      },
+      string
+    >(
+      {
+        devToken: config.MusicKit.token,
+        musicUserToken: MusicKit.getInstance()?.musicUserToken,
+        id: params.id
+      },
+      fetchStationDetailed
     )
 
     return data
