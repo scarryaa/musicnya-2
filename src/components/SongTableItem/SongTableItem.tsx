@@ -17,7 +17,7 @@ export const SongTableItem = ({ track, data, index }) => {
   const [isDisliked, setIsDisliked] = createSignal(false)
   const [inLibrary, setInLibrary] = createSignal(false)
   const [contextMenuItems, setContextMenuItems] = createSignal(
-    contextMenu(track.id, 'songs', isLoved(), inLibrary(), isDisliked())
+    contextMenu(track.id, track.type, isLoved(), inLibrary(), isDisliked())
   )
   console.log(track)
 
@@ -27,7 +27,7 @@ export const SongTableItem = ({ track, data, index }) => {
         handleContextMenu(
           e,
           track.id,
-          'songs',
+          track.type,
           isLoved,
           setIsLoved,
           inLibrary,

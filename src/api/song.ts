@@ -46,10 +46,13 @@ export const fetchLibrarySongDetailed = async ({
     }
   )
     .then(async response => {
-      const res = (await response.json()) as Promise<Response>
-      const response2 = await fetchLibrarySongDetailed({ devToken, musicUserToken, id })
-      const res2 = (await response2.json()) as Promise<Response>
-      return res2
+      const res = await response.json()
+      const response2 = await fetchSongDetailed({
+        devToken,
+        musicUserToken,
+        id: res.data[0].id
+      })
+      return response2
     })
     .catch(e => {
       console.error(e)

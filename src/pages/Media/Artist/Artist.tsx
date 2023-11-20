@@ -84,20 +84,7 @@ export const Artist = () => {
   return (
     <Switch fallback={<LoadingSpinner />}>
       <Match when={artistData.state === 'ready' && currentArtist()}>
-        <div
-          class={styles.artist}
-          onContextMenu={e =>
-            handleContextMenu(
-              e,
-              currentArtist().id,
-              currentArtist().type,
-              isFavorited,
-              setIsFavorited,
-              contextMenuItems,
-              setContextMenuItems
-            )
-          }
-        >
+        <div class={styles.artist}>
           <div class={styles.artist__artwork}>
             <div class={styles.artist__artwork__gradient}></div>
             <img

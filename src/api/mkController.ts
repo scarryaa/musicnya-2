@@ -668,6 +668,7 @@ export class mkController {
 
   static checkIfLoved = async (id: string, type: string) => {
     const instance = await mkController.getInstance()
+    console.log(type)
 
     if (instance) {
       const response = await fetch(

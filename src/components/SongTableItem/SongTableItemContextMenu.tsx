@@ -193,68 +193,41 @@ const updateContextMenu = async (
         .checkIfInLibrary(id, type)
         .then(data => data.data[0]?.attributes?.inLibrary)
 
-  if (type.includes('stations')) {
-    const isLovedState = await mkController
-      .checkIfLoved(id, type)
-      .then(data => data.data[0]?.attributes?.value === 1)
+  // Update inLibrary item
+  updatedItems[0].icon = inLibraryState ? faMinus : faPlus
+  updatedItems[0].action = () =>
+    inLibraryState
+      ? mkController.removeFromLibrary(newId, type)
+      : mkController.addToLibrary(id, type)
+  updatedItems[0].tooltip = inLibraryState ? 'Remove from Library' : 'Add to Library'
+  updatedItems[0].disabled = false
+  setInLibrary(inLibraryState)
 
-    updatedItems[0].icon = isLovedState ? faHeartSolid : faHeart
-    updatedItems[0].action = () =>
-      isLovedState ? mkController.unlove(id, type) : mkController.love(id, type)
-    updatedItems[0].tooltip = isLovedState ? 'Unlove' : 'Love'
-    updatedItems[0].disabled = false
-    setIsLoved(isLovedState)
-    isLovedState ? setIsDisliked(false) : setIsDisliked(isDisliked())
+  const isLovedState = await mkController
+    .checkIfLoved(id, type)
+    .then(data => data.data[0]?.attributes?.value === 1)
 
-    const isDislikedState = await mkController
-      .checkIfLoved(id, type)
-      .then(data => data.data[0]?.attributes?.value === -1)
+  // Update isLoved item
+  updatedItems[1].icon = isLovedState ? faHeartSolid : faHeart
+  updatedItems[1].action = () =>
+    isLovedState ? mkController.unlove(id, type) : mkController.love(id, type)
+  updatedItems[1].tooltip = isLovedState ? 'Unlove' : 'Love'
+  updatedItems[1].disabled = false
+  setIsLoved(isLovedState)
+  isLovedState ? setIsDisliked(false) : setIsDisliked(isDisliked())
 
-    // Update isDisliked item
-    updatedItems[1].icon = isDislikedState ? faThumbsDownSolid : faThumbsDown
-    updatedItems[1].action = () =>
-      isDislikedState ? mkController.unlove(id, type) : mkController.dislike(id, type)
-    updatedItems[1].tooltip = isDislikedState ? 'Undislike' : 'Dislike'
-    updatedItems[1].disabled = false
-    setIsDisliked(isDislikedState)
-    isDislikedState ? setIsLoved(false) : setIsLoved(isLoved())
-  } else {
-    // Update inLibrary item
-    updatedItems[0].icon = inLibraryState ? faMinus : faPlus
-    updatedItems[0].action = () =>
-      inLibraryState
-        ? mkController.removeFromLibrary(newId, type)
-        : mkController.addToLibrary(id, type)
-    updatedItems[0].tooltip = inLibraryState ? 'Remove from Library' : 'Add to Library'
-    updatedItems[0].disabled = false
-    setInLibrary(inLibraryState)
+  const isDislikedState = await mkController
+    .checkIfLoved(id, type)
+    .then(data => data.data[0]?.attributes?.value === -1)
 
-    const isLovedState = await mkController
-      .checkIfLoved(id, type)
-      .then(data => data.data[0]?.attributes?.value === 1)
-
-    // Update isLoved item
-    updatedItems[1].icon = isLovedState ? faHeartSolid : faHeart
-    updatedItems[1].action = () =>
-      isLovedState ? mkController.unlove(id, type) : mkController.love(id, type)
-    updatedItems[1].tooltip = isLovedState ? 'Unlove' : 'Love'
-    updatedItems[1].disabled = false
-    setIsLoved(isLovedState)
-    isLovedState ? setIsDisliked(false) : setIsDisliked(isDisliked())
-
-    const isDislikedState = await mkController
-      .checkIfLoved(id, type)
-      .then(data => data.data[0]?.attributes?.value === -1)
-
-    // Update isDisliked item
-    updatedItems[2].icon = isDislikedState ? faThumbsDownSolid : faThumbsDown
-    updatedItems[2].action = () =>
-      isDislikedState ? mkController.unlove(id, type) : mkController.dislike(id, type)
-    updatedItems[2].tooltip = isDislikedState ? 'Undislike' : 'Dislike'
-    updatedItems[2].disabled = false
-    setIsDisliked(isDislikedState)
-    isDislikedState ? setIsLoved(false) : setIsLoved(isLoved())
-  }
+  // Update isDisliked item
+  updatedItems[2].icon = isDislikedState ? faThumbsDownSolid : faThumbsDown
+  updatedItems[2].action = () =>
+    isDislikedState ? mkController.unlove(id, type) : mkController.dislike(id, type)
+  updatedItems[2].tooltip = isDislikedState ? 'Undislike' : 'Dislike'
+  updatedItems[2].disabled = false
+  setIsDisliked(isDislikedState)
+  isDislikedState ? setIsLoved(false) : setIsLoved(isLoved())
 
   // Update the context menu items state after the fetches
   setContextMenuItems(updatedItems)
