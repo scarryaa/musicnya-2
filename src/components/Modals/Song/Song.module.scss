@@ -239,6 +239,30 @@
       display: flex;
       flex-direction: row;
       justify-content: space-between;
+
+      &__button {
+        background-color: var(--app-primary-color);
+        width: 50px;
+        height: 20px;
+        border-radius: var(--app-border-radius);
+        font-size: 0.8rem;
+
+        &:hover {
+          background-color: var(--app-primary-color-hover);
+        }
+
+        &:active {
+          background-color: var(--app-primary-color-active);
+        }
+      }
     }
   }
+}
+
+#playCount {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
 }

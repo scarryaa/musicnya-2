@@ -10,6 +10,7 @@ import { LoadingSpinner } from '../../LoadingSpinner/LoadingSpinner'
 import { SwatchSquare } from '../../SwatchSquare/SwatchSquare'
 import { Chip } from '../../Chip/Chip'
 import { mkController } from '../../../api/mkController'
+import { getDB } from '../../../db/db'
 
 export const Song = () => {
   const [songId, setSongId] = createSignal(store.app.modal.id)
@@ -18,13 +19,23 @@ export const Song = () => {
   const [songCredits, setSongCredits] = createSignal(null)
   const [audioAnalysis, setAudioAnalysis] = createSignal(null)
   const [artworkUrls, setArtworkUrls] = createSignal(null)
-
+  const [playCount, setPlayCount] = createSignal(null)
   const [currentSong, setCurrentSong] = createSignal(null)
+
+  const resetPlayCount = async (id: string) => {
+    const db = await getDB()
+    const song = db.data.songs.filter(song => song.id === id)[0]
+    if (song) {
+      song.playCount = 0
+    }
+    db.write()
+  }
 
   createEffect(async () => {
     setCurrentSong(null)
     setSongId(store.app.modal.id)
     const data = songData()
+    const db = await getDB()
     if (data && data.data && data.data.length > 0) {
       setCurrentSong(data.data[0])
       setAudioAnalysis(data.data[0]?.relationships?.['audio-analysis'].data[0])
@@ -41,6 +52,10 @@ export const Song = () => {
         )
       )
       console.log(data.data[0])
+      console.log(db)
+      setPlayCount(
+        db.data.songs.filter(song => song.id === data.data[0].id)[0]?.playCount
+      )
       setArtworkUrls([
         data.data[0]?.attributes?.artwork.url && {
           name: 'Artwork',
@@ -476,6 +491,26 @@ export const Song = () => {
                       </For>
                     </div>
                     <h3 class={styles.song__details__header}>Info</h3>
+                    <div class={styles.song__details__grouping}>
+                      <div
+                        id={styles.playCount}
+                        class={styles.song__details__grouping__header}
+                      >
+                        <h4 class={styles.song__details__subsubheader}>Play Count</h4>
+                        <button
+                          class={styles.song__details__grouping__button}
+                          onClick={() => {
+                            resetPlayCount(currentSong().id)
+                            setPlayCount(0)
+                          }}
+                        >
+                          Reset
+                        </button>
+                      </div>
+                      <span class={styles.song__details__description}>
+                        {playCount() || 0}
+                      </span>
+                    </div>
                     <div class={styles.song__details__grouping}>
                       <h4 class={styles.song__details__subsubheader}>
                         Has Time Synced Lyrics

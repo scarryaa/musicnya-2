@@ -75,6 +75,14 @@ export const Settings = () => {
     )
   }
 
+  const handleSearchPageOnFocusClick = () => {
+    setStore('app', 'general', 'searchPageOnFocus', !store.app.general.searchPageOnFocus)
+    localStorage.setItem(
+      'searchPageOnFocus',
+      store.app.general.searchPageOnFocus.toString()
+    )
+  }
+
   return (
     <div class={styles.settings}>
       <h1 class={styles.settings__title}>Settings</h1>
@@ -101,6 +109,14 @@ export const Settings = () => {
             options={tooltipDelayOptions}
             selected={selectedTooltipDelayOption}
             onSelectedChange={handleTooltipDelaySelect}
+          />
+        </div>
+        <div class={styles.settings__setting}>
+          <span>Go to search page when search is focused</span>
+          <input
+            type="checkbox"
+            checked={store.app.general.searchPageOnFocus}
+            onClick={handleSearchPageOnFocusClick}
           />
         </div>
       </Accordion>
@@ -140,6 +156,10 @@ export const Settings = () => {
           />
         </div>
       </Accordion>
+      {/* TODO implement */}
+      <button class={styles.settings__button} onClick={() => window.location.reload()}>
+        Reload App
+      </button>
     </div>
   )
 }

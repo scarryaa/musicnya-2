@@ -19,6 +19,7 @@ import { NotFound } from './components/NotFound/NotFound'
 import { RecentlyAdded } from './pages/RecentlyAdded/RecentlyAdded'
 import { Albums } from './pages/Albums/Albums'
 import { Artist } from './pages/Media/Artist/Artist'
+import { Playlists } from './pages/Playlists/Playlists'
 
 const root = document.getElementById('root')
 
@@ -48,6 +49,7 @@ render(
           <Route path="/search" component={Search} />
           <Route path="/recent" component={RecentlyAdded} />
           <Route path="/albums" component={Albums} />
+          <Route path="/playlists" component={Playlists} />
           <Route path="*" component={NotFound} />
         </Route>
       </Routes>

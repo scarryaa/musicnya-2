@@ -1038,12 +1038,13 @@ export class mkController {
     }
   }
 
-  static getPlaylists = async () => {
+  static getPlaylists = async (offset: string = '0') => {
     const instance = await mkController.getInstance()
     if (instance) {
       return await instance.api.v3.music('v1/me/library/playlists', {
         limit: 100,
-        include: 'catalog,artists,[tracks]=artists'
+        include: 'catalog,artists,[tracks]=artists',
+        offset: offset
       })
     } else {
       console.error('Failed to get playlists: MusicKit instance not available')

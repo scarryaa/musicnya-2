@@ -24,7 +24,8 @@ export const [store, setStore] = createStore({
     },
     general: {
       defaultPage: localStorage.getItem('defaultPage') || 'home',
-      tooltipDelay: Number.parseInt(localStorage.getItem('tooltipDelay')) ?? 500
+      tooltipDelay: Number.parseInt(localStorage.getItem('tooltipDelay')) ?? 500,
+      searchPageOnFocus: localStorage.getItem('searchPageOnFocus') === 'false' || true
     },
     media: {
       hideEditorialNotes: localStorage.getItem('hideEditorialNotes') === 'true' || false,
