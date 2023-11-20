@@ -5,6 +5,9 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import { Curator } from './Curator/Curator'
 import { Playlist } from './Playlist/Playlist'
 import { Album } from './Album/Album'
+import { Artist } from './Artist/Artist'
+import { Song } from './Song/Song'
+import { Station } from './Station/Station'
 
 export const Modal = () => {
   const handleModalClose = () => {
@@ -40,11 +43,12 @@ export const Modal = () => {
         </div>
         <div class={styles.modal__body}>
           <div class={styles.modal__body__text}>
-            {store.app.modal.type === 'curators' && (
-              <Curator curatorId={store.app.modal.id} />
-            )}
+            {store.app.modal.type === 'curators' && <Curator />}
             {store.app.modal.type === 'playlists' && <Playlist />}
-            {store.app.modal.type === 'albums' && <Album albumId={store.app.modal.id} />}
+            {store.app.modal.type === 'albums' && <Album />}
+            {store.app.modal.type === 'artists' && <Artist />}
+            {store.app.modal.type === 'songs' && <Song />}
+            {store.app.modal.type === 'stations' && <Station />}
           </div>
         </div>
       </div>

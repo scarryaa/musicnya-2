@@ -153,7 +153,11 @@ export const contextMenu = (id, type, isLoved, inLibrary, isDisliked) => [
   {
     icon: faInfoCircle,
     action: () => {
-      console.log('last')
+      setStore('app', 'modal', {
+        open: true,
+        type: 'songs',
+        id: id
+      })
     },
     isQuickAction: false,
     label: 'Properties',

@@ -1,7 +1,12 @@
 import { createEffect, createResource, createSignal } from 'solid-js'
 import * as config from '../../config.json'
 import { fetchRecommendations } from '../api/home'
-import { fetchAlbum, fetchLibraryAlbum } from '../api/album'
+import {
+  fetchAlbum,
+  fetchAlbumDetailed,
+  fetchLibraryAlbum,
+  fetchLibraryAlbumDetailed
+} from '../api/album'
 import { fetchLibraryPlaylist, fetchPlaylist } from '../api/playlist'
 import { fetchStation } from '../api/station'
 import { fetchBrowse } from '../api/browse'
@@ -133,6 +138,24 @@ export const createRadioStore = () => {
         musicUserToken: MusicKit.getInstance()?.musicUserToken
       },
       fetchRadio
+    )
+
+    return data
+  }
+}
+
+export const createModalAlbumStore = () => {
+  return function (params: { id: string }) {
+    const [data] = createResource(
+      () => params.id,
+      async () =>
+        await (params.id.startsWith('l.')
+          ? fetchLibraryAlbumDetailed
+          : fetchAlbumDetailed)({
+          devToken: config.MusicKit.token,
+          musicUserToken: MusicKit.getInstance()?.musicUserToken,
+          id: params.id
+        })
     )
 
     return data

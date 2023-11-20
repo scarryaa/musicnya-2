@@ -2,12 +2,12 @@ import { For, Match, Switch, createEffect, createSignal } from 'solid-js'
 import styles from './Playlist.module.scss'
 import { TabSwitcher } from '../../TabSwitcher/TabSwitcher'
 import { MediaItemDetailed } from '../../MediaItemDetailed/MediaItemDetailed'
-import { mkController } from '../../../api/mkController'
 import { Utils } from '../../../util/util'
 import { createModalPlaylistStore } from '../../../stores/api-store'
 import { A } from '@solidjs/router'
 import { store } from '../../../stores/store'
 import { LoadingSpinner } from '../../LoadingSpinner/LoadingSpinner'
+import { SwatchSquare } from '../../SwatchSquare/SwatchSquare'
 
 export const Playlist = () => {
   const [playlistId, setPlaylistId] = createSignal(store.app.modal.id)
@@ -40,7 +40,12 @@ export const Playlist = () => {
             4320 / 4,
             'webp',
             'none'
-          )
+          ),
+          bgColor: data.data[0]?.attributes?.artwork?.bgColor,
+          textColor1: data.data[0]?.attributes?.artwork?.textColor1,
+          textColor2: data.data[0]?.attributes?.artwork?.textColor2,
+          textColor3: data.data[0]?.attributes?.artwork?.textColor3,
+          textColor4: data.data[0]?.attributes?.artwork?.textColor4
         },
         data.data[0]?.attributes?.editorialArtwork?.superHeroTall?.url && {
           name: 'Super Hero Tall',
@@ -57,7 +62,16 @@ export const Playlist = () => {
             2240 / 4,
             'webp',
             'sr'
-          )
+          ),
+          bgColor: data.data[0]?.attributes?.editorialArtwork?.superHeroTall?.bgColor,
+          textColor1:
+            data.data[0]?.attributes?.editorialArtwork?.superHeroTall?.textColor1,
+          textColor2:
+            data.data[0]?.attributes?.editorialArtwork?.superHeroTall?.textColor2,
+          textColor3:
+            data.data[0]?.attributes?.editorialArtwork?.superHeroTall?.textColor3,
+          textColor4:
+            data.data[0]?.attributes?.editorialArtwork?.superHeroTall?.textColor4
         },
         data.data[0]?.attributes?.editorialArtwork?.storeFlowcase?.url && {
           name: 'Store Flowcase',
@@ -74,7 +88,16 @@ export const Playlist = () => {
             1080 / 4,
             'webp',
             'sr'
-          )
+          ),
+          bgColor: data.data[0]?.attributes?.editorialArtwork?.storeFlowcase?.bgColor,
+          textColor1:
+            data.data[0]?.attributes?.editorialArtwork?.storeFlowcase?.textColor1,
+          textColor2:
+            data.data[0]?.attributes?.editorialArtwork?.storeFlowcase?.textColor2,
+          textColor3:
+            data.data[0]?.attributes?.editorialArtwork?.storeFlowcase?.textColor3,
+          textColor4:
+            data.data[0]?.attributes?.editorialArtwork?.storeFlowcase?.textColor4
         },
         data.data[0]?.attributes?.editorialArtwork?.subscriptionHero?.url && {
           name: 'Subscription Hero',
@@ -91,7 +114,16 @@ export const Playlist = () => {
             1080 / 4,
             'webp',
             'sr'
-          )
+          ),
+          bgColor: data.data[0]?.attributes?.editorialArtwork?.subscriptionHero?.bgColor,
+          textColor1:
+            data.data[0]?.attributes?.editorialArtwork?.subscriptionHero?.textColor1,
+          textColor2:
+            data.data[0]?.attributes?.editorialArtwork?.subscriptionHero?.textColor2,
+          textColor3:
+            data.data[0]?.attributes?.editorialArtwork?.subscriptionHero?.textColor3,
+          textColor4:
+            data.data[0]?.attributes?.editorialArtwork?.subscriptionHero?.textColor4
         },
         data.data[0]?.attributes?.editorialArtwork?.subscriptionCover?.url && {
           name: 'Subscription Cover',
@@ -108,7 +140,16 @@ export const Playlist = () => {
             4320 / 4,
             'webp',
             'sr'
-          )
+          ),
+          bgColor: data.data[0]?.attributes?.editorialArtwork?.subscriptionCover?.bgColor,
+          textColor1:
+            data.data[0]?.attributes?.editorialArtwork?.subscriptionCover?.textColor1,
+          textColor2:
+            data.data[0]?.attributes?.editorialArtwork?.subscriptionCover?.textColor2,
+          textColor3:
+            data.data[0]?.attributes?.editorialArtwork?.subscriptionCover?.textColor3,
+          textColor4:
+            data.data[0]?.attributes?.editorialArtwork?.subscriptionCover?.textColor4
         },
         data.data[0]?.attributes?.editorialArtwork?.staticDetailSquare?.url && {
           name: 'Static Detail Square',
@@ -125,7 +166,17 @@ export const Playlist = () => {
             3840 / 4,
             'webp',
             'sr'
-          )
+          ),
+          bgColor:
+            data.data[0]?.attributes?.editorialArtwork?.staticDetailSquare?.bgColor,
+          textColor1:
+            data.data[0]?.attributes?.editorialArtwork?.staticDetailSquare?.textColor1,
+          textColor2:
+            data.data[0]?.attributes?.editorialArtwork?.staticDetailSquare?.textColor2,
+          textColor3:
+            data.data[0]?.attributes?.editorialArtwork?.staticDetailSquare?.textColor3,
+          textColor4:
+            data.data[0]?.attributes?.editorialArtwork?.staticDetailSquare?.textColor4
         },
         data.data[0]?.attributes?.editorialArtwork?.staticDetailSquare?.url && {
           name: 'Static Detail Tall',
@@ -142,7 +193,17 @@ export const Playlist = () => {
             2732 / 4,
             'webp',
             'sr'
-          )
+          ),
+          bgColor:
+            data.data[0]?.attributes?.editorialArtwork?.staticDetailSquare?.bgColor,
+          textColor1:
+            data.data[0]?.attributes?.editorialArtwork?.staticDetailSquare?.textColor1,
+          textColor2:
+            data.data[0]?.attributes?.editorialArtwork?.staticDetailSquare?.textColor2,
+          textColor3:
+            data.data[0]?.attributes?.editorialArtwork?.staticDetailSquare?.textColor3,
+          textColor4:
+            data.data[0]?.attributes?.editorialArtwork?.staticDetailSquare?.textColor4
         },
         data.data[0]?.attributes?.editorialArtwork?.brandLogo?.url && {
           name: 'Brand Logo',
@@ -159,7 +220,12 @@ export const Playlist = () => {
             1080 / 4,
             'webp',
             'sr'
-          )
+          ),
+          bgColor: data.data[0]?.attributes?.editorialArtwork?.brandLogo?.bgColor,
+          textColor1: data.data[0]?.attributes?.editorialArtwork?.brandLogo?.textColor1,
+          textColor2: data.data[0]?.attributes?.editorialArtwork?.brandLogo?.textColor2,
+          textColor3: data.data[0]?.attributes?.editorialArtwork?.brandLogo?.textColor3,
+          textColor4: data.data[0]?.attributes?.editorialArtwork?.brandLogo?.textColor4
         },
         data.data[0]?.attributes?.editorialArtwork?.superHeroWide?.url && {
           name: 'Super Hero Wide',
@@ -176,7 +242,16 @@ export const Playlist = () => {
             1800 / 4,
             'webp',
             'sr'
-          )
+          ),
+          bgColor: data.data[0]?.attributes?.editorialArtwork?.superHeroWide?.bgColor,
+          textColor1:
+            data.data[0]?.attributes?.editorialArtwork?.superHeroWide?.textColor1,
+          textColor2:
+            data.data[0]?.attributes?.editorialArtwork?.superHeroWide?.textColor2,
+          textColor3:
+            data.data[0]?.attributes?.editorialArtwork?.superHeroWide?.textColor3,
+          textColor4:
+            data.data[0]?.attributes?.editorialArtwork?.superHeroWide?.textColor4
         },
         data.data[0]?.attributes?.editorialVideo?.motionSquareVideo1x1?.video && {
           name: 'Motion Square Video 1x1',
@@ -194,7 +269,17 @@ export const Playlist = () => {
             3840 / 4,
             'webp',
             'sr'
-          )
+          ),
+          bgColor:
+            data.data[0]?.attributes?.editorialVideo?.motionSquareVideo1x1?.bgColor,
+          textColor1:
+            data.data[0]?.attributes?.editorialVideo?.motionSquareVideo1x1?.textColor1,
+          textColor2:
+            data.data[0]?.attributes?.editorialVideo?.motionSquareVideo1x1?.textColor2,
+          textColor3:
+            data.data[0]?.attributes?.editorialVideo?.motionSquareVideo1x1?.textColor3,
+          textColor4:
+            data.data[0]?.attributes?.editorialVideo?.motionSquareVideo1x1?.textColor4
         },
         data.data[0]?.attributes?.editorialVideo?.motionTallVideo3x4?.video && {
           name: 'Motion Tall Video 3x4',
@@ -212,7 +297,16 @@ export const Playlist = () => {
             2732 / 4,
             'webp',
             'sr'
-          )
+          ),
+          bgColor: data.data[0]?.attributes?.editorialVideo?.motionTallVideo3x4?.bgColor,
+          textColor1:
+            data.data[0]?.attributes?.editorialVideo?.motionTallVideo3x4?.textColor1,
+          textColor2:
+            data.data[0]?.attributes?.editorialVideo?.motionTallVideo3x4?.textColor2,
+          textColor3:
+            data.data[0]?.attributes?.editorialVideo?.motionTallVideo3x4?.textColor3,
+          textColor4:
+            data.data[0]?.attributes?.editorialVideo?.motionTallVideo3x4?.textColor4
         },
         data.data[0]?.attributes?.editorialVideo?.motionWideVideo21x9?.video && {
           name: 'Motion Wide Video 21x9',
@@ -230,7 +324,16 @@ export const Playlist = () => {
             1646 / 2,
             'webp',
             'sr'
-          )
+          ),
+          bgColor: data.data[0]?.attributes?.editorialVideo?.motionWideVideo21x9?.bgColor,
+          textColor1:
+            data.data[0]?.attributes?.editorialVideo?.motionWideVideo21x9?.textColor1,
+          textColor2:
+            data.data[0]?.attributes?.editorialVideo?.motionWideVideo21x9?.textColor2,
+          textColor3:
+            data.data[0]?.attributes?.editorialVideo?.motionWideVideo21x9?.textColor3,
+          textColor4:
+            data.data[0]?.attributes?.editorialVideo?.motionWideVideo21x9?.textColor4
         },
         data.data[0]?.attributes?.editorialVideo?.motionDetailTall?.video && {
           name: 'Motion Detail Tall',
@@ -247,7 +350,16 @@ export const Playlist = () => {
             2732 / 4,
             'webp',
             'sr'
-          )
+          ),
+          bgColor: data.data[0]?.attributes?.editorialVideo?.motionDetailTall?.bgColor,
+          textColor1:
+            data.data[0]?.attributes?.editorialVideo?.motionDetailTall?.textColor1,
+          textColor2:
+            data.data[0]?.attributes?.editorialVideo?.motionDetailTall?.textColor2,
+          textColor3:
+            data.data[0]?.attributes?.editorialVideo?.motionDetailTall?.textColor3,
+          textColor4:
+            data.data[0]?.attributes?.editorialVideo?.motionDetailTall?.textColor4
         },
         data.data[0]?.attributes?.editorialVideo?.motionDetailSquare?.video && {
           name: 'Motion Detail Square',
@@ -265,7 +377,16 @@ export const Playlist = () => {
             3840 / 4,
             'webp',
             'sr'
-          )
+          ),
+          bgColor: data.data[0]?.attributes?.editorialVideo?.motionDetailSquare?.bgColor,
+          textColor1:
+            data.data[0]?.attributes?.editorialVideo?.motionDetailSquare?.textColor1,
+          textColor2:
+            data.data[0]?.attributes?.editorialVideo?.motionDetailSquare?.textColor2,
+          textColor3:
+            data.data[0]?.attributes?.editorialVideo?.motionDetailSquare?.textColor3,
+          textColor4:
+            data.data[0]?.attributes?.editorialVideo?.motionDetailSquare?.textColor4
         }
       ])
     }
@@ -283,6 +404,7 @@ export const Playlist = () => {
         <div class={styles.playlist}>
           <div class={styles.playlist__header}>
             <MediaItemDetailed
+              releaseDate={null}
               mediaItemId={playlistId}
               src={Utils.formatArtworkUrl(
                 currentPlaylist()?.attributes?.artwork.url,
@@ -383,6 +505,35 @@ export const Playlist = () => {
                             <A href={artwork.url} target="_blank">
                               <img src={artwork.thumbnailUrl} />
                             </A>
+                            <div class={styles.playlist__artwork__colors}>
+                              {artwork.bgColor && (
+                                <SwatchSquare color={artwork.bgColor} name="bgColor" />
+                              )}
+                              {artwork.textColor1 && (
+                                <SwatchSquare
+                                  color={artwork.textColor1}
+                                  name="textColor1"
+                                />
+                              )}
+                              {artwork.textColor2 && (
+                                <SwatchSquare
+                                  color={artwork.textColor2}
+                                  name="textColor2"
+                                />
+                              )}
+                              {artwork.textColor3 && (
+                                <SwatchSquare
+                                  color={artwork.textColor3}
+                                  name="textColor3"
+                                />
+                              )}
+                              {artwork.textColor4 && (
+                                <SwatchSquare
+                                  color={artwork.textColor4}
+                                  name="textColor4"
+                                />
+                              )}
+                            </div>
                           </div>
                         )
                       }
