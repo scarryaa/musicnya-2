@@ -12,7 +12,7 @@ export const LibraryPlaylist = () => {
   let playlistPage: HTMLDivElement = undefined as unknown as HTMLDivElement
 
   createEffect(() => {
-    let newPlaylistData = store.libraryPlaylists.find(
+    let newPlaylistData = store.library.playlists.find(
       playlist => playlist.id === params.id
     )
 

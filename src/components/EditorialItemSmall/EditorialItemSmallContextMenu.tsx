@@ -153,7 +153,7 @@ export const contextMenu = (
           label: 'Add to Playlist',
           hasSubMenu: true,
           onMouseOver: () => {
-            const playlists = store.libraryPlaylists
+            const playlists = store.library.playlists
               .filter(playlist => playlist.attributes.canEdit)
               .map(playlist => {
                 return {
@@ -273,7 +273,7 @@ export const contextMenu = (
           label: 'Add to Playlist',
           hasSubMenu: true,
           onMouseOver: () => {
-            const playlists = store.libraryPlaylists
+            const playlists = store.library.playlists
               .filter(playlist => playlist.attributes.canEdit)
               .map(playlist => {
                 return {

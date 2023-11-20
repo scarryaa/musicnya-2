@@ -111,7 +111,7 @@ export const contextMenu = (id, type, isLoved, inLibrary, isDisliked, index) =>
           label: 'Add to Playlist',
           hasSubMenu: true,
           onMouseOver: () => {
-            const playlists = store.libraryPlaylists
+            const playlists = store.library.playlists
               .filter(playlist => playlist.attributes.canEdit)
               .map(playlist => {
                 return {
@@ -227,7 +227,7 @@ export const contextMenu = (id, type, isLoved, inLibrary, isDisliked, index) =>
           label: 'Add to Playlist',
           hasSubMenu: true,
           onMouseOver: () => {
-            const playlists = store.libraryPlaylists
+            const playlists = store.library.playlists
               .filter(playlist => playlist.attributes.canEdit)
               .map(playlist => {
                 return {

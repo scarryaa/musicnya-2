@@ -20,6 +20,7 @@ import { RecentlyAdded } from './pages/RecentlyAdded/RecentlyAdded'
 import { Albums } from './pages/Albums/Albums'
 import { Artist } from './pages/Media/Artist/Artist'
 import { Playlists } from './pages/Playlists/Playlists'
+import { Artists } from './pages/Artists/Artists'
 
 const root = document.getElementById('root')
 
@@ -50,6 +51,7 @@ render(
           <Route path="/recent" component={RecentlyAdded} />
           <Route path="/albums" component={Albums} />
           <Route path="/playlists" component={Playlists} />
+          <Route path="/artists" component={Artists} />
           <Route path="*" component={NotFound} />
         </Route>
       </Routes>

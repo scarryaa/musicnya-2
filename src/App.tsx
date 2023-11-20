@@ -17,6 +17,17 @@ const App: Component = () => {
   const navigate = useNavigate()
   initDB()
 
+  const fetchLibraryAlbums = async () => {
+    try {
+      const albumsResponse = await mkController.getLibraryAlbums('0')
+      const libraryAlbums = albumsResponse.data
+      setStore('library', 'albums', libraryAlbums)
+      console.log(libraryAlbums)
+    } catch (error) {
+      console.error('Error fetching albums:', error)
+    }
+  }
+
   const fetchPlaylistsAndTracks = async () => {
     try {
       const playlistsResponse = await mkController.getPlaylists()
@@ -43,7 +54,7 @@ const App: Component = () => {
       })
 
       // Update the store
-      setStore('libraryPlaylists', updatedLibraryPlaylists)
+      setStore('library', 'playlists', updatedLibraryPlaylists)
     } catch (error) {
       console.error('Error fetching playlists:', error)
     }
@@ -58,6 +69,7 @@ const App: Component = () => {
 
     // Fetch playlists and their tracks in the background
     fetchPlaylistsAndTracks()
+    fetchLibraryAlbums()
     setStore('app', 'navigate', () => navigate)
   })
 

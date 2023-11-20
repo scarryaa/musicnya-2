@@ -104,13 +104,13 @@ export const LeftSidebar = () => {
         />
       </LeftSidebarGroup>
       <LeftSidebarGroup title="Apple Music Playlists">
-        <Show when={store.libraryPlaylists.length === 0}>
+        <Show when={store.library.playlists.length === 0}>
           <LeftSidebarButtonSkeleton />
           <LeftSidebarButtonSkeleton />
           <LeftSidebarButtonSkeleton />
         </Show>
         <For
-          each={store.libraryPlaylists.filter(playlist => !playlist.attributes.canEdit)}
+          each={store.library.playlists.filter(playlist => !playlist.attributes.canEdit)}
         >
           {playlist => (
             <LeftSidebarButton
@@ -137,13 +137,13 @@ export const LeftSidebar = () => {
           icon={faList}
           href="/library/playlists"
         />
-        <Show when={store.libraryPlaylists.length === 0}>
+        <Show when={store.library.playlists.length === 0}>
           <LeftSidebarButtonSkeleton />
           <LeftSidebarButtonSkeleton />
           <LeftSidebarButtonSkeleton />
         </Show>
         <For
-          each={store.libraryPlaylists.filter(playlist => playlist.attributes.canEdit)}
+          each={store.library.playlists.filter(playlist => playlist.attributes.canEdit)}
         >
           {playlist => (
             <LeftSidebarButton
