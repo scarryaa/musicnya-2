@@ -13,7 +13,7 @@ import { fetchBrowse } from '../api/browse'
 import { fetchRadio } from '../api/radio'
 import { fetchVideo } from '../api/video'
 import { fetchRecentlyAdded } from '../api/recentlyAdded'
-import { fetchArtist } from '../api/artist'
+import { fetchArtist, fetchArtistDetailed } from '../api/artist'
 import { fetchLibrarySongDetailed, fetchSongDetailed } from '../api/song'
 import { fetchCuratorDetailed } from '../api/curator'
 
@@ -245,6 +245,22 @@ export const createModalPlaylistStore = () => {
         id: params.id
       },
       fetchPlaylist
+    )
+
+    return data
+  }
+}
+
+export const createModalArtistStore = () => {
+  return function (params: { id: string }) {
+    const [data] = createResource(
+      () => params.id,
+      async () =>
+        await fetchArtistDetailed({
+          devToken: config.MusicKit.token,
+          musicUserToken: MusicKit.getInstance()?.musicUserToken,
+          id: params.id
+        })
     )
 
     return data

@@ -7,12 +7,13 @@ export const MediaItemDetailed = ({
   title,
   artists,
   releaseDate,
-  albums
+  albums,
+  circleArtwork
 }) => {
   return (
     <div class={styles.mediaItemDetailed}>
       <div class={styles.mediaItemDetailed__artwork}>
-        <img src={src} />
+        <img src={src} style={{ 'border-radius': circleArtwork ? '50%' : '0' }} />
       </div>
       <div class={styles.mediaItemDetailed__info}>
         <span class={styles.mediaItemDetailed__info__title}>{title}</span>

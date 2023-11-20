@@ -1,2 +1,111 @@
 .artist {
+  width: 100%;
+  height: 100%;
+  position: relative;
+
+  &__albums {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+
+    &__album {
+      width: 100%;
+      padding: 0.5rem;
+      border-radius: var(--app-border-radius);
+
+      img {
+        width: 3rem;
+        height: 3rem;
+        border-radius: var(--app-border-radius);
+        margin-right: 0.5rem;
+      }
+
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      cursor: default;
+
+      &:hover {
+        background-color: var(--queue-button-hover-background-color);
+      }
+    }
+  }
+
+  &__header {
+    width: 100%;
+    padding: 1rem;
+  }
+
+  &__artwork {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: start;
+
+    &__colors {
+      margin-top: 0.5rem;
+      display: flex;
+      flex-direction: row;
+      gap: 0.2rem;
+      width: 100%;
+      margin-bottom: 0.5rem;
+    }
+
+    &__container {
+      width: 100%;
+      height: 100%;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    &__header {
+      align-self: flex-start;
+      margin-top: 2rem;
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  &__details {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow-y: overlay;
+
+    &__header {
+      margin-bottom: 0.5rem;
+    }
+
+    &__subheader {
+      margin-bottom: 0.2rem;
+    }
+
+    &__subsubheader {
+      margin-bottom: 0rem;
+    }
+
+    &__description {
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+    }
+
+    &__groupingRegular {
+      display: flex;
+      flex-direction: row;
+      gap: 0.5rem;
+    }
+
+    &__grouping {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
 }

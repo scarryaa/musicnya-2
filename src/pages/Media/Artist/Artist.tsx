@@ -14,7 +14,7 @@ import { MediaItem } from '../../../components/MediaItem/MediaItem'
 import { ViewSelector } from '../../../components/ViewSelector/ViewSelector'
 import { ArtistInfoPane } from '../../../components/ArtistInfoPane/ArtistInfoPane'
 import { RelatedArtistsPane } from '../../../components/RelatedArtistsPane/RelatedArtistsPane'
-import { contextMenu, handleMoreClick } from './ArtistContextMenu'
+import { contextMenu, handleContextMenu, handleMoreClick } from './ArtistContextMenu'
 
 export const Artist = () => {
   const params = useParams<{ id: string }>()
@@ -84,7 +84,20 @@ export const Artist = () => {
   return (
     <Switch fallback={<LoadingSpinner />}>
       <Match when={artistData.state === 'ready' && currentArtist()}>
-        <div class={styles.artist}>
+        <div
+          class={styles.artist}
+          onContextMenu={e =>
+            handleContextMenu(
+              e,
+              currentArtist().id,
+              currentArtist().type,
+              isFavorited,
+              setIsFavorited,
+              contextMenuItems,
+              setContextMenuItems
+            )
+          }
+        >
           <div class={styles.artist__artwork}>
             <div class={styles.artist__artwork__gradient}></div>
             <img
