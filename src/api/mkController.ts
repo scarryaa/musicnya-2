@@ -313,6 +313,24 @@ export class mkController {
 
   // api
 
+  static getSongCredits = async (id: string) => {
+    const instance = await mkController.getInstance()
+    if (instance) {
+      const response = await fetch(
+        `https://amp-api.music.apple.com/v1/catalog/${store.countryCode}/songs/${id}/credits?l=en-US&platform=web`,
+        {
+          headers: {
+            authorization: `Bearer ${MusicKit.getInstance().developerToken}`,
+            'music-user-token': MusicKit.getInstance().musicUserToken
+          }
+        }
+      )
+      return response.json()
+    } else {
+      console.error('Failed to get song credits: MusicKit instance not available')
+    }
+  }
+
   static getItemInfo = async (id: string, type: string) => {
     const instance = await mkController.getInstance()
 

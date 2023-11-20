@@ -30,6 +30,18 @@
       max-width: max-content;
     }
 
+    &__albums {
+      font-size: 0.8rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      color: var(--app-text-light-color);
+      cursor: default;
+      width: 100%;
+      max-width: max-content;
+    }
+
     &__artists {
       font-size: 0.8rem;
       display: -webkit-box;

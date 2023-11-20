@@ -526,6 +526,7 @@ export const Album = () => {
                     <For each={currentAlbum().relationships.artists.data}>
                       {artist => (
                         <A
+                          activeClass=""
                           onClick={() =>
                             // TODO add pop out animation
                             setStore('app', 'modal', {

@@ -14,6 +14,7 @@ import { fetchRadio } from '../api/radio'
 import { fetchVideo } from '../api/video'
 import { fetchRecentlyAdded } from '../api/recentlyAdded'
 import { fetchArtist } from '../api/artist'
+import { fetchLibrarySongDetailed, fetchSongDetailed } from '../api/song'
 
 export const createStationStore = () => {
   return function (params: { id: string }) {
@@ -138,6 +139,24 @@ export const createRadioStore = () => {
         musicUserToken: MusicKit.getInstance()?.musicUserToken
       },
       fetchRadio
+    )
+
+    return data
+  }
+}
+
+export const createModalSongStore = () => {
+  return function (params: { id: string }) {
+    const [data] = createResource(
+      () => params.id,
+      async () =>
+        await (params.id.startsWith('i.') ? fetchLibrarySongDetailed : fetchSongDetailed)(
+          {
+            devToken: config.MusicKit.token,
+            musicUserToken: MusicKit.getInstance()?.musicUserToken,
+            id: params.id
+          }
+        )
     )
 
     return data
