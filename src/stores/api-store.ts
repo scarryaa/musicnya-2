@@ -15,6 +15,7 @@ import { fetchVideo } from '../api/video'
 import { fetchRecentlyAdded } from '../api/recentlyAdded'
 import { fetchArtist } from '../api/artist'
 import { fetchLibrarySongDetailed, fetchSongDetailed } from '../api/song'
+import { fetchCuratorDetailed } from '../api/curator'
 
 export const createStationStore = () => {
   return function (params: { id: string }) {
@@ -175,6 +176,29 @@ export const createModalAlbumStore = () => {
           musicUserToken: MusicKit.getInstance()?.musicUserToken,
           id: params.id
         })
+    )
+
+    return data
+  }
+}
+
+export const createModalCuratorStore = () => {
+  return function (params: { id: string }) {
+    const [data] = createResource<
+      any,
+      {
+        devToken: string
+        musicUserToken: string
+        id: string
+      },
+      string
+    >(
+      {
+        devToken: config.MusicKit.token,
+        musicUserToken: MusicKit.getInstance()?.musicUserToken,
+        id: params.id
+      },
+      fetchCuratorDetailed
     )
 
     return data

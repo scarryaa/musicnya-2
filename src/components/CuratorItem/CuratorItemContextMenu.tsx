@@ -21,7 +21,11 @@ export const contextMenu = (id, type) => [
   {
     icon: faInfoCircle,
     action: () => {
-      store.app.modal.open = true
+      setStore('app', 'modal', {
+        open: true,
+        type: 'curators',
+        id: id
+      })
     },
     isQuickAction: false,
     label: 'Properties',
