@@ -7,6 +7,7 @@ import { Search } from '../../components/LibraryActions/Search/Search'
 import { LibraryButton } from '../../components/Library/Button/LibraryButton'
 import { faArrows, faRefresh, faTableCells } from '@fortawesome/free-solid-svg-icons'
 import { store } from '../../stores/store'
+import { LoadingSpinner } from '../../components/LoadingSpinner/LoadingSpinner'
 
 export const Albums = () => {
   const [currentView, setCurrentView] = createSignal('grid' as 'grid' | 'list')
@@ -30,6 +31,7 @@ export const Albums = () => {
           b.relationships.artists.data[0].attributes.name
         )
       case 'date':
+        // @ts-ignore
         return new Date(a.attributes.releaseDate) - new Date(b.attributes.releaseDate)
       case 'genre':
         return a.attributes.genreNames[0].localeCompare(b.attributes.genreName[0])
@@ -83,6 +85,9 @@ export const Albums = () => {
     <LibraryShell title={'Albums'} actions={actions}>
       <div class={styles.albums}>
         <Switch>
+          <Match when={store.library.albums.length === 0}>
+            <LoadingSpinner />
+          </Match>
           <Match when={currentView() === 'grid'}>
             <div class={styles.albums__grid}>
               <For each={filteredAlbums()}>

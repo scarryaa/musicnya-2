@@ -19,130 +19,25 @@ const App: Component = () => {
   const navigate = useNavigate()
   initDB()
 
-  const fetchLibraryAlbums = async (offset: number) => {
-    try {
-      await albumService
-        .fetchLibraryAlbums({
-          platform: 'web',
-          limit: 100,
-          offset: offset,
-          extend: 'artistUrl',
-          art: {
-            f: 'url'
-          },
-          include: 'catalog,artists'
-        })
-        .then(
-          res => {
-            setStore('library', 'albums', res.data)
+  async function fetchData() {
+    const fetchPromises = []
+    setStore('library', 'loading', true)
 
-            if (res.next) {
-              fetchLibraryAlbums(store.library.albums.length)
-            }
-          },
-          err => {
-            console.error(err)
-          }
-        )
-    } catch (error) {
-      console.error('Error fetching albums:', error)
+    if (store.library.albums.length === 0) {
+      fetchPromises.push(store.library.fetchLibraryAlbums(0))
     }
-  }
-
-  const fetchLibraryPlaylists = async (offset: number) => {
-    try {
-      await playlistService
-        .fetchLibraryPlaylists({
-          platform: 'web',
-          limit: 100,
-          offset: offset,
-          extend: 'artistUrl',
-          art: {
-            f: 'url'
-          },
-          include: 'catalog,artists'
-        })
-        .then(
-          res => {
-            setStore('library', 'playlists', res.data)
-
-            if (res.next) {
-              fetchLibraryPlaylists(store.library.playlists.length)
-            }
-          },
-          err => {
-            console.error(err)
-          }
-        )
-        .finally(async () => {
-          // Fetch tracks for each playlist, 100 at a time
-          const trackFetchPromises = store.library.playlists.map(playlist =>
-            playlistService
-              .fetchLibraryPlaylistTracks(playlist.id, {
-                platform: 'web',
-                limit: 100,
-                include: 'catalog,artists,[tracks]=artists',
-                offset: 0
-              })
-              .then(
-                res => {
-                  if (res.next) {
-                    // Fetch the rest of the tracks
-                    const trackFetchPromises = []
-                    for (let i = 100; i < res.meta.total; i += 100) {
-                      trackFetchPromises.push(
-                        playlistService.fetchLibraryPlaylistTracks(playlist.id, {
-                          platform: 'web',
-                          limit: 100,
-                          include: 'catalog,artists,[tracks]=artists',
-                          offset: i
-                        })
-                      )
-                    }
-
-                    return Promise.all(trackFetchPromises).then(responses => {
-                      const tracks = responses.reduce((acc, response) => {
-                        return [...acc, ...response.data]
-                      }, res.data)
-                      console.log(tracks)
-                      return {
-                        ...res,
-                        data: tracks
-                      }
-                    })
-                  }
-                  return res
-                },
-                err => {
-                  console.error(err)
-                }
-              )
-          )
-
-          const trackResponses = await Promise.all(trackFetchPromises)
-
-          // Map tracks to the corresponding playlists
-          const updatedLibraryPlaylists = store.library.playlists.map(
-            (playlist, index) => {
-              const tracks = trackResponses[index].data
-              return {
-                ...playlist,
-                relationships: {
-                  ...playlist.relationships,
-                  tracks: {
-                    data: tracks
-                  }
-                }
-              }
-            }
-          )
-
-          // Update the store
-          setStore('library', 'playlists', updatedLibraryPlaylists)
-        })
-    } catch (error) {
-      console.error('Error fetching playlists:', error)
+    if (store.library.playlists.length === 0) {
+      fetchPromises.push(store.library.fetchLibraryPlaylists(0))
     }
+    if (store.library.artists.length === 0) {
+      fetchPromises.push(store.library.fetchLibraryArtists(0))
+    }
+
+    if (fetchPromises.length > 0) {
+      await Promise.all(fetchPromises)
+    }
+
+    setStore('library', 'loading', false)
   }
 
   createEffect(async () => {
@@ -152,8 +47,8 @@ const App: Component = () => {
     await mkController.authorize()
     navigate(Utils.parseSelectedDefaultPage(store.app.general.defaultPage))
 
-    fetchLibraryPlaylists(0)
-    fetchLibraryAlbums(0)
+    setStore('library', 'loading', true)
+    await fetchData()
     setStore('app', 'navigate', () => navigate)
   })
 

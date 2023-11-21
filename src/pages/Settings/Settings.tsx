@@ -1,4 +1,4 @@
-import { createSignal } from 'solid-js'
+import { Show, createSignal } from 'solid-js'
 import { Accordion } from '../../components/Accordion/Accordion'
 import { Select } from '../../components/Select/Select'
 import { setStore, store } from '../../stores/store'
@@ -83,6 +83,16 @@ export const Settings = () => {
     )
   }
 
+  const handleResetDatabaseClick = () => {
+    localStorage.removeItem('library')
+    setStore('library', 'loading', true)
+    Promise.all([store.library.refreshPlaylists(), store.library.refreshAlbums()]).then(
+      () => {
+        setStore('library', 'loading', false)
+      }
+    )
+  }
+
   return (
     <div class={styles.settings}>
       <h1 class={styles.settings__title}>Settings</h1>
@@ -138,6 +148,35 @@ export const Settings = () => {
             checked={store.app.media.hideEditorialNotes}
             onClick={handleEditorialNotesClick}
           />
+        </div>
+        <div class={styles.settings__setting}>
+          <span>Always expand editorial notes</span>
+          <input
+            type="checkbox"
+            checked={store.app.media.expandEditorialNotes}
+            onClick={handleEditorialNotesExpandClick}
+          />
+        </div>
+        <div class={styles.settings__setting}>
+          <span>Disable animated artwork</span>
+          <input
+            type="checkbox"
+            checked={store.app.media.disableAnimatedArtwork}
+            onClick={handleDisableAnimatedArtworkClick}
+          />
+        </div>
+      </Accordion>
+      <Accordion title="Database">
+        <div class={styles.settings__setting}>
+          <span>Reset database</span>
+          <Show when={store.library.loading}>
+            <span>...</span>
+          </Show>
+          <Show when={!store.library.loading}>
+            <button class={styles.settings__button} onClick={handleResetDatabaseClick}>
+              Reset Database
+            </button>
+          </Show>
         </div>
         <div class={styles.settings__setting}>
           <span>Always expand editorial notes</span>

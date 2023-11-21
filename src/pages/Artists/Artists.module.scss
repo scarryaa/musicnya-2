@@ -11,7 +11,7 @@
 .artists {
   font-family: 'Inter', sans-serif;
   color: var(--app-text-color);
-  height: 100%;
+  height: calc(100% - 3.6rem);
   display: flex;
   flex-direction: row;
   overflow: visible;
@@ -25,17 +25,6 @@
     gap: 1rem;
     padding: 1rem;
     overflow-y: overlay;
-
-    &__skelContainer {
-      height: calc(100% + 3.6rem);
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-      align-content: flex-start;
-      gap: 1rem;
-      padding: 1rem;
-      overflow-y: overlay;
-    }
   }
 
   &__sidebar {
