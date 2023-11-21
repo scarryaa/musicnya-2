@@ -1,5 +1,6 @@
 :root {
   --top-bar-height: 3rem;
+  --top-bar-padding: 0.5rem;
 }
 
 .libraryShell {
@@ -7,11 +8,13 @@
   width: 100%;
   height: 100%;
   position: relative;
+  overflow: hidden;
 
   &__topBar {
     display: flex;
     justify-content: space-between;
     padding: 0 1rem;
+    padding-bottom: var(--top-bar-padding);
     height: var(--top-bar-height);
 
     &__title {
@@ -24,12 +27,12 @@
       display: flex;
       flex-direction: row;
       align-items: flex-end;
-      gap: 1rem;
     }
   }
 
   &__content {
     width: 100%;
-    height: calc(100% - var(--top-bar-height) - 3.6rem);
+    height: calc(100% - var(--top-bar-height));
+    overflow-y: overlay;
   }
 }

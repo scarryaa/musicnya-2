@@ -1,12 +1,78 @@
-import { createSignal, createEffect, onCleanup, Switch, Match, For } from 'solid-js'
-import { mkController } from '../../api/mkController'
+import { For, Match, Switch, createMemo, createSignal } from 'solid-js'
 import { MediaItem } from '../../components/MediaItem/MediaItem'
 import { Utils } from '../../util/util'
 import styles from './Albums.module.scss'
-import musicNote from '../../assets/music_note.png'
-import { MediaItemSkeleton } from '../../components/Skeletons/MediaItemSkeleton'
-import { ArtistListSkeleton } from '../../components/Skeletons/ArtistListSkeleton'
+import { LibraryShell } from '../../components/Library/Shell/LibraryShell'
+import { Search } from '../../components/LibraryActions/Search/Search'
+import { LibraryButton } from '../../components/Library/Button/LibraryButton'
+import { faArrows, faRefresh, faTableCells } from '@fortawesome/free-solid-svg-icons'
+import { store } from '../../stores/store'
 
 export const Albums = () => {
-  return <ArtistListSkeleton />
+  const [currentView, setCurrentView] = createSignal('grid' as 'grid' | 'list')
+  const [currentSort, setCurrentSort] = createSignal(
+    'none' as 'name' | 'none' | 'artist' | 'date' | 'genre'
+  )
+  const [search, setSearch] = createSignal('')
+  const filteredAlbums = createMemo(() => {
+    const term = search().toLowerCase()
+    return (
+      store.library.albums.filter(album =>
+        album.attributes.name.toLowerCase().includes(term)
+      ) || []
+    )
+  })
+
+  const actions = (
+    <div class={styles.albums__actions}>
+      <LibraryButton
+        faIcon={faTableCells}
+        onClick={() => {
+          if (currentView() === 'grid') {
+            setCurrentView('list')
+          } else {
+            setCurrentView('grid')
+          }
+        }}
+        tooltip="View"
+      />
+      <LibraryButton faIcon={faArrows} onClick={() => {}} tooltip="Sort By" />
+      <LibraryButton faIcon={faRefresh} onClick={() => {}} tooltip="Refresh" />
+      <Search onInput={e => setSearch(e.target.value)} />
+    </div>
+  )
+  return (
+    <LibraryShell title={'Albums'} actions={actions}>
+      <div class={styles.albums}>
+        <Switch>
+          <Match when={currentView() === 'grid'}>
+            <div class={styles.albums__grid}>
+              <For each={filteredAlbums()}>
+                {album => {
+                  return (
+                    <div class={styles.albums__item}>
+                      <MediaItem
+                        artistId={
+                          album.relationships.artists.data[0].relationships.catalog
+                            .data[0].id
+                        }
+                        artists={[album.relationships.artists.data[0].attributes.name]}
+                        id={album.id}
+                        type={album.type}
+                        title={album.attributes.name}
+                        src={Utils.formatArtworkUrl(album.attributes.artwork?.url, 200)}
+                      />
+                    </div>
+                  )
+                }}
+              </For>
+            </div>
+          </Match>
+          <Match when={currentView() === 'list'}>
+            <div class={styles.albums__list}></div>
+          </Match>
+        </Switch>
+      </div>
+    </LibraryShell>
+  )
 }

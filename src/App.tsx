@@ -1,5 +1,5 @@
 import { useNavigate } from '@solidjs/router'
-import { Component, createEffect } from 'solid-js'
+import { Component, createEffect, createSignal } from 'solid-js'
 import { mkController } from './api/mkController'
 import { ContextMenu } from './components/ContextMenu/ContextMenu'
 import { Footer } from './components/Footer/Footer'
@@ -9,20 +9,50 @@ import { RightSidebar } from './components/RightSidebar/RightSidebar'
 import { Topbar } from './components/Topbar/Topbar'
 import { setStore, store } from './stores/store'
 import { Utils } from './util/util'
-import '@fontsource/inter'
 import { initDB } from './db/db'
 import { Modal } from './components/Modals/Modal'
+import '@fontsource/inter'
 
 const App: Component = () => {
   const navigate = useNavigate()
+  const [albumsResponse, setAlbumsResponse] = createSignal(null)
   initDB()
+
+  const fetchMoreLibraryAlbums = async () => {
+    try {
+      if (albumsResponse().next) {
+        await mkController.getLibraryAlbums(store.library.albums.length.toString()).then(
+          res => {
+            setAlbumsResponse(res)
+            setStore('library', 'albums', [...store.library.albums, ...res.data])
+          },
+          err => {
+            console.error(err)
+          }
+        )
+        fetchMoreLibraryAlbums()
+      }
+    } catch (error) {
+      console.error('Error fetching more albums:', error)
+    }
+  }
 
   const fetchLibraryAlbums = async () => {
     try {
-      const albumsResponse = await mkController.getLibraryAlbums('0')
-      const libraryAlbums = albumsResponse.data
-      setStore('library', 'albums', libraryAlbums)
-      console.log(libraryAlbums)
+      await mkController.getLibraryAlbums('0').then(
+        res => {
+          setAlbumsResponse(res)
+        },
+        err => {
+          console.error(err)
+        }
+      )
+
+      setStore('library', 'albums', albumsResponse().data)
+
+      if (albumsResponse().next) {
+        fetchMoreLibraryAlbums()
+      }
     } catch (error) {
       console.error('Error fetching albums:', error)
     }
