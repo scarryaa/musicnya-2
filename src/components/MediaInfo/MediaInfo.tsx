@@ -21,31 +21,31 @@ export const MediaInfo = ({ media, artistId }) => {
   }
 
   const handleBlur = () => {
-    var video = document.getElementById('video')
+    var video: any = document.getElementById('video')
     video.pause()
   }
 
   const handleFocus = () => {
-    var video = document.getElementById('video')
+    var video: any = document.getElementById('video')
     video.play()
   }
 
   createEffect(() => {
     if (
-      window.Hls.isSupported() &&
+      (window as any).Hls.isSupported() &&
       !store.app.media.disableAnimatedArtwork &&
       media()?.attributes?.editorialVideo?.motionDetailSquare?.video
     ) {
       var video = document.getElementById('video')
-      var hls = new window.Hls()
+      var hls = new (window as any).Hls()
       hls.loadSource(media().attributes?.editorialVideo?.motionDetailSquare?.video, {
         appData: {
           serviceName: 'web-static-video'
         }
       })
       hls.attachMedia(video)
-      hls.on(window.Hls.Events.MANIFEST_PARSED, function () {
-        video.play()
+      hls.on((window as any).Hls.Events.MANIFEST_PARSED, function () {
+        ;(video as any).play()
       })
 
       window.addEventListener('blur', handleBlur)

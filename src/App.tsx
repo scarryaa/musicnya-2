@@ -14,6 +14,7 @@ import { Modal } from './components/Modals/Modal'
 import { albumService } from './services/albumService'
 import { playlistService } from './services/playlistService'
 import '@fontsource/inter'
+import { localStorageService } from './services/localStorageService'
 
 const App: Component = () => {
   const navigate = useNavigate()
@@ -21,33 +22,28 @@ const App: Component = () => {
 
   async function fetchData() {
     const fetchPromises = []
-    setStore('library', 'loading', true)
-
     if (store.library.albums.length === 0) {
-      fetchPromises.push(store.library.fetchLibraryAlbums(0))
+      fetchPromises.push(store.library.refreshAlbums())
     }
     if (store.library.playlists.length === 0) {
-      fetchPromises.push(store.library.fetchLibraryPlaylists(0))
+      fetchPromises.push(store.library.refreshPlaylists())
     }
     if (store.library.artists.length === 0) {
-      fetchPromises.push(store.library.fetchLibraryArtists(0))
+      fetchPromises.push(store.library.refreshArtists())
     }
 
     if (fetchPromises.length > 0) {
       await Promise.all(fetchPromises)
     }
-
-    setStore('library', 'loading', false)
   }
 
   createEffect(async () => {
-    Utils.setDarkMode(localStorage.getItem('darkMode') === 'true')
+    Utils.setDarkMode(localStorageService.get('darkMode') === 'true')
     Utils.disableContextMenu()
 
     await mkController.authorize()
     navigate(Utils.parseSelectedDefaultPage(store.app.general.defaultPage))
 
-    setStore('library', 'loading', true)
     await fetchData()
     setStore('app', 'navigate', () => navigate)
   })

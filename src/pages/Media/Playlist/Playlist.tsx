@@ -27,7 +27,7 @@ export const Playlist = () => {
     <Switch fallback={<LoadingSpinner />}>
       <Match when={playlistData.state === 'ready' && currentPlaylist()}>
         <div class={styles.playlist}>
-          <MediaInfo media={currentPlaylist} />
+          <MediaInfo artistId={null} media={currentPlaylist} />
         </div>
 
         {currentPlaylist().attributes.editorialNotes?.standard &&

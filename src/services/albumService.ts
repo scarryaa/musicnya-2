@@ -22,5 +22,31 @@ export const albumService = {
     } catch (error) {
       throw error
     }
+  },
+
+  async fetchAllLibraryAlbums(offset = 0, accumulatedAlbums = []) {
+    try {
+      const res = await albumService.fetchLibraryAlbums({
+        platform: 'web',
+        limit: 100,
+        offset: offset,
+        extend: 'artistUrl',
+        art: { f: 'url' },
+        include: 'catalog,artists'
+      })
+
+      // Combine current results with previous ones
+      const newAlbums = accumulatedAlbums.concat(res.data)
+
+      if (res.next) {
+        // Recursively fetch more albums if necessary
+        return albumService.fetchAllLibraryAlbums(offset + 100, newAlbums)
+      }
+
+      return newAlbums
+    } catch (error) {
+      console.error('Error fetching additional albums:', error)
+      throw error
+    }
   }
 }

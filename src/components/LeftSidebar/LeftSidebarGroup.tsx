@@ -6,12 +6,13 @@ import {
   faChevronUp
 } from '@fortawesome/free-solid-svg-icons'
 import { createEffect, createSignal } from 'solid-js'
+import { localStorageService } from '../../services/localStorageService'
 
 export const LeftSidebarGroup = ({ title, children }) => {
   const [showChildren, setShowChildren] = createSignal(true)
 
   createEffect(() => {
-    const storedValue = localStorage.getItem(`leftSidebarGroup-${title}`)
+    const storedValue = localStorageService.get(`leftSidebarGroup-${title}`)
     if (storedValue === 'false') {
       setShowChildren(false)
     }

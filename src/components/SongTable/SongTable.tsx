@@ -20,20 +20,19 @@ export const SongTable = ({ data }) => {
   const [remainingTracks, setRemainingTracks] = createSignal(
     totalTracks - tracks()?.length ?? 0
   )
-  const [trackCount, setTrackCount] = createSignal(
-    data().attributes.trackCount || data().relationships.tracks.data.length
-  )
-  console.log(data())
-  const [duration, setDuration] = createSignal(
-    Utils.formatTimeHours(
-      data()
-        .relationships.tracks.data.filter(track => track.attributes.durationInMillis)
-        .reduce((a, b) => a + b.attributes.durationInMillis, 0) / 1000
-    )
-  )
+  const [trackCount, setTrackCount] = createSignal(0)
+  const [duration, setDuration] = createSignal('')
 
   createEffect(() => {
     setTracks(data().relationships.tracks.data)
+    setTrackCount(data().attributes.trackCount || data().relationships.tracks.data.length)
+    setDuration(
+      Utils.formatTimeHours(
+        data()
+          .relationships.tracks.data.filter(track => track.attributes.durationInMillis)
+          .reduce((a, b) => a + b.attributes.durationInMillis, 0) / 1000
+      )
+    )
     console.log(data().relationships)
 
     if (data().relationships.tracks.data.length < 100) {

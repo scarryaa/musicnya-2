@@ -15,7 +15,7 @@ import {
 import { setStore, store } from '../../stores/store'
 import { WindowButtonsMac } from '../WindowButtons/WindowButtons'
 import Tooltip from '../Tooltip/Tooltip'
-import { For, Show, createSignal } from 'solid-js'
+import { For, Match, Show, Switch, createSignal } from 'solid-js'
 import { LeftSidebarGroup } from './LeftSidebarGroup'
 import { LeftSidebarButtonSkeleton } from '../Skeletons/LeftSidebarButtonSkeleton'
 
@@ -104,24 +104,30 @@ export const LeftSidebar = () => {
         />
       </LeftSidebarGroup>
       <LeftSidebarGroup title="Apple Music Playlists">
-        <Show when={store.library.playlists.length === 0}>
-          <LeftSidebarButtonSkeleton />
-          <LeftSidebarButtonSkeleton />
-          <LeftSidebarButtonSkeleton />
-        </Show>
-        <For
-          each={store.library.playlists.filter(playlist => !playlist.attributes.canEdit)}
-        >
-          {playlist => (
-            <LeftSidebarButton
-              tooltip={playlist.attributes.name}
-              text={playlist.attributes.name}
-              icon={faHeadphones}
-              href={`media/library-playlists/${playlist.id}`}
-              showTooltip={true}
-            />
-          )}
-        </For>
+        <Switch>
+          <Match when={store.library.playlists.length === 0}>
+            <LeftSidebarButtonSkeleton />
+            <LeftSidebarButtonSkeleton />
+            <LeftSidebarButtonSkeleton />
+          </Match>
+          <Match when={store.library.playlists.length > 0}>
+            <For
+              each={store.library.playlists.filter(
+                playlist => !playlist.attributes.canEdit
+              )}
+            >
+              {playlist => (
+                <LeftSidebarButton
+                  tooltip={playlist.attributes.name}
+                  text={playlist.attributes.name}
+                  icon={faHeadphones}
+                  href={`media/library-playlists/${playlist.id}`}
+                  showTooltip={true}
+                />
+              )}
+            </For>
+          </Match>
+        </Switch>
       </LeftSidebarGroup>
       <LeftSidebarGroup title="Playlists">
         <LeftSidebarButton
@@ -135,26 +141,32 @@ export const LeftSidebar = () => {
           tooltip="All Playlists"
           text="All Playlists"
           icon={faList}
-          href="/library/playlists"
+          href="/playlists"
         />
-        <Show when={store.library.playlists.length === 0}>
-          <LeftSidebarButtonSkeleton />
-          <LeftSidebarButtonSkeleton />
-          <LeftSidebarButtonSkeleton />
-        </Show>
-        <For
-          each={store.library.playlists.filter(playlist => playlist.attributes.canEdit)}
-        >
-          {playlist => (
-            <LeftSidebarButton
-              tooltip={playlist.attributes.name}
-              text={playlist.attributes.name}
-              icon={faHeadphones}
-              href={`media/library-playlists/${playlist.id}`}
-              showTooltip={true}
-            />
-          )}
-        </For>
+        <Switch>
+          <Match when={store.library.playlists.length === 0}>
+            <LeftSidebarButtonSkeleton />
+            <LeftSidebarButtonSkeleton />
+            <LeftSidebarButtonSkeleton />
+          </Match>
+          <Match when={store.library.playlists.length > 0}>
+            <For
+              each={store.library.playlists.filter(
+                playlist => playlist.attributes.canEdit
+              )}
+            >
+              {playlist => (
+                <LeftSidebarButton
+                  tooltip={playlist.attributes.name}
+                  text={playlist.attributes.name}
+                  icon={faHeadphones}
+                  href={`media/library-playlists/${playlist.id}`}
+                  showTooltip={true}
+                />
+              )}
+            </For>
+          </Match>
+        </Switch>
       </LeftSidebarGroup>
     </>
   )

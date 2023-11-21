@@ -23,7 +23,7 @@ export const Station = () => {
     <Switch fallback={<LoadingSpinner />}>
       <Match when={stationData.state === 'ready' && currentStation()}>
         <div class={styles.station}>
-          <MediaInfo media={currentStation} />
+          <MediaInfo artistId={null} media={currentStation} />
         </div>
       </Match>
     </Switch>

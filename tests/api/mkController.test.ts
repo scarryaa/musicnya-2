@@ -2,6 +2,7 @@ import * as config from '../../config.json'
 import { mkController } from '../../src/api/mkController'
 
 // Mocking the MusicKit global object
+// @ts-ignore
 global.MusicKit = {
   configure: jest.fn().mockImplementation(() =>
     Promise.resolve({

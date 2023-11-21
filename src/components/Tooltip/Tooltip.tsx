@@ -4,6 +4,14 @@ import { createMutable } from 'solid-js/store'
 import { onCleanup, onMount } from 'solid-js'
 import { insert } from 'solid-js/web'
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface Directives {
+      Tooltip: [string, string | (() => string), (boolean | (() => boolean))?, number?]
+    }
+  }
+}
+
 // state
 let local = createMutable({
   open: false,

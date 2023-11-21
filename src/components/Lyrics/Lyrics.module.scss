@@ -5,6 +5,7 @@
   height: calc(100vh - var(--app-footer-height) - 1.3rem);
   padding-inline: 1rem;
   overflow-y: overlay;
+  --font-size-relative: 10cqw;
 
   :not(.activeLyric) {
     span {
@@ -21,7 +22,7 @@
       font-weight: 700;
       font-family: 'Inter';
       padding-right: 1rem;
-      font-size: clamp(14px, 10cqw, 22px);
+      font-size: clamp(14px, var(--font-size-relative), 22px);
       white-space: pre-wrap;
       word-wrap: break-word;
       text-shadow: 0 0 10px rgba(0, 0, 0, 0.3);

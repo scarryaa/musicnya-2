@@ -896,60 +896,6 @@ export class mkController {
     }
   }
 
-  static getAlbums = async (offset: string) => {
-    const instance = await mkController.getInstance()
-    if (instance) {
-      const response = await fetch(
-        `https://amp-api.music.apple.com/v1/me/library/albums?l=en-US&platform=web&extend=artistUrl&limit=100&art%5Bf%5D=url&include=catalog&offset=${offset}`,
-        {
-          headers: {
-            authorization: `Bearer ${config.MusicKit.token}`,
-            'music-user-token': config.MusicKit.musicUserToken
-          }
-        }
-      )
-      return response.json()
-    } else {
-      console.error('Failed to get albums: MusicKit instance not available')
-    }
-  }
-
-  static getLibraryAlbums = async (offset: string) => {
-    const instance = await mkController.getInstance()
-    if (instance) {
-      const response = await fetch(
-        `https://amp-api.music.apple.com/v1/me/library/albums?l=en-US&platform=web&extend=artistUrl&limit=100&art%5Bf%5D=url&include=catalog,artists&offset=${offset}`,
-        {
-          headers: {
-            authorization: `Bearer ${MusicKit.getInstance().developerToken}`,
-            'music-user-token': MusicKit.getInstance().musicUserToken
-          }
-        }
-      )
-      return response.json()
-    } else {
-      console.error('Failed to get albums: MusicKit instance not available')
-    }
-  }
-
-  static getLibraryArtists = async (offset: string) => {
-    const instance = await mkController.getInstance()
-    if (instance) {
-      const response = await fetch(
-        `https://amp-api.music.apple.com/v1/me/library/artists?l=en-US&platform=web&extend=artistUrl&limit=100&include=catalog&art%5Bf%5D=url&offset=${offset}`,
-        {
-          headers: {
-            authorization: `Bearer ${config.MusicKit.token}`,
-            'music-user-token': config.MusicKit.musicUserToken
-          }
-        }
-      )
-      return response.json()
-    } else {
-      console.error('Failed to get albums: MusicKit instance not available')
-    }
-  }
-
   static getArtist = async (id: string) => {
     const instance = await mkController.getInstance()
     if (instance) {
@@ -1006,7 +952,10 @@ export class mkController {
         artwork: e.attributes.artwork.url,
         type: e.type,
         parentType: e.container.type,
-        parentID: e.container.id,
+        parentID: e.container.id
+      })
+
+      setStore('currentTrack', {
         lyrics: {
           lyricsArray: Utils.parseTTMLtoJS(rawLyricsData),
           writtenByArray: Utils.stripWrittenBy(rawLyricsData),

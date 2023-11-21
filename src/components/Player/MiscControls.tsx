@@ -5,12 +5,13 @@ import { createEffect, createSignal } from 'solid-js'
 import { mkController } from '../../api/mkController'
 import { setStore, store } from '../../stores/store'
 import { Utils } from '../../util/util'
+import { localStorageService } from '../../services/localStorageService'
 
 export const MiscControls = () => {
   const [isMuted, setIsMuted] = createSignal(false)
 
   createEffect(() => {
-    const storedVolume = Number(localStorage.getItem('volume'))
+    const storedVolume = Number(localStorageService.get('volume'))
     updateVolume(storedVolume ?? 20)
   })
 
@@ -30,8 +31,8 @@ export const MiscControls = () => {
   const toggleMute = () => {
     if (isMuted()) {
       updateVolume(
-        localStorage.getItem('previousVolume')
-          ? Number(localStorage.getItem('previousVolume'))
+        localStorageService.get('previousVolume')
+          ? Number(localStorageService.get('previousVolume'))
           : 20
       )
     } else {

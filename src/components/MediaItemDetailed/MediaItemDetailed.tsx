@@ -1,5 +1,16 @@
+import { Accessor } from 'solid-js'
 import { Utils } from '../../util/util'
 import styles from './MediaItemDetailed.module.scss'
+
+type MediaItemDetailedProps = {
+  mediaItemId: string | Accessor<string>
+  src: string
+  title: string
+  artists: string
+  releaseDate?: string
+  albums?: string
+  circleArtwork?: boolean
+}
 
 export const MediaItemDetailed = ({
   mediaItemId,
@@ -9,7 +20,7 @@ export const MediaItemDetailed = ({
   releaseDate,
   albums,
   circleArtwork
-}) => {
+}: MediaItemDetailedProps) => {
   return (
     <div class={styles.mediaItemDetailed}>
       <div class={styles.mediaItemDetailed__artwork}>

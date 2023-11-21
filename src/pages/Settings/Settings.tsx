@@ -84,13 +84,12 @@ export const Settings = () => {
   }
 
   const handleResetDatabaseClick = () => {
-    localStorage.removeItem('library')
-    setStore('library', 'loading', true)
-    Promise.all([store.library.refreshPlaylists(), store.library.refreshAlbums()]).then(
-      () => {
-        setStore('library', 'loading', false)
-      }
-    )
+    store.library.reset()
+    Promise.all([
+      store.library.refreshPlaylists(),
+      store.library.refreshAlbums(),
+      store.library.refreshArtists()
+    ])
   }
 
   return (
@@ -177,22 +176,6 @@ export const Settings = () => {
               Reset Database
             </button>
           </Show>
-        </div>
-        <div class={styles.settings__setting}>
-          <span>Always expand editorial notes</span>
-          <input
-            type="checkbox"
-            checked={store.app.media.expandEditorialNotes}
-            onClick={handleEditorialNotesExpandClick}
-          />
-        </div>
-        <div class={styles.settings__setting}>
-          <span>Disable animated artwork</span>
-          <input
-            type="checkbox"
-            checked={store.app.media.disableAnimatedArtwork}
-            onClick={handleDisableAnimatedArtworkClick}
-          />
         </div>
       </Accordion>
       {/* TODO implement */}

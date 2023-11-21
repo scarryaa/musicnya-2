@@ -72,7 +72,7 @@ export const MediaSelector = ({ item }) => {
 
     switch (mediaItem.type) {
       case 'songs':
-        return <SongItem item={mediaItem} />
+        return <SongItem album={null} albumId={null} item={mediaItem} />
       case 'uploaded-videos':
         return <VideoItem item={mediaItem} />
       case 'music-videos':
