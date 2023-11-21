@@ -1,0 +1,9 @@
+.baseLink {
+  cursor: default;
+  width: auto;
+  height: 30px;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

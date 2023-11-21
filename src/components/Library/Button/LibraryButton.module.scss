@@ -1,0 +1,27 @@
+:root {
+  --libraryButton-hover-color: rgba(0, 0, 0, 0.2);
+  --libraryButton-active-color: rgba(0, 0, 0, 0.3);
+}
+
+:root[theme='dark'] {
+  --libraryButton-hover-color: rgba(255, 255, 255, 0.2);
+  --libraryButton-active-color: rgba(255, 255, 255, 0.3);
+}
+
+.libraryButton {
+  width: 25px;
+  height: 25px;
+  border-radius: var(--app-border-radius);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: default;
+
+  &:hover {
+    background-color: var(--libraryButton-hover-color);
+  }
+
+  &:active {
+    background-color: var(--libraryButton-active-color);
+  }
+}

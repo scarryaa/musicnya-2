@@ -930,7 +930,7 @@ export class mkController {
     }
   }
 
-  static getArtists = async (offset: string) => {
+  static getLibraryArtists = async (offset: string) => {
     const instance = await mkController.getInstance()
     if (instance) {
       const response = await fetch(

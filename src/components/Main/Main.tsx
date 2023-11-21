@@ -8,9 +8,7 @@ export const Main = () => {
       class={styles.main + ' main'}
       style={{ 'margin-left': `${store.app.leftSidebarWidth}px` }}
     >
-      <div class={styles.main__scrollContainer}>
-        <Outlet />
-      </div>
+      <Outlet />
     </div>
   )
 }

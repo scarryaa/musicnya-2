@@ -1,127 +1,113 @@
-import { createSignal, createEffect, onCleanup, For, Match, Switch, Show } from 'solid-js'
-import { mkController } from '../../api/mkController'
-import { Utils } from '../../util/util'
 import styles from './Artists.module.scss'
-import { MediaItemSkeleton } from '../../components/Skeletons/MediaItemSkeleton'
+import { LibraryShell } from '../../components/Library/Shell/LibraryShell'
+import { Search } from '../../components/LibraryActions/Search/Search'
+import { faRefresh } from '@fortawesome/free-solid-svg-icons'
+import { For, Match, Switch, createMemo, createResource, createSignal } from 'solid-js'
+import { LibraryButton } from '../../components/Library/Button/LibraryButton'
+import { mkController } from '../../api/mkController'
+import { LoadingSpinner } from '../../components/LoadingSpinner/LoadingSpinner'
+import { Utils } from '../../util/util'
 import { store } from '../../stores/store'
 import { MediaItem } from '../../components/MediaItem/MediaItem'
+import { ArtistListSkeleton } from '../../components/Skeletons/ArtistListSkeleton'
 
 export const Artists = () => {
-  const [data, setData] = createSignal([])
-  const [sentinel, setSentinel] = createSignal(null)
-  const [fetchingData, setFetchingData] = createSignal(false)
+  const [artists] = createResource(() => '0', mkController.getLibraryArtists, {
+    initialValue: []
+  })
   const [selectedArtist, setSelectedArtist] = createSignal(null)
+  const [search, setSearch] = createSignal('')
+  const filteredArtists = createMemo(() => {
+    const term = search().toLowerCase()
+    return (
+      artists()?.data?.filter(artist =>
+        artist.attributes.name.toLowerCase().includes(term)
+      ) || []
+    )
+  })
 
-  let observer
-
-  const handleArtistClick = async (id: string) => {
+  const handleArtistClick = (id: string) => {
     setSelectedArtist(id)
   }
 
-  const fetchMoreData = () => {
-    if (fetchingData()) return
-    setFetchingData(true)
-    mkController
-      .getArtists(data()?.length.toString())
-      .then(newData => {
-        setData([...data(), ...newData.data])
-        if (newData.data.length < 25) {
-          observer.disconnect()
-        }
-      })
-      .catch(error => {
-        console.error(error)
-      })
-      .finally(() => {
-        setFetchingData(false)
-      })
-  }
-
-  createEffect(() => {
-    observer = new IntersectionObserver(
-      entries => {
-        if (entries[0].isIntersecting && !fetchingData()) {
-          fetchMoreData()
-        }
-      },
-      { rootMargin: '100px' }
-    )
-
-    if (sentinel()) {
-      observer.observe(sentinel())
-    }
-
-    onCleanup(() => {
-      if (sentinel()) {
-        observer.unobserve(sentinel())
-      }
-    })
-  })
-
   return (
-    <div>
+    <LibraryShell title={'Artists'} actions={<div class={styles.actions}></div>}>
       <div class={styles.artists}>
-        <Switch fallback={<div>loading</div>}>
-          <Match when={data() && data().length > 0}>
-            <h1 class={styles.artists__header}>Artists</h1>
-            <div class={styles.artists__content}>
-              <div class={styles.artists__content__artists}>
-                <For each={data()}>
-                  {item => (
+        <div class={styles.artists__sidebar}>
+          <div class={styles.artists__sidebar__search}>
+            <Search
+              onInput={e =>
+                setSearch(
+                  e.target.value
+                    .toLowerCase()
+                    .replace(/[^a-z0-9 ]/g, '')
+                    .replace(/ +(?= )/g, ' ')
+                    .trim()
+                )
+              }
+            />
+          </div>
+          <div class={styles.artists__sidebar__list}>
+            <Switch>
+              <Match when={artists.state === 'refreshing'}>
+                <div class={styles.artists__sidebar__list__skelContainer}>
+                  {Array.from({ length: 8 }, _ => (
+                    <div class={styles.artists__sidebar__list__skelContainer__item}>
+                      <ArtistListSkeleton />
+                    </div>
+                  ))}
+                </div>
+              </Match>
+
+              <Match when={artists.state === 'ready'}>
+                <For each={filteredArtists()}>
+                  {artist => (
                     <div
-                      class={styles.artists__item}
-                      onClick={e => handleArtistClick(item.id)}
+                      class={styles.artists__sidebar__list__item}
+                      style={{
+                        'background-color':
+                          artist.id === selectedArtist() ? 'var(--app-primary-color)' : ''
+                      }}
+                      onClick={() => handleArtistClick(artist.id)}
                     >
-                      <div class={styles.artists__item__image}>
+                      <div class={styles.artists__sidebar__list__item__image}>
                         <img
                           src={Utils.formatArtworkUrl(
-                            item.relationships?.catalog?.data?.[0]?.attributes.artwork
-                              .url,
-                            200
+                            artist.relationships.catalog.data[0].attributes.artwork.url,
+                            100
                           )}
-                          alt={item.attributes.name}
                         />
                       </div>
-                      <div class={styles.artists__item__info}>
-                        <span class={styles.artists__item__info__name}>
-                          {item.attributes.name}
-                        </span>
+                      <div class={styles.artists__sidebar__list__item__name}>
+                        {artist.attributes.name}
                       </div>
                     </div>
                   )}
                 </For>
-              </div>
-              <Show when={selectedArtist()}>
-                <div class={styles.artists__selectedArtist}>
-                  <For
-                    each={store.library.albums.filter(
-                      item =>
-                        item.relationships?.artists?.data?.[0]?.id === selectedArtist()
-                    )}
-                  >
-                    {item => (
-                      <MediaItem
-                        artistId={null}
-                        id={item.id}
-                        type={item.type}
-                        artists={[item.attributes.artistName]}
-                        src={Utils.formatArtworkUrl(
-                          item.attributes.artwork.url,
-                          400,
-                          400
-                        )}
-                        title={item.attributes.name}
-                      />
-                    )}
-                  </For>
-                </div>
-              </Show>
-              {fetchingData() && <MediaItemSkeleton />}
-            </div>
-          </Match>
-        </Switch>
-        <div ref={setSentinel} style={{ height: '1px' }}></div>
+              </Match>
+            </Switch>
+          </div>
+        </div>
+        <div class={styles.artists__content}>
+          {store.library.albums
+            .filter(album => album.relationships.artists.data[0].id === selectedArtist())
+            .map(album => (
+              <MediaItem
+                id={album.id}
+                title={album.attributes.name}
+                artistId={
+                  album.relationships.artists.data[0].relationships.catalog.data[0].id
+                }
+                artists={[album.attributes.artistName]}
+                src={Utils.formatArtworkUrl(
+                  album.relationships.catalog.data[0].attributes.artwork.url,
+                  150
+                )}
+                type="albums"
+              ></MediaItem>
+            ))}
+        </div>
       </div>
-    </div>
+    </LibraryShell>
   )
 }

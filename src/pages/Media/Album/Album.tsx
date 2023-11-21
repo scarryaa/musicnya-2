@@ -1,4 +1,4 @@
-import { useParams } from '@solidjs/router'
+import { A, useParams } from '@solidjs/router'
 import { Match, Switch, createEffect, createSignal } from 'solid-js'
 import { EditorialNotes } from '../../../components/EditorialNotes/EditorialNotes'
 import { LoadingSpinner } from '../../../components/LoadingSpinner/LoadingSpinner'
@@ -7,6 +7,7 @@ import { SongTable } from '../../../components/SongTable/SongTable'
 import { createAlbumStore } from '../../../stores/api-store'
 import { store } from '../../../stores/store'
 import styles from './Album.module.scss'
+import { BaseLink } from '../../../components/BaseLink/BaseLink'
 
 export const Album = () => {
   const params = useParams<{ id: string }>()
@@ -37,6 +38,18 @@ export const Album = () => {
           currentAlbum().attributes.editorialNotes?.short) &&
           !store.app.media.hideEditorialNotes && <EditorialNotes data={currentAlbum} />}
         <SongTable data={currentAlbum} />
+        {currentAlbum().type === 'library-albums' && (
+          <div class={styles.album__footer}>
+            <BaseLink
+              activeClass={styles.album__footer__showCompleteAlbumLink__active}
+              aria-label="Show Complete Album"
+              class={styles.album__footer__showCompleteAlbumLink}
+              href={`/media/albums/${currentAlbum().relationships.catalog.data[0].id}`}
+            >
+              Show Catalog Album
+            </BaseLink>
+          </div>
+        )}
       </Match>
     </Switch>
   )

@@ -1,4 +1,21 @@
 .album {
   color: var(--app-text-color);
   padding-inline: 1.5rem;
+
+  &__footer {
+    color: var(--app-primary-color);
+    padding-inline: 1.5rem;
+    padding-bottom: 1rem;
+
+    &__showCompleteAlbumLink {
+      cursor: default;
+      width: auto;
+      height: 30px;
+      border-radius: 5px;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
 }

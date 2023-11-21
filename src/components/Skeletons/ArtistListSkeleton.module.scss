@@ -1,0 +1,43 @@
+.item {
+  width: 250px;
+  display: flex;
+  flex-direction: row;
+  animation: shimmer 1.2s linear infinite forwards;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.skeletonArtwork {
+  min-width: 50px;
+  min-height: 50px;
+  border-radius: 50%;
+}
+
+.skeletonText {
+  height: 10px;
+  width: 70%;
+  background-color: var(--skeleton-background-color);
+  border-radius: var(--app-border-radius);
+}
+
+// Shimmer effect
+@keyframes shimmer {
+  0% {
+    background-position: -40rem 0;
+  }
+  100% {
+    background-position: 40rem 0;
+  }
+}
+
+[class*='skeleton'] {
+  background: linear-gradient(
+    to right,
+    var(--skeleton-background-color) 4%,
+    var(--skeleton-background-color-2) 25%,
+    var(--skeleton-background-color) 36%
+  );
+  background-size: 1000px 104px;
+  position: relative;
+}
