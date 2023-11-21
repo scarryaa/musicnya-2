@@ -14,14 +14,42 @@ export const Albums = () => {
     'none' as 'name' | 'none' | 'artist' | 'date' | 'genre'
   )
   const [search, setSearch] = createSignal('')
+  console.log(store.library.albums)
+
+  const refreshAlbums = () => {
+    store.library.refreshAlbums()
+  }
+
+  const sortAlbums = (a, b) => {
+    const sort = currentSort()
+    switch (sort) {
+      case 'name':
+        return a.attributes.name.localeCompare(b.attributes.name)
+      case 'artist':
+        return a.relationships.artists.data[0].attributes.name.localeCompare(
+          b.relationships.artists.data[0].attributes.name
+        )
+      case 'date':
+        return new Date(a.attributes.releaseDate) - new Date(b.attributes.releaseDate)
+      case 'genre':
+        return a.attributes.genreNames[0].localeCompare(b.attributes.genreName[0])
+      default:
+        return 0
+    }
+  }
+
   const filteredAlbums = createMemo(() => {
     const term = search().toLowerCase()
-    return (
-      store.library.albums.filter(album =>
-        album.attributes.name.toLowerCase().includes(term)
-      ) || []
+    const filtered = store.library.albums.filter(album =>
+      album.attributes.name.toLowerCase().includes(term)
     )
+
+    return filtered.sort(sortAlbums)
   })
+
+  const changeSort = e => {
+    setCurrentSort(e.target.value)
+  }
 
   const actions = (
     <div class={styles.albums__actions}>
@@ -36,8 +64,18 @@ export const Albums = () => {
         }}
         tooltip="View"
       />
-      <LibraryButton faIcon={faArrows} onClick={() => {}} tooltip="Sort By" />
-      <LibraryButton faIcon={faRefresh} onClick={() => {}} tooltip="Refresh" />
+      <LibraryButton
+        faIcon={faArrows}
+        onClick={() => {
+          if (currentSort() === 'none') {
+            setCurrentSort('name')
+          } else {
+            setCurrentSort('none')
+          }
+        }}
+        tooltip="Sort"
+      />
+      <LibraryButton faIcon={faRefresh} onClick={refreshAlbums} tooltip="Refresh" />
       <Search onInput={e => setSearch(e.target.value)} />
     </div>
   )

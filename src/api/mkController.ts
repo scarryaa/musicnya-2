@@ -285,8 +285,10 @@ export class mkController {
   static setQueue = async (id: any, type: string, index: number) => {
     const instance = await mkController.getInstance()
     instance.shuffleMode = 0
+    const strippedType = type.replace('library-', '')
+
     if (instance) {
-      instance.setQueue({ startWith: index, [type]: [id] }).then(() => {
+      instance.setQueue({ startWith: index, [strippedType]: [id] }).then(() => {
         instance.play()
       })
     } else {
@@ -989,7 +991,10 @@ export class mkController {
 
   static setUpEvents = () => {
     MusicKit.getInstance().addEventListener('mediaItemStateDidChange', async e => {
-      const rawLyricsData = await this.getLyrics(e.id).then((response: any) => {
+      console.log(e)
+      const rawLyricsData = await this.getLyrics(
+        e.playParams.catalogId ?? e.playParams.id
+      ).then((response: any) => {
         return response.data[0].attributes.ttml
       })
 

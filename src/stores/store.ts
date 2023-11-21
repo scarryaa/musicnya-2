@@ -77,6 +77,9 @@ export const [store, setStore] = createStore({
   shuffleMode: localStorage.getItem('shuffleMode') === 'true' || false,
   repeatMode: localStorage.getItem('repeatMode') === 'true' || false,
   library: {
+    refreshAlbums() {
+      setStore('library', 'albums', [])
+    },
     albums: [],
     playlists: []
   },

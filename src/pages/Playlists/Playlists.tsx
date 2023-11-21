@@ -5,61 +5,20 @@ import { Utils } from '../../util/util'
 import styles from './Playlists.module.scss'
 import musicNote from '../../assets/music_note.png'
 import { MediaItemSkeleton } from '../../components/Skeletons/MediaItemSkeleton'
+import { store } from '../../stores/store'
 
 export const Playlists = () => {
   const [data, setData] = createSignal([])
   const [sentinel, setSentinel] = createSignal(null)
   const [fetchingData, setFetchingData] = createSignal(false)
-
-  let observer
-
-  const fetchMoreData = () => {
-    if (fetchingData()) return
-    setFetchingData(true)
-    mkController
-      .getPlaylists(data()?.length.toString())
-      .then(newData => {
-        console.log(newData)
-        setData([...data(), ...newData.data.data])
-        if (newData.data.data.length < 25) {
-          observer.disconnect()
-        }
-      })
-      .catch(error => {
-        console.error(error)
-      })
-      .finally(() => {
-        setFetchingData(false)
-      })
-  }
-
-  createEffect(() => {
-    observer = new IntersectionObserver(
-      entries => {
-        if (entries[0].isIntersecting && !fetchingData()) {
-          fetchMoreData()
-        }
-      },
-      { rootMargin: '100px' }
-    )
-
-    if (sentinel()) {
-      observer.observe(sentinel())
-    }
-
-    onCleanup(() => {
-      if (sentinel()) {
-        observer.unobserve(sentinel())
-      }
-    })
-  })
+  console.log(store.library.playlists)
 
   return (
     <div>
       <div class={styles.playlists}>
         <h1 class={styles.playlists__header}>Playlists</h1>
         <div class={styles.playlists__content}>
-          <For each={data()}>
+          <For each={store.library.playlists}>
             {item => (
               <MediaItem
                 artistId={null}
