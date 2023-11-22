@@ -126,7 +126,7 @@ export const RightSidebar = () => {
         <div class={styles.rightSidebar__innerContainer}>
           {store.app.platform === 'win32' && (
             <div class={styles.rightSidebar__windowButtons}>
-              <WindowButtons />
+              <WindowButtons buttonColor={null} buttonIconColor={'var(--color-black)'} />
             </div>
           )}
           <div class={styles.rightSidebar__buttons}>

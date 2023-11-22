@@ -16,6 +16,7 @@ import { playlistService } from './services/playlistService'
 import '@fontsource/inter'
 import { localStorageService } from './services/localStorageService'
 import * as config from '../config.json'
+import { MiniPlayer } from './components/MiniPlayer/MiniPlayer'
 
 const App: Component = () => {
   const navigate = useNavigate()
@@ -55,15 +56,20 @@ const App: Component = () => {
   }, [store.isAuthorized])
 
   return (
-    <div class="appContainer" right-drawer={store.app.rightSidebar.isExpanded}>
-      <Topbar />
-      <LeftSidebar />
-      <RightSidebar />
-      <Main />
-      <Footer />
-      <ContextMenu />
-      <Modal />
-    </div>
+    <>
+      {store.app.miniPlayer && <MiniPlayer />}
+      {!store.app.miniPlayer && (
+        <div class="appContainer" right-drawer={store.app.rightSidebar.isExpanded}>
+          <Topbar />
+          <LeftSidebar />
+          <RightSidebar />
+          <Main />
+          <Footer />
+          <ContextMenu />
+          <Modal />
+        </div>
+      )}
+    </>
   )
 }
 

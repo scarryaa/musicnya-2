@@ -1,17 +1,18 @@
 import { createStore } from 'solid-js/store'
-import { TauriService } from '../api/tauri'
 import { playlistService } from '../services/playlistService'
 import { albumService } from '../services/albumService'
 import { artistService } from '../services/artistService'
 import { songService } from '../services/songService'
 import { localStorageService } from '../services/localStorageService'
 import { ContextMenuType } from '../types/types'
+import { tauriService } from '../services/tauriService'
 
 export const [store, setStore] = createStore({
   app: {
     title: 'musicnya 2',
     version: '1.0.0',
     platform: 'unknown',
+    miniPlayer: localStorageService.get('miniPlayer') === 'true' || false,
     navigate: null,
     isMaximized: false,
     isDarkMode: localStorageService.get('darkMode') === 'true' || false,
@@ -187,7 +188,7 @@ export const [store, setStore] = createStore({
 })
 
 async function initializeStore() {
-  const platformInfo = await TauriService.getPlatformInfo()
+  const platformInfo = await tauriService.getPlatformInfo()
   setStore('app', 'platform', platformInfo)
 }
 

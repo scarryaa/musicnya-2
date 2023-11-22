@@ -25,6 +25,9 @@ import {
 } from '@fortawesome/free-regular-svg-icons'
 import { mkController } from '../../api/mkController'
 import { setStore, store } from '../../stores/store'
+import { LogicalSize, appWindow } from '@tauri-apps/api/window'
+import { tauriService } from '../../services/tauriService'
+import { Utils } from '../../util/util'
 
 // Actions
 
@@ -44,7 +47,9 @@ export const ImmersiveItem = () => {
 export const MiniPlayerItem = () => {
   return {
     icon: faWindowMaximize,
-    action: () => {},
+    action: () => {
+      Utils.resizeToMiniPlayer()
+    },
     isQuickAction: false,
     label: 'Mini Player',
     disabled: false,

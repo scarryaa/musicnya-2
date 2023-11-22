@@ -19,6 +19,8 @@
       },
       "window": {
         "all": false,
+        "setSize": true,
+        "setResizable": true,
         "close": true,
         "hide": true,
         "show": true,

@@ -1,4 +1,6 @@
-import { store } from '../stores/store'
+import { localStorageService } from '../services/localStorageService'
+import { tauriService } from '../services/tauriService'
+import { setStore, store } from '../stores/store'
 
 export class Utils {
   static formatTime = (time: number) => {
@@ -6,6 +8,18 @@ export class Utils {
     const minutes = Math.floor(time / 60)
     const seconds = Math.floor(time % 60)
     return `${minutes}:${seconds < 10 ? '0' + seconds : seconds}`
+  }
+
+  static resizeToMiniPlayer = async () => {
+    await tauriService.resizeToMiniPlayer()
+    setStore('app', 'miniPlayer', true)
+  }
+
+  static resizeToSavedSize = async () => {
+    const savedSize = JSON.parse(localStorageService.get('savedWindowSize'))
+    console.log(savedSize)
+    await tauriService.resizeToSavedSize(savedSize)
+    setStore('app', 'miniPlayer', false)
   }
 
   static formatTimeHours = (time: number) => {
