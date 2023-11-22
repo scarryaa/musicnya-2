@@ -1,11 +1,11 @@
 :root {
   --lyrics-text-color: #000000;
-  --lyrics-text-color-light: #838383;
+  --lyrics-text-color-light: rgb(97, 97, 97);
 }
 
 :root[theme='dark'] {
   --lyrics-text-color: #ffffff;
-  --lyrics-text-color-light: #838383;
+  --lyrics-text-color-light: #dadada;
 }
 
 .lyrics {

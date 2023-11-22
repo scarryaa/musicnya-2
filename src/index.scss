@@ -6,9 +6,9 @@
   --app-toolbar-height: 40px;
   --app-sidebar-width: 200px;
   --app-border-radius: 8px;
-  --app-primary-color: #5fa9aa;
+  --app-primary-color: #9ecece;
   --app-primary-color-hover: #90c5c7;
-  --app-primary-color-active: #628a8d;
+  --app-primary-color-active: #74a5a8;
   --app-text-color: #000;
   --app-footer-height: 70px;
   --app-left-sidebar-background-color: #f2f2f2;
@@ -27,6 +27,9 @@
 }
 
 :root[theme='dark'] {
+  --app-primary-color: #6b8f8f;
+  --app-primary-color-hover: #90c5c7;
+  --app-primary-color-active: #74a5a8;
   --app-text-color: #000;
   --app-left-sidebar-background-color: #2b2a2a;
   --app-background-color: #070707;

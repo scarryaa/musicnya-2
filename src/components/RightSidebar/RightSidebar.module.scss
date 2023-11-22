@@ -12,17 +12,17 @@
 .rightSidebar {
   width: var(--app-sidebar-width);
   height: calc(100% - var(--app-footer-height));
-  background-color: #7dadaf;
+  background-color: var(--app-primary-color);
   position: fixed;
   top: 0;
   right: 0;
   z-index: 1000;
   box-sizing: border-box;
   overflow: hidden;
-  padding-top: 40px;
+  padding-top: 20px;
 
   &__innerContainer {
-    height: calc(100vh - var(--app-footer-height) - 1.3rem);
+    height: calc(100vh - var(--app-footer-height));
     overflow: visible;
     padding-right: 5px;
     position: relative;
@@ -35,7 +35,7 @@
   }
 
   &__buttons {
-    margin-top: 20px;
+    margin-top: 40px;
     position: absolute;
     display: flex;
     align-items: flex-end;

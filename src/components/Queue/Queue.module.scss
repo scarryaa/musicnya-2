@@ -6,7 +6,7 @@
   --queue-scrollbar-background-color: rgba(255, 255, 255, 0.2);
   --queue-scrollbar-thumb-background-color: rgba(255, 255, 255, 0.4);
   --queue-drag-border-color: rgba(255, 255, 255, 0.6);
-  --queue-autoplay-enabled-color: #9bd7d8;
+  --queue-autoplay-enabled-color: #136f63;
 
   --queue-item-text-color: #000000;
   --queue-item-text-color-light: #696969;
@@ -31,19 +31,7 @@
   height: calc(100vh - var(--app-footer-height) - 3.3rem);
 
   &__content {
-    overflow-y: overlay;
-
-    &::-webkit-scrollbar {
-      background-color: var(--queue-scrollbar-background-color) !important;
-      z-index: 999;
-      width: 8px;
-      border-radius: 4px;
-
-      &-thumb {
-        background-color: var(--queue-scrollbar-thumb-background-color) !important;
-        border-radius: 4px;
-      }
-    }
+    overflow-y: auto !important;
   }
 
   &__upNext {
@@ -66,6 +54,7 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
+    padding-top: 0.5rem;
     padding-inline: 1rem;
     padding-bottom: 0.4rem;
 
