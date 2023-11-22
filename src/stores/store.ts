@@ -5,6 +5,7 @@ import { albumService } from '../services/albumService'
 import { artistService } from '../services/artistService'
 import { songService } from '../services/songService'
 import { localStorageService } from '../services/localStorageService'
+import { ContextMenuType } from '../components/ContextMenu/ContextMenuTypes'
 
 export const [store, setStore] = createStore({
   app: {
@@ -56,7 +57,9 @@ export const [store, setStore] = createStore({
       items: [],
       open: false,
       id: '',
-      type: '',
+      catalogId: '',
+      type: '' as ContextMenuType,
+      subType: '',
       display: 'block'
     },
     subContextMenu: {

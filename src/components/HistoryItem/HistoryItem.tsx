@@ -2,19 +2,15 @@ import { createSignal } from 'solid-js'
 import { mkController } from '../../api/mkController'
 import { store } from '../../stores/store'
 import styles from './HistoryItem.module.scss'
-import { contextMenu, handleContextMenu } from './HistoryItemContextMenu'
 import { faPlay } from '@fortawesome/free-solid-svg-icons'
 import Fa from 'solid-fa'
 import { Utils } from '../../util/util'
 import Tooltip from '../Tooltip/Tooltip'
+import { useContextMenu } from '../../composables/useContextMenu'
+import { ContextMenuType } from '../ContextMenu/ContextMenuTypes'
 
 export const HistoryItem = ({ item, index }) => {
-  const [isLoved, setIsLoved] = createSignal(false)
-  const [isDisliked, setIsDisliked] = createSignal(false)
-  const [inLibrary, setInLibrary] = createSignal(false)
-  const [contextMenuItems, setContextMenuItems] = createSignal(
-    contextMenu(item.id, item.type, isLoved(), inLibrary(), isDisliked(), index)
-  )
+  const { openContextMenu } = useContextMenu()
 
   const handleDoubleClick = e => {
     mkController.changeToIndex(index)
@@ -61,20 +57,7 @@ export const HistoryItem = ({ item, index }) => {
       class={styles.historyItem}
       onDblClick={handleDoubleClick}
       onContextMenu={e =>
-        handleContextMenu(
-          e,
-          item.id,
-          item.type,
-          isLoved,
-          setIsLoved,
-          inLibrary,
-          setInLibrary,
-          isDisliked,
-          setIsDisliked,
-          contextMenuItems,
-          setContextMenuItems,
-          index
-        )
+        openContextMenu(e, item.id, ContextMenuType.HISTORY_ITEM, item.type)
       }
     >
       <div class={styles.historyItem__artwork__container}>

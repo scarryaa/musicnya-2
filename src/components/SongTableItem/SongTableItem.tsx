@@ -5,38 +5,14 @@ import { mkController } from '../../api/mkController'
 import { store } from '../../stores/store'
 import { Utils } from '../../util/util'
 import styles from './SongTableItem.module.scss'
-import { createSignal } from 'solid-js'
-import {
-  contextMenu,
-  handleContextMenu,
-  handleMoreClick
-} from './SongTableItemContextMenu'
+import { useContextMenu } from '../../composables/useContextMenu'
+import { ContextMenuType } from '../ContextMenu/ContextMenuTypes'
 
 export const SongTableItem = ({ track, data, index }) => {
-  const [isLoved, setIsLoved] = createSignal(false)
-  const [isDisliked, setIsDisliked] = createSignal(false)
-  const [inLibrary, setInLibrary] = createSignal(false)
-  const [contextMenuItems, setContextMenuItems] = createSignal(
-    contextMenu(track.id, track.type, isLoved(), inLibrary(), isDisliked())
-  )
-
+  const { openContextMenu } = useContextMenu()
   return (
     <tr
-      onContextMenu={e =>
-        handleContextMenu(
-          e,
-          track.id,
-          track.type,
-          isLoved,
-          setIsLoved,
-          inLibrary,
-          setInLibrary,
-          isDisliked,
-          setIsDisliked,
-          contextMenuItems,
-          setContextMenuItems
-        )
-      }
+      onContextMenu={e => openContextMenu(e, track.id, ContextMenuType.SONG, data().type)}
       onDblClick={() => mkController.setQueue(data().id, data().type, index)}
       class={
         data().type === 'albums' &&
@@ -157,21 +133,7 @@ export const SongTableItem = ({ track, data, index }) => {
           <span>{Utils.formatTime(track.attributes.durationInMillis / 1000)}</span>
           <div
             class={styles.songTableItem__time__moreButton}
-            onClick={e =>
-              handleMoreClick(
-                e,
-                track.id,
-                'songs',
-                isLoved,
-                setIsLoved,
-                inLibrary,
-                setInLibrary,
-                isDisliked,
-                setIsDisliked,
-                contextMenuItems,
-                setContextMenuItems
-              )
-            }
+            onClick={e => openContextMenu(e, track.id, ContextMenuType.SONG, data().type)}
           >
             <Fa icon={faEllipsisH} size="1x" color="var(--app-text-color)" />
           </div>

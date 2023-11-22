@@ -3,12 +3,8 @@ import { Utils } from '../../util/util'
 import styles from './EditorialItemSmall.module.scss'
 import Fa from 'solid-fa'
 import { A } from '@solidjs/router'
-import { createSignal } from 'solid-js'
-import {
-  contextMenu,
-  handleContextMenu,
-  handleMoreClick
-} from './EditorialItemSmallContextMenu'
+import { useContextMenu } from '../../composables/useContextMenu'
+import { ContextMenuType } from '../ContextMenu/ContextMenuTypes'
 
 export const EditorialItemSmall = ({ item }) => {
   const showMoreButton = !item.attributes?.link?.label
@@ -24,47 +20,17 @@ export const EditorialItemSmall = ({ item }) => {
     item.relationships?.children?.data?.[0]?.id ||
     item.relationships?.contents?.data?.[0]?.id
 
-  const [isLoved, setIsLoved] = createSignal(false)
-  const [isDisliked, setIsDisliked] = createSignal(false)
-  const [inLibrary, setInLibrary] = createSignal(false)
-  const [isStation, setIsStation] = createSignal(childType === 'stations')
-  const [isPlaylist, setIsPlaylist] = createSignal(childType === 'playlists')
-  const [isCurator, setIsCurator] = createSignal(isCuratorType)
-  const [contextMenuItems, setContextMenuItems] = createSignal(
-    contextMenu(
-      childId,
-      childType,
-      isLoved(),
-      inLibrary(),
-      isDisliked(),
-      isStation(),
-      isPlaylist(),
-      isCurator()
-    )
-  )
+  const { openContextMenu } = useContextMenu()
 
   return (
     <div
       class={styles.editorialItemSmall}
       onContextMenu={e =>
-        handleContextMenu(
+        openContextMenu(
           e,
           childId,
-          childType,
-          isLoved,
-          setIsLoved,
-          isDisliked,
-          setIsDisliked,
-          inLibrary,
-          setInLibrary,
-          contextMenuItems,
-          setContextMenuItems,
-          isStation,
-          setIsStation,
-          isPlaylist,
-          setIsPlaylist,
-          isCurator,
-          setIsCurator
+          ContextMenuType.EDITORIAL,
+          isCuratorType ? 'curators' : childType
         )
       }
     >
@@ -76,30 +42,14 @@ export const EditorialItemSmall = ({ item }) => {
           {showMoreButton && (
             <div
               class={styles.editorialItemSmall__imageContainer__overlay__moreButton}
-              onClick={e => {
-                e.stopImmediatePropagation()
-                e.preventDefault()
-                e.stopPropagation()
-                handleMoreClick(
+              onClick={e =>
+                openContextMenu(
                   e,
                   childId,
-                  childType,
-                  isLoved,
-                  setIsLoved,
-                  isDisliked,
-                  setIsDisliked,
-                  inLibrary,
-                  setInLibrary,
-                  contextMenuItems,
-                  setContextMenuItems,
-                  isStation,
-                  setIsStation,
-                  isPlaylist,
-                  setIsPlaylist,
-                  isCurator,
-                  setIsCurator
+                  ContextMenuType.EDITORIAL,
+                  isCuratorType ? 'curators' : childType
                 )
-              }}
+              }
             >
               <Fa icon={faEllipsisH} size="1x" />
             </div>

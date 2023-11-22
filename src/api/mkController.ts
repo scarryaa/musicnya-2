@@ -555,6 +555,26 @@ export class mkController {
     }
   }
 
+  static getCatalogFromLibrary = async (id: string, type: string) => {
+    const instance = await mkController.getInstance()
+    type = type.replace('library-', '')
+
+    if (instance) {
+      const response = await fetch(
+        `https://amp-api.music.apple.com/v1/me/library/${type}/${id}/catalog?l=en-US&platform=web`,
+        {
+          headers: {
+            authorization: `Bearer ${config.MusicKit.token}`,
+            'music-user-token': config.MusicKit.musicUserToken
+          }
+        }
+      )
+      return response.json()
+    } else {
+      console.error('Failed to get catalog from library: MusicKit instance not available')
+    }
+  }
+
   static addTrackToPlaylist = async (id: string, type: string, playlistID: string) => {
     const instance = await mkController.getInstance()
     const strippedType = type.replace('library-', '')
@@ -668,13 +688,48 @@ export class mkController {
     }
   }
 
-  static checkIfLoved = async (id: string, type: string) => {
+  static checkIfLovedSong = async (id: string, type: string) => {
     const instance = await mkController.getInstance()
-    console.log(type)
+
+    if (type.includes('library-')) {
+      // get catalog id
+      const catalog = await mkController.getCatalogFromLibrary(id, type)
+      id = catalog.data[0].id
+    }
+
+    const strippedType = type.replace('library-', '')
 
     if (instance) {
       const response = await fetch(
-        `https://amp-api.music.apple.com/v1/me/ratings/${type}?ids=${id}`,
+        `https://amp-api.music.apple.com/v1/me/ratings/${strippedType}?ids=${id}`,
+        {
+          headers: {
+            authorization: `Bearer ${config.MusicKit.token}`,
+            'music-user-token': config.MusicKit.musicUserToken
+          }
+        }
+      )
+      return response.json()
+    } else {
+      console.error('Failed to check if loved: MusicKit instance not available')
+    }
+  }
+
+  static checkIfLoved = async (id: string, type: string) => {
+    const instance = await mkController.getInstance()
+
+    console.log(type)
+    if (type.includes('library-')) {
+      // get catalog id
+      const catalog = await mkController.getCatalogFromLibrary(id, type)
+      id = catalog.data[0].id
+      console.log(id)
+    }
+
+    const strippedType = type.replace('library-', '')
+    if (instance) {
+      const response = await fetch(
+        `https://amp-api.music.apple.com/v1/me/ratings/${strippedType}?ids=${id}`,
         {
           headers: {
             authorization: `Bearer ${config.MusicKit.token}`,
@@ -692,6 +747,7 @@ export class mkController {
     const instance = await mkController.getInstance()
     const strippedType = type.replace('library-', '')
 
+    console.log(type)
     if (instance) {
       try {
         const response = await fetch(
@@ -717,9 +773,17 @@ export class mkController {
   static unlove = async (id: string, type: string) => {
     const instance = await mkController.getInstance()
 
+    if (type.includes('library-')) {
+      // get catalog id
+      const catalog = await mkController.getCatalogFromLibrary(id, type)
+      id = catalog.data[0].id
+    }
+
+    const strippedType = type.replace('library-', '')
+
     if (instance) {
       const response = await fetch(
-        `https://amp-api.music.apple.com/v1/me/ratings/${type}/${id}`,
+        `https://amp-api.music.apple.com/v1/me/ratings/${strippedType}/${id}`,
         {
           method: 'DELETE',
           headers: {
@@ -737,9 +801,17 @@ export class mkController {
   static dislike = async (id: string, type: string) => {
     const instance = await mkController.getInstance()
 
+    if (type.includes('library-')) {
+      // get catalog id
+      const catalog = await mkController.getCatalogFromLibrary(id, type)
+      id = catalog.data[0].id
+    }
+
+    const strippedType = type.replace('library-', '')
+
     if (instance) {
       const response = await fetch(
-        `https://amp-api.music.apple.com/v1/me/ratings/${type}/${id}`,
+        `https://amp-api.music.apple.com/v1/me/ratings/${strippedType}/${id}`,
         {
           method: 'PUT',
           headers: {
@@ -762,9 +834,17 @@ export class mkController {
   static love = async (id: string, type: string) => {
     const instance = await mkController.getInstance()
 
+    if (type.includes('library-')) {
+      // get catalog id
+      const catalog = await mkController.getCatalogFromLibrary(id, type)
+      id = catalog.data[0].id
+    }
+
+    const strippedType = type.replace('library-', '')
+
     if (instance) {
       const response = await fetch(
-        `https://amp-api.music.apple.com/v1/me/ratings/${type}/${id}`,
+        `https://amp-api.music.apple.com/v1/me/ratings/${strippedType}/${id}`,
         {
           method: 'PUT',
           headers: {
@@ -938,11 +1018,6 @@ export class mkController {
   static setUpEvents = () => {
     MusicKit.getInstance().addEventListener('mediaItemStateDidChange', async e => {
       console.log(e)
-      const rawLyricsData = await this.getLyrics(
-        e.playParams.catalogId ?? e.playParams.id
-      ).then((response: any) => {
-        return response.data[0].attributes.ttml
-      })
 
       setStore('currentTrack', {
         id: e.id,
@@ -953,6 +1028,12 @@ export class mkController {
         type: e.type,
         parentType: e.container.type,
         parentID: e.container.id
+      })
+
+      const rawLyricsData = await this.getLyrics(
+        e.playParams.catalogId ?? e.playParams.id
+      ).then((response: any) => {
+        return response.data[0].attributes.ttml
       })
 
       setStore('currentTrack', {

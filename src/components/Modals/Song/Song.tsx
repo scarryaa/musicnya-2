@@ -33,7 +33,15 @@ export const Song = () => {
 
   createEffect(async () => {
     setCurrentSong(null)
-    setSongId(store.app.modal.id)
+    if (store.app.modal.type.includes('library-')) {
+      const res = await mkController.getCatalogFromLibrary(
+        store.app.modal.id,
+        store.app.modal.type
+      )
+      setSongId(res.data[0].id)
+    } else {
+      setSongId(store.app.modal.id)
+    }
     const data = songData()
     const db = await getDB()
     if (data && data.data && data.data.length > 0) {

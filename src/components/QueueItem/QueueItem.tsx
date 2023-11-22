@@ -7,15 +7,11 @@ import Tooltip from '../Tooltip/Tooltip'
 import Fa from 'solid-fa'
 import { faPlay } from '@fortawesome/free-solid-svg-icons'
 import { createSignal } from 'solid-js'
-import { contextMenu, handleContextMenu } from './QueueItemContextMenu'
+import { useContextMenu } from '../../composables/useContextMenu'
+import { ContextMenuType } from '../ContextMenu/ContextMenuTypes'
 
 export const QueueItem = ({ item, index }) => {
-  const [isLoved, setIsLoved] = createSignal(false)
-  const [isDisliked, setIsDisliked] = createSignal(false)
-  const [inLibrary, setInLibrary] = createSignal(false)
-  const [contextMenuItems, setContextMenuItems] = createSignal(
-    contextMenu(item.id, 'songs', isLoved(), inLibrary(), isDisliked(), index)
-  )
+  const { openContextMenu } = useContextMenu()
 
   const handleDoubleClick = e => {
     mkController.changeToIndex(index)
@@ -62,20 +58,7 @@ export const QueueItem = ({ item, index }) => {
       class={styles.queueItem}
       onDblClick={handleDoubleClick}
       onContextMenu={e =>
-        handleContextMenu(
-          e,
-          item.id,
-          'songs',
-          isLoved,
-          setIsLoved,
-          inLibrary,
-          setInLibrary,
-          isDisliked,
-          setIsDisliked,
-          contextMenuItems,
-          setContextMenuItems,
-          index
-        )
+        openContextMenu(e, item.id, ContextMenuType.QUEUE_ITEM, item.type + 's')
       }
     >
       <div class={styles.queueItem__artwork__container}>

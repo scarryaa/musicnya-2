@@ -1,31 +1,18 @@
 import { A } from '@solidjs/router'
 import { Utils } from '../../util/util'
 import styles from './ArtistItem.module.scss'
-import { createSignal } from 'solid-js'
-import { contextMenu, handleContextMenu } from './ArtistItemContextMenu'
+import { useContextMenu } from '../../composables/useContextMenu'
+import { ContextMenuType } from '../ContextMenu/ContextMenuTypes'
 
 export const ArtistItem = ({ item }) => {
-  const [isFavorited, setIsFavorited] = createSignal(false)
-  const [contextMenuItems, setContextMenuItems] = createSignal(
-    contextMenu(item.id, item.type, isFavorited)
-  )
+  const { openContextMenu } = useContextMenu()
 
   return (
     <A
       class={styles.artistItem}
       href={`/media/artists/${item.id}`}
       activeClass=""
-      onContextMenu={e =>
-        handleContextMenu(
-          e,
-          item.id,
-          item.type,
-          isFavorited,
-          setIsFavorited,
-          contextMenuItems,
-          setContextMenuItems
-        )
-      }
+      onContextMenu={e => openContextMenu(e, item.id, null, ContextMenuType.ARTIST, null)}
     >
       <div class={styles.artistItem__artwork__container}>
         <div class={styles.artistItem__artwork__container__overlay}></div>

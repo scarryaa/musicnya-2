@@ -6,18 +6,14 @@ import { A } from '@solidjs/router'
 import { mkController } from '../../api/mkController'
 import Tooltip from '../Tooltip/Tooltip'
 import { createSignal } from 'solid-js'
-import { contextMenu, handleContextMenu, handleMoreClick } from './SongItemContextMenu'
+import { useContextMenu } from '../../composables/useContextMenu'
+import { ContextMenuType } from '../ContextMenu/ContextMenuTypes'
 
 export const SongItem = ({ item, album, albumId }) => {
   const [inLibrary, setInLibrary] = createSignal(false)
   const [checkedInLibrary, setCheckedInLibrary] = createSignal(false)
   const [libraryId, setLibraryId] = createSignal(null)
-  const [isLoved, setIsLoved] = createSignal(false)
-  const [isDisliked, setIsDisliked] = createSignal(false)
-
-  const [contextMenuItems, setContextMenuItems] = createSignal(
-    contextMenu(item.id, 'songs', isLoved(), inLibrary(), isDisliked())
-  )
+  const { openContextMenu } = useContextMenu()
 
   const handleAddToLibraryClick = e => {
     mkController.addToLibrary(item.id, 'songs').then(
@@ -67,18 +63,11 @@ export const SongItem = ({ item, album, albumId }) => {
       class={styles.songItem}
       onMouseEnter={handleMouseOver}
       onContextMenu={e =>
-        handleContextMenu(
+        openContextMenu(
           e,
-          item.id,
-          'songs',
-          isLoved,
-          setIsLoved,
-          inLibrary,
-          setInLibrary,
-          isDisliked,
-          setIsDisliked,
-          contextMenuItems,
-          setContextMenuItems
+          libraryId(),
+          ContextMenuType.SONG,
+          inLibrary() ? 'library-songs' : 'songs'
         )
       }
     >
@@ -165,18 +154,11 @@ export const SongItem = ({ item, album, albumId }) => {
         <div
           class={styles.songItem__actions__moreButton}
           onClick={e =>
-            handleMoreClick(
+            openContextMenu(
               e,
               item.id,
-              'songs',
-              isLoved,
-              setIsLoved,
-              inLibrary,
-              setInLibrary,
-              isDisliked,
-              setIsDisliked,
-              contextMenuItems,
-              setContextMenuItems
+              ContextMenuType.SONG,
+              inLibrary() ? 'library-songs' : 'songs'
             )
           }
         >

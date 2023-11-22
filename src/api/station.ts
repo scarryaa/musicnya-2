@@ -37,7 +37,7 @@ export const fetchStationDetailed = async ({
   id: string
 }) => {
   return await fetch(
-    `https://amp-api.music.apple.com/v1/catalog/us/stations/ra.q-GAI6IDllNDM2NjI1MTg3ZTIxNWMxYWJiNzBmZjc1N2FhOTVm?l=en-US&platform=web&include=audio-analysis,genres,artists,albums,library,lyrics&extend=editorialArtwork,editorialVideo,lyricsExcerpt`,
+    `https://amp-api.music.apple.com/v1/catalog/us/stations/${id}?l=en-US&platform=web&include=audio-analysis,genres,artists,albums,library,lyrics&extend=editorialArtwork,editorialVideo,lyricsExcerpt`,
     {
       headers: {
         authorization: `Bearer ${devToken}`,

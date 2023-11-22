@@ -23,7 +23,6 @@ export const Station = () => {
     const data = stationData()
     if (data && data.data && data.data.length > 0) {
       setCurrentStation(data.data[0])
-      console.log(data.data[0])
       setArtworkUrls([
         data.data[0]?.attributes?.artwork.url && {
           name: 'Artwork',

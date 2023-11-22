@@ -4,8 +4,8 @@ import styles from './EditorialItem.module.scss'
 import { faPlay } from '@fortawesome/free-solid-svg-icons'
 import { mkController } from '../../api/mkController'
 import { A } from '@solidjs/router'
-import { contextMenu, handleContextMenu } from './EditorialItemContextMenu'
-import { createSignal } from 'solid-js'
+import { useContextMenu } from '../../composables/useContextMenu'
+import { ContextMenuType } from '../ContextMenu/ContextMenuTypes'
 
 export const EditorialItem = ({ item }) => {
   const childType =
@@ -18,48 +18,13 @@ export const EditorialItem = ({ item }) => {
     item.relationships?.children?.data?.[0]?.id ||
     item.relationships?.contents?.data?.[0]?.id
 
-  const [isLoved, setIsLoved] = createSignal(false)
-  const [isDisliked, setIsDisliked] = createSignal(false)
-  const [inLibrary, setInLibrary] = createSignal(false)
-  const [isStation, setIsStation] = createSignal(childType === 'stations')
-  const [isPlaylist, setIsPlaylist] = createSignal(childType === 'playlists')
-  const [isCurator, setIsCurator] = createSignal(isCuratorType)
-  const [contextMenuItems, setContextMenuItems] = createSignal(
-    contextMenu(
-      childId,
-      childType,
-      isLoved(),
-      inLibrary(),
-      isDisliked(),
-      isStation(),
-      isPlaylist(),
-      isCurator()
-    )
-  )
+  const { openContextMenu } = useContextMenu()
 
   return (
     <div
       class={styles.editorialItem}
       onContextMenu={e =>
-        handleContextMenu(
-          e,
-          childId,
-          childType,
-          isLoved,
-          setIsLoved,
-          isDisliked,
-          setIsDisliked,
-          inLibrary,
-          setInLibrary,
-          contextMenuItems,
-          setContextMenuItems,
-          isStation,
-          setIsStation,
-          isPlaylist,
-          setIsPlaylist,
-          isCurator,
-          setIsCurator
-        )
+        openContextMenu(e, childId, ContextMenuType.EDITORIAL, childType)
       }
     >
       <div>

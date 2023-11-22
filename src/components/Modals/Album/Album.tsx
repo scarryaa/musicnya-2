@@ -9,6 +9,7 @@ import { setStore, store } from '../../../stores/store'
 import { LoadingSpinner } from '../../LoadingSpinner/LoadingSpinner'
 import { SwatchSquare } from '../../SwatchSquare/SwatchSquare'
 import { Chip } from '../../Chip/Chip'
+import { mkController } from '../../../api/mkController'
 
 export const Album = () => {
   const [albumId, setAlbumId] = createSignal(store.app.modal.id)
@@ -18,9 +19,24 @@ export const Album = () => {
 
   const [currentAlbum, setCurrentAlbum] = createSignal(null)
 
-  createEffect(() => {
+  createEffect(async () => {
     setCurrentAlbum(null)
-    setAlbumId(store.app.modal.id)
+    if (store.app.modal.type.includes('library-')) {
+      const res = await mkController
+        .getCatalogFromLibrary(store.app.modal.id, store.app.modal.type)
+        .then(
+          res => {
+            if (res) {
+              setAlbumId(res.data[0].id)
+            }
+          },
+          err => {
+            console.error(err)
+          }
+        )
+    } else {
+      setAlbumId(store.app.modal.id)
+    }
     const data = albumData()
     if (data && data.data && data.data.length > 0) {
       setCurrentAlbum(data.data[0])

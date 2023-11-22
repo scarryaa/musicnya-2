@@ -71,7 +71,6 @@ export const playlistService = {
         allPlaylists
       )
 
-      console.log('playlistsWithTracks', playlistsWithTracks)
       return playlistsWithTracks
     } catch (error) {
       console.error('Error fetching playlists:', error)

@@ -14,13 +14,15 @@ import { MediaItem } from '../../../components/MediaItem/MediaItem'
 import { ViewSelector } from '../../../components/ViewSelector/ViewSelector'
 import { ArtistInfoPane } from '../../../components/ArtistInfoPane/ArtistInfoPane'
 import { RelatedArtistsPane } from '../../../components/RelatedArtistsPane/RelatedArtistsPane'
-import { contextMenu, handleContextMenu, handleMoreClick } from './ArtistContextMenu'
+import { useContextMenu } from '../../../composables/useContextMenu'
+import { ContextMenuType } from '../../../components/ContextMenu/ContextMenuTypes'
 
 export const Artist = () => {
   const params = useParams<{ id: string }>()
   const artistStore = createArtistStore()
   const artistData = artistStore(params)
 
+  const { openContextMenu } = useContextMenu()
   const [currentArtist, setCurrentArtist] = createSignal(null)
   const [isFavorited, setIsFavorited] = createSignal(false)
   const [currentArtistBanner, setCurrentArtistBanner] = createSignal(null)
@@ -30,7 +32,6 @@ export const Artist = () => {
     setCurrentArtistBanner(null)
     const data = artistData()
     if (data && data.data && data.data.length > 0) {
-      setContextMenuItems(contextMenu(data.data[0].id, data.data[0].type, isFavorited))
       setCurrentArtist(data.data[0])
       setIsFavorited(data.data[0].attributes.inFavorites)
       setCurrentArtistBanner(
@@ -84,7 +85,12 @@ export const Artist = () => {
   return (
     <Switch fallback={<LoadingSpinner />}>
       <Match when={artistData.state === 'ready' && currentArtist()}>
-        <div class={styles.artist}>
+        <div
+          class={styles.artist}
+          onContextMenu={e =>
+            openContextMenu(e, currentArtist().id, ContextMenuType.ARTIST, null)
+          }
+        >
           <div class={styles.artist__artwork}>
             <div class={styles.artist__artwork__gradient}></div>
             <img
@@ -119,15 +125,7 @@ export const Artist = () => {
                 <button
                   class={styles.artist__artwork__info__actions__button}
                   onClick={e =>
-                    handleMoreClick(
-                      e,
-                      currentArtist().id,
-                      currentArtist().type,
-                      isFavorited,
-                      setIsFavorited,
-                      contextMenuItems,
-                      setContextMenuItems
-                    )
+                    openContextMenu(e, currentArtist().id, ContextMenuType.ARTIST, null)
                   }
                 >
                   <Fa icon={faEllipsisH} size="1x" color="var(--color-white)" />

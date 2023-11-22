@@ -3,9 +3,10 @@ import styles from './MediaItem.module.scss'
 import { faEllipsisH, faPlay } from '@fortawesome/free-solid-svg-icons'
 import { mkController } from '../../api/mkController'
 import { A } from '@solidjs/router'
-import { createSignal } from 'solid-js'
-import { contextMenu, handleContextMenu, handleMoreClick } from './MediaItemContextMenu'
+import { createEffect, createSignal } from 'solid-js'
 import Tooltip from '../Tooltip/Tooltip'
+import { useContextMenu } from '../../composables/useContextMenu'
+import { ContextMenuType } from '../ContextMenu/ContextMenuTypes'
 
 export const MediaItem = ({
   src,
@@ -28,37 +29,19 @@ export const MediaItem = ({
   curator?: string
   curatorId?: string
 }) => {
-  const [isLoved, setIsLoved] = createSignal(false)
-  const [inLibrary, setInLibrary] = createSignal(type.includes('library'))
-  const [isDisliked, setIsDisliked] = createSignal(false)
-  const [contextMenuItems, setContextMenuItems] = createSignal(
-    contextMenu(id, type, isLoved(), inLibrary(), isDisliked())
-  )
+  const { openContextMenu } = useContextMenu()
   const isAppleCurator = type === 'apple-curators'
 
   const handlePlayClick = e => {
     e.preventDefault()
+    console.log(id)
     mkController.playMediaItem(id, type)
   }
 
   return (
     <div
       class={styles.mediaItem}
-      onContextMenu={e =>
-        handleContextMenu(
-          e,
-          id,
-          type,
-          isLoved,
-          setIsLoved,
-          inLibrary,
-          setInLibrary,
-          isDisliked,
-          setIsDisliked,
-          contextMenuItems,
-          setContextMenuItems
-        )
-      }
+      onContextMenu={e => openContextMenu(e, id, ContextMenuType.MEDIA_ITEM, type)}
     >
       <div class={styles.mediaItem__inner}>
         <div class={styles.mediaItem__inner__artwork}>
@@ -86,21 +69,7 @@ export const MediaItem = ({
             )}
             <div
               class={styles.mediaItem__inner__artwork__overlay__moreButton}
-              onClick={e =>
-                handleMoreClick(
-                  e,
-                  id,
-                  type,
-                  isLoved,
-                  setIsLoved,
-                  inLibrary,
-                  setInLibrary,
-                  isDisliked,
-                  setIsDisliked,
-                  contextMenuItems,
-                  setContextMenuItems
-                )
-              }
+              onClick={e => openContextMenu(e, id, ContextMenuType.MEDIA_ITEM, type)}
             >
               <Fa
                 icon={faEllipsisH}

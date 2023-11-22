@@ -9,6 +9,7 @@ import { setStore, store } from '../../../stores/store'
 import { LoadingSpinner } from '../../LoadingSpinner/LoadingSpinner'
 import { SwatchSquare } from '../../SwatchSquare/SwatchSquare'
 import { Chip } from '../../Chip/Chip'
+import { mkController } from '../../../api/mkController'
 
 export const Artist = () => {
   const [artistId, setArtistId] = createSignal(store.app.modal.id)
@@ -18,9 +19,17 @@ export const Artist = () => {
 
   const [currentArtist, setCurrentArtist] = createSignal(null)
 
-  createEffect(() => {
+  createEffect(async () => {
     setCurrentArtist(null)
-    setArtistId(store.app.modal.id)
+    if (store.app.modal.type.includes('library-')) {
+      const res = await mkController.getCatalogFromLibrary(
+        store.app.modal.id,
+        store.app.modal.type
+      )
+      setArtistId(res.data[0].id)
+    } else {
+      setArtistId(store.app.modal.id)
+    }
     const data = artistData()
     if (data && data.data && data.data.length > 0) {
       setCurrentArtist(data.data[0])

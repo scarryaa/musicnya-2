@@ -44,10 +44,10 @@ export const Modal = () => {
         <div class={styles.modal__body}>
           <div class={styles.modal__body__text}>
             {store.app.modal.type === 'curators' && <Curator />}
-            {store.app.modal.type === 'playlists' && <Playlist />}
-            {store.app.modal.type === 'albums' && <Album />}
-            {store.app.modal.type === 'artists' && <Artist />}
-            {store.app.modal.type === 'songs' && <Song />}
+            {store.app.modal.type.includes('playlists') && <Playlist />}
+            {store.app.modal.type.includes('albums') && <Album />}
+            {store.app.modal.type.includes('artists') && <Artist />}
+            {store.app.modal.type.includes('songs') && <Song />}
             {store.app.modal.type === 'stations' && <Station />}
           </div>
         </div>
