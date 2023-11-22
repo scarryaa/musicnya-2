@@ -6,7 +6,7 @@ import { store } from '../../stores/store'
 import { Utils } from '../../util/util'
 import styles from './SongTableItem.module.scss'
 import { useContextMenu } from '../../composables/useContextMenu'
-import { ContextMenuType } from '../ContextMenu/ContextMenuTypes'
+import { ContextMenuType } from '../../types/types'
 
 export const SongTableItem = ({ track, data, index }) => {
   const { openContextMenu } = useContextMenu()

@@ -8,7 +8,7 @@ import Fa from 'solid-fa'
 import { faPlay } from '@fortawesome/free-solid-svg-icons'
 import { createSignal } from 'solid-js'
 import { useContextMenu } from '../../composables/useContextMenu'
-import { ContextMenuType } from '../ContextMenu/ContextMenuTypes'
+import { ContextMenuType } from '../../types/types'
 
 export const QueueItem = ({ item, index }) => {
   const { openContextMenu } = useContextMenu()
@@ -58,7 +58,7 @@ export const QueueItem = ({ item, index }) => {
       class={styles.queueItem}
       onDblClick={handleDoubleClick}
       onContextMenu={e =>
-        openContextMenu(e, item.id, ContextMenuType.QUEUE_ITEM, item.type + 's')
+        openContextMenu(e, item.id, ContextMenuType.QueueItem, item.type + 's')
       }
     >
       <div class={styles.queueItem__artwork__container}>

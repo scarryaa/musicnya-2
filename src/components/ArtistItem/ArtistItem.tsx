@@ -2,7 +2,7 @@ import { A } from '@solidjs/router'
 import { Utils } from '../../util/util'
 import styles from './ArtistItem.module.scss'
 import { useContextMenu } from '../../composables/useContextMenu'
-import { ContextMenuType } from '../ContextMenu/ContextMenuTypes'
+import { ContextMenuType } from '../../types/types'
 
 export const ArtistItem = ({ item }) => {
   const { openContextMenu } = useContextMenu()
@@ -12,7 +12,7 @@ export const ArtistItem = ({ item }) => {
       class={styles.artistItem}
       href={`/media/artists/${item.id}`}
       activeClass=""
-      onContextMenu={e => openContextMenu(e, item.id, null, ContextMenuType.Artist, null)}
+      onContextMenu={e => openContextMenu(e, item.id, null, ContextMenuType.Artist)}
     >
       <div class={styles.artistItem__artwork__container}>
         <div class={styles.artistItem__artwork__container__overlay}></div>

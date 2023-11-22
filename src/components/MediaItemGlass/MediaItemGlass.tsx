@@ -5,7 +5,7 @@ import { createSignal, For } from 'solid-js'
 import { mkController } from '../../api/mkController'
 import styles from './MediaItemGlass.module.scss'
 import { useContextMenu } from '../../composables/useContextMenu'
-import { ContextMenuType } from '../ContextMenu/ContextMenuTypes'
+import { ContextMenuType } from '../../types/types'
 
 export const MediaItemGlass = ({ src, title, artists, type, id, reason }) => {
   const { openContextMenu } = useContextMenu()

@@ -4,7 +4,7 @@ import styles from './EditorialItemSmall.module.scss'
 import Fa from 'solid-fa'
 import { A } from '@solidjs/router'
 import { useContextMenu } from '../../composables/useContextMenu'
-import { ContextMenuType } from '../ContextMenu/ContextMenuTypes'
+import { ContextMenuType } from '../../types/types'
 
 export const EditorialItemSmall = ({ item }) => {
   const showMoreButton = !item.attributes?.link?.label

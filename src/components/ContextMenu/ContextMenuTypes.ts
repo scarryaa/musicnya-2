@@ -16,18 +16,6 @@ import {
   ShuffleItem
 } from './ContextMenuItems'
 
-export enum ContextMenuType {
-  Song = 'song',
-  Album = 'album',
-  Artist = 'artist',
-  Playlist = 'playlist',
-  Curator = 'curator',
-  HistoryItem = 'historyItem',
-  MediaItem = 'mediaItem',
-  QueueItem = 'queueItem',
-  Editorial = 'editorial'
-}
-
 //TODO fix the share link
 export const curatorContextMenu = id => {
   return [ShareItem(id, 'curators'), PropertiesItem(id, 'curators')]

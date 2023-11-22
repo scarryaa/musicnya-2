@@ -7,7 +7,7 @@ import { mkController } from '../../api/mkController'
 import Tooltip from '../Tooltip/Tooltip'
 import { createSignal } from 'solid-js'
 import { useContextMenu } from '../../composables/useContextMenu'
-import { ContextMenuType } from '../ContextMenu/ContextMenuTypes'
+import { ContextMenuType } from '../../types/types'
 
 export const SongItem = ({ item, album, albumId }) => {
   const [inLibrary, setInLibrary] = createSignal(false)

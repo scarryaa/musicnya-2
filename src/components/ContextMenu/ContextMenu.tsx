@@ -2,12 +2,9 @@ import { For, JSX, createEffect, onCleanup, onMount } from 'solid-js'
 import styles from './ContextMenu.module.scss'
 import { store } from '../../stores/store'
 import Fa from 'solid-fa'
-import Tooltip from '../Tooltip/Tooltip'
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import {
-  ContextMenuType,
   artistContextMenu,
-  curatorContextMenu,
   editorialContextMenu,
   historyItemContextMenu,
   mediaItemContextMenu,
@@ -16,7 +13,7 @@ import {
 } from './ContextMenuTypes'
 import { useContextMenu, useContextMenuState } from '../../composables/useContextMenu'
 import { mkController } from '../../api/mkController'
-import { Reaction } from '../../types/types'
+import { ContextMenuType, Reaction } from '../../types/types'
 
 const contextMenuConfig = {
   [ContextMenuType.HistoryItem]: {
@@ -32,7 +29,7 @@ const contextMenuConfig = {
         isDisliked: isLovedState.data?.[0]?.attributes.value == Reaction.Disliked
       }
     },
-    createInitialMenuItems: (id, subType, data) =>
+    createInitialMenuItems: (id, subType) =>
       historyItemContextMenu(id, subType, true, false, false, false),
     createMenuItems: (id, subType, data) =>
       historyItemContextMenu(
@@ -52,7 +49,7 @@ const contextMenuConfig = {
         isFavorited: isFavoritedState.data[0].attributes.inFavorites
       }
     },
-    createInitialMenuItems: (id, subType, data) => artistContextMenu(id, subType, false),
+    createInitialMenuItems: (id, subType) => artistContextMenu(id, subType, false),
     createMenuItems: (id, subType, data) =>
       artistContextMenu(id, subType, data.isFavorited)
   },
@@ -69,7 +66,7 @@ const contextMenuConfig = {
         isDisliked: isLovedState.data?.[0]?.attributes.value == Reaction.Disliked
       }
     },
-    createInitialMenuItems: (id, subType, data) =>
+    createInitialMenuItems: (id, subType) =>
       songContextMenu(id, true, false, false, false),
     createMenuItems: (id, subType, data) =>
       songContextMenu(id, false, data.isLoved, data.isDisliked, data.inLibrary)
@@ -87,7 +84,7 @@ const contextMenuConfig = {
         isDisliked: isLovedState.data?.[0]?.attributes.value == Reaction.Disliked
       }
     },
-    createInitialMenuItems: (id, subType, data) =>
+    createInitialMenuItems: (id, subType) =>
       mediaItemContextMenu(id, true, subType, false, false, false),
     createMenuItems: (id, subType, data) =>
       mediaItemContextMenu(
@@ -112,7 +109,7 @@ const contextMenuConfig = {
         isDisliked: isLovedState.data?.[0]?.attributes.value == Reaction.Disliked
       }
     },
-    createInitialMenuItems: (id, subType, data) =>
+    createInitialMenuItems: (id, subType) =>
       queueItemContextMenu(id, true, subType, false, false, false),
     createMenuItems: (id, subType, data) =>
       queueItemContextMenu(
@@ -137,7 +134,7 @@ const contextMenuConfig = {
         isDisliked: isLovedState.data?.[0]?.attributes.value == Reaction.Disliked
       }
     },
-    createInitialMenuItems: (id, subType, data) =>
+    createInitialMenuItems: (id, subType) =>
       editorialContextMenu(id, true, subType, false, false, false),
     createMenuItems: (id, subType, data) =>
       editorialContextMenu(

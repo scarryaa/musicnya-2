@@ -5,7 +5,7 @@ import { faEllipsisH, faPlay } from '@fortawesome/free-solid-svg-icons'
 import Fa from 'solid-fa'
 import { mkController } from '../../api/mkController'
 import { useContextMenu } from '../../composables/useContextMenu'
-import { ContextMenuType } from '../ContextMenu/ContextMenuTypes'
+import { ContextMenuType } from '../../types/types'
 
 // TODO check if context menu works
 export const EditorialItemLarge = ({ item }) => {

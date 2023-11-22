@@ -5,7 +5,7 @@ import { faPlay } from '@fortawesome/free-solid-svg-icons'
 import { mkController } from '../../api/mkController'
 import { A } from '@solidjs/router'
 import { useContextMenu } from '../../composables/useContextMenu'
-import { ContextMenuType } from '../ContextMenu/ContextMenuTypes'
+import { ContextMenuType } from '../../types/types'
 
 export const EditorialItem = ({ item }) => {
   const childType =

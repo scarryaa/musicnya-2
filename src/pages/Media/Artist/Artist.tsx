@@ -15,7 +15,7 @@ import { ViewSelector } from '../../../components/ViewSelector/ViewSelector'
 import { ArtistInfoPane } from '../../../components/ArtistInfoPane/ArtistInfoPane'
 import { RelatedArtistsPane } from '../../../components/RelatedArtistsPane/RelatedArtistsPane'
 import { useContextMenu } from '../../../composables/useContextMenu'
-import { ContextMenuType } from '../../../components/ContextMenu/ContextMenuTypes'
+import { ContextMenuType } from '../../../types/types'
 
 export const Artist = () => {
   const params = useParams<{ id: string }>()
