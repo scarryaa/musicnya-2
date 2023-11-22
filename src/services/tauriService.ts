@@ -28,5 +28,9 @@ export const tauriService = {
     // resize to saved size and enable resizing
     await appWindow.setResizable(true)
     appWindow.setSize(savedSize).catch(console.error)
+  },
+
+  setWindowSize: async (width, height) => {
+    appWindow.setSize(new LogicalSize(width, height)).catch(console.error)
   }
 }

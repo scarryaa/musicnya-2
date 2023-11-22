@@ -12,7 +12,11 @@ export const [store, setStore] = createStore({
     title: 'musicnya 2',
     version: '1.0.0',
     platform: 'unknown',
-    miniPlayer: localStorageService.get('miniPlayer') === 'true' || false,
+    miniPlayer: {
+      panelOpen: false,
+      activePanel: '' as 'queue' | 'lyrics' | '',
+      open: false
+    },
     navigate: null,
     isMaximized: false,
     isDarkMode: localStorageService.get('darkMode') === 'true' || false,
@@ -177,6 +181,9 @@ export const [store, setStore] = createStore({
     type: '',
     parentType: '',
     parentID: '',
+    inLibrary: false,
+    loved: false,
+    disliked: false,
     lyrics: {
       lyricsArray: [],
       writtenByArray: [],

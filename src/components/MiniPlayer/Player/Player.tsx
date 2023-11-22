@@ -6,8 +6,18 @@ import {
   faShuffle,
   faRepeat,
   faVolumeLow,
-  faVolumeMute
+  faVolumeMute,
+  faPlus,
+  faMinus,
+  faHeart,
+  faThumbsDown,
+  faBars,
+  faQuoteRight
 } from '@fortawesome/free-solid-svg-icons'
+import {
+  faHeart as faHeartRegular,
+  faThumbsDown as faThumbsDownRegular
+} from '@fortawesome/free-regular-svg-icons'
 import Fa from 'solid-fa'
 import { mkController } from '../../../api/mkController'
 import { setStore, store } from '../../../stores/store'
@@ -15,6 +25,9 @@ import styles from './Player.module.scss'
 import { createEffect, createSignal } from 'solid-js'
 import { localStorageService } from '../../../services/localStorageService'
 import { Utils } from '../../../util/util'
+import { tauriService } from '../../../services/tauriService'
+import { Lyrics } from '../../Lyrics/Lyrics'
+import { Queue } from '../../Queue/Queue'
 
 export const Player = () => {
   const [isMuted, setIsMuted] = createSignal(false)
@@ -82,107 +95,278 @@ export const Player = () => {
     mkController.play()
   }
 
+  const handleLibraryButton = e => {
+    if (store.currentTrack.inLibrary) {
+      mkController.removeFromLibrary(store.currentTrack.id, 'songs').then(res => {
+        if (res) {
+          setStore('currentTrack', {
+            ...store.currentTrack,
+            inLibrary: false
+          })
+        }
+      })
+    } else {
+      mkController.addToLibrary(store.currentTrack.id, 'songs').then(res => {
+        if (res) {
+          setStore('currentTrack', {
+            ...store.currentTrack,
+            inLibrary: true
+          })
+        }
+      })
+    }
+  }
+
+  const handleLoveButton = e => {
+    if (store.currentTrack.loved) {
+      mkController.unlove(store.currentTrack.id, 'songs').then(res => {
+        if (res) {
+          setStore('currentTrack', {
+            ...store.currentTrack,
+            loved: false
+          })
+        }
+      })
+    } else {
+      mkController.love(store.currentTrack.id, 'songs').then(res => {
+        if (res) {
+          setStore('currentTrack', {
+            ...store.currentTrack,
+            loved: true
+          })
+        }
+      })
+    }
+  }
+
+  const handleDislikeButton = e => {
+    if (store.currentTrack.disliked) {
+      mkController.unlove(store.currentTrack.id, 'songs').then(res => {
+        if (res) {
+          setStore('currentTrack', {
+            ...store.currentTrack,
+            disliked: false
+          })
+        }
+      })
+    } else {
+      mkController.dislike(store.currentTrack.id, 'songs').then(res => {
+        if (res) {
+          setStore('currentTrack', {
+            ...store.currentTrack,
+            disliked: true
+          })
+        }
+      })
+    }
+  }
+
+  const handleQueueButton = async e => {
+    if (store.app.miniPlayer.activePanel === 'queue') {
+      await tauriService.setWindowSize(325, 325)
+      setStore('app', 'miniPlayer', 'activePanel', '')
+      setStore('app', 'miniPlayer', 'panelOpen', false)
+    } else if (store.app.miniPlayer.activePanel === 'lyrics') {
+      await tauriService.setWindowSize(325, 700)
+      setStore('app', 'miniPlayer', 'activePanel', 'queue')
+      setStore('app', 'miniPlayer', 'panelOpen', true)
+    } else {
+      await tauriService.setWindowSize(325, 700)
+      setStore('app', 'miniPlayer', 'activePanel', 'queue')
+      setStore('app', 'miniPlayer', 'panelOpen', true)
+    }
+  }
+
+  const handleLyricsButton = async e => {
+    if (store.app.miniPlayer.activePanel === 'lyrics') {
+      await tauriService.setWindowSize(325, 325)
+      setStore('app', 'miniPlayer', 'activePanel', '')
+      setStore('app', 'miniPlayer', 'panelOpen', false)
+    } else if (store.app.miniPlayer.activePanel === 'queue') {
+      await tauriService.setWindowSize(325, 700)
+      setStore('app', 'miniPlayer', 'activePanel', 'lyrics')
+      setStore('app', 'miniPlayer', 'panelOpen', true)
+    } else {
+      await tauriService.setWindowSize(325, 700)
+      setStore('app', 'miniPlayer', 'activePanel', 'lyrics')
+      setStore('app', 'miniPlayer', 'panelOpen', true)
+    }
+  }
+
   return (
-    <div class={styles.player}>
-      <div class={styles.player__progress}>
-        <input
-          type="range"
-          min="0"
-          max="100"
-          value={`${store.progress}`}
-          style={{
-            '--progress': `${
-              store.isSeeking ? (store.seekTime / store.duration) * 100 : store.progress
-            }%`
-          }}
-          class={styles.player__progress__slider}
-          onInput={handleInput}
-          onChange={handleChange}
-        />
-      </div>
-      <div class={styles.player__progress__time}>
-        <span class={styles.player__progress__time__current}>
-          {store.isSeeking
-            ? Utils.formatTime(store.seekTime)
-            : Utils.formatTime(store.currentTime)}
-        </span>
-        <span class={styles.player__progress__time__total}>
-          {Utils.formatTime(store.duration)}
-        </span>
-      </div>
-      <div class={styles.player__controls}>
-        <div class={styles.player__controls__top}>
-          <button class={styles.player__controls__button} onClick={() => toggleShuffle()}>
-            <Fa
-              icon={faShuffle}
-              size="1x"
-              color={
-                store.shuffleMode
-                  ? 'var(--app-primary-color)'
-                  : 'var(--color-mini-player-button)'
-              }
-            />
-          </button>
-          <button
-            class={styles.player__controls__button}
-            onClick={mkController.skipToPreviousItem}
-          >
-            <Fa icon={faStepBackward} size="lg" />
-          </button>
-          {store.isPlaying ? (
-            <button class={styles.player__controls__button} onClick={handlePause}>
-              <Fa icon={faPause} size="lg" />
-            </button>
-          ) : (
-            <button class={styles.player__controls__button} onClick={handlePlay}>
-              <Fa icon={faPlay} size="lg" />
-            </button>
-          )}
-          <button
-            class={styles.player__controls__button}
-            onClick={mkController.skipToNextItem}
-          >
-            <Fa icon={faStepForward} size="lg" />
-          </button>
-          <button class={styles.player__controls__button} onClick={() => toggleRepeat()}>
-            <Fa
-              icon={faRepeat}
-              size="1x"
-              color={
-                store.repeatMode
-                  ? 'var(--app-primary-color)'
-                  : 'var(--color-mini-player-button)'
-              }
-            />
-          </button>
+    <>
+      <div
+        class={styles.player}
+        style={{ bottom: store.app.miniPlayer.panelOpen ? '385px' : '10px' }}
+      >
+        <div class={styles.player__progress}>
+          <input
+            type="range"
+            min="0"
+            max="100"
+            value={`${store.progress}`}
+            style={{
+              '--progress': `${
+                store.isSeeking ? (store.seekTime / store.duration) * 100 : store.progress
+              }%`
+            }}
+            class={styles.player__progress__slider}
+            onInput={handleInput}
+            onChange={handleChange}
+          />
         </div>
-        <div class={styles.player__controls__bottom}>
-          <span class={styles.player__controls__bottom__title}>
-            {store.currentTrack.title}
+        <div class={styles.player__progress__time}>
+          <span class={styles.player__progress__time__current}>
+            {store.isSeeking
+              ? Utils.formatTime(store.seekTime)
+              : Utils.formatTime(store.currentTime)}
           </span>
-          <span class={styles.player__controls__bottom__artist}>
-            {store.currentTrack.artist}
+          <span class={styles.player__progress__time__total}>
+            {Utils.formatTime(store.duration)}
           </span>
-          <div class={styles.player__controls__bottom__volume}>
+        </div>
+        <div class={styles.player__controls}>
+          <div class={styles.player__controls__top}>
             <button
-              class={styles.player__controls__bottom__volume__button}
-              onClick={toggleMute}
+              class={styles.player__controls__button}
+              onClick={() => toggleShuffle()}
             >
-              <Fa icon={isMuted() ? faVolumeMute : faVolumeLow} size="1x" />
+              <Fa
+                icon={faShuffle}
+                size="1x"
+                color={
+                  store.shuffleMode
+                    ? 'var(--app-primary-color)'
+                    : 'var(--color-mini-player-button)'
+                }
+              />
             </button>
-            <input
-              type="range"
-              min="0"
-              max="100"
-              value={store.volume}
-              style={{ '--progress': `${store.volume}%` }}
-              class={styles.player__controls__bottom__volume__slider}
-              onInput={e => updateVolume(e.currentTarget.valueAsNumber)}
-              onWheel={handleScroll}
-            />
+            <button
+              class={styles.player__controls__button}
+              onClick={mkController.skipToPreviousItem}
+            >
+              <Fa icon={faStepBackward} size="lg" />
+            </button>
+            {store.isPlaying ? (
+              <button class={styles.player__controls__button} onClick={handlePause}>
+                <Fa icon={faPause} size="lg" />
+              </button>
+            ) : (
+              <button class={styles.player__controls__button} onClick={handlePlay}>
+                <Fa icon={faPlay} size="lg" />
+              </button>
+            )}
+            <button
+              class={styles.player__controls__button}
+              onClick={mkController.skipToNextItem}
+            >
+              <Fa icon={faStepForward} size="lg" />
+            </button>
+            <button
+              class={styles.player__controls__button}
+              onClick={() => toggleRepeat()}
+            >
+              <Fa
+                icon={faRepeat}
+                size="1x"
+                color={
+                  store.repeatMode
+                    ? 'var(--app-primary-color)'
+                    : 'var(--color-mini-player-button)'
+                }
+              />
+            </button>
+          </div>
+          <div class={styles.player__controls__bottom}>
+            <span class={styles.player__controls__bottom__title}>
+              {store.currentTrack.title}
+            </span>
+            <span class={styles.player__controls__bottom__artist}>
+              {store.currentTrack.artist}
+            </span>
+            <div class={styles.player__controls__bottom__volume}>
+              <button
+                class={styles.player__controls__bottom__volume__button}
+                onClick={toggleMute}
+              >
+                <Fa icon={isMuted() ? faVolumeMute : faVolumeLow} size="1x" />
+              </button>
+              <input
+                type="range"
+                min="0"
+                max="100"
+                value={store.volume}
+                style={{ '--progress': `${store.volume}%` }}
+                class={styles.player__controls__bottom__volume__slider}
+                onInput={e => updateVolume(e.currentTarget.valueAsNumber)}
+                onWheel={handleScroll}
+              />
+            </div>
+          </div>
+          <div class={styles.player__controls__bottom__left}>
+            <div
+              class={styles.player__controls__bottom__left__queue}
+              onClick={handleQueueButton}
+            >
+              <Fa
+                icon={faBars}
+                size="1x"
+                color={
+                  store.app.miniPlayer.activePanel === 'queue'
+                    ? 'var(--app-primary-color)'
+                    : 'var(--color-white)'
+                }
+              />
+            </div>
+            <div
+              class={styles.player__controls__bottom__left__lyrics}
+              onClick={handleLyricsButton}
+            >
+              <Fa
+                icon={faQuoteRight}
+                size="1x"
+                color={
+                  store.app.miniPlayer.activePanel === 'lyrics'
+                    ? 'var(--app-primary-color)'
+                    : 'var(--color-white)'
+                }
+              />
+            </div>
+          </div>
+          <div class={styles.player__controls__bottom__misc}>
+            <div
+              class={styles.player__controls__bottom__misc__addToLibrary}
+              onClick={handleLibraryButton}
+            >
+              <Fa
+                icon={store.currentTrack.inLibrary ? faMinus : faPlus}
+                size="1x"
+                color="var(--color-white)"
+              />
+            </div>
+            <div
+              class={styles.player__controls__bottom__misc__like}
+              onClick={handleLoveButton}
+            >
+              <Fa
+                icon={store.currentTrack.loved ? faHeart : faHeartRegular}
+                size="1x"
+                color="var(--color-white)"
+              />
+            </div>
+            <div
+              class={styles.player__controls__bottom__misc__dislike}
+              onClick={handleDislikeButton}
+            >
+              <Fa
+                icon={store.currentTrack.disliked ? faThumbsDown : faThumbsDownRegular}
+                size="1x"
+                color="var(--color-white)"
+              />
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }

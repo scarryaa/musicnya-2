@@ -51,6 +51,13 @@ export const Lyrics = () => {
     store.currentTrack.lyrics.lyricsArray.length > 0 && (
       <div
         class={[styles.lyrics, styles.blur].join(' ')}
+        style={{
+          height: store.app.miniPlayer.open
+            ? '375px'
+            : 'calc(100vh - var(--app-footer-height) - 3.3rem)',
+          position: store.app.miniPlayer.open ? 'absolute' : 'relative',
+          bottom: store.app.miniPlayer.open ? '0' : 'unset'
+        }}
         ref={lyricsPane}
         onMouseEnter={() => {
           setAutoScroll(false)

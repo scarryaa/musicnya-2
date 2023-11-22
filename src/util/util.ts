@@ -12,14 +12,14 @@ export class Utils {
 
   static resizeToMiniPlayer = async () => {
     await tauriService.resizeToMiniPlayer()
-    setStore('app', 'miniPlayer', true)
+    setStore('app', 'miniPlayer', 'open', true)
   }
 
   static resizeToSavedSize = async () => {
     const savedSize = JSON.parse(localStorageService.get('savedWindowSize'))
     console.log(savedSize)
     await tauriService.resizeToSavedSize(savedSize)
-    setStore('app', 'miniPlayer', false)
+    setStore('app', 'miniPlayer', 'open', false)
   }
 
   static formatTimeHours = (time: number) => {

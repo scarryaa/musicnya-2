@@ -11,8 +11,6 @@ import { setStore, store } from './stores/store'
 import { Utils } from './util/util'
 import { initDB } from './db/db'
 import { Modal } from './components/Modals/Modal'
-import { albumService } from './services/albumService'
-import { playlistService } from './services/playlistService'
 import '@fontsource/inter'
 import { localStorageService } from './services/localStorageService'
 import * as config from '../config.json'
@@ -57,8 +55,8 @@ const App: Component = () => {
 
   return (
     <>
-      {store.app.miniPlayer && <MiniPlayer />}
-      {!store.app.miniPlayer && (
+      {store.app.miniPlayer.open && <MiniPlayer />}
+      {!store.app.miniPlayer.open && (
         <div class="appContainer" right-drawer={store.app.rightSidebar.isExpanded}>
           <Topbar />
           <LeftSidebar />

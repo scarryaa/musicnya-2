@@ -89,7 +89,16 @@ export const Queue = () => {
   }
 
   return (
-    <div class={styles.queue}>
+    <div
+      class={styles.queue}
+      style={{
+        height: store.app.miniPlayer.open
+          ? '370px'
+          : 'calc(100vh - var(--app-footer-height) - 3.3rem)',
+        position: store.app.miniPlayer.open ? 'absolute' : 'relative',
+        bottom: store.app.miniPlayer.open ? '0' : 'unset'
+      }}
+    >
       <div class={styles.queue__header}>
         <button class={styles.queue__header__clear} onClick={handleClearClick}>
           Clear

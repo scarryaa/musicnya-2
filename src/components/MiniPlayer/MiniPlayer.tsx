@@ -7,6 +7,8 @@ import { WindowButtons, WindowButtonsMac } from '../WindowButtons/WindowButtons'
 import { Topbar } from './Topbar/Topbar'
 import { createSignal } from 'solid-js'
 import { Player } from './Player/Player'
+import { Queue } from '../Queue/Queue'
+import { Lyrics } from '../Lyrics/Lyrics'
 
 export const MiniPlayer = () => {
   const [showWindowButtons, setShowWindowButtons] = createSignal(true)
@@ -48,6 +50,12 @@ export const MiniPlayer = () => {
         />
       </div>
       {showWindowButtons() && <Player />}
+      {store.app.miniPlayer.panelOpen && (
+        <div class={styles.miniPlayer__bottomPane}>
+          {store.app.miniPlayer.activePanel === 'queue' && <Queue />}
+          {store.app.miniPlayer.activePanel === 'lyrics' && <Lyrics />}
+        </div>
+      )}
     </div>
   )
 }

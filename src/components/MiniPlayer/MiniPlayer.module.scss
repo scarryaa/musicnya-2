@@ -1,4 +1,20 @@
 .miniPlayer {
+  width: 325px;
+  height: 325px;
+  max-width: 325px;
+  max-height: 325px;
+  background-color: var(--app-primary-color);
+  overflow: hidden;
+
+  &__bottomPane {
+    background-color: var(--app-primary-color);
+    width: 100%;
+    height: 375px;
+    position: absolute;
+    bottom: 0;
+    overflow: hidden;
+  }
+
   &__exitButton {
     position: absolute;
     margin-top: 1rem;
@@ -42,6 +58,10 @@
     left: 0;
     right: 0;
     bottom: 0;
+    width: 325px;
+    height: 325px;
+    max-width: 325px;
+    max-height: 325px;
 
     img {
       width: 100%;

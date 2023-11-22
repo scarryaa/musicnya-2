@@ -1,6 +1,7 @@
 import * as config from '../../config.json'
 import { addSong, getDB, increasePlayCount } from '../db/db'
 import { setStore, store } from '../stores/store'
+import { Reaction } from '../types/types'
 import { Utils } from '../util/util'
 
 export class mkController {
@@ -1029,6 +1030,23 @@ export class mkController {
         parentType: e.container.type,
         parentID: e.container.id
       })
+
+      Utils.debounce(async () => {
+        const isLoved = await mkController.checkIfLoved(e.id, 'songs')
+        setStore(
+          'currentTrack',
+          'loved',
+          isLoved.data?.[0]?.attributes?.value === Reaction.Loved
+        )
+        setStore(
+          'currentTrack',
+          'disliked',
+          isLoved.data?.[0]?.attributes?.value === Reaction.Disliked
+        )
+
+        const inLibrary = await mkController.checkIfInLibrary(e.id, 'songs')
+        setStore('currentTrack', 'inLibrary', inLibrary.data?.[0]?.attributes?.inLibrary)
+      }, 1000)()
 
       const rawLyricsData = await this.getLyrics(
         e.playParams.catalogId ?? e.playParams.id
