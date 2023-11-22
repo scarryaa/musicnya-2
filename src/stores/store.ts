@@ -189,6 +189,7 @@ export const [store, setStore] = createStore({
       writtenByArray: [],
       begin: ''
     },
+    primaryColor: '',
     duration: 0,
     currentTime: 0
   }

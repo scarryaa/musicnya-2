@@ -9,7 +9,7 @@
   --queue-button-background-color: transparent;
   --queue-button-hover-background-color: rgba(255, 255, 255, 0.15);
   --queue-button-active-background-color: rgba(255, 255, 255, 0.25);
-  --queue-artist-color: #424242;
+  --queue-artist-color: #838383;
 }
 
 .queueItem {
@@ -63,6 +63,7 @@
     flex-direction: column;
     justify-content: center;
     max-width: 140px;
+    color: var(--queue-item-text-color);
 
     &__title {
       font-size: 0.9rem;

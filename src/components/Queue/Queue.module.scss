@@ -7,6 +7,9 @@
   --queue-scrollbar-thumb-background-color: rgba(255, 255, 255, 0.4);
   --queue-drag-border-color: rgba(255, 255, 255, 0.6);
   --queue-autoplay-enabled-color: #9bd7d8;
+
+  --queue-item-text-color: #000000;
+  --queue-item-text-color-light: #696969;
 }
 
 :root[theme='dark'] {
@@ -16,6 +19,9 @@
 
   --queue-scrollbar-background-color: rgba(255, 255, 255, 0.1);
   --queue-scrollbar-thumb-background-color: rgba(255, 255, 255, 0.3);
+
+  --queue-item-text-color: #ffffff;
+  --queue-item-text-color-light: #696969;
 }
 
 .queue {
@@ -73,6 +79,7 @@
       height: 30px;
       border-radius: 5px;
       padding-inline: 1.4rem;
+      color: var(--queue-item-text-color);
       background-color: var(--queue-button-background-color);
 
       &:hover {

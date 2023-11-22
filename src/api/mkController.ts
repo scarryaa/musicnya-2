@@ -1,5 +1,6 @@
 import * as config from '../../config.json'
 import { addSong, getDB, increasePlayCount } from '../db/db'
+import { fastAverageColorService } from '../services/fastAverageColorService'
 import { setStore, store } from '../stores/store'
 import { Reaction } from '../types/types'
 import { Utils } from '../util/util'
@@ -1031,6 +1032,22 @@ export class mkController {
         parentID: e.container.id
       })
 
+      var color = await fastAverageColorService.getColorFromURL(
+        Utils.formatArtworkUrl(store.currentTrack.artwork, 200),
+        null
+      )
+      setStore('currentTrack', 'primaryColor', color.hex)
+    })
+
+    MusicKit.getInstance().addEventListener('nowPlayingItemDidChange', async e => {
+      setStore('app', 'queue', {
+        index: MusicKit.getInstance().queue.position,
+        nextUpIndex: MusicKit.getInstance().queue.position + 1,
+        remainingStartIndex: MusicKit.getInstance().queue.position + 1
+      })
+
+      setStore('app', 'wroteToDb', false)
+
       Utils.debounce(async () => {
         const isLoved = await mkController.checkIfLoved(e.id, 'songs')
         setStore(
@@ -1048,8 +1065,9 @@ export class mkController {
         setStore('currentTrack', 'inLibrary', inLibrary.data?.[0]?.attributes?.inLibrary)
       }, 1000)()
 
+      console.log(e)
       const rawLyricsData = await this.getLyrics(
-        e.playParams.catalogId ?? e.playParams.id
+        e.item.playParams.catalogId ?? e.item.playParams.id
       ).then((response: any) => {
         return response.data[0].attributes.ttml
       })
@@ -1061,16 +1079,6 @@ export class mkController {
           begin: Utils.getLyricsBeginning(rawLyricsData)
         }
       })
-    })
-
-    MusicKit.getInstance().addEventListener('nowPlayingItemDidChange', e => {
-      setStore('app', 'queue', {
-        index: MusicKit.getInstance().queue.position,
-        nextUpIndex: MusicKit.getInstance().queue.position + 1,
-        remainingStartIndex: MusicKit.getInstance().queue.position + 1
-      })
-
-      setStore('app', 'wroteToDb', false)
     })
 
     MusicKit.getInstance().addEventListener('queueItemsDidChange', e => {

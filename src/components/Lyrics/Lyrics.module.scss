@@ -1,3 +1,13 @@
+:root {
+  --lyrics-text-color: #000000;
+  --lyrics-text-color-light: #838383;
+}
+
+:root[theme='dark'] {
+  --lyrics-text-color: #ffffff;
+  --lyrics-text-color-light: #838383;
+}
+
 .lyrics {
   display: flex;
   flex-direction: column;
@@ -9,14 +19,14 @@
 
   :not(.activeLyric) {
     span {
-      color: rgba(255, 255, 255, 0.5);
+      color: var(--lyrics-text-color-light);
     }
   }
 
   &__content {
     &__ellipsis,
     &__text {
-      color: #fff;
+      color: var(--lyrics-text-color);
       font-size: 1rem;
       line-height: 1.5;
       font-weight: 700;
@@ -37,7 +47,7 @@
     }
 
     &__writtenBy {
-      color: #fff !important;
+      color: var(--lyrics-text-color) !important;
       filter: none !important;
       font-size: 0.8rem;
       font-weight: bold;
@@ -47,7 +57,7 @@
 
       &__text {
         filter: none !important;
-        color: #fff !important;
+        color: var(--lyrics-text-color) !important;
         font-size: 0.8rem;
         font-weight: 400;
       }
@@ -66,7 +76,7 @@
 }
 
 .activeLyric {
-  color: #fff !important;
+  color: var(--lyrics-text-color) !important;
   opacity: 1 !important;
   filter: none !important;
 }

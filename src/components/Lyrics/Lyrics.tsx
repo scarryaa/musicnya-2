@@ -54,7 +54,7 @@ export const Lyrics = () => {
         style={{
           height: store.app.miniPlayer.open
             ? '375px'
-            : 'calc(100vh - var(--app-footer-height) - 3.3rem)',
+            : 'calc(100vh - var(--app-footer-height))',
           position: store.app.miniPlayer.open ? 'absolute' : 'relative',
           bottom: store.app.miniPlayer.open ? '0' : 'unset'
         }}

@@ -113,7 +113,7 @@ export const Queue = () => {
             color={
               store.app.queue.autoplay
                 ? 'var(--queue-autoplay-enabled-color)'
-                : 'var(--color-black)'
+                : 'var(--queue-item-text-color)'
             }
           />
         </button>

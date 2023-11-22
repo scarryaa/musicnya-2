@@ -1,3 +1,11 @@
+:root {
+  --bottom-pane-background-color: #ffffff;
+}
+
+:root[theme='dark'] {
+  --bottom-pane-background-color: #000000;
+}
+
 .miniPlayer {
   width: 325px;
   height: 325px;
@@ -7,7 +15,7 @@
   overflow: hidden;
 
   &__bottomPane {
-    background-color: var(--app-primary-color);
+    background-color: var(--bottom-pane-background-color);
     width: 100%;
     height: 375px;
     position: absolute;

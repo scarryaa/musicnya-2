@@ -5,7 +5,7 @@ import { faChevronDown, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { Utils } from '../../util/util'
 import { WindowButtons, WindowButtonsMac } from '../WindowButtons/WindowButtons'
 import { Topbar } from './Topbar/Topbar'
-import { createSignal } from 'solid-js'
+import { createEffect, createSignal } from 'solid-js'
 import { Player } from './Player/Player'
 import { Queue } from '../Queue/Queue'
 import { Lyrics } from '../Lyrics/Lyrics'
@@ -14,6 +14,14 @@ export const MiniPlayer = () => {
   const [showWindowButtons, setShowWindowButtons] = createSignal(true)
   const handleImageClick = () => {
     setShowWindowButtons(!showWindowButtons())
+  }
+
+  const handleExitClick = () => {
+    Utils.resizeToSavedSize()
+    setStore('app', 'miniPlayer', {
+      panelOpen: false,
+      activePanel: ''
+    })
   }
 
   return (
@@ -32,9 +40,7 @@ export const MiniPlayer = () => {
       {showWindowButtons() && (
         <button
           class={styles.miniPlayer__exitButton}
-          onClick={() => {
-            Utils.resizeToSavedSize()
-          }}
+          onClick={handleExitClick}
           style={{
             left: store.app.platform === 'darwin' ? 'calc(100% - 3rem)' : '1rem'
           }}
