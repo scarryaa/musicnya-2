@@ -6,6 +6,7 @@ import { Utils } from '../../util/util'
 import { WindowButtons, WindowButtonsMac } from '../WindowButtons/WindowButtons'
 import { Topbar } from './Topbar/Topbar'
 import { createSignal } from 'solid-js'
+import { Player } from './Player/Player'
 
 export const MiniPlayer = () => {
   const [showWindowButtons, setShowWindowButtons] = createSignal(true)
@@ -46,6 +47,7 @@ export const MiniPlayer = () => {
           onClick={handleImageClick}
         />
       </div>
+      {showWindowButtons() && <Player />}
     </div>
   )
 }
