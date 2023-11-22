@@ -116,7 +116,7 @@ export function ContextMenu(): JSX.Element {
           subType,
           isLovedStateEditorial.data?.[0]?.attributes.value == IS_LOVED,
           isLovedStateEditorial.data?.[0]?.attributes.value == IS_DISLIKED,
-          inLibraryStateEditorial.data[0].attributes.inLibrary
+          inLibraryStateEditorial.data?.[0]?.attributes?.inLibrary
         )
     }
 
