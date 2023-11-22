@@ -88,7 +88,7 @@ export const Artist = () => {
         <div
           class={styles.artist}
           onContextMenu={e =>
-            openContextMenu(e, currentArtist().id, ContextMenuType.ARTIST, null)
+            openContextMenu(e, currentArtist().id, ContextMenuType.Artist, null)
           }
         >
           <div class={styles.artist__artwork}>
@@ -125,7 +125,7 @@ export const Artist = () => {
                 <button
                   class={styles.artist__artwork__info__actions__button}
                   onClick={e =>
-                    openContextMenu(e, currentArtist().id, ContextMenuType.ARTIST, null)
+                    openContextMenu(e, currentArtist().id, ContextMenuType.Artist, null)
                   }
                 >
                   <Fa icon={faEllipsisH} size="1x" color="var(--color-white)" />

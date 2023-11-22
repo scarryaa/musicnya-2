@@ -17,15 +17,15 @@ import {
 } from './ContextMenuItems'
 
 export enum ContextMenuType {
-  SONG = 'song',
-  ALBUM = 'album',
-  ARTIST = 'artist',
-  PLAYLIST = 'playlist',
-  CURATOR = 'curator',
-  HISTORY_ITEM = 'historyItem',
-  MEDIA_ITEM = 'mediaItem',
-  QUEUE_ITEM = 'queueItem',
-  EDITORIAL = 'editorial'
+  Song = 'song',
+  Album = 'album',
+  Artist = 'artist',
+  Playlist = 'playlist',
+  Curator = 'curator',
+  HistoryItem = 'historyItem',
+  MediaItem = 'mediaItem',
+  QueueItem = 'queueItem',
+  Editorial = 'editorial'
 }
 
 //TODO fix the share link
@@ -134,6 +134,7 @@ export const mediaItemContextMenu = (
   let items = []
 
   if (subType.includes('stations')) {
+    console.log('station')
     items = [
       LoveQuickItem(id, 'stations', disabled, isLovedState),
       DislikeQuickItem(id, 'stations', disabled, isDislikedState),

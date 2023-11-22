@@ -29,7 +29,7 @@ export const EditorialItemSmall = ({ item }) => {
         openContextMenu(
           e,
           childId,
-          ContextMenuType.EDITORIAL,
+          ContextMenuType.Editorial,
           isCuratorType ? 'curators' : childType
         )
       }
@@ -46,7 +46,7 @@ export const EditorialItemSmall = ({ item }) => {
                 openContextMenu(
                   e,
                   childId,
-                  ContextMenuType.EDITORIAL,
+                  ContextMenuType.Editorial,
                   isCuratorType ? 'curators' : childType
                 )
               }

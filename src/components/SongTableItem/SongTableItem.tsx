@@ -12,7 +12,7 @@ export const SongTableItem = ({ track, data, index }) => {
   const { openContextMenu } = useContextMenu()
   return (
     <tr
-      onContextMenu={e => openContextMenu(e, track.id, ContextMenuType.SONG, data().type)}
+      onContextMenu={e => openContextMenu(e, track.id, ContextMenuType.Song, data().type)}
       onDblClick={() => mkController.setQueue(data().id, data().type, index)}
       class={
         data().type === 'albums' &&
@@ -133,7 +133,7 @@ export const SongTableItem = ({ track, data, index }) => {
           <span>{Utils.formatTime(track.attributes.durationInMillis / 1000)}</span>
           <div
             class={styles.songTableItem__time__moreButton}
-            onClick={e => openContextMenu(e, track.id, ContextMenuType.SONG, data().type)}
+            onClick={e => openContextMenu(e, track.id, ContextMenuType.Song, data().type)}
           >
             <Fa icon={faEllipsisH} size="1x" color="var(--app-text-color)" />
           </div>

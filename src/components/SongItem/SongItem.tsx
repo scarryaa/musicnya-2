@@ -66,7 +66,7 @@ export const SongItem = ({ item, album, albumId }) => {
         openContextMenu(
           e,
           libraryId(),
-          ContextMenuType.SONG,
+          ContextMenuType.Song,
           inLibrary() ? 'library-songs' : 'songs'
         )
       }
@@ -157,7 +157,7 @@ export const SongItem = ({ item, album, albumId }) => {
             openContextMenu(
               e,
               item.id,
-              ContextMenuType.SONG,
+              ContextMenuType.Song,
               inLibrary() ? 'library-songs' : 'songs'
             )
           }

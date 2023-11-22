@@ -24,7 +24,7 @@ export const EditorialItem = ({ item }) => {
     <div
       class={styles.editorialItem}
       onContextMenu={e =>
-        openContextMenu(e, childId, ContextMenuType.EDITORIAL, childType)
+        openContextMenu(e, childId, ContextMenuType.Editorial, childType)
       }
     >
       <div>

@@ -57,7 +57,7 @@ export const HistoryItem = ({ item, index }) => {
       class={styles.historyItem}
       onDblClick={handleDoubleClick}
       onContextMenu={e =>
-        openContextMenu(e, item.id, ContextMenuType.HISTORY_ITEM, item.type)
+        openContextMenu(e, item.id, ContextMenuType.HistoryItem, item.type)
       }
     >
       <div class={styles.historyItem__artwork__container}>

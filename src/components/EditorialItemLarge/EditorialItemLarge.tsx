@@ -22,7 +22,7 @@ export const EditorialItemLarge = ({ item }) => {
     <div
       class={styles.editorialItemLarge}
       onContextMenu={e =>
-        openContextMenu(e, item.id, ContextMenuType.EDITORIAL, item.type)
+        openContextMenu(e, item.id, ContextMenuType.Editorial, item.type)
       }
     >
       <div class={styles.editorialItemLarge__info}>
@@ -43,7 +43,7 @@ export const EditorialItemLarge = ({ item }) => {
           <div
             class={styles.editorialItemLarge__thumbnail__overlay__moreButton}
             onClick={e =>
-              openContextMenu(e, item.id, ContextMenuType.EDITORIAL, item.type)
+              openContextMenu(e, item.id, ContextMenuType.Editorial, item.type)
             }
           >
             <Fa icon={faEllipsisH} size="1x" />

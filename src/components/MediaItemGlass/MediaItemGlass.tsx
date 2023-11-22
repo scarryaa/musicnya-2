@@ -18,7 +18,7 @@ export const MediaItemGlass = ({ src, title, artists, type, id, reason }) => {
     <A
       class={styles.mediaItemGlass}
       href={`/media/${type}/${id}`}
-      onContextMenu={e => openContextMenu(e, id, ContextMenuType.MEDIA_ITEM, type)}
+      onContextMenu={e => openContextMenu(e, id, ContextMenuType.MediaItem, type)}
     >
       <span class={styles.mediaItemGlass__reason}>{reason}</span>
       <div class={styles.mediaItemGlass__inner}>
@@ -37,7 +37,7 @@ export const MediaItemGlass = ({ src, title, artists, type, id, reason }) => {
             </div>
             <div
               class={styles.mediaItemGlass__inner__artwork__overlay__moreButton}
-              onClick={e => openContextMenu(e, id, ContextMenuType.MEDIA_ITEM, type)}
+              onClick={e => openContextMenu(e, id, ContextMenuType.MediaItem, type)}
             >
               <Fa
                 icon={faEllipsisH}

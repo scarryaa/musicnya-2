@@ -41,7 +41,7 @@ export const MediaItem = ({
   return (
     <div
       class={styles.mediaItem}
-      onContextMenu={e => openContextMenu(e, id, ContextMenuType.MEDIA_ITEM, type)}
+      onContextMenu={e => openContextMenu(e, id, ContextMenuType.MediaItem, type)}
     >
       <div class={styles.mediaItem__inner}>
         <div class={styles.mediaItem__inner__artwork}>
@@ -69,7 +69,7 @@ export const MediaItem = ({
             )}
             <div
               class={styles.mediaItem__inner__artwork__overlay__moreButton}
-              onClick={e => openContextMenu(e, id, ContextMenuType.MEDIA_ITEM, type)}
+              onClick={e => openContextMenu(e, id, ContextMenuType.MediaItem, type)}
             >
               <Fa
                 icon={faEllipsisH}

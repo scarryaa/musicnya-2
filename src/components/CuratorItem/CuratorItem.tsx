@@ -17,7 +17,7 @@ export const CuratorItem = ({ item }) => {
       class={styles.curatorItem}
       href="#"
       onContextMenu={e =>
-        openContextMenu(e, item.id, null, ContextMenuType.CURATOR, null)
+        openContextMenu(e, item.id, null, ContextMenuType.Curator, null)
       }
     >
       <div class={styles.curatorItem__image}>
