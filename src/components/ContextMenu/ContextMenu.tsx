@@ -14,6 +14,7 @@ import {
 import { useContextMenu, useContextMenuState } from '../../composables/useContextMenu'
 import { mkController } from '../../api/mkController'
 import { ContextMenuType, Reaction } from '../../types/types'
+import Tooltip from '../Tooltip/Tooltip'
 
 const contextMenuConfig = {
   [ContextMenuType.HistoryItem]: {
