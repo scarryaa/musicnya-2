@@ -58,6 +58,15 @@ export const useContextMenu = () => {
       display: 'block'
     })
 
+    setStore('app', 'subContextMenu', {
+      x,
+      y,
+      items: [],
+      open: false,
+      id: '',
+      type: ''
+    })
+
     e.preventDefault()
     e.stopPropagation()
     e.stopImmediatePropagation()

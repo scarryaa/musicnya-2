@@ -15,6 +15,7 @@ import { albumService } from './services/albumService'
 import { playlistService } from './services/playlistService'
 import '@fontsource/inter'
 import { localStorageService } from './services/localStorageService'
+import * as config from '../config.json'
 
 const App: Component = () => {
   const navigate = useNavigate()
@@ -45,8 +46,13 @@ const App: Component = () => {
     navigate(Utils.parseSelectedDefaultPage(store.app.general.defaultPage))
 
     await fetchData()
-    setStore('app', 'navigate', () => navigate)
   })
+
+  createEffect(() => {
+    if (store.isAuthorized && config.MusicKit.musicUserToken) {
+      setStore('app', 'navigate', () => navigate)
+    }
+  }, [store.isAuthorized])
 
   return (
     <div class="appContainer" right-drawer={store.app.rightSidebar.isExpanded}>

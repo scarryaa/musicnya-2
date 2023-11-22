@@ -11,32 +11,31 @@ export class mkController {
   static getInstance = async () => {
     if (!mkController.isInitialized) {
       console.log('Initializing MusicKit...')
-      await MusicKit.configure({
-        developerToken: config.MusicKit.token,
-        app: {
-          name: 'Music',
-          build: '1.0.0'
-        },
-        sourceType: 24,
-        suppressErrorDialog: true
-      })
-        .then(music => {
-          music.authorize().then(() => {
-            console.log('Authorized')
-            mkController.isAuthorized = true
-            mkController.setUpEvents()
-            music.autoplayEnabled = store.app.queue.autoplay
-            music._autoplayEnabled = store.app.queue.autoplay
-          })
+      try {
+        const music = await MusicKit.configure({
+          developerToken: config.MusicKit.token,
+          app: {
+            name: 'Music',
+            build: '1.0.0'
+          },
+          sourceType: 24,
+          suppressErrorDialog: true
+        })
 
-          config.MusicKit.musicUserToken = music.musicUserToken
-        })
-        .catch(e => {
-          mkController.isInitialized = false
-          mkController.isErrored = true
-          console.error('Failed to initialize MusicKit: ', e)
-        })
-      mkController.isInitialized = true
+        await music.authorize()
+        config.MusicKit.musicUserToken = music.musicUserToken
+        mkController.isAuthorized = true
+        setStore('isAuthorized', true)
+        mkController.setUpEvents()
+        music.autoplayEnabled = store.app.queue.autoplay
+        music._autoplayEnabled = store.app.queue.autoplay
+
+        mkController.isInitialized = true
+      } catch (e) {
+        mkController.isInitialized = false
+        mkController.isErrored = true
+        console.error('Failed to initialize MusicKit: ', e)
+      }
     }
     return MusicKit.getInstance()
   }
@@ -49,6 +48,7 @@ export class mkController {
       } catch (e) {
         mkController.isErrored = true
         mkController.isAuthorized = false
+        setStore('isAuthorized', false)
         console.error('Failed to authorize: ', e)
       }
     } else {

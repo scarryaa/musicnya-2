@@ -5,7 +5,7 @@ import { albumService } from '../services/albumService'
 import { artistService } from '../services/artistService'
 import { songService } from '../services/songService'
 import { localStorageService } from '../services/localStorageService'
-import { ContextMenuType } from '../components/ContextMenu/ContextMenuTypes'
+import { ContextMenuType } from '../types/types'
 
 export const [store, setStore] = createStore({
   app: {
@@ -110,7 +110,7 @@ export const [store, setStore] = createStore({
     },
     async refreshSongs() {
       setStore('library', 'songs', [])
-      await store.library.fetchLibrarySongs(0)
+      await store.library.refreshSongs()
     },
     async refreshAlbums() {
       try {

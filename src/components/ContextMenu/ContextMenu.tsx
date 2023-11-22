@@ -4,6 +4,7 @@ import { store } from '../../stores/store'
 import Fa from 'solid-fa'
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import {
+  appContextMenu,
   artistContextMenu,
   editorialContextMenu,
   historyItemContextMenu,
@@ -17,6 +18,9 @@ import { ContextMenuType, Reaction } from '../../types/types'
 import Tooltip from '../Tooltip/Tooltip'
 
 const contextMenuConfig = {
+  [ContextMenuType.App]: {
+    createInitialMenuItems: (id, subType) => appContextMenu()
+  },
   [ContextMenuType.HistoryItem]: {
     fetchData: async (id, subType) => {
       const [inLibraryState, isLovedState] = await Promise.all([
@@ -189,7 +193,7 @@ export function ContextMenu(): JSX.Element {
     )
     setContextMenuItems(initialMenuItems)
 
-    if (menuType !== ContextMenuType.Curator) {
+    if (menuType !== ContextMenuType.Curator && menuType !== ContextMenuType.App) {
       updateMenuItems(menuType, store.app.contextMenu.subType)
     }
   }, [store.app.contextMenu.id, store.app.contextMenu.type])

@@ -7,7 +7,9 @@ import {
   FavoriteQuickItem,
   GoToAlbumItem,
   GoToArtistItem,
+  ImmersiveItem,
   LoveQuickItem,
+  MiniPlayerItem,
   PlayLastQuickItem,
   PlayNextQuickItem,
   PropertiesItem,
@@ -15,6 +17,10 @@ import {
   ShareItem,
   ShuffleItem
 } from './ContextMenuItems'
+
+export const appContextMenu = () => {
+  return [ImmersiveItem(), MiniPlayerItem()]
+}
 
 //TODO fix the share link
 export const curatorContextMenu = id => {

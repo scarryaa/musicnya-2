@@ -3,13 +3,16 @@ import { createHomeStore } from '../../stores/api-store'
 import styles from './ListenNow.module.scss'
 import { LoadingSpinner } from '../../components/LoadingSpinner/LoadingSpinner'
 import { MediaSelector } from '../../components/MediaSelector/MediaSelector'
+import { store } from '../../stores/store'
 
 export const ListenNow = () => {
   const homeStore = createHomeStore()
   const homeData = homeStore()
 
   createEffect(() => {
-    console.log(homeData())
+    if (store.isAuthorized) {
+      homeStore()
+    }
   })
 
   return (

@@ -11,19 +11,48 @@ import {
   faShare,
   faShuffle,
   faStar,
+  faTable,
   faThumbsDown,
+  faUpRightAndDownLeftFromCenter,
   faUser,
   faX
 } from '@fortawesome/free-solid-svg-icons'
 import {
   faHeart as faHeartRegular,
   faThumbsDown as faThumbsDownRegular,
-  faStar as faStarRegular
+  faStar as faStarRegular,
+  faWindowMaximize
 } from '@fortawesome/free-regular-svg-icons'
 import { mkController } from '../../api/mkController'
 import { setStore, store } from '../../stores/store'
 
 // Actions
+
+export const ImmersiveItem = () => {
+  return {
+    icon: faUpRightAndDownLeftFromCenter,
+    action: () => {},
+    isQuickAction: false,
+    label: 'Immersive',
+    disabled: false,
+    onMouseOver: () => {
+      setStore('app', 'subContextMenu', { open: false })
+    }
+  }
+}
+
+export const MiniPlayerItem = () => {
+  return {
+    icon: faWindowMaximize,
+    action: () => {},
+    isQuickAction: false,
+    label: 'Mini Player',
+    disabled: false,
+    onMouseOver: () => {
+      setStore('app', 'subContextMenu', { open: false })
+    }
+  }
+}
 
 export const ShareItem = (id, type) => {
   return {

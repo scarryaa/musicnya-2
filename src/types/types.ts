@@ -12,5 +12,6 @@ export const enum ContextMenuType {
   HistoryItem = 'historyItem',
   MediaItem = 'mediaItem',
   QueueItem = 'queueItem',
-  Editorial = 'editorial'
+  Editorial = 'editorial',
+  App = 'app'
 }

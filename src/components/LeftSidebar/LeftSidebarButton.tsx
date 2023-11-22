@@ -8,8 +8,8 @@ import { Accessor, createMemo } from 'solid-js'
 
 type LeftSidebarButtonProps = {
   icon: IconDefinition
-  text: string
-  href: string
+  text?: string
+  href?: string
   tooltip?: string
   showTooltip?: boolean
   isLink?: boolean
