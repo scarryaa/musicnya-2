@@ -1,3 +1,11 @@
+:root {
+  --color-player-button: #e7e7e7;
+  --color-player-button-hover: #fff;
+  --color-player-button-active: #e1e1e1;
+  --vibrant-divider: rgba(235, 235, 245, 0.19);
+  --progress-color: #ffffff;
+}
+
 .player {
   position: fixed;
   bottom: 10px;
@@ -95,6 +103,8 @@
           margin-top: -5px;
           margin-right: 10px;
           color: var(--color-white);
+          cursor: default;
+
           &:hover {
             fill: var(--color-player-button-hover);
             color: var(--color-player-button-hover);
@@ -134,8 +144,8 @@
       justify-content: center;
       align-items: center;
       padding: 0.3rem;
-      fill: var(--color-player-button);
-      color: var(--color-player-button);
+      fill: var(--color-white);
+      color: var(--color-white);
       cursor: default;
 
       &:hover {
