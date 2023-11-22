@@ -1,9 +1,9 @@
 :root {
-  --color-player-button: #e7e7e7;
-  --color-player-button-hover: #fff;
-  --color-player-button-active: #e1e1e1;
-  --vibrant-divider: rgba(235, 235, 245, 0.19);
-  --progress-color: #ffffff;
+  --color-mini-player-button: #e7e7e7;
+  --color-mini-player-button-hover: #fff;
+  --color-mini-player-button-active: #e1e1e1;
+  --vibrant-divider-mini: rgba(235, 235, 245, 0.19);
+  --progress-mini-color: #ffffff;
 }
 
 .player {
@@ -31,15 +31,35 @@
       appearance: none;
       background: linear-gradient(
         90deg,
-        var(--progress-color) var(--progress),
-        var(--vibrant-divider) var(--progress),
-        var(--vibrant-divider)
+        var(--progress-mini-color) var(--progress),
+        var(--vibrant-divider-mini) var(--progress),
+        var(--vibrant-divider-mini)
       );
       height: 4px;
 
       &::-webkit-slider-thumb {
         opacity: 0;
       }
+    }
+
+    &__time__current {
+      position: absolute;
+      top: 2px;
+      left: 0;
+      font-size: 0.7rem;
+      color: var(--color-white);
+      padding-inline: 0.3rem;
+      margin-top: 0.3rem;
+    }
+
+    &__time__total {
+      position: absolute;
+      top: 2px;
+      right: 0;
+      font-size: 0.7rem;
+      color: var(--color-white);
+      padding-inline: 0.3rem;
+      margin-top: 0.3rem;
     }
   }
 
@@ -106,13 +126,13 @@
           cursor: default;
 
           &:hover {
-            fill: var(--color-player-button-hover);
-            color: var(--color-player-button-hover);
+            fill: var(--color-mini-player-button-hover);
+            color: var(--color-mini-player-button-hover);
           }
 
           &:active {
-            fill: var(--color-player-button-active);
-            color: var(--color-player-button-active);
+            fill: var(--color-mini-player-button-active);
+            color: var(--color-mini-player-button-active);
           }
         }
 
@@ -121,9 +141,9 @@
           appearance: none;
           background: linear-gradient(
             90deg,
-            var(--progress-color) var(--progress),
-            var(--vibrant-divider) var(--progress),
-            var(--vibrant-divider)
+            var(--progress-mini-color) var(--progress),
+            var(--vibrant-divider-mini) var(--progress),
+            var(--vibrant-divider-mini)
           );
           height: 5px;
           border-radius: 10px;
@@ -149,13 +169,13 @@
       cursor: default;
 
       &:hover {
-        fill: var(--color-player-button-hover);
-        color: var(--color-player-button-hover);
+        fill: var(--color-mini-player-button-hover);
+        color: var(--color-mini-player-button-hover);
       }
 
       &:active {
-        fill: var(--color-player-button-active);
-        color: var(--color-player-button-active);
+        fill: var(--color-mini-player-button-active);
+        color: var(--color-mini-player-button-active);
       }
     }
   }

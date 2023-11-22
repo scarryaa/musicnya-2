@@ -66,8 +66,9 @@ let defaultTooltipStyle = (
 
 			box-shadow: 0 0 7px 1px rgba(0, 0, 0, 0.05);
 			color: var(--app-text-color);
-			background: var(--app-background-color);
-			border: 1px solid var(--app-background-light-color);
+			background: var(--contextmenu-background);
+			border: 1px solid var(--app-contextmenu-border-color);
+      backdrop-filter: blur(10px);
 			font-size: 0.8rem;
             border-radius: 8px;
 		`}

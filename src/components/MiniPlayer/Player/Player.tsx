@@ -14,6 +14,7 @@ import { setStore, store } from '../../../stores/store'
 import styles from './Player.module.scss'
 import { createEffect, createSignal } from 'solid-js'
 import { localStorageService } from '../../../services/localStorageService'
+import { Utils } from '../../../util/util'
 
 export const Player = () => {
   const [isMuted, setIsMuted] = createSignal(false)
@@ -99,6 +100,16 @@ export const Player = () => {
           onChange={handleChange}
         />
       </div>
+      <div class={styles.player__progress__time}>
+        <span class={styles.player__progress__time__current}>
+          {store.isSeeking
+            ? Utils.formatTime(store.seekTime)
+            : Utils.formatTime(store.currentTime)}
+        </span>
+        <span class={styles.player__progress__time__total}>
+          {Utils.formatTime(store.duration)}
+        </span>
+      </div>
       <div class={styles.player__controls}>
         <div class={styles.player__controls__top}>
           <button class={styles.player__controls__button} onClick={() => toggleShuffle()}>
@@ -108,7 +119,7 @@ export const Player = () => {
               color={
                 store.shuffleMode
                   ? 'var(--app-primary-color)'
-                  : 'var(--color-player-button)'
+                  : 'var(--color-mini-player-button)'
               }
             />
           </button>
@@ -140,7 +151,7 @@ export const Player = () => {
               color={
                 store.repeatMode
                   ? 'var(--app-primary-color)'
-                  : 'var(--color-player-button)'
+                  : 'var(--color-mini-player-button)'
               }
             />
           </button>
