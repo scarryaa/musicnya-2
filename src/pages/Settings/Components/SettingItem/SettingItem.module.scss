@@ -1,0 +1,19 @@
+@import '../../../../styles/mixins/settings-mixins';
+
+.setting {
+  @include settings-category;
+
+  &__titleContainer {
+    display: flex;
+    flex-direction: column;
+
+    &__title {
+      font-size: 0.9rem;
+    }
+
+    &__subtitle {
+      font-size: 0.8rem;
+      color: var(--app-text-light-color);
+    }
+  }
+}

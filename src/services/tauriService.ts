@@ -1,6 +1,7 @@
 import { platform } from '@tauri-apps/api/os'
 import { LogicalSize, appWindow } from '@tauri-apps/api/window'
 import { localStorageService } from './localStorageService'
+import { invoke } from '@tauri-apps/api'
 
 const MINI_PLAYER_SIZE = new LogicalSize(325, 325)
 
@@ -32,5 +33,14 @@ export const tauriService = {
 
   setWindowSize: async (width, height) => {
     appWindow.setSize(new LogicalSize(width, height)).catch(console.error)
+  },
+
+  executeCommand: async (command, args) => {
+    try {
+      return await invoke(command, args)
+    } catch (error) {
+      console.error(error)
+      return null
+    }
   }
 }

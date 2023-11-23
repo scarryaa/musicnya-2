@@ -17,6 +17,20 @@ export const [store, setStore] = createStore({
       activePanel: '' as 'queue' | 'lyrics' | '',
       open: false
     },
+    connectivity: {
+      discord: {
+        enabled: localStorageService.get('discordEnabled') === 'true' || false,
+        activity: {
+          details: '',
+          state: '',
+          largeImageKey: '',
+          largeImageText: '',
+          instance: false,
+          startTimestamp: 0,
+          endTimestamp: 0
+        }
+      }
+    },
     navigate: null,
     isMaximized: false,
     isDarkMode: localStorageService.get('darkMode') === 'true' || false,

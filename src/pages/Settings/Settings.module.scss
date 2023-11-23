@@ -1,3 +1,5 @@
+@import '../../styles/mixins/settings-mixins';
+
 .settings {
   color: var(--app-text-color);
   padding-inline: 1.5rem;
@@ -6,26 +8,7 @@
     margin-bottom: 1rem;
   }
 
-  &__setting {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1rem;
-  }
-
   &__button {
-    width: auto;
-    height: auto;
-    padding: 0.4rem;
-    border-radius: var(--app-border-radius);
-    background-color: var(--app-primary-color);
-
-    &:hover {
-      background-color: var(--app-primary-color-hover);
-    }
-
-    &:active {
-      background-color: var(--app-primary-color-active);
-    }
+    @include settings-button;
   }
 }

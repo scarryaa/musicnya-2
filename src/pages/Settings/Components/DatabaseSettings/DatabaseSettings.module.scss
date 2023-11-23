@@ -1,0 +1,5 @@
+@import '../../../../styles/mixins/settings-mixins';
+
+.button {
+  @include settings-button;
+}

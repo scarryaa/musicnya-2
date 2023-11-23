@@ -15,10 +15,12 @@ import '@fontsource/inter'
 import { localStorageService } from './services/localStorageService'
 import * as config from '../config.json'
 import { MiniPlayer } from './components/MiniPlayer/MiniPlayer'
+import { discordService } from './services/discordService'
 
 const App: Component = () => {
   const navigate = useNavigate()
   initDB()
+  discordService.init()
 
   async function fetchData() {
     const fetchPromises = []

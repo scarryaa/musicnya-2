@@ -1,5 +1,6 @@
 import * as config from '../../config.json'
 import { addSong, getDB, increasePlayCount } from '../db/db'
+import { discordService } from '../services/discordService'
 import { fastAverageColorService } from '../services/fastAverageColorService'
 import { setStore, store } from '../stores/store'
 import { Reaction } from '../types/types'
@@ -1055,6 +1056,33 @@ export class mkController {
 
       setStore('app', 'wroteToDb', false)
 
+      // Discord RPC
+      if (
+        MusicKit.getInstance().nowPlayingItem !== undefined &&
+        store.app.connectivity.discord.enabled
+      ) {
+        discordService.setActivity({
+          details:
+            MusicKit.getInstance().nowPlayingItem?.title +
+            ' - ' +
+            MusicKit.getInstance().nowPlayingItem?.albumName,
+          state: MusicKit.getInstance().nowPlayingItem?.artistName,
+          largeImageKey: MusicKit.getInstance().nowPlayingItem?.artwork?.url.replace(
+            '{w}x{h}',
+            '512x512'
+          ),
+          largeImageText:
+            MusicKit.getInstance().nowPlayingItem?.albumName +
+            (MusicKit.getInstance().nowPlayingItem?.albumName.length < 2 ? '     ' : ''),
+          instance: false,
+          startTimestamp: Date.now(),
+          endTimestamp:
+            Date.now() +
+            MusicKit.getInstance().currentPlaybackDuration * 1000 -
+            MusicKit.getInstance().currentPlaybackTime * 1000
+        })
+      }
+
       Utils.debounce(async () => {
         const isLoved = await mkController.checkIfLoved(e.id, 'songs')
         setStore(
@@ -1101,6 +1129,39 @@ export class mkController {
       setStore('isPlaying', e.state === 2)
       setStore('isPaused', e.state === 3)
       setStore('isStopped', e.state === 0)
+
+      // Discord RPC
+      if (e.state === 2) {
+        setStore('app', 'connectivity', 'discord', 'activity', {
+          details:
+            MusicKit.getInstance().nowPlayingItem?.title +
+            ' - ' +
+            MusicKit.getInstance().nowPlayingItem?.albumName,
+          state: MusicKit.getInstance().nowPlayingItem?.artistName,
+          largeImageKey: MusicKit.getInstance().nowPlayingItem?.artwork?.url.replace(
+            '{w}x{h}',
+            '512x512'
+          ),
+          largeImageText:
+            MusicKit.getInstance().nowPlayingItem?.albumName +
+            (MusicKit.getInstance().nowPlayingItem?.albumName.length < 2 ? '     ' : ''),
+          instance: false,
+          startTimestamp: Date.now(),
+          endTimestamp:
+            Date.now() +
+            MusicKit.getInstance().currentPlaybackDuration * 1000 -
+            MusicKit.getInstance().currentPlaybackTime * 1000
+        })
+
+        if (store.app.connectivity.discord.enabled) {
+          discordService.setActivity(store.app.connectivity.discord.activity)
+        }
+      } else {
+        setStore('app', 'connectivity', 'discord', 'activity', null)
+        if (store.app.connectivity.discord.enabled) {
+          discordService.setActivity(store.app.connectivity.discord.activity)
+        }
+      }
     })
 
     MusicKit.getInstance().addEventListener('playbackDurationDidChange', e => {

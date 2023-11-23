@@ -96,11 +96,6 @@ h5 {
   -webkit-line-clamp: unset !important;
 }
 
-.accordion__content--open {
-  max-height: 500px !important;
-  opacity: 1 !important;
-}
-
 ::-webkit-scrollbar {
   background-color: var(--app-scrollbar-background-color);
   z-index: 999;

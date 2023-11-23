@@ -1,0 +1,22 @@
+@mixin settings-category {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+}
+
+@mixin settings-button {
+  width: auto;
+  height: auto;
+  padding: 0.4rem;
+  border-radius: var(--app-border-radius);
+  background-color: var(--app-primary-color);
+
+  &:hover {
+    background-color: var(--app-primary-color-hover);
+  }
+
+  &:active {
+    background-color: var(--app-primary-color-active);
+  }
+}
