@@ -1,7 +1,6 @@
 import { render } from 'solid-js/web'
 
 import App from './App'
-import './index.scss'
 import { Route, Router, Routes } from '@solidjs/router'
 import { Home } from './pages/Home/Home'
 import { Browse } from './pages/Browse/Browse'
@@ -21,6 +20,7 @@ import { Albums } from './pages/Albums/Albums'
 import { Artist } from './pages/Media/Artist/Artist'
 import { Playlists } from './pages/Playlists/Playlists'
 import { Artists } from './pages/Artists/Artists'
+import './styles/styles.scss'
 
 const root = document.getElementById('root')
 

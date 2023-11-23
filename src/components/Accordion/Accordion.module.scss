@@ -17,7 +17,6 @@
   border-radius: var(--app-border-radius);
   margin-bottom: 1rem;
   font-size: 0.9rem;
-  transition: background-color 0.2s ease-in-out;
 
   &__title {
     border-radius: var(--app-border-radius);
@@ -27,10 +26,10 @@
     padding: 18px;
     position: relative;
     text-align: left;
-    transition: background-color 0.2s ease-in-out;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    cursor: default;
 
     &:focus-visible {
       background-color: var(--color-accordion-hover);
@@ -38,6 +37,7 @@
 
     &:hover {
       background-color: var(--color-accordion-hover);
+      transition: background-color 0.2s ease-in-out;
     }
   }
 

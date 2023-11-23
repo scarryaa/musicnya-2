@@ -11,11 +11,11 @@ import { setStore, store } from './stores/store'
 import { Utils } from './util/util'
 import { initDB } from './db/db'
 import { Modal } from './components/Modals/Modal'
-import '@fontsource/inter'
 import { localStorageService } from './services/localStorageService'
 import * as config from '../config.json'
 import { MiniPlayer } from './components/MiniPlayer/MiniPlayer'
 import { discordService } from './services/discordService'
+import '@fontsource/inter'
 
 const App: Component = () => {
   const navigate = useNavigate()

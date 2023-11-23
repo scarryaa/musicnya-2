@@ -78,7 +78,8 @@
         "title": "musicnya 2",
         "width": 800,
         "minWidth": 500,
-        "fileDropEnabled": false
+        "fileDropEnabled": false,
+        "transparent": true
       }
     ],
     "security": {
