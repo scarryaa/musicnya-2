@@ -91,7 +91,7 @@ export const fetchLibraryAlbumDetailed = async ({
   id: string
 }) => {
   return await fetch(
-    `https://amp-api.music.apple.com/v1/me/library/albums/${id}?art[url]=f&fields[artists]=name,url&includeOnly=catalog,artists,tracks&include[albums]=artists,tracks&include[library-albums]=artists,tracks&include[music-videos]=catalog,artists,tracks&l=en-US&platform=web`,
+    `https://amp-api.music.apple.com/v1/me/library/albums/${id}?art[url]=f&fields[artists]=name,url&include[albums]=artists,tracks&include[library-albums]=artists,tracks&extend[artists]=artwork&include[music-videos]=catalog,artists,tracks&l=en-US&platform=web`,
     {
       headers: {
         authorization: `Bearer ${devToken}`,
@@ -100,7 +100,7 @@ export const fetchLibraryAlbumDetailed = async ({
     }
   )
     .then(async response => {
-      return await (response.json() as Promise<Response>)
+      return response.json()
     })
     .catch(e => {
       console.error(e)

@@ -8,6 +8,9 @@
         }
       }
     ],
+    [
+      "babel-preset-solid"
+    ],
     "@babel/preset-typescript"
   ]
 }

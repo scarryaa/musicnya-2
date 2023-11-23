@@ -14,20 +14,22 @@ import { mkController } from '../../../api/mkController'
 export const Album = () => {
   const [albumId, setAlbumId] = createSignal(store.app.modal.id)
   const modalAlbumStore = createModalAlbumStore()
-  const albumData = modalAlbumStore({ id: store.app.modal.id })
+  const albumData = modalAlbumStore({ id: albumId() })
   const [artworkUrls, setArtworkUrls] = createSignal(null)
 
   const [currentAlbum, setCurrentAlbum] = createSignal(null)
 
   createEffect(async () => {
     setCurrentAlbum(null)
-    if (store.app.modal.type.includes('library-')) {
-      const res = await mkController
+    if (store.app.modal.type.includes('library-') && store.app.modal.id[0] === 'l') {
+      console.log('getting catalog from library')
+      await mkController
         .getCatalogFromLibrary(store.app.modal.id, store.app.modal.type)
         .then(
           res => {
             if (res) {
               setAlbumId(res.data[0].id)
+              console.log(res)
             }
           },
           err => {
@@ -38,6 +40,7 @@ export const Album = () => {
       setAlbumId(store.app.modal.id)
     }
     const data = albumData()
+    console.log(albumData())
     if (data && data.data && data.data.length > 0) {
       setCurrentAlbum(data.data[0])
       console.log(data.data[0])
@@ -554,15 +557,17 @@ export const Album = () => {
                           class={styles.album__artists__artist}
                           href={`/media/artists/${artist.id}`}
                         >
-                          <img
-                            src={Utils.formatArtworkUrl(
-                              artist.attributes.artwork.url,
-                              100,
-                              100,
-                              'webp',
-                              'none'
-                            )}
-                          />
+                          {artist.attributes.artwork?.url && (
+                            <img
+                              src={Utils.formatArtworkUrl(
+                                artist.attributes.artwork.url,
+                                100,
+                                100,
+                                'webp',
+                                'none'
+                              )}
+                            />
+                          )}
 
                           {artist.attributes.name}
                         </A>

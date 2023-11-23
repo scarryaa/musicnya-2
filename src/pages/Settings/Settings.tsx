@@ -178,7 +178,6 @@ export const Settings = () => {
           </Show>
         </div>
       </Accordion>
-      {/* TODO implement */}
       <button class={styles.settings__button} onClick={() => window.location.reload()}>
         Reload App
       </button>

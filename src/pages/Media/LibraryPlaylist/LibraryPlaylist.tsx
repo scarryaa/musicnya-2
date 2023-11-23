@@ -17,6 +17,8 @@ export const LibraryPlaylist = () => {
       playlist => playlist.id === params.id
     )
 
+    console.log(playlistData())
+
     setPlaylistData(newPlaylistData)
 
     document.querySelector('.main')?.scrollTo(0, 0)

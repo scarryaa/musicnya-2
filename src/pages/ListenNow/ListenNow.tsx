@@ -12,6 +12,7 @@ export const ListenNow = () => {
   createEffect(() => {
     if (store.isAuthorized) {
       homeStore()
+      console.log(homeData())
     }
   })
 

@@ -31,6 +31,7 @@ export const MediaItem = ({
 }) => {
   const { openContextMenu } = useContextMenu()
   const isAppleCurator = type === 'apple-curators'
+  type === 'library-playlists' ? (type = 'playlists') : type
 
   const handlePlayClick = e => {
     e.preventDefault()

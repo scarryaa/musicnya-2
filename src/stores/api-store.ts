@@ -16,6 +16,7 @@ import { fetchRecentlyAdded } from '../api/recentlyAdded'
 import { fetchArtist, fetchArtistDetailed } from '../api/artist'
 import { fetchLibrarySongDetailed, fetchSongDetailed } from '../api/song'
 import { fetchCuratorDetailed } from '../api/curator'
+import { mkController } from '../api/mkController'
 
 export const createStationStore = () => {
   return function (params: { id: string }) {
@@ -201,6 +202,13 @@ export const createModalAlbumStore = () => {
         })
     )
 
+    if (params.id.startsWith('l.')) {
+      mkController.getCatalogFromLibrary(params.id, 'library-albums').then(data => {
+        console.log(data)
+      })
+    }
+
+    console.log(data())
     return data
   }
 }

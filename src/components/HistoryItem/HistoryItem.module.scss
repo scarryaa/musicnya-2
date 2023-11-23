@@ -59,6 +59,7 @@
       cursor: default;
       width: 100%;
       max-width: max-content;
+      color: var(--queue-item-text-color);
 
       &:hover {
         text-decoration: underline;

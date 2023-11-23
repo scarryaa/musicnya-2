@@ -58,7 +58,7 @@ export const SongTableItem = ({ track, data, index }) => {
               }}
             >
               {track.attributes.name}
-              {(track.relationships.catalog?.data?.[0]?.attributes.contentRating ===
+              {(track.relationships?.catalog?.data?.[0]?.attributes?.contentRating ===
                 'explicit' ||
                 track.attributes.contentRating === 'explicit') && (
                 <span class={styles.songTableItem__title__name__artist__name__explicit}>

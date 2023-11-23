@@ -693,10 +693,16 @@ export class mkController {
   static checkIfLovedSong = async (id: string, type: string) => {
     const instance = await mkController.getInstance()
 
-    if (type.includes('library-')) {
+    if (type.includes('library-') && type !== 'library-albums') {
       // get catalog id
-      const catalog = await mkController.getCatalogFromLibrary(id, type)
-      id = catalog.data[0].id
+      try {
+        const catalog = await mkController.getCatalogFromLibrary(id, type)
+        if (catalog.data?.[0]?.length > 0) {
+          id = catalog.data[0].id
+        }
+      } catch (error) {
+        console.error('Error getting catalog from library: ', error)
+      }
     }
 
     const strippedType = type.replace('library-', '')
@@ -721,7 +727,8 @@ export class mkController {
     const instance = await mkController.getInstance()
 
     console.log(type)
-    if (type.includes('library-')) {
+    if (type.includes('library-') && id[0] === 'l') {
+      console.log(type)
       // get catalog id
       const catalog = await mkController.getCatalogFromLibrary(id, type)
       id = catalog.data[0].id
