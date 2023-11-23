@@ -9,13 +9,11 @@ import { faEllipsisH, faPlay, faStar } from '@fortawesome/free-solid-svg-icons'
 import { faStar as faStarSolid } from '@fortawesome/free-regular-svg-icons'
 import { mkController } from '../../../api/mkController'
 import { Shelf } from '../../../components/Shelf/Shelf'
-import { MediaSelector } from '../../../components/MediaSelector/MediaSelector'
-import { MediaItem } from '../../../components/MediaItem/MediaItem'
 import { ViewSelector } from '../../../components/ViewSelector/ViewSelector'
-import { ArtistInfoPane } from '../../../components/ArtistInfoPane/ArtistInfoPane'
 import { RelatedArtistsPane } from '../../../components/RelatedArtistsPane/RelatedArtistsPane'
 import { useContextMenu } from '../../../composables/useContextMenu'
 import { ContextMenuType } from '../../../types/types'
+import { ArtistInfoPane } from './Components/ArtistInfoPane/ArtistInfoPane'
 
 export const Artist = () => {
   const params = useParams<{ id: string }>()
@@ -26,7 +24,6 @@ export const Artist = () => {
   const [currentArtist, setCurrentArtist] = createSignal(null)
   const [isFavorited, setIsFavorited] = createSignal(false)
   const [currentArtistBanner, setCurrentArtistBanner] = createSignal(null)
-  const [contextMenuItems, setContextMenuItems] = createSignal(null)
 
   createEffect(() => {
     setCurrentArtistBanner(null)

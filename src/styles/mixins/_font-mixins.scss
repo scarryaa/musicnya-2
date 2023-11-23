@@ -1,0 +1,9 @@
+@mixin font-style($size, $weight: 500) {
+  font-size: $size;
+  font-weight: $weight;
+}
+
+@mixin heading-style($size, $weight: 600) {
+  font-size: $size;
+  font-weight: $weight;
+}

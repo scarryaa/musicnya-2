@@ -236,7 +236,7 @@ export const Player = () => {
                 size="1x"
                 color={
                   store.shuffleMode
-                    ? 'var(--app-primary-color)'
+                    ? 'var(--color-primary)'
                     : 'var(--color-mini-player-button)'
                 }
               />
@@ -271,7 +271,7 @@ export const Player = () => {
                 size="1x"
                 color={
                   store.repeatMode
-                    ? 'var(--app-primary-color)'
+                    ? 'var(--color-primary)'
                     : 'var(--color-mini-player-button)'
                 }
               />
@@ -313,7 +313,7 @@ export const Player = () => {
                 size="1x"
                 color={
                   store.app.miniPlayer.activePanel === 'queue'
-                    ? 'var(--app-primary-color)'
+                    ? 'var(--color-primary)'
                     : 'var(--color-white)'
                 }
               />
@@ -327,7 +327,7 @@ export const Player = () => {
                 size="1x"
                 color={
                   store.app.miniPlayer.activePanel === 'lyrics'
-                    ? 'var(--app-primary-color)'
+                    ? 'var(--color-primary)'
                     : 'var(--color-white)'
                 }
               />

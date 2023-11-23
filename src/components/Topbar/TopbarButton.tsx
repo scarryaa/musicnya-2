@@ -22,7 +22,7 @@ export const TopbarButton = ({
         class={styles.topbarButton__icon}
         icon={icon}
         size="1x"
-        color="var(--app-text-color)"
+        color="var(--color-on-primary)"
       />
     </div>
   )

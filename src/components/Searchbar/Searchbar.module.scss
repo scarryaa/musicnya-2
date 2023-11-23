@@ -1,19 +1,27 @@
+:root {
+  --color-searchbar-bg: #bdbdbd;
+}
+
+:root[theme='dark'] {
+  --color-searchbar-bg: #f4f4f4;
+}
+
 .searchbar {
   width: 200px;
   height: 30px;
   outline: none;
   padding-inline: 5px;
-  background-color: var(--app-searchbar-background-color);
+  background-color: var(--color-searchbar-bg);
   margin-inline: auto;
-  color: var(--app-text-color);
+  color: var(--color-on-primary);
   position: absolute;
   left: 50%;
   transform: translate(-50%);
   margin: 5px;
   border-bottom: 1px solid transparent;
-  border-radius: var(--app-border-radius);
+  border-radius: $app-border-radius;
 
   &:focus {
-    border-bottom: 1px solid var(--app-primary-color);
+    border-bottom: 1px solid var(--color-primary);
   }
 }

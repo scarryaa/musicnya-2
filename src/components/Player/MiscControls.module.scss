@@ -24,7 +24,7 @@
     position: absolute;
     left: -850%;
     top: -15%;
-    color: var(--app-text-color);
+    color: var(--color-on-primary);
   }
 
   &__volume {
@@ -40,7 +40,7 @@
   &__button {
     width: 20px;
     height: 20px;
-    border-radius: var(--app-border-radius);
+    border-radius: $app-border-radius;
     display: flex;
     justify-content: center;
     align-items: center;

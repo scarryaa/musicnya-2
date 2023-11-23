@@ -1,3 +1,11 @@
+:root {
+  --color-footer-bg: #f4f4f4;
+}
+
+:root[theme='dark'] {
+  --color-footer-bg: #050505;
+}
+
 .footer {
   color: #fff;
   padding: 10px;
@@ -5,10 +13,10 @@
   position: fixed;
   bottom: 0;
   width: 100%;
-  height: var(--app-footer-height);
+  height: $app-footer-height;
   backdrop-filter: blur(10px);
   z-index: 100;
-  background: var(--app-footer-background-color);
+  background: var(--color-footer-bg);
   display: flex;
 
   &__left {

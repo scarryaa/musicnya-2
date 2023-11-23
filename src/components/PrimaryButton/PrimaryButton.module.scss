@@ -1,7 +1,7 @@
 .primaryButton {
-  background-color: var(--app-primary-color);
+  background-color: var(--color-primary);
   border-radius: 4px;
-  color: var(--color-white);
+  color: $color-white;
   font-size: 1rem;
   font-weight: 600;
   padding: 0.4rem 1rem;
@@ -16,10 +16,10 @@
   }
 
   &:hover {
-    background-color: var(--app-primary-color-hover);
+    background-color: var(--color-primary-hover);
   }
 
   &:active {
-    background-color: var(--app-primary-color-active);
+    background-color: var(--color-primary-active);
   }
 }

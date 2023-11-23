@@ -36,7 +36,7 @@ export const LibraryAlbum = () => {
           />
         </div>
 
-        {currentAlbum().relationships.catalog.data[0].attributes.editorialNotes
+        {currentAlbum().relationships?.catalog?.data?.[0]?.attributes?.editorialNotes
           ?.standard &&
           !store.app.media.hideEditorialNotes && <EditorialNotes data={currentAlbum} />}
 

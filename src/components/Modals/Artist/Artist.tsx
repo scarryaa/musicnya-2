@@ -445,7 +445,7 @@ export const Artist = () => {
                         {genre => (
                           <Chip
                             text={genre}
-                            backgroundColor={'var(--app-primary-color)'}
+                            backgroundColor={'var(--color-primary)'}
                             textColor={'var(--color-white)'}
                           />
                         )}

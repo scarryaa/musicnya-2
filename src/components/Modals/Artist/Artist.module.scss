@@ -11,12 +11,12 @@
     &__album {
       width: 100%;
       padding: 0.5rem;
-      border-radius: var(--app-border-radius);
+      border-radius: $app-border-radius;
 
       img {
         width: 3rem;
         height: 3rem;
-        border-radius: var(--app-border-radius);
+        border-radius: $app-border-radius;
         margin-right: 0.5rem;
       }
 

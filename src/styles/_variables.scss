@@ -1,0 +1,43 @@
+// app variables
+$app-toolbar-height: 40px;
+$app-sidebar-width: 200px;
+$app-border-radius: 8px;
+$app-footer-height: 70px;
+
+// ui colors
+$color-scrollbar-bg: #e4e4e4;
+$color-scrollbar-thumb: #c7c7c7;
+
+// ui dark colors
+$color-scrollbar-bg-dark: #222222;
+$color-scrollbar-thumb-dark: #41424c;
+
+// light theme
+$color-main-bg: #fff;
+$color-main-bg-muted: #f7f7f8;
+$color-primary: #9ecece;
+$color-primary-hover: lighten($color-primary, 10%);
+$color-primary-active: darken($color-primary, 10%);
+$color-on-main: #000;
+$color-on-main-muted: #838383;
+$color-on-primary: #000;
+$color-on-primary-muted: #838383;
+
+// dark theme
+$color-main-bg-dark: #070707;
+$color-main-bg-muted-dark: #252525;
+$color-primary-dark: #6b8f8f;
+$color-primary-hover-dark: lighten($color-primary-dark, 10%);
+$color-primary-active-dark: darken($color-primary-dark, 10%);
+$color-on-main-dark: #fff;
+$color-on-main-muted-dark: #838383;
+$color-on-primary-dark: #fff;
+$color-on-primary-muted-dark: #838383;
+
+// general colors
+$color-black: #000;
+$color-white: #fff;
+$color-off-white: #f7f7f8;
+$color-off-white-muted: #e4e4e4;
+$color-off-white-muted-2: #c7c7c7;
+$color-link-active: rgba($color-white, 0.2);

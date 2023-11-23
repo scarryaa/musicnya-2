@@ -3,6 +3,7 @@
 import { createMutable } from 'solid-js/store'
 import { onCleanup, onMount } from 'solid-js'
 import { insert } from 'solid-js/web'
+import styles from './Tooltip.module.scss'
 
 declare module 'solid-js' {
   namespace JSX {
@@ -33,20 +34,8 @@ let portal = (
       local.open = true
       tooltip.style.setProperty('display', 'block')
     }}
+    class={styles.tooltip}
     onMouseOut={close}
-    style={`
-            pointer-events: none;
-            position: fixed;
-            z-index: 2147483646;
-            top: var(--y);
-            left: var(--x);
-            width: max-content;
-            box-sizing: border-box;
-            display: none;
-            opacity: 0;
-            transform: translateY(-10px);
-            transition: opacity 0.3s ease, transform 0.3s ease;
-		`}
   >
     {local.content}
   </div>
@@ -58,24 +47,7 @@ queueMicrotask(() => {
 
 // for when a tooltip style is not defined
 // it reuses the div
-let defaultTooltipStyle = (
-  <div
-    style={`
-			margin: 3px;
-			padding: 6px;
-
-			box-shadow: 0 0 7px 1px rgba(0, 0, 0, 0.05);
-			color: var(--app-text-color);
-			background: var(--contextmenu-background);
-			border: 1px solid var(--app-contextmenu-border-color);
-      backdrop-filter: blur(10px);
-			font-size: 0.8rem;
-            border-radius: 8px;
-		`}
-  >
-    {local.currentTitle}
-  </div>
-)
+let defaultTooltipStyle = <div class={styles.defaultTooltip}>{local.currentTitle}</div>
 
 // directive
 export default function Tooltip(related, at, wrap) {

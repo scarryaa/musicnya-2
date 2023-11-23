@@ -26,7 +26,7 @@ export const Queue = () => {
     img.src = src
     img.style.width = '40px'
     img.style.height = '40px'
-    img.style.borderRadius = 'var(--app-border-radius)'
+    img.style.borderRadius = '$app-border-radius'
     img.style.position = 'absolute'
     img.style.top = '-1000px'
     img.classList.add('ghostImg')
@@ -94,7 +94,7 @@ export const Queue = () => {
       style={{
         height: store.app.miniPlayer.open
           ? '370px'
-          : 'calc(100vh - var(--app-footer-height) - 3.3rem)',
+          : 'calc(100vh - $app-footer-height - 3.3rem)',
         position: store.app.miniPlayer.open ? 'absolute' : 'relative',
         bottom: store.app.miniPlayer.open ? '0' : 'unset'
       }}

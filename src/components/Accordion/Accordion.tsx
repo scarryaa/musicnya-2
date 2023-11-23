@@ -22,11 +22,15 @@ export const Accordion = ({ title, children }) => {
     }
   })
 
+  const handleTitleClick = () => {
+    setIsOpen(!isOpen())
+  }
+
   return (
     <div class={styles.accordion}>
       <button
         class={styles.accordion__title}
-        onClick={() => setIsOpen(!isOpen())}
+        onClick={handleTitleClick}
         aria-expanded={isOpen()}
       >
         <div class={styles.accordion__title__text}>{title}</div>
@@ -34,7 +38,7 @@ export const Accordion = ({ title, children }) => {
           <Fa
             icon={isOpen() ? faChevronUp : faChevronDown}
             size="1x"
-            color="var(--app-text-color)"
+            color="var(--color-on-primary)"
           />
         </div>
       </button>

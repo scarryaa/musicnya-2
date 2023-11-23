@@ -1,7 +1,7 @@
+@import '../../styles/mixins/mixins';
+
 .artistItem {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+  @include flex-layout(column, center, center, 10px);
   cursor: default;
 
   &:hover {

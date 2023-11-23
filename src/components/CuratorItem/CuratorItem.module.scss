@@ -5,7 +5,7 @@
 
   display: flex;
   flex-direction: column;
-  border-radius: var(--app-border-radius);
+  border-radius: $app-border-radius;
   cursor: default;
 
   &:hover .curatorItem__image__overlay {
@@ -40,10 +40,10 @@
 
   &__image {
     position: relative;
-    border-radius: var(--app-border-radius);
+    border-radius: $app-border-radius;
 
     img {
-      border-radius: var(--app-border-radius);
+      border-radius: $app-border-radius;
       position: relative;
       width: var(--size);
       height: var(--size);
@@ -59,7 +59,7 @@
       position: absolute;
       width: 100%;
       height: 100%;
-      border-radius: var(--app-border-radius);
+      border-radius: $app-border-radius;
       background-color: rgba(0, 0, 0, 0.5);
       opacity: 0;
       transition: opacity 0.2s ease-in-out;
@@ -83,7 +83,7 @@
         transition: background-color 0.2s ease-in-out;
 
         &:hover {
-          background-color: var(--app-primary-color);
+          background-color: var(--color-primary);
         }
       }
     }

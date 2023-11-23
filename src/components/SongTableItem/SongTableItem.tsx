@@ -25,7 +25,7 @@ export const SongTableItem = ({ track, data, index }) => {
       <td class={styles.songTableItem__number}>
         <span class={styles.songTableItem__number__popularity}>
           {data().type === 'albums' && track.meta.popularity > 0.7 && (
-            <Fa icon={faStar} color="var(--app-text-color)" size="xs" />
+            <Fa icon={faStar} color="var(--color-on-primary)" size="xs" />
           )}
         </span>
         <span class={styles.songTableItem__number__number}>{index + 1}</span>
@@ -34,9 +34,9 @@ export const SongTableItem = ({ track, data, index }) => {
           onClick={() => mkController.setQueue(data().id, data().type, index)}
         >
           {track.id === store.currentTrack.id ? (
-            <Fa icon={faPause} size="1x" color="var(--app-primary-color)" />
+            <Fa icon={faPause} size="1x" color="var(--color-primary)" />
           ) : (
-            <Fa icon={faPlay} size="1x" color="var(--app-text-color)" />
+            <Fa icon={faPlay} size="1x" color="var(--color-on-primary)" />
           )}
         </div>
       </td>
@@ -53,8 +53,8 @@ export const SongTableItem = ({ track, data, index }) => {
               style={{
                 color:
                   track.id === store.currentTrack.id
-                    ? 'var(--app-primary-color)'
-                    : 'var(--app-text-color)'
+                    ? 'var(--color-primary)'
+                    : 'var(--color-on-primary)'
               }}
             >
               {track.attributes.name}
@@ -135,7 +135,7 @@ export const SongTableItem = ({ track, data, index }) => {
             class={styles.songTableItem__time__moreButton}
             onClick={e => openContextMenu(e, track.id, ContextMenuType.Song, data().type)}
           >
-            <Fa icon={faEllipsisH} size="1x" color="var(--app-text-color)" />
+            <Fa icon={faEllipsisH} size="1x" color="var(--color-on-primary)" />
           </div>
         </div>
       </td>

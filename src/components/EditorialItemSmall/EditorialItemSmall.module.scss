@@ -21,7 +21,7 @@
       position: absolute;
       top: 0;
       left: 0;
-      border-radius: var(--app-border-radius);
+      border-radius: $app-border-radius;
       display: flex;
       flex-direction: row;
       justify-content: flex-end;
@@ -42,7 +42,7 @@
         transition: background-color 0.2s ease-in-out;
 
         &:hover {
-          background-color: var(--app-primary-color);
+          background-color: var(--color-primary);
         }
       }
     }
@@ -51,7 +51,7 @@
       min-width: 14rem;
       min-height: 8rem;
       object-fit: cover;
-      border-radius: var(--app-border-radius);
+      border-radius: $app-border-radius;
     }
   }
 }

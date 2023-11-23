@@ -134,7 +134,7 @@ export const SongItem = ({ item, album, albumId }) => {
             <Fa
               icon={faPlus}
               size="1x"
-              color="var(--app-primary-color)"
+              color="var(--color-primary)"
               class={
                 !checkedInLibrary()
                   ? styles.songItem__actions__addToLibrary__disabled
@@ -148,7 +148,7 @@ export const SongItem = ({ item, album, albumId }) => {
             onClick={handleRemoveFromLibraryClick}
             use:Tooltip={['bottom', 'Remove from Library']}
           >
-            <Fa icon={faMinus} size="1x" color="var(--app-primary-color)" />
+            <Fa icon={faMinus} size="1x" color="var(--color-primary)" />
           </div>
         )}
         <div
@@ -162,7 +162,7 @@ export const SongItem = ({ item, album, albumId }) => {
             )
           }
         >
-          <Fa icon={faEllipsisH} size="1x" color="var(--app-primary-color)" />
+          <Fa icon={faEllipsisH} size="1x" color="var(--color-primary)" />
         </div>
       </div>
     </div>

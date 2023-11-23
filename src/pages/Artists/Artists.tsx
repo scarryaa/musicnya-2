@@ -49,7 +49,7 @@ export const Artists = () => {
                   class={styles.artists__sidebar__list__item}
                   style={{
                     'background-color':
-                      artist.id === selectedArtist() ? 'var(--app-primary-color)' : ''
+                      artist.id === selectedArtist() ? 'var(--color-primary)' : ''
                   }}
                   onClick={() => handleArtistClick(artist.id)}
                 >

@@ -1,47 +1,42 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import './mixins/font-mixins';
+@import './mixins/mixins';
 
 :root {
-  --app-toolbar-height: 40px;
-  --app-sidebar-width: 200px;
-  --app-border-radius: 8px;
-  --app-primary-color: #9ecece;
-  --app-primary-color-hover: #90c5c7;
-  --app-primary-color-active: #74a5a8;
-  --app-text-color: #000;
-  --app-footer-height: 70px;
-  --app-left-sidebar-background-color: #f2f2f2;
-  --app-background-color: #fff;
-  --app-background-light-color: #f7f7f8;
-  --app-footer-background-color: #f4f4f4;
-  --app-searchbar-background-color: #bdbdbd;
-  --app-text-light-color: #838383;
-  --app-contextmenu-border-color: #e4e4e4;
-  --app-active-color: rgba(0, 0, 0, 0.2);
-  --app-scrollbar-background-color: #e4e4e4;
-  --app-scrollbar-thumb-background-color: #c7c7c7;
+  --color-primary: #{$color-primary};
+  --color-primary-hover: #{$color-primary-hover};
+  --color-primary-active: #{$color-primary-active};
+  --color-main-bg: #{$color-main-bg};
+  --color-main-bg-muted: #{$color-main-bg-muted};
+  --color-on-primary: #{$color-on-primary};
+  --color-on-primary-muted: #{$color-on-primary-muted};
+  --color-on-main: #{$color-on-main};
+  --color-on-main-muted: #{$color-on-main-muted};
+  --color-link-active: #{$color-link-active};
 
-  --color-black: #000;
-  --color-white: #f7f7f8;
+  --color-scrollbar-bg: #{$color-scrollbar-bg};
+  --color-scrollbar-thumb: #{$color-scrollbar-thumb};
+
+  --color-black: #{$color-black};
+  --color-white: #{$color-white};
+  --color-off-white: #{$color-off-white};
 }
 
 :root[theme='dark'] {
-  --app-primary-color: #6b8f8f;
-  --app-primary-color-hover: #90c5c7;
-  --app-primary-color-active: #74a5a8;
-  --app-text-color: #000;
-  --app-left-sidebar-background-color: #2b2a2a;
-  --app-background-color: #070707;
-  --app-background-light-color: #252525;
-  --app-footer-background-color: #050505;
-  --app-searchbar-background-color: #f4f4f4;
-  --app-text-color: #fff;
-  --app-text-light-color: #838383;
-  --app-contextmenu-border-color: #41424c;
-  --app-active-color: rgba(255, 255, 255, 0.2);
-  --app-scrollbar-background-color: #222222;
-  --app-scrollbar-thumb-background-color: #41424c;
+  --color-primary: #{$color-primary-dark};
+  --color-primary-hover: #{$color-primary-hover-dark};
+  --color-primary-active: #{$color-primary-active-dark};
+  --color-main-bg: #{$color-main-bg-dark};
+  --color-main-bg-muted: #{$color-main-bg-muted-dark};
+  --color-on-primary: #{$color-on-primary-dark};
+  --color-on-primary-muted: #{$color-on-primary-muted-dark};
+  --color-on-main: #{$color-on-main-dark};
+  --color-on-main-muted: #{$color-on-main-muted-dark};
+
+  --color-scrollbar-bg: #{$color-scrollbar-bg-dark};
+  --color-scrollbar-thumb: #{$color-scrollbar-thumb-dark};
 }
 
 html,
@@ -49,11 +44,12 @@ body,
 #root {
   height: 100%;
   width: 100%;
-  background-color: var(--app-background-color);
+  background-color: var(--color-main-bg);
   user-select: none;
-  overflow-x: hidden;
+  -webkit-user-select: none;
+  -moz-user-select: none;
   font-size: 16px;
-  border-radius: var(--app-border-radius);
+  border-radius: $app-border-radius;
   overflow: hidden;
 }
 
@@ -62,7 +58,7 @@ body,
 }
 
 .active {
-  background-color: var(--app-active-color) !important;
+  background-color: $color-link-active;
 }
 
 .hidden {
@@ -70,44 +66,31 @@ body,
 }
 
 h1 {
-  font-weight: 600;
-  font-size: 2rem;
+  @include heading-style(2rem);
 }
 
 h2 {
-  font-weight: 600;
-  font-size: 1.5rem;
+  @include heading-style(1.5rem);
 }
 
 h3 {
-  font-weight: 600;
-  font-size: 1.25rem;
+  @include heading-style(1.25rem);
 }
 
 h4 {
-  font-weight: 600;
-  font-size: 1rem;
+  @include heading-style(1rem);
 }
 
 h5 {
-  font-weight: 600;
-  font-size: 0.9rem;
+  @include heading-style(0.9rem);
+}
+
+* {
+  @include custom-scrollbar;
 }
 
 .expanded {
   -webkit-line-clamp: unset !important;
-}
-
-::-webkit-scrollbar {
-  background-color: var(--app-scrollbar-background-color);
-  z-index: 999;
-  width: 8px;
-  border-radius: 4px;
-
-  &-thumb {
-    background-color: var(--app-scrollbar-thumb-background-color);
-    border-radius: 4px;
-  }
 }
 
 .disabled {

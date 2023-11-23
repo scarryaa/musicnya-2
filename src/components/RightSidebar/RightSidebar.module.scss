@@ -10,9 +10,9 @@
 }
 
 .rightSidebar {
-  width: var(--app-sidebar-width);
-  height: calc(100% - var(--app-footer-height));
-  background-color: var(--app-primary-color);
+  width: $app-sidebar-width;
+  height: calc(100% - $app-footer-height);
+  background-color: var(--color-primary);
   position: fixed;
   top: 0;
   right: 0;
@@ -22,7 +22,7 @@
   padding-top: 20px;
 
   &__innerContainer {
-    height: calc(100vh - var(--app-footer-height));
+    height: calc(100vh - $app-footer-height);
     overflow: visible;
     padding-right: 5px;
     position: relative;
@@ -80,11 +80,11 @@
           z-index: -1;
           backdrop-filter: blur(10px);
           background-color: rgba(0, 0, 0, 0.3);
-          border-radius: var(--app-border-radius);
+          border-radius: $app-border-radius;
         }
 
         &__button {
-          border-radius: var(--app-border-radius);
+          border-radius: $app-border-radius;
           padding: 0.2rem;
           padding-inline: 1.5rem;
         }

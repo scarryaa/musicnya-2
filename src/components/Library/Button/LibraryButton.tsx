@@ -15,7 +15,7 @@ export const LibraryButton = ({ faIcon, tooltip, onClick }) => {
       use:Tooltip={['bottom', tooltip, tooltip, 0]}
       onClick={onClick}
     >
-      <Fa icon={faIcon} size="sm" color="var(--app-text-color)" />
+      <Fa icon={faIcon} size="sm" color="var(--color-on-primary)" />
     </div>
   )
 }

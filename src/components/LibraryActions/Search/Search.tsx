@@ -6,7 +6,7 @@ export const Search = ({ onInput }) => {
   return (
     <div class={styles.search}>
       <div class={styles.search__icon}>
-        <Fa icon={faSearch} size="sm" color="var(--app-text-color)" />
+        <Fa icon={faSearch} size="sm" color="var(--color-on-primary)" />
       </div>
       <input
         class={styles.search__input}

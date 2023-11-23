@@ -1,0 +1,31 @@
+@mixin flex-layout($direction: row, $justify: flex-start, $align: flex-start, $gap: 0) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+  gap: $gap;
+}
+
+@mixin grid-layout($columns: 1, $rows: 1, $gap: 1rem) {
+  display: grid;
+  grid-template-columns: repeat($columns, 1fr);
+  grid-template-rows: repeat($rows, 1fr);
+  gap: $gap;
+}
+
+@mixin custom-scrollbar(
+  $width: 8px,
+  $background-color: var(--color-scrollbar-bg),
+  $thumb-color: var(--color-scrollbar-thumb)
+) {
+  &::-webkit-scrollbar {
+    background-color: $background-color;
+    width: $width;
+    border-radius: calc($width / 2);
+
+    &-thumb {
+      background-color: $thumb-color;
+      border-radius: calc($width / 2);
+    }
+  }
+}

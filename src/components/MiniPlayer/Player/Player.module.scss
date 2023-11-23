@@ -16,8 +16,8 @@
   height: 120px;
   background-color: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(10px);
-  border-bottom-left-radius: var(--app-border-radius);
-  border-bottom-right-radius: var(--app-border-radius);
+  border-bottom-left-radius: $app-border-radius;
+  border-bottom-right-radius: $app-border-radius;
   overflow: hidden;
 
   &__progress {
@@ -47,7 +47,7 @@
       top: 2px;
       left: 0;
       font-size: 0.7rem;
-      color: var(--color-white);
+      color: $color-white;
       padding-inline: 0.3rem;
       margin-top: 0.3rem;
     }
@@ -57,7 +57,7 @@
       top: 2px;
       right: 0;
       font-size: 0.7rem;
-      color: var(--color-white);
+      color: $color-white;
       padding-inline: 0.3rem;
       margin-top: 0.3rem;
     }
@@ -111,7 +111,7 @@
         padding-inline: 0.3rem;
         font-size: 0.9rem;
         font-weight: 500;
-        color: var(--color-white);
+        color: $color-white;
         text-align: center;
         margin-top: 0.3rem;
         text-overflow: ellipsis;
@@ -144,7 +144,7 @@
           height: 10px;
           margin-top: -5px;
           margin-right: 10px;
-          color: var(--color-white);
+          color: $color-white;
           cursor: default;
 
           &:hover {
@@ -181,13 +181,13 @@
     &__button {
       width: 30px;
       height: 30px;
-      border-radius: var(--app-border-radius);
+      border-radius: $app-border-radius;
       display: flex;
       justify-content: center;
       align-items: center;
       padding: 0.3rem;
-      fill: var(--color-white);
-      color: var(--color-white);
+      fill: $color-white;
+      color: $color-white;
       cursor: default;
 
       &:hover {

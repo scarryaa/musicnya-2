@@ -3,7 +3,7 @@
 }
 
 .search {
-  border-radius: var(--app-border-radius);
+  border-radius: $app-border-radius;
   padding-left: 0.5rem;
   padding-inline: 0.5rem;
   height: 25px;
@@ -24,7 +24,7 @@
     height: 100%;
     background-color: transparent;
     border: none;
-    color: var(--app-text-color);
+    color: var(--color-on-primary);
     font-size: 0.9rem;
     padding-left: 1.2rem;
     padding-right: 0.5rem;

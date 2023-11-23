@@ -18,7 +18,7 @@
   height: 10px;
   width: 70%;
   background-color: var(--skeleton-background-color);
-  border-radius: var(--app-border-radius);
+  border-radius: $app-border-radius;
 }
 
 // Shimmer effect

@@ -1,0 +1,18 @@
+@import '../../../../../../styles/mixins/font-mixins';
+
+:root {
+  --description-color: #525252;
+}
+
+:root[theme='dark'] {
+  --description-color: #9c9c9c;
+}
+
+.header {
+  @include heading-style(1.5rem);
+}
+
+.description {
+  @include font-style(0.9rem);
+  color: var(--description-color);
+}

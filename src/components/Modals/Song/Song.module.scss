@@ -47,12 +47,12 @@
     &__album {
       width: 100%;
       padding: 0.5rem;
-      border-radius: var(--app-border-radius);
+      border-radius: $app-border-radius;
 
       img {
         width: 3rem;
         height: 3rem;
-        border-radius: var(--app-border-radius);
+        border-radius: $app-border-radius;
         margin-right: 0.5rem;
       }
 
@@ -87,7 +87,7 @@
           flex-direction: row;
           gap: 0.5rem;
           padding: 0.5rem;
-          border-radius: var(--app-border-radius);
+          border-radius: $app-border-radius;
           align-items: center;
           cursor: default;
 
@@ -144,7 +144,7 @@
     &__artist {
       width: 100%;
       padding: 0.5rem;
-      border-radius: var(--app-border-radius);
+      border-radius: $app-border-radius;
 
       img {
         width: 3rem;
@@ -241,18 +241,18 @@
       justify-content: space-between;
 
       &__button {
-        background-color: var(--app-primary-color);
+        background-color: var(--color-primary);
         width: 50px;
         height: 20px;
-        border-radius: var(--app-border-radius);
+        border-radius: $app-border-radius;
         font-size: 0.8rem;
 
         &:hover {
-          background-color: var(--app-primary-color-hover);
+          background-color: var(--color-primary-hover);
         }
 
         &:active {
-          background-color: var(--app-primary-color-active);
+          background-color: var(--color-primary-active);
         }
       }
     }

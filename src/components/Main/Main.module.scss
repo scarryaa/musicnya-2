@@ -12,9 +12,9 @@
   position: fixed;
   right: 40px;
   bottom: 0;
-  top: var(--app-toolbar-height);
+  top: $app-toolbar-height;
   left: 0;
-  margin-bottom: var(--app-footer-height);
+  margin-bottom: $app-footer-height;
   overflow-y: auto;
   container-type: size;
   container-name: main;

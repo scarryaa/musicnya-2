@@ -1,11 +1,11 @@
+@import '../../styles/mixins/mixins.scss';
+
 .topbar {
+  @include flex-layout(row, flex-start, center, 0);
   position: fixed;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
   top: 0;
-  height: var(--app-toolbar-height);
-  color: var(--app-text-color);
+  height: $app-toolbar-height;
+  color: var(--color-on-primary);
 
   &__buttons {
     display: inline-flex;

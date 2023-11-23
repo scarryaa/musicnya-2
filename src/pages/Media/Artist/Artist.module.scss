@@ -7,7 +7,7 @@
 }
 
 .artist {
-  color: var(--app-text-color);
+  color: var(--color-on-primary);
   --height: 60cqh;
   max-width: 100%;
 
@@ -51,7 +51,7 @@
         position: absolute;
         left: 3.5rem;
         bottom: 0rem;
-        color: var(--color-white);
+        color: $color-white;
         max-width: 65%;
       }
 
@@ -68,18 +68,18 @@
         width: 2.5rem;
         height: 2.5rem;
         transition: background-color 0.2s ease-in-out;
-        background-color: var(--app-primary-color);
+        background-color: var(--color-primary);
         cursor: default;
         z-index: 1;
         filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.5));
 
         &:hover {
-          background-color: var(--app-primary-color-hover);
+          background-color: var(--color-primary-hover);
         }
 
         &:active {
           transition: background-color 0s ease-in-out;
-          background-color: var(--app-primary-color-active);
+          background-color: var(--color-primary-active);
         }
       }
 
@@ -104,7 +104,7 @@
           cursor: default;
 
           &:hover {
-            background-color: var(--app-primary-color);
+            background-color: var(--color-primary);
           }
         }
       }

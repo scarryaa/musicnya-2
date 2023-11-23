@@ -10,7 +10,7 @@
 
 .artists {
   font-family: 'Inter', sans-serif;
-  color: var(--app-text-color);
+  color: var(--color-on-primary);
   height: calc(100% - 3.6rem);
   display: flex;
   flex-direction: row;
@@ -75,7 +75,7 @@
         &__name {
           font-size: 1rem;
           font-weight: 500;
-          color: var(--app-text-color);
+          color: var(--color-on-primary);
           display: -webkit-box;
           -webkit-line-clamp: 1;
           -webkit-box-orient: vertical;

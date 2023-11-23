@@ -1,7 +1,7 @@
 .rightSidebarButton {
   width: 30px;
   height: 30px;
-  border-radius: var(--app-border-radius);
+  border-radius: $app-border-radius;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -20,6 +20,6 @@
   &__icon {
     width: 20px;
     height: 20px;
-    fill: var(--color-white);
+    fill: $color-white;
   }
 }

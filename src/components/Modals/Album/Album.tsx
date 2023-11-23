@@ -454,7 +454,7 @@ export const Album = () => {
                         {genre => (
                           <Chip
                             text={genre}
-                            backgroundColor={'var(--app-primary-color)'}
+                            backgroundColor={'var(--color-primary)'}
                             textColor={'var(--color-white)'}
                           />
                         )}
@@ -471,7 +471,7 @@ export const Album = () => {
                         {trait => (
                           <Chip
                             text={trait}
-                            backgroundColor={'var(--app-primary-color)'}
+                            backgroundColor={'var(--color-primary)'}
                             textColor={'var(--color-white)'}
                           />
                         )}

@@ -1,0 +1,16 @@
+@import '../../../../../../styles/mixins/font-mixins';
+@import '../../../../../../styles/mixins/mixins';
+
+.artistDetail {
+  @include flex-layout(column, flex-start, flex-start);
+
+  &__title {
+    color: var(--description-color);
+    font-size: 0.9rem;
+  }
+
+  &__description {
+    color: var(--extraInfo-item-color);
+    font-size: 0.9rem;
+  }
+}

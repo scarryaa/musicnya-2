@@ -475,7 +475,7 @@ export const Song = () => {
                         {genre => (
                           <Chip
                             text={genre}
-                            backgroundColor={'var(--app-primary-color)'}
+                            backgroundColor={'var(--color-primary)'}
                             textColor={'var(--color-white)'}
                           />
                         )}
@@ -492,7 +492,7 @@ export const Song = () => {
                         {trait => (
                           <Chip
                             text={trait}
-                            backgroundColor={'var(--app-primary-color)'}
+                            backgroundColor={'var(--color-primary)'}
                             textColor={'var(--color-white)'}
                           />
                         )}
@@ -654,7 +654,7 @@ export const Song = () => {
                                           {role => (
                                             <Chip
                                               text={role}
-                                              backgroundColor={'var(--app-primary-color)'}
+                                              backgroundColor={'var(--color-primary)'}
                                               textColor={'var(--color-white)'}
                                             />
                                           )}

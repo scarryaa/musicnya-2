@@ -79,9 +79,7 @@ export const Player = () => {
             icon={faShuffle}
             size="1x"
             color={
-              store.shuffleMode
-                ? 'var(--app-primary-color)'
-                : 'var(--color-player-button)'
+              store.shuffleMode ? 'var(--color-primary)' : 'var(--color-player-button)'
             }
           />
         </button>
@@ -109,7 +107,7 @@ export const Player = () => {
             icon={faRepeat}
             size="1x"
             color={
-              store.repeatMode ? 'var(--app-primary-color)' : 'var(--color-player-button)'
+              store.repeatMode ? 'var(--color-primary)' : 'var(--color-player-button)'
             }
           />
         </button>

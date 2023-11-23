@@ -6,7 +6,7 @@
   padding: 0.5rem;
   transition: background-color 0.2s ease-in-out;
   align-items: center;
-  border-radius: var(--app-border-radius);
+  border-radius: $app-border-radius;
   justify-content: space-between;
   position: relative;
 
@@ -29,7 +29,7 @@
     position: relative;
 
     &__overlay {
-      border-radius: var(--app-border-radius);
+      border-radius: $app-border-radius;
       position: absolute;
       opacity: 0;
       background-color: rgba(0, 0, 0, 0.5);
@@ -58,7 +58,7 @@
     margin-right: 0.8rem;
 
     img {
-      border-radius: var(--app-border-radius);
+      border-radius: $app-border-radius;
       width: 50px;
       height: 50px;
       min-width: 50px;
@@ -87,7 +87,7 @@
     }
 
     &__artist {
-      color: var(--app-text-light-color);
+      color: var(--color-on-main-muted);
       font-size: 0.7rem;
       display: -webkit-box;
       -webkit-line-clamp: 1;

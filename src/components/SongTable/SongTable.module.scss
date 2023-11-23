@@ -13,26 +13,26 @@
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  color: var(--app-text-color);
-  border-radius: var(--app-border-radius);
+  color: var(--color-on-primary);
+  border-radius: $app-border-radius;
   padding: 1.5rem;
 
   &__releaseDate {
     font-size: 0.9rem;
     font-weight: 500;
-    color: var(--app-text-light-color);
+    color: var(--color-on-main-muted);
   }
 
   &__copyright {
     font-size: 0.9rem;
     font-weight: 500;
-    color: var(--app-text-light-color);
+    color: var(--color-on-main-muted);
   }
 
   &__trackCount {
     font-size: 0.9rem;
     font-weight: 500;
-    color: var(--app-text-light-color);
+    color: var(--color-on-main-muted);
   }
 
   &__table {
@@ -47,7 +47,7 @@
       font-size: 0.9rem;
       text-align: left;
       padding-bottom: 0.5rem;
-      color: var(--app-text-light-color);
+      color: var(--color-on-main-muted);
       background-color: transparent !important;
 
       &.album__tracks__table__number {
@@ -90,7 +90,7 @@
     &__time {
       padding-right: 1rem;
       font-size: 0.8rem;
-      color: var(--app-text-light-color);
+      color: var(--color-on-main-muted);
       text-align: right;
       position: relative;
     }

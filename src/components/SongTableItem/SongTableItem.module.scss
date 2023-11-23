@@ -32,7 +32,7 @@
       width: 100%;
       max-width: max-content;
       margin-right: 1rem;
-      color: var(--app-text-light-color);
+      color: var(--color-on-main-muted);
       cursor: default;
 
       &:hover {
@@ -94,7 +94,7 @@
         &__explicit__text {
           font-weight: 500;
           font-size: 0.8rem;
-          color: var(--app-text-light-color);
+          color: var(--color-on-main-muted);
           padding-bottom: 0.2rem;
           padding-left: 0.2rem;
           -webkit-line-clamp: 1;
@@ -112,7 +112,7 @@
       &__artist {
         font-weight: 500;
         font-size: 0.9rem;
-        color: var(--app-text-light-color);
+        color: var(--color-on-main-muted);
         padding-bottom: 0.2rem;
         display: -webkit-box;
         -webkit-line-clamp: 1;
@@ -134,7 +134,7 @@
         height: 40px;
         min-width: 40px;
         min-height: 40px;
-        border-radius: var(--app-border-radius);
+        border-radius: $app-border-radius;
         object-fit: cover;
       }
     }
@@ -143,7 +143,7 @@
   &__time {
     padding-right: 1rem;
     font-size: 0.8rem;
-    color: var(--app-text-light-color);
+    color: var(--color-on-main-muted);
     text-align: right;
     position: relative;
 

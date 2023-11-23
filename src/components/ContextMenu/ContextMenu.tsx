@@ -3,154 +3,26 @@ import styles from './ContextMenu.module.scss'
 import { store } from '../../stores/store'
 import Fa from 'solid-fa'
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
-import {
-  appContextMenu,
-  artistContextMenu,
-  editorialContextMenu,
-  historyItemContextMenu,
-  mediaItemContextMenu,
-  queueItemContextMenu,
-  songContextMenu
-} from './ContextMenuTypes'
 import { useContextMenu, useContextMenuState } from '../../composables/useContextMenu'
-import { mkController } from '../../api/mkController'
 import { ContextMenuType, Reaction } from '../../types/types'
 import Tooltip from '../Tooltip/Tooltip'
+import { historyItemContextMenuConfig } from './Configs/historyItemContextMenuConfig'
+import { appContextMenuConfig } from './Configs/appContextMenuConfig'
+import { artistContextMenuConfig } from './Configs/artistContextMenuConfig'
+import { songContextMenuConfig } from './Configs/songContextMenuConfig'
+import { mediaItemContextMenuConfig } from './Configs/mediaItemContextMenuConfig'
+import { queueItemContextMenuConfig } from './Configs/queueItemContextMenuConfig'
+import { editorialContextMenuConfig } from './Configs/editorialContextMenuConfig'
+import { QuickActionItem } from './Components/QuickActionItem'
 
 const contextMenuConfig = {
-  [ContextMenuType.App]: {
-    createInitialMenuItems: (id, subType) => appContextMenu()
-  },
-  [ContextMenuType.HistoryItem]: {
-    fetchData: async (id, subType) => {
-      const [inLibraryState, isLovedState] = await Promise.all([
-        mkController.checkIfInLibrary(id, subType),
-        mkController.checkIfLoved(id, subType)
-      ])
-
-      return {
-        inLibrary: inLibraryState.data[0].attributes.inLibrary,
-        isLoved: isLovedState.data?.[0]?.attributes.value == Reaction.Loved,
-        isDisliked: isLovedState.data?.[0]?.attributes.value == Reaction.Disliked
-      }
-    },
-    createInitialMenuItems: (id, subType) =>
-      historyItemContextMenu(id, subType, true, false, false, false),
-    createMenuItems: (id, subType, data) =>
-      historyItemContextMenu(
-        id,
-        subType,
-        false,
-        data.isLoved,
-        data.isDisliked,
-        data.inLibrary
-      )
-  },
-  [ContextMenuType.Artist]: {
-    fetchData: async id => {
-      const isFavoritedState = await mkController.getArtist(id)
-
-      return {
-        isFavorited: isFavoritedState.data[0].attributes.inFavorites
-      }
-    },
-    createInitialMenuItems: (id, subType) => artistContextMenu(id, subType, false),
-    createMenuItems: (id, subType, data) =>
-      artistContextMenu(id, subType, data.isFavorited)
-  },
-  [ContextMenuType.Song]: {
-    fetchData: async (id, subType) => {
-      const [inLibraryState, isLovedState] = await Promise.all([
-        mkController.checkIfInLibrary(id, subType),
-        mkController.checkIfLovedSong(id, subType)
-      ])
-
-      return {
-        inLibrary: inLibraryState.data?.[0]?.attributes?.inLibrary,
-        isLoved: isLovedState.data?.[0]?.attributes.value == Reaction.Loved,
-        isDisliked: isLovedState.data?.[0]?.attributes.value == Reaction.Disliked
-      }
-    },
-    createInitialMenuItems: (id, subType) =>
-      songContextMenu(id, true, false, false, false),
-    createMenuItems: (id, subType, data) =>
-      songContextMenu(id, false, data.isLoved, data.isDisliked, data.inLibrary)
-  },
-  [ContextMenuType.MediaItem]: {
-    fetchData: async (id, subType) => {
-      const [inLibraryState, isLovedState] = await Promise.all([
-        mkController.checkIfInLibrary(id, subType),
-        mkController.checkIfLoved(id, subType)
-      ])
-
-      return {
-        inLibrary: inLibraryState.data?.[0]?.attributes?.inLibrary,
-        isLoved: isLovedState.data?.[0]?.attributes.value == Reaction.Loved,
-        isDisliked: isLovedState.data?.[0]?.attributes.value == Reaction.Disliked
-      }
-    },
-    createInitialMenuItems: (id, subType) =>
-      mediaItemContextMenu(id, true, subType, false, false, false),
-    createMenuItems: (id, subType, data) =>
-      mediaItemContextMenu(
-        id,
-        false,
-        subType,
-        data.isLoved,
-        data.isDisliked,
-        data.inLibrary
-      )
-  },
-  [ContextMenuType.QueueItem]: {
-    fetchData: async (id, subType) => {
-      const [inLibraryState, isLovedState] = await Promise.all([
-        mkController.checkIfInLibrary(id, subType),
-        mkController.checkIfLoved(id, subType)
-      ])
-
-      return {
-        inLibrary: inLibraryState.data[0].attributes.inLibrary,
-        isLoved: isLovedState.data?.[0]?.attributes.value == Reaction.Loved,
-        isDisliked: isLovedState.data?.[0]?.attributes.value == Reaction.Disliked
-      }
-    },
-    createInitialMenuItems: (id, subType) =>
-      queueItemContextMenu(id, true, subType, false, false, false),
-    createMenuItems: (id, subType, data) =>
-      queueItemContextMenu(
-        id,
-        false,
-        subType,
-        data.isLoved,
-        data.isDisliked,
-        data.inLibrary
-      )
-  },
-  [ContextMenuType.Editorial]: {
-    fetchData: async (id, subType) => {
-      const [inLibraryState, isLovedState] = await Promise.all([
-        mkController.checkIfInLibrary(id, subType),
-        mkController.checkIfLoved(id, subType)
-      ])
-
-      return {
-        inLibrary: inLibraryState.data?.[0]?.attributes?.inLibrary,
-        isLoved: isLovedState.data?.[0]?.attributes.value == Reaction.Loved,
-        isDisliked: isLovedState.data?.[0]?.attributes.value == Reaction.Disliked
-      }
-    },
-    createInitialMenuItems: (id, subType) =>
-      editorialContextMenu(id, true, subType, false, false, false),
-    createMenuItems: (id, subType, data) =>
-      editorialContextMenu(
-        id,
-        false,
-        subType,
-        data.isLoved,
-        data.isDisliked,
-        data.inLibrary
-      )
-  }
+  [ContextMenuType.App]: appContextMenuConfig,
+  [ContextMenuType.HistoryItem]: historyItemContextMenuConfig,
+  [ContextMenuType.Artist]: artistContextMenuConfig,
+  [ContextMenuType.Song]: songContextMenuConfig,
+  [ContextMenuType.MediaItem]: mediaItemContextMenuConfig,
+  [ContextMenuType.QueueItem]: queueItemContextMenuConfig,
+  [ContextMenuType.Editorial]: editorialContextMenuConfig
 }
 
 //TODO fix editorial item small context menu
@@ -209,20 +81,7 @@ export function ContextMenu(): JSX.Element {
       style={`top: ${store.app.contextMenu.y}px; left: ${store.app.contextMenu.x}px; display: ${store.app.contextMenu.display}`}
     >
       <div class={styles.quickActions}>
-        <For each={filterMenuItems(true)}>
-          {item => (
-            <div
-              class={`${styles.contextMenu__quick__item} ${
-                item.disabled ? 'disabled' : ''
-              }`}
-              onclick={!item.disabled ? item.action : undefined}
-              use:Tooltip={['bottom', item.tooltip, true, 0]}
-              aria-disabled={item.disabled}
-            >
-              <Fa icon={item.icon} size="1x" />
-            </div>
-          )}
-        </For>
+        <For each={filterMenuItems(true)}>{item => <QuickActionItem item={item} />}</For>
       </div>
 
       <For each={filterMenuItems(false)}>

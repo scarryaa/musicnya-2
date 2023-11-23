@@ -1,0 +1,29 @@
+@import '../../../../../styles/mixins/mixins.scss';
+@import '../../../../../styles/mixins/font-mixins.scss';
+
+:root {
+  --background-color: #e0e0e0;
+  --description-color: #525252;
+  --extraInfo-item-color: #000000;
+}
+
+:root[theme='dark'] {
+  --background-color: #000000;
+  --description-color: #9c9c9c;
+  --extraInfo-item-color: #ffffff;
+}
+
+.artistInfoPane {
+  background-color: var(--background-color);
+  padding: 1.5rem;
+
+  &__header {
+    @include heading-style(1.5rem);
+  }
+
+  &__info {
+    display: grid;
+    grid-template-columns: 4fr 1fr;
+    gap: 1rem;
+  }
+}
