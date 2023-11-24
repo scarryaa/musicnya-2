@@ -6,6 +6,7 @@ import { mkController } from '../../api/mkController'
 import { setStore, store } from '../../stores/store'
 import { Utils } from '../../util/util'
 import { localStorageService } from '../../services/localStorageService'
+import { mkManager } from '../../api/mkManager'
 
 export const MiscControls = () => {
   const [isMuted, setIsMuted] = createSignal(false)
@@ -18,7 +19,7 @@ export const MiscControls = () => {
   const updateVolume = newVolume => {
     setIsMuted(newVolume === 0)
     localStorage.setItem('volume', newVolume.toString())
-    mkController.setVolume(newVolume / 100)
+    mkManager.setVolume(newVolume / 100)
     setStore('volume', newVolume)
   }
 

@@ -43,39 +43,6 @@ export class mkController {
     return MusicKit.getInstance()
   }
 
-  static authorize = async () => {
-    const instance = await mkController.getInstance()
-    if (instance) {
-      try {
-        await instance.authorize()
-      } catch (e) {
-        mkController.isErrored = true
-        mkController.isAuthorized = false
-        setStore('isAuthorized', false)
-        console.error('Failed to authorize: ', e)
-      }
-    } else {
-      console.error('Failed to authorize: MusicKit instance not available')
-    }
-  }
-
-  static setVolume = async (volume: number) => {
-    const instance = await mkController.getInstance()
-    if (instance) {
-      try {
-        if (volume > 100) {
-          throw new Error('Volume cannot be greater than 100')
-        }
-
-        instance.volume = volume
-      } catch (e) {
-        console.error('Error setting volume: ', e)
-      }
-    } else {
-      console.error('Failed to set volume: MusicKit instance not available')
-    }
-  }
-
   static playMediaItem = async (
     id: any,
     type: string,
@@ -610,7 +577,6 @@ export class mkController {
   static addToPlaylist = async (id: string, type: string, playlistID: string) => {
     const instance = await mkController.getInstance()
     const strippedType = type.replace('library-', '')
-    console.log('adding to playlist')
 
     if (instance) {
       if (type === 'songs') {

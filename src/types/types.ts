@@ -15,3 +15,13 @@ export const enum ContextMenuType {
   Editorial = 'editorial',
   App = 'app'
 }
+
+export enum MediaItemType {
+  Stations = 'stations',
+  Songs = 'songs',
+  Albums = 'albums',
+  Artists = 'artists',
+  Playlists = 'playlists',
+  UploadedVideoss = 'uploadedVideos',
+  MusicVideoss = 'musicVideos'
+}

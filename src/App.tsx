@@ -16,6 +16,7 @@ import * as config from '../config.json'
 import { MiniPlayer } from './components/MiniPlayer/MiniPlayer'
 import { discordService } from './services/discordService'
 import '@fontsource/inter'
+import { mkManager } from './api/mkManager'
 
 const App: Component = () => {
   const navigate = useNavigate()
@@ -43,7 +44,8 @@ const App: Component = () => {
     Utils.setDarkMode(localStorageService.get('darkMode') === 'true')
     Utils.disableContextMenu()
 
-    await mkController.authorize()
+    await mkManager.initializeMusicKit()
+    await mkManager.authorize()
     navigate(Utils.parseSelectedDefaultPage(store.app.general.defaultPage))
 
     await fetchData()
