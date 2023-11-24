@@ -2,11 +2,18 @@ import * as config from '../../config.json'
 import { discordService } from '../services/discordService'
 import { MediaItemTypeService } from '../services/mediaItemTypeService'
 import { setStore, store } from '../stores/store'
-import { Reaction } from '../types/types'
-import { Utils } from '../util/util'
+import { ArtistsApi } from './ArtistsApi'
+import { ApiClient } from './MkApiClient'
 
+/**
+ * Class representing a MusicKitManager.
+ * This class provides methods for managing the MusicKit instance and controlling playback.
+ */
 class MusicKitManager {
   _musicKitInstance: MusicKit.MusicKitInstance | null = null
+  _musicKitApiClient: ApiClient | null = null
+  _artistsApi: ArtistsApi | null = null
+
   private _shouldBeArray = (type: string) => {
     if (type === 'musicVideos') return false
     else return true
@@ -21,6 +28,17 @@ class MusicKitManager {
     this._musicKitInstance = value
   }
 
+  constructor() {
+    this._musicKitApiClient = new ApiClient(this.musicKitInstance, config)
+    this._artistsApi = new ArtistsApi(this.musicKitInstance, this._musicKitApiClient)
+  }
+
+  /**
+   * Initializes the MusicKit instance.
+   *
+   * @returns {Promise<MusicKitInstance>} A promise that resolves to the initialized MusicKit instance.
+   * @throws {Error} If there is an error initializing MusicKit.
+   */
   async initializeMusicKit() {
     if (this._musicKitInstance) return this._musicKitInstance
 
@@ -35,6 +53,12 @@ class MusicKitManager {
     }
   }
 
+  /**
+   * Attempts to initialize the MusicKit instance.
+   * @param attempts The number of attempts to initialize.
+   * @returns A promise that resolves to the initialized MusicKit instance.
+   * @throws If initialization fails after the specified number of attempts.
+   */
   async attemptToInitialize(attempts = 3) {
     while (attempts > 0) {
       try {
@@ -55,6 +79,11 @@ class MusicKitManager {
     }
   }
 
+  /**
+   * Authorizes the musicKitInstance.
+   * @returns A promise that resolves to a string or void.
+   * @throws If authorization fails.
+   */
   async authorize(): Promise<string | void> {
     try {
       return await this.musicKitInstance.authorize()
@@ -64,6 +93,12 @@ class MusicKitManager {
     }
   }
 
+  /**
+   * Sets the volume of the MusicKit instance.
+   * @param volume - The volume value to set. Must be between 0 and 1.
+   * @throws Error if the volume is not between 0 and 1.
+   * @throws Error if the MusicKit instance is not initialized.
+   */
   setVolume = (volume: number) => {
     if (volume < 0 || volume > 1) throw new Error('Volume must be between 0 and 1')
     if (!this.musicKitInstance) throw new Error('MusicKit instance not initialized')
@@ -71,30 +106,57 @@ class MusicKitManager {
     this.musicKitInstance.volume = volume
   }
 
+  /**
+   * Sets the shuffle mode of the MusicKit instance.
+   * @param shuffle - The shuffle mode to set.
+   * @throws Error if the MusicKit instance is not initialized.
+   */
   setShuffle = (shuffle: MusicKit.PlayerShuffleMode) => {
     if (!this.musicKitInstance) throw new Error('MusicKit instance not initialized')
 
     this.musicKitInstance.shuffleMode = shuffle ? 1 : 0
   }
 
+  /**
+   * Sets the repeat mode for the MusicKit instance.
+   * @param repeatMode The repeat mode to set.
+   * @throws Error if the MusicKit instance is not initialized.
+   */
   setRepeatMode = (repeatMode: MusicKit.PlayerRepeatMode) => {
     if (!this.musicKitInstance) throw new Error('MusicKit instance not initialized')
 
     this.musicKitInstance.repeatMode = repeatMode
   }
 
+  /**
+   * Plays the music using the MusicKit instance.
+   */
   play = async () => {
     await this.musicKitInstance.play()
   }
 
+  /**
+   * Pauses the music playback.
+   */
   pause = async () => {
     await this.musicKitInstance.pause()
   }
 
+  /**
+   * Stops the music playback.
+   */
   stop = async () => {
     await this.musicKitInstance.stop()
   }
 
+  /**
+   * Sets the queue for the MusicKit instance.
+   *
+   * @param id - The ID of the media item.
+   * @param type - The type of the media item.
+   * @param shuffle - Optional. Specifies whether to shuffle the queue. Default is false.
+   * @param startWith - Optional. Specifies the starting index of the queue. Default is 0.
+   */
   setQueue = async (
     id: string,
     type: MusicKit.MediaItemType,
@@ -107,6 +169,13 @@ class MusicKitManager {
     })
   }
 
+  /**
+   * Moves a queue item from one position to another in the music queue.
+   *
+   * @param from - The index of the item to move.
+   * @param to - The index where the item should be moved to.
+   * @returns The updated array of queue items.
+   */
   moveQueueItem = async (from: number, to: number): Promise<any> => {
     this.musicKitInstance.queue._queueItems.splice(
       to,
@@ -118,16 +187,33 @@ class MusicKitManager {
     return this.musicKitInstance.queue._queueItems
   }
 
+  /**
+   * Clears the queue of the music player.
+   * @returns {Promise<void>} A promise that resolves when the queue is cleared.
+   */
   clearQueue = async () => {
     await this.musicKitInstance.clearQueue()
   }
 
+  /**
+   * Sets the station queue with the specified ID and type.
+   *
+   * @param id - The ID of the item to add to the queue.
+   * @param type - The type of the item to add to the queue.
+   * @returns A promise that resolves when the queue is set and playback starts.
+   */
   setStationQueue = async (id: string, type: MusicKit.MediaItemType) => {
     const strippedType = MediaItemTypeService.stripType(type)
     await this.musicKitInstance.setStationQueue({ [strippedType]: [id] })
     await this.play()
   }
 
+  /**
+   * Removes an item from the queue based on its ID.
+   *
+   * @param id - The ID of the item to be removed.
+   * @returns The ID of the removed item.
+   */
   removeFromQueue = async (id: string): Promise<string> => {
     this.musicKitInstance.queue._queueItems =
       this.musicKitInstance.queue._queueItems.filter((item: any) => item.item.id !== id)
@@ -136,6 +222,14 @@ class MusicKitManager {
     return id
   }
 
+  /**
+   * Processes the item with the specified id and plays it.
+   *
+   * @param id - The id of the item to process and play.
+   * @param type - The type of the item (e.g., song, album, playlist).
+   * @param shuffle - Optional. Specifies whether to shuffle the queue. Defaults to false.
+   * @param startWith - Optional. Specifies the index to start playing from. Defaults to 0.
+   */
   processItemAndPlay = async (
     id: string,
     type: MusicKit.MediaItemType,
@@ -148,6 +242,13 @@ class MusicKitManager {
     await this.play()
   }
 
+  /**
+   * Sets the queue to play the specified item next.
+   *
+   * @param id - The ID of the item to be played.
+   * @param type - The type of the item to be played.
+   * @returns void.
+   */
   playNext = async (id: string, type: MusicKit.MediaItemType) => {
     const strippedType = MediaItemTypeService.stripType(type)
     console.log(id, strippedType)
@@ -158,6 +259,13 @@ class MusicKitManager {
     this.setShuffle('off' as unknown as MusicKit.PlayerShuffleMode)
   }
 
+  /**
+   * Sets the queue to play the specified item later.
+   *
+   * @param id - The ID of the media item to play later.
+   * @param type - The type of the media item.
+   * @returns void.
+   */
   playLater = async (id: string, type: string) => {
     const strippedType = MediaItemTypeService.stripType(type)
 
@@ -167,20 +275,38 @@ class MusicKitManager {
     this.setShuffle('off' as unknown as MusicKit.PlayerShuffleMode)
   }
 
+  /**
+   * Seeks to the specified time in the music track.
+   * @param time The time to seek to.
+   * @throws {Error} If the time is less than 0.
+   */
   seekToTime = async (time: number) => {
     if (time < 0) throw new Error('Time must be greater than 0')
 
     await this.musicKitInstance.seekToTime(time)
   }
 
+  /**
+   * Skips to the previous item in the music player.
+   * @returns {Promise<void>} A promise that resolves when the operation is complete.
+   */
   skipToPreviousItem = async () => {
     await this.musicKitInstance.skipToPreviousItem()
   }
 
+  /**
+   * Skips to the next item in the music queue.
+   * @returns {Promise<void>} A promise that resolves when the skip operation is complete.
+   */
   skipToNextItem = async () => {
     await this.musicKitInstance.skipToNextItem()
   }
 
+  /**
+   * Toggles the autoplay feature of the music player.
+   * @param autoplay - A boolean value indicating whether autoplay should be enabled or disabled.
+   * @returns The updated value of the autoplayEnabled property.
+   */
   toggleAutoplay = async (autoplay: boolean) => {
     this.musicKitInstance.autoplayEnabled = autoplay
     this.musicKitInstance._autoplayEnabled = autoplay
@@ -189,6 +315,9 @@ class MusicKitManager {
 
   // Events
 
+  /**
+   * Sets up the event handlers for various MusicKit events.
+   */
   setUpEvents = () => {
     const eventHandlers = {
       mediaItemStateDidChange: this.mediaItemStateDidChange,
@@ -206,6 +335,10 @@ class MusicKitManager {
     })
   }
 
+  /**
+   * Callback function that is called when the state of a media item changes.
+   * @param event The event object containing information about the changed media item.
+   */
   mediaItemStateDidChange = (event: any) => {
     setStore('currentTrack', {
       id: event.id,
@@ -217,10 +350,13 @@ class MusicKitManager {
       parentType: event.container.type,
       parentID: event.container.id
     })
-
-    console.log(event)
   }
 
+  /**
+   * Handles the event when the now playing item changes.
+   * @param event - The event object.
+   * @returns {Promise<void>}
+   */
   nowPlayingItemDidChange = async (event: any) => {
     setStore('app', 'queue', {
       index: MusicKit.getInstance().queue.position,
@@ -290,6 +426,11 @@ class MusicKitManager {
     //   })
   }
 
+  /**
+   * Callback function that is called when the queue items change.
+   *
+   * @param event - The event object containing the updated queue items.
+   */
   queueItemsDidChange = (event: any) => {
     setStore('app', 'queue', {
       items: event,
@@ -299,6 +440,10 @@ class MusicKitManager {
     })
   }
 
+  /**
+   * Callback function that is called when the playback state changes.
+   * @param event - The event object containing information about the playback state.
+   */
   playbackStateDidChange = (event: any) => {
     setStore('isPlaying', event.state === 2)
     setStore('isPaused', event.state === 3)
@@ -338,14 +483,26 @@ class MusicKitManager {
     }
   }
 
+  /**
+   * Callback function that is called when the playback duration changes.
+   * @param event - The event object containing the new duration.
+   */
   playbackDurationDidChange = (event: any) => {
     setStore('duration', event.duration)
   }
 
+  /**
+   * Callback function that is called when the playback progress changes.
+   * @param event - The event object containing the progress information.
+   */
   playbackProgressDidChange = (event: any) => {
     setStore('progress', event.progress * 100)
   }
 
+  /**
+   * Callback function that is called when the playback time changes.
+   * @param event - The event object containing the current playback time.
+   */
   playbackTimeDidChange = (event: any) => {
     setStore('currentTime', event.currentPlaybackTime)
 
@@ -360,6 +517,10 @@ class MusicKitManager {
     }
   }
 
+  /**
+   * Handles the change in shuffle mode.
+   * @param event - The event object containing the new shuffle mode.
+   */
   shuffleModeDidChange = (event: any) => {
     console.log('shuffleModeDidChange', event)
 
@@ -371,6 +532,16 @@ class MusicKitManager {
     } else {
       throw new Error('Unknown shuffle mode')
     }
+  }
+
+  // API
+  /**
+   * Retrieves an artist by their ID.
+   * @param {number} id - The ID of the artist.
+   * @returns {Promise<Artist>} - A promise that resolves to the artist object.
+   */
+  getArtist(id) {
+    return this._artistsApi.getArtist(id)
   }
 }
 

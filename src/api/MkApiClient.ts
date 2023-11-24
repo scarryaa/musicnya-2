@@ -20,10 +20,25 @@ export class ApiClient {
     this.config = config
   }
 
-  async fetchFromMusicKit(endpoint, options = {}) {
+  async fetchFromMusicKit(endpoint, options = { headers: {} }) {
     const url = `https://amp-api.music.apple.com/v1/${endpoint}`
     const headers = {
-      authorization: `Bearer ${config}`
+      authorization: `Bearer ${this.config.MusicKit.token}`,
+      'music-user-token': this.config.MusicKit.musicUserToken,
+      ...options.headers
+    }
+
+    try {
+      const response = await fetch(url, { ...options, headers })
+
+      if (!response.ok) {
+        throw new Error(`API Call failed: ${response.status}`)
+      }
+
+      return await response.json()
+    } catch (error) {
+      console.log('API call error:', error)
+      throw new Error(error.message)
     }
   }
 }

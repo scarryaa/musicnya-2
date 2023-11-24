@@ -1,5 +1,8 @@
+import { ApiClient } from './MkApiClient'
+
 export class ArtistsApi {
   _musicKitInstance: MusicKit.MusicKitInstance = null
+  musicKitApiClient: ApiClient = null
 
   get musicKitInstance() {
     if (!this._musicKitInstance) {
@@ -12,7 +15,15 @@ export class ArtistsApi {
     this._musicKitInstance = musicKitInstance
   }
 
-  constructor(musicKitInstance) {
+  constructor(musicKitInstance, musicKitApiClient) {
     this.musicKitInstance = musicKitInstance
+    this.musicKitApiClient = musicKitApiClient
+  }
+
+  async getArtist(id) {
+    const response = await this.musicKitApiClient.fetchFromMusicKit(
+      `catalog/us/artists/${id}`
+    )
+    return response.data[0]
   }
 }
