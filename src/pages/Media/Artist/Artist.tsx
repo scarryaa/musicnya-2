@@ -14,6 +14,7 @@ import { RelatedArtistsPane } from '../../../components/RelatedArtistsPane/Relat
 import { useContextMenu } from '../../../composables/useContextMenu'
 import { ContextMenuType } from '../../../types/types'
 import { ArtistInfoPane } from './Components/ArtistInfoPane/ArtistInfoPane'
+import { mkManager } from '../../../api/mkManager'
 
 export const Artist = () => {
   const params = useParams<{ id: string }>()
@@ -58,9 +59,7 @@ export const Artist = () => {
   }
 
   const handlePlayClick = () => {
-    mkController.setStationQueue(currentArtist().id, 'artists').then(() => {
-      MusicKit.getInstance().play()
-    })
+    mkManager.setStationQueue(currentArtist().id, 'artists')
   }
 
   const handleFavoriteClick = () => {

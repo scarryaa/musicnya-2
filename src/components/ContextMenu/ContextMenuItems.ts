@@ -79,7 +79,7 @@ export const contextMenuItems = {
     return {
       icon: faSatelliteDish,
       action: () => {
-        mkController.setStationQueue(id, type)
+        mkManager.setStationQueue(id, type)
       },
       isQuickAction: false,
       label: 'Create Station',
@@ -129,8 +129,11 @@ export const contextMenuItems = {
   removeFromQueue: (id, type) => {
     return {
       icon: faX,
-      action: () => {
-        mkManager.removeFromQueue(id)
+      action: async () => {
+        const returnedId = await mkManager.removeFromQueue(id)
+        setStore('app', 'queue', {
+          items: store.app.queue.items.filter((item: any) => item.id !== returnedId)
+        })
       },
       isQuickAction: false,
       disabled: false,
@@ -166,7 +169,7 @@ export const contextMenuItems = {
     return {
       icon: faSatelliteDish,
       action: () => {
-        mkController.setStationQueue(id, type)
+        mkManager.setStationQueue(id, type)
       },
       isQuickAction: true,
       tooltip: 'Create Station'

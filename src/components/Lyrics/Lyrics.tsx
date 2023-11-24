@@ -3,6 +3,7 @@ import { store } from '../../stores/store'
 import styles from './Lyrics.module.scss'
 import { Utils } from '../../util/util'
 import { mkController } from '../../api/mkController'
+import { mkManager } from '../../api/mkManager'
 
 export const Lyrics = () => {
   const [autoScroll, setAutoScroll] = createSignal(true)
@@ -25,7 +26,7 @@ export const Lyrics = () => {
     lyricsPane?.querySelectorAll('.lyric-line').forEach(line => {
       line.addEventListener('click', e => {
         const begin = e.target.getAttribute('data-begin')
-        mkController.seekToTime(Utils.timecodeToMs(begin) / 1000)
+        mkManager.seekToTime(Utils.timecodeToMs(begin) / 1000)
       })
 
       if (

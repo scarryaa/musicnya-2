@@ -27,6 +27,8 @@ class MusicKitManager {
     try {
       this._musicKitInstance = await this.attemptToInitialize()
       config.MusicKit.musicUserToken = this._musicKitInstance.musicUserToken
+      this.musicKitInstance.autoplayEnabled = store.app.queue.autoplay
+      this.musicKitInstance._autoplayEnabled = store.app.queue.autoplay
     } catch (e) {
       console.error('Failed to initialize MusicKit: ', e)
       throw e
@@ -53,9 +55,9 @@ class MusicKitManager {
     }
   }
 
-  async authorize() {
+  async authorize(): Promise<string | void> {
     try {
-      await this.musicKitInstance.authorize()
+      return await this.musicKitInstance.authorize()
     } catch (e) {
       console.error('Failed to authorize: ', e)
       throw e
@@ -105,11 +107,33 @@ class MusicKitManager {
     })
   }
 
-  removeFromQueue = async (id: string) => {
+  moveQueueItem = async (from: number, to: number): Promise<any> => {
+    this.musicKitInstance.queue._queueItems.splice(
+      to,
+      0,
+      this.musicKitInstance.queue._queueItems.splice(from, 1)[0]
+    )
+    this.musicKitInstance.queue._reindex()
+
+    return this.musicKitInstance.queue._queueItems
+  }
+
+  clearQueue = async () => {
+    await this.musicKitInstance.clearQueue()
+  }
+
+  setStationQueue = async (id: string, type: MusicKit.MediaItemType) => {
+    const strippedType = MediaItemTypeService.stripType(type)
+    await this.musicKitInstance.setStationQueue({ [strippedType]: [id] })
+    await this.play()
+  }
+
+  removeFromQueue = async (id: string): Promise<string> => {
     this.musicKitInstance.queue._queueItems =
       this.musicKitInstance.queue._queueItems.filter((item: any) => item.item.id !== id)
 
     this.musicKitInstance.queue._reindex()
+    return id
   }
 
   processItemAndPlay = async (
@@ -126,6 +150,7 @@ class MusicKitManager {
 
   playNext = async (id: string, type: MusicKit.MediaItemType) => {
     const strippedType = MediaItemTypeService.stripType(type)
+    console.log(id, strippedType)
 
     await this.musicKitInstance.playNext({
       [strippedType]: this._shouldBeArray(strippedType) ? [id] : id
@@ -154,6 +179,12 @@ class MusicKitManager {
 
   skipToNextItem = async () => {
     await this.musicKitInstance.skipToNextItem()
+  }
+
+  toggleAutoplay = async (autoplay: boolean) => {
+    this.musicKitInstance.autoplayEnabled = autoplay
+    this.musicKitInstance._autoplayEnabled = autoplay
+    return this.musicKitInstance.autoplayEnabled
   }
 
   // Events
@@ -186,6 +217,8 @@ class MusicKitManager {
       parentType: event.container.type,
       parentID: event.container.id
     })
+
+    console.log(event)
   }
 
   nowPlayingItemDidChange = async (event: any) => {

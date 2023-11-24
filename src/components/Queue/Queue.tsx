@@ -1,12 +1,13 @@
 import { For, createEffect, createSignal } from 'solid-js'
 import styles from './Queue.module.scss'
-import { store } from '../../stores/store'
+import { setStore, store } from '../../stores/store'
 import { QueueItem } from '../QueueItem/QueueItem'
 import Fa from 'solid-fa'
 import { faInfinity } from '@fortawesome/free-solid-svg-icons'
 import { mkController } from '../../api/mkController'
 import { Utils } from '../../util/util'
 import Tooltip from '../Tooltip/Tooltip'
+import { mkManager } from '../../api/mkManager'
 
 export const Queue = () => {
   const [queueItems, setQueueItems] = createSignal(store.app.queue.items)
@@ -66,7 +67,7 @@ export const Queue = () => {
     setDropTarget(null)
   }
 
-  const handleDrop = (e, index) => {
+  const handleDrop = async (e, index) => {
     e.preventDefault()
     e.stopPropagation()
 
@@ -75,16 +76,19 @@ export const Queue = () => {
       return
     }
 
-    mkController.moveQueueItem(draggedItem, index)
+    const newQueue = await mkManager.moveQueueItem(draggedItem, index)
+    setStore('app', 'queue', {
+      items: newQueue
+    })
     setDropTarget(null)
   }
 
   const handleClearClick = () => {
-    mkController.clearQueue()
+    mkManager.clearQueue()
   }
 
   const handleAutoplayClick = () => {
-    mkController.toggleAutoplay(!store.app.queue.autoplay)
+    mkManager.toggleAutoplay(!store.app.queue.autoplay)
     localStorage.setItem('autoplay', JSON.stringify(!store.app.queue.autoplay))
   }
 

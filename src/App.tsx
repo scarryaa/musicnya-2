@@ -1,6 +1,5 @@
 import { useNavigate } from '@solidjs/router'
 import { Component, createEffect, createSignal } from 'solid-js'
-import { mkController } from './api/mkController'
 import { ContextMenu } from './components/ContextMenu/ContextMenu'
 import { Footer } from './components/Footer/Footer'
 import { LeftSidebar } from './components/LeftSidebar/LeftSidebar'
@@ -45,8 +44,10 @@ const App: Component = () => {
     Utils.disableContextMenu()
 
     await mkManager.initializeMusicKit()
-    await mkManager.authorize()
+    const authorized = await mkManager.authorize()
     await mkManager.setUpEvents()
+    setStore('isAuthorized', !!authorized)
+
     navigate(Utils.parseSelectedDefaultPage(store.app.general.defaultPage))
 
     await fetchData()

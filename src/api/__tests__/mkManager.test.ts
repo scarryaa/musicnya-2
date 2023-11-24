@@ -255,6 +255,95 @@ describe('MusicKitManager', () => {
     })
   })
 
+  describe('MusicKitManager - clearQueue', () => {
+    let mockMusicKitInstance
+
+    beforeEach(() => {
+      // Create a mock MusicKit instance with a clearQueue method
+      mockMusicKitInstance = { clearQueue: jest.fn(), queue: { items: [] } }
+
+      // Initialize MusicKitManager and replace the musicKitInstance with the mock
+      mkManager.musicKitInstance = mockMusicKitInstance
+    })
+
+    it('calls clearQueue on the MusicKit instance', async () => {
+      await mkManager.clearQueue()
+
+      expect(mockMusicKitInstance.clearQueue).toHaveBeenCalled()
+    })
+
+    it('clears the queue', async () => {
+      await mkManager.clearQueue()
+
+      expect(mockMusicKitInstance.queue.items).toEqual([])
+    })
+
+    it('throws error if MusicKit instance is not initialized', async () => {
+      mkManager.musicKitInstance = null
+
+      await expect(mkManager.clearQueue()).rejects.toThrow(
+        'MusicKit instance not initialized'
+      )
+    })
+  })
+
+  describe('MusicKitManager - moveQueueItem', () => {
+    let mockMusicKitInstance
+
+    beforeEach(() => {
+      // Create a mock MusicKit instance with a moveQueueItem method
+      mockMusicKitInstance = {
+        moveQueueItem: jest.fn(),
+        queue: { _queueItems: [], items: [], _reindex: jest.fn() }
+      }
+
+      // Initialize MusicKitManager and replace the musicKitInstance with the mock
+      mkManager.musicKitInstance = mockMusicKitInstance
+    })
+
+    it('throws error if MusicKit instance is not initialized', async () => {
+      mkManager.musicKitInstance = null
+
+      await expect(mkManager.moveQueueItem(0, 1)).rejects.toThrow(
+        'MusicKit instance not initialized'
+      )
+    })
+  })
+
+  describe('MusicKitManager - setStationQueue', () => {
+    let mockMusicKitInstance
+
+    beforeEach(() => {
+      // Create a mock MusicKit instance with a setQueue method
+      mockMusicKitInstance = { setStationQueue: jest.fn(), play: jest.fn() }
+
+      // Initialize MusicKitManager and replace the musicKitInstance with the mock
+      mkManager.musicKitInstance = mockMusicKitInstance
+    })
+
+    it('calls setStationQueue on the MusicKit instance', async () => {
+      await mkManager.setStationQueue('id', 'artists')
+
+      expect(mockMusicKitInstance.setStationQueue).toHaveBeenCalledWith({
+        artists: ['id']
+      })
+    })
+
+    it('calls play on the MusicKit instance', async () => {
+      await mkManager.setStationQueue('id', 'artists')
+
+      expect(mockMusicKitInstance.play).toHaveBeenCalled()
+    })
+
+    it('throws error if MusicKit instance is not initialized', async () => {
+      mkManager.musicKitInstance = null
+
+      await expect(mkManager.setStationQueue('id', 'artists')).rejects.toThrow(
+        'MusicKit instance not initialized'
+      )
+    })
+  })
+
   describe('MusicKitManager - removeFromQueue', () => {
     let mockMusicKitInstance
 

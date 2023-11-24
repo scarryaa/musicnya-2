@@ -1,10 +1,5 @@
 import * as config from '../../config.json'
-import { increasePlayCount } from '../db/db'
-import { discordService } from '../services/discordService'
-import { fastAverageColorService } from '../services/fastAverageColorService'
 import { setStore, store } from '../stores/store'
-import { Reaction } from '../types/types'
-import { Utils } from '../util/util'
 
 export class mkController {
   static isInitialized: boolean
@@ -29,7 +24,6 @@ export class mkController {
         config.MusicKit.musicUserToken = music.musicUserToken
         mkController.isAuthorized = true
         setStore('isAuthorized', true)
-        mkController.setUpEvents()
         music.autoplayEnabled = store.app.queue.autoplay
         music._autoplayEnabled = store.app.queue.autoplay
 
@@ -41,23 +35,6 @@ export class mkController {
       }
     }
     return MusicKit.getInstance()
-  }
-
-  static removeFromQueue = async (id: number) => {
-    console.log('removing from queue: ', id)
-    const instance = await mkController.getInstance()
-    if (instance) {
-      setStore('app', 'queue', {
-        items: store.app.queue.items.filter((item: any) => item.id !== id)
-      })
-      instance.queue._queueItems = instance.queue._queueItems.filter(
-        (item: any) => item.item.id !== id
-      )
-
-      instance.queue._reindex()
-    } else {
-      console.error('Failed to remove from queue: MusicKit instance not available')
-    }
   }
 
   // api
@@ -195,29 +172,6 @@ export class mkController {
       return response
     } else {
       console.error('Failed to toggle artist favorite: MusicKit instance not available')
-    }
-  }
-
-  static setStationQueue = async (id: string, type: string) => {
-    const instance = await mkController.getInstance()
-
-    const strippedType = type.substring(0, type.length - 1)
-    if (instance) {
-      instance.setStationQueue({ [strippedType]: [id] }).then(() => {
-        instance.play()
-      })
-    } else {
-      console.error('Failed to set station queue: MusicKit instance not available')
-    }
-  }
-
-  static clearQueue = async () => {
-    const instance = await mkController.getInstance()
-
-    if (instance) {
-      instance.clearQueue()
-    } else {
-      console.error('Failed to clear queue: MusicKit instance not available')
     }
   }
 
@@ -767,172 +721,6 @@ export class mkController {
     } else {
       console.error('Failed to change to index: MusicKit instance not available')
     }
-  }
-
-  static setUpEvents = () => {
-    MusicKit.getInstance().addEventListener('mediaItemStateDidChange', async e => {
-      console.log(e)
-
-      setStore('currentTrack', {
-        id: e.id,
-        title: e.attributes.name,
-        artist: e.attributes.artistName,
-        album: e.attributes.albumName,
-        artwork: e.attributes.artwork.url,
-        type: e.type,
-        parentType: e.container.type,
-        parentID: e.container.id
-      })
-
-      var color = await fastAverageColorService.getColorFromURL(
-        Utils.formatArtworkUrl(store.currentTrack.artwork, 200),
-        null
-      )
-      setStore('currentTrack', 'primaryColor', color.hex)
-    })
-
-    MusicKit.getInstance().addEventListener('nowPlayingItemDidChange', async e => {
-      setStore('app', 'queue', {
-        index: MusicKit.getInstance().queue.position,
-        nextUpIndex: MusicKit.getInstance().queue.position + 1,
-        remainingStartIndex: MusicKit.getInstance().queue.position + 1
-      })
-
-      setStore('app', 'wroteToDb', false)
-
-      // Discord RPC
-      if (
-        MusicKit.getInstance().nowPlayingItem !== undefined &&
-        store.app.connectivity.discord.enabled
-      ) {
-        discordService.setActivity({
-          details:
-            MusicKit.getInstance().nowPlayingItem?.title +
-            ' - ' +
-            MusicKit.getInstance().nowPlayingItem?.albumName,
-          state: MusicKit.getInstance().nowPlayingItem?.artistName,
-          largeImageKey: MusicKit.getInstance().nowPlayingItem?.artwork?.url.replace(
-            '{w}x{h}',
-            '512x512'
-          ),
-          largeImageText:
-            MusicKit.getInstance().nowPlayingItem?.albumName +
-            (MusicKit.getInstance().nowPlayingItem?.albumName.length < 2 ? '     ' : ''),
-          instance: false,
-          startTimestamp: Date.now(),
-          endTimestamp:
-            Date.now() +
-            MusicKit.getInstance().currentPlaybackDuration * 1000 -
-            MusicKit.getInstance().currentPlaybackTime * 1000
-        })
-      }
-
-      Utils.debounce(async () => {
-        const isLoved = await mkController.checkIfLoved(e.id, 'songs')
-        setStore(
-          'currentTrack',
-          'loved',
-          isLoved.data?.[0]?.attributes?.value === Reaction.Loved
-        )
-        setStore(
-          'currentTrack',
-          'disliked',
-          isLoved.data?.[0]?.attributes?.value === Reaction.Disliked
-        )
-
-        const inLibrary = await mkController.checkIfInLibrary(e.id, 'songs')
-        setStore('currentTrack', 'inLibrary', inLibrary.data?.[0]?.attributes?.inLibrary)
-      }, 1000)()
-
-      console.log(e)
-      const rawLyricsData = await this.getLyrics(
-        e.item.playParams.catalogId ?? e.item.playParams.id
-      ).then((response: any) => {
-        return response.data[0].attributes.ttml
-      })
-
-      setStore('currentTrack', {
-        lyrics: {
-          lyricsArray: Utils.parseTTMLtoJS(rawLyricsData),
-          writtenByArray: Utils.stripWrittenBy(rawLyricsData),
-          begin: Utils.getLyricsBeginning(rawLyricsData)
-        }
-      })
-    })
-
-    MusicKit.getInstance().addEventListener('queueItemsDidChange', e => {
-      setStore('app', 'queue', {
-        items: e,
-        index: store.app.queue.index,
-        nextUpIndex: MusicKit.getInstance().queue.position + 1,
-        remainingStartIndex: store.app.queue.remainingStartIndex
-      })
-    })
-
-    MusicKit.getInstance().addEventListener('playbackStateDidChange', e => {
-      setStore('isPlaying', e.state === 2)
-      setStore('isPaused', e.state === 3)
-      setStore('isStopped', e.state === 0)
-
-      // Discord RPC
-      if (e.state === 2) {
-        setStore('app', 'connectivity', 'discord', 'activity', {
-          details:
-            MusicKit.getInstance().nowPlayingItem?.title +
-            ' - ' +
-            MusicKit.getInstance().nowPlayingItem?.albumName,
-          state: MusicKit.getInstance().nowPlayingItem?.artistName,
-          largeImageKey: MusicKit.getInstance().nowPlayingItem?.artwork?.url.replace(
-            '{w}x{h}',
-            '512x512'
-          ),
-          largeImageText:
-            MusicKit.getInstance().nowPlayingItem?.albumName +
-            (MusicKit.getInstance().nowPlayingItem?.albumName.length < 2 ? '     ' : ''),
-          instance: false,
-          startTimestamp: Date.now(),
-          endTimestamp:
-            Date.now() +
-            MusicKit.getInstance().currentPlaybackDuration * 1000 -
-            MusicKit.getInstance().currentPlaybackTime * 1000
-        })
-
-        if (store.app.connectivity.discord.enabled) {
-          discordService.setActivity(store.app.connectivity.discord.activity)
-        }
-      } else {
-        setStore('app', 'connectivity', 'discord', 'activity', null)
-        if (store.app.connectivity.discord.enabled) {
-          discordService.setActivity(store.app.connectivity.discord.activity)
-        }
-      }
-    })
-
-    MusicKit.getInstance().addEventListener('playbackDurationDidChange', e => {
-      setStore('duration', e.duration)
-    })
-
-    MusicKit.getInstance().addEventListener('playbackProgressDidChange', e => {
-      setStore('progress', e.progress * 100)
-    })
-
-    MusicKit.getInstance().addEventListener('playbackTimeDidChange', async e => {
-      setStore('currentTime', e.currentPlaybackTime)
-
-      if (store.currentTime > 5 && !store.app.wroteToDb) {
-        increasePlayCount({
-          id: store.currentTrack.id,
-          artist: store.currentTrack.artist,
-          playCount: 1,
-          title: store.currentTrack.title
-        })
-        setStore('app', 'wroteToDb', true)
-      }
-    })
-
-    MusicKit.getInstance().addEventListener('shuffleModeDidChange', e => {
-      setStore('shuffleMode', e.shuffleMode === 1)
-    })
   }
 
   static getTracksForPlaylist = async (id: string) => {
