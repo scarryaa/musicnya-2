@@ -16,7 +16,9 @@ export const CuratorItem = ({ item }) => {
       activeClass=""
       class={styles.curatorItem}
       href="#"
-      onContextMenu={e => openContextMenu(e, item.id, null, ContextMenuType.Curator)}
+      onContextMenu={e =>
+        openContextMenu(e, item.id, null, ContextMenuType.Curator, 165, 215)
+      }
     >
       <div class={styles.curatorItem__image}>
         <div class={styles.curatorItem__image__overlay}>

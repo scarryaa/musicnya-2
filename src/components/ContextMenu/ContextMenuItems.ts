@@ -25,24 +25,22 @@ import {
 import { mkController } from '../../api/mkController'
 import { setStore, store } from '../../stores/store'
 import { Utils } from '../../util/util'
+import { usePlaylistSubMenu } from '../../composables/usePlaylistSubMenu'
+import { useSubContextMenuState } from '../../composables/useSubContextMenu'
+
+const { closeSubContextMenu } = useSubContextMenuState()
 
 // Actions
-
-export const ImmersiveItem = () => {
-  return {
+export const contextMenuItems = {
+  immersive: {
     icon: faUpRightAndDownLeftFromCenter,
     action: () => {},
     isQuickAction: false,
     label: 'Immersive',
     disabled: false,
-    onMouseOver: () => {
-      setStore('app', 'subContextMenu', { open: false })
-    }
-  }
-}
-
-export const MiniPlayerItem = () => {
-  return {
+    onMouseEnter: () => closeSubContextMenu()
+  },
+  miniPlayer: {
     icon: faWindowMaximize,
     action: () => {
       Utils.resizeToMiniPlayer()
@@ -50,250 +48,186 @@ export const MiniPlayerItem = () => {
     isQuickAction: false,
     label: 'Mini Player',
     disabled: false,
-    onMouseOver: () => {
-      setStore('app', 'subContextMenu', { open: false })
-    }
-  }
-}
-
-export const ShareItem = (id, type) => {
-  return {
-    icon: faShare,
-    action: async () => {
-      await mkController.getShareLink(id, type).then(async data => {
-        await navigator.clipboard.writeText(data.data[0].attributes.url)
-      })
-    },
-    isQuickAction: false,
-    label: 'Share',
-    onMouseOver: () => {
-      setStore('app', 'subContextMenu', { open: false })
-    }
-  }
-}
-
-export const PropertiesItem = (id, type) => {
-  return {
-    icon: faInfoCircle,
-    action: () => {
-      setStore('app', 'modal', { open: true, type, id })
-    },
-    isQuickAction: false,
-    label: 'Properties',
-    onMouseOver: () => {
-      setStore('app', 'subContextMenu', { open: false })
-    }
-  }
-}
-
-export const CreateStationItem = (id, type) => {
-  return {
-    icon: faSatelliteDish,
-    action: () => {
-      mkController.setStationQueue(id, type)
-    },
-    isQuickAction: false,
-    label: 'Create Station',
-    disabled: false,
-    onMouseOver: () => {
-      setStore('app', 'subContextMenu', {
-        open: false
-      })
-    }
-  }
-}
-
-export const GoToArtistItem = (id, type) => {
-  return {
-    icon: faUser,
-    action: async () => {
-      await mkController.getArtistFromMediaItem(id, type).then(data => {
-        console.log(data)
-        store.app.navigate(`/media/artists/${data.data[0].id}`)
-      })
-    },
-    isQuickAction: false,
-    label: 'Go to Artist',
-    onMouseOver: () => {
-      setStore('app', 'subContextMenu', {
-        open: false
-      })
-    }
-  }
-}
-
-export const GoToAlbumItem = (id, type) => {
-  return {
-    icon: faRecordVinyl,
-    action: async () => {
-      await mkController.getAlbumFromMediaItem(id, type).then(data => {
-        console.log(data)
-        store.app.navigate(`/media/albums/${data.data[0].id}`)
-      })
-    },
-    isQuickAction: false,
-    label: 'Go to Album',
-    onMouseOver: () => {
-      setStore('app', 'subContextMenu', {
-        open: false
-      })
-    }
-  }
-}
-
-export const ShuffleItem = (id, type) => {
-  return {
-    icon: faShuffle,
-    action: () => {
-      mkController.shufflePlayMediaItem(id, type)
-    },
-    isQuickAction: false,
-    label: 'Shuffle',
-    onMouseOver: () => {
-      setStore('app', 'subContextMenu', {
-        open: false
-      })
-    }
-  }
-}
-
-export const RemoveFromQueueItem = (id, type) => {
-  return {
-    icon: faX,
-    action: () => {
-      mkController.removeFromQueue(id)
-    },
-    isQuickAction: false,
-    disabled: false,
-    label: 'Remove from Queue'
-  }
-}
-
-export const AddToPlaylistItem = (id, type) => {
-  return {
-    icon: faHeadphones,
-    isQuickAction: false,
-    label: 'Add to Playlist',
-    hasSubMenu: true,
-    onMouseOver: () => {
-      const playlists = store.library.playlists
-        .filter(playlist => playlist.attributes.canEdit)
-        .map(playlist => {
-          return {
-            icon: faHeadphones,
-            action: () => {
-              mkController.addToPlaylist(id, type, playlist.id)
-            },
-            isQuickAction: false,
-            label: playlist.attributes.name,
-            onMouseOver: () => {
-              setStore('app', 'subContextMenu', {
-                open: true,
-                id: id,
-                type: type
-              })
-            }
-          }
+    onMouseEnter: () => closeSubContextMenu()
+  },
+  share: (id, type) => {
+    return {
+      icon: faShare,
+      action: async () => {
+        await mkController.getShareLink(id, type).then(async data => {
+          await navigator.clipboard.writeText(data.data[0].attributes.url)
         })
-
-      setStore('app', 'subContextMenu', {
-        x: 0,
-        y: 35,
-        items: playlists,
-        open: true,
-        id: id,
-        type: type
-      })
+      },
+      isQuickAction: false,
+      label: 'Share',
+      onMouseEnter: () => closeSubContextMenu()
     }
-  }
-}
-
-// Quick actions
-
-export const FavoriteQuickItem = (id, type, disabled, isFavorite = false) => {
-  return {
-    icon: disabled ? faStarRegular : isFavorite ? faStar : faStarRegular,
-    action: () => {
-      isFavorite ? mkController.unfavoriteArtist(id) : mkController.favoriteArtist(id)
-    },
-    isQuickAction: true,
-    tooltip: isFavorite ? 'Unfavorite' : 'Favorite',
-    disabled: disabled
-  }
-}
-
-export const CreateStationQuickItem = (id, type) => {
-  return {
-    icon: faSatelliteDish,
-    action: () => {
-      mkController.setStationQueue(id, type)
-    },
-    isQuickAction: true,
-    tooltip: 'Create Station'
-  }
-}
-
-export const LoveQuickItem = (id, type, disabled, isLoved = false) => {
-  return {
-    icon: disabled ? faHeartRegular : isLoved ? faHeart : faHeartRegular,
-    action: () => {
-      isLoved ? mkController.unlove(id, type) : mkController.love(id, type)
-    },
-    isQuickAction: true,
-    tooltip: isLoved ? 'Unlove' : 'Love',
-    disabled: disabled
-  }
-}
-
-export const DislikeQuickItem = (id, type, disabled, isDisliked = false) => {
-  return {
-    icon: disabled
-      ? faThumbsDownRegular
-      : isDisliked
-      ? faThumbsDown
-      : faThumbsDownRegular,
-    action: () => {
-      isDisliked ? mkController.unlove(id, type) : mkController.dislike(id, type)
-    },
-    isQuickAction: true,
-    tooltip: isDisliked ? 'Undislike' : 'Dislike',
-    disabled: disabled
-  }
-}
-
-// TODO fix case when removing from lib, and album is in library, and isnt of library album type
-export const AddToLibraryQuickItem = (id, type, disabled, isInLibrary = false) => {
-  return {
-    icon: disabled ? faPlus : isInLibrary ? faMinus : faPlus,
-    action: () => {
-      isInLibrary
-        ? mkController.removeFromLibrary(id, type)
-        : mkController.addToLibrary(id, type)
-    },
-    isQuickAction: true,
-    tooltip: isInLibrary ? 'Remove from Library' : 'Add to Library',
-    disabled: disabled
-  }
-}
-
-export const PlayNextQuickItem = (id, type) => {
-  return {
-    icon: faIndent,
-    action: () => {
-      mkController.playNext(id, type)
-    },
-    isQuickAction: true,
-    tooltip: 'Play Next'
-  }
-}
-
-export const PlayLastQuickItem = (id, type) => {
-  return {
-    icon: faOutdent,
-    action: () => {
-      mkController.playLater(id, type)
-    },
-    isQuickAction: true,
-    tooltip: 'Play Last'
+  },
+  properties: (id, type) => {
+    return {
+      icon: faInfoCircle,
+      action: () => {
+        setStore('app', 'modal', { open: true, type, id })
+      },
+      isQuickAction: false,
+      label: 'Properties',
+      onMouseEnter: () => closeSubContextMenu()
+    }
+  },
+  createStation: (id, type) => {
+    return {
+      icon: faSatelliteDish,
+      action: () => {
+        mkController.setStationQueue(id, type)
+      },
+      isQuickAction: false,
+      label: 'Create Station',
+      disabled: false,
+      onMouseEnter: () => closeSubContextMenu()
+    }
+  },
+  goToArtist: (id, type) => {
+    return {
+      icon: faUser,
+      action: async () => {
+        await mkController.getArtistFromMediaItem(id, type).then(data => {
+          console.log(data)
+          store.app.navigate(`/media/artists/${data.data[0].id}`)
+        })
+      },
+      isQuickAction: false,
+      label: 'Go to Artist',
+      onMouseEnter: () => closeSubContextMenu()
+    }
+  },
+  goToAlbum: (id, type) => {
+    return {
+      icon: faRecordVinyl,
+      action: async () => {
+        await mkController.getAlbumFromMediaItem(id, type).then(data => {
+          console.log(data)
+          store.app.navigate(`/media/albums/${data.data[0].id}`)
+        })
+      },
+      isQuickAction: false,
+      label: 'Go to Album',
+      onMouseEnter: () => closeSubContextMenu()
+    }
+  },
+  shuffle: (id, type) => {
+    return {
+      icon: faShuffle,
+      action: () => {
+        mkController.shufflePlayMediaItem(id, type)
+      },
+      isQuickAction: false,
+      label: 'Shuffle',
+      onMouseEnter: () => closeSubContextMenu()
+    }
+  },
+  removeFromQueue: (id, type) => {
+    return {
+      icon: faX,
+      action: () => {
+        mkController.removeFromQueue(id)
+      },
+      isQuickAction: false,
+      disabled: false,
+      label: 'Remove from Queue',
+      onMouseEnter: () => closeSubContextMenu()
+    }
+  },
+  addToPlaylist: (id, type) => {
+    return {
+      icon: faHeadphones,
+      isQuickAction: false,
+      label: 'Add to Playlist',
+      hasSubMenu: true,
+      onMouseEnter: e => {
+        const { openPlaylistSubMenu } = usePlaylistSubMenu(e)
+        openPlaylistSubMenu(id, type)
+      }
+    }
+  },
+  // Quick actions
+  favoriteQuick: (id, type, disabled, isFavorite = false) => {
+    return {
+      icon: disabled ? faStarRegular : isFavorite ? faStar : faStarRegular,
+      action: () => {
+        isFavorite ? mkController.unfavoriteArtist(id) : mkController.favoriteArtist(id)
+      },
+      isQuickAction: true,
+      tooltip: isFavorite ? 'Unfavorite' : 'Favorite',
+      disabled: disabled
+    }
+  },
+  createStationQuick: (id, type) => {
+    return {
+      icon: faSatelliteDish,
+      action: () => {
+        mkController.setStationQueue(id, type)
+      },
+      isQuickAction: true,
+      tooltip: 'Create Station'
+    }
+  },
+  loveQuick: (id, type, disabled, isLoved = false) => {
+    return {
+      icon: disabled ? faHeartRegular : isLoved ? faHeart : faHeartRegular,
+      action: () => {
+        isLoved ? mkController.unlove(id, type) : mkController.love(id, type)
+      },
+      isQuickAction: true,
+      tooltip: isLoved ? 'Unlove' : 'Love',
+      disabled: disabled
+    }
+  },
+  dislikeQuick: (id, type, disabled, isDisliked = false) => {
+    return {
+      icon: disabled
+        ? faThumbsDownRegular
+        : isDisliked
+        ? faThumbsDown
+        : faThumbsDownRegular,
+      action: () => {
+        isDisliked ? mkController.unlove(id, type) : mkController.dislike(id, type)
+      },
+      isQuickAction: true,
+      tooltip: isDisliked ? 'Undislike' : 'Dislike',
+      disabled: disabled
+    }
+  },
+  addToLibraryQuick: (id, type, disabled, isInLibrary = false) => {
+    return {
+      icon: disabled ? faPlus : isInLibrary ? faMinus : faPlus,
+      action: () => {
+        isInLibrary
+          ? mkController.removeFromLibrary(id, type)
+          : mkController.addToLibrary(id, type)
+      },
+      isQuickAction: true,
+      tooltip: isInLibrary ? 'Remove from Library' : 'Add to Library',
+      disabled: disabled
+    }
+  },
+  playNextQuick: (id, type) => {
+    return {
+      icon: faIndent,
+      action: () => {
+        mkController.playNext(id, type)
+      },
+      isQuickAction: true,
+      tooltip: 'Play Next'
+    }
+  },
+  playLastQuick: (id, type) => {
+    return {
+      icon: faOutdent,
+      action: () => {
+        mkController.playLater(id, type)
+      },
+      isQuickAction: true,
+      tooltip: 'Play Last'
+    }
   }
 }

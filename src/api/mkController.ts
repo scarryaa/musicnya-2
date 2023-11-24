@@ -610,6 +610,7 @@ export class mkController {
   static addToPlaylist = async (id: string, type: string, playlistID: string) => {
     const instance = await mkController.getInstance()
     const strippedType = type.replace('library-', '')
+    console.log('adding to playlist')
 
     if (instance) {
       if (type === 'songs') {

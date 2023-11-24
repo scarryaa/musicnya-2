@@ -7,7 +7,7 @@ export const ActionItem = ({ item }) => {
     <div
       class={styles.actionItem}
       onclick={item.action}
-      onMouseOver={item.onMouseOver}
+      onMouseEnter={e => item.onMouseEnter(e, item.id)}
       onMouseLeave={item.onMouseLeave}
     >
       <div class={styles.actionItem__icon}>

@@ -32,44 +32,61 @@ export const useContextMenu = () => {
     setStore('app', 'contextMenu', 'items', items)
   }
 
-  const calculatePosition = e => {
-    return {
-      x:
-        e.clientX + 150 >
-        (store.app.rightSidebar.isExpanded
-          ? window.innerWidth - 300
-          : window.innerWidth - 50)
-          ? e.clientX - 160
-          : e.clientX,
-      y: e.clientY + 200 > window.innerHeight ? e.clientY - 200 : e.clientY
-    }
+  const calculatePosition = (e, menuWidth, menuHeight) => {
+    const padding = 10
+    const { clientX, clientY } = e
+
+    let x =
+      clientX + menuWidth + padding > window.innerWidth ? clientX - menuWidth : clientX
+
+    let y =
+      clientY + menuHeight + padding > window.innerHeight ? clientY - menuHeight : clientY
+
+    x = Math.max(padding, Math.min(x, window.innerWidth - menuWidth - padding))
+    y = Math.max(padding, Math.min(y, window.innerHeight - menuHeight - padding))
+
+    return { x, y }
   }
 
   const openContextMenu = (e, id, type, subType) => {
-    const { x, y } = calculatePosition(e)
-
     setStore('app', 'contextMenu', {
       open: true,
-      x,
-      y,
-      id: id,
-      type: type,
-      subType: subType,
+      x: OUT_OF_VIEW,
+      y: OUT_OF_VIEW,
+      id: '',
+      type: null,
+      subType: null,
       display: 'block'
     })
 
-    setStore('app', 'subContextMenu', {
-      x,
-      y,
-      items: [],
-      open: false,
-      id: '',
-      type: ''
-    })
+    const menu = document.getElementById('contextMenu')
+    if (menu) {
+      const { offsetWidth, offsetHeight } = menu
+      const { x, y } = calculatePosition(e, offsetWidth, offsetHeight)
 
-    e.preventDefault()
-    e.stopPropagation()
-    e.stopImmediatePropagation()
+      setStore('app', 'contextMenu', {
+        open: true,
+        x,
+        y,
+        id: id,
+        type: type,
+        subType: subType,
+        display: 'block'
+      })
+
+      setStore('app', 'subContextMenu', {
+        x,
+        y,
+        items: [],
+        open: false,
+        id: '',
+        type: ''
+      })
+
+      e.preventDefault()
+      e.stopPropagation()
+      e.stopImmediatePropagation()
+    }
   }
 
   return { openContextMenu, setContextMenuItems }

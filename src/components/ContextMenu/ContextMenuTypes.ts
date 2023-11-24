@@ -1,36 +1,20 @@
-import {
-  AddToLibraryQuickItem,
-  AddToPlaylistItem,
-  CreateStationItem,
-  CreateStationQuickItem,
-  DislikeQuickItem,
-  FavoriteQuickItem,
-  GoToAlbumItem,
-  GoToArtistItem,
-  ImmersiveItem,
-  LoveQuickItem,
-  MiniPlayerItem,
-  PlayLastQuickItem,
-  PlayNextQuickItem,
-  PropertiesItem,
-  RemoveFromQueueItem,
-  ShareItem,
-  ShuffleItem
-} from './ContextMenuItems'
+import { contextMenuItems } from './ContextMenuItems'
 
 export const appContextMenu = () => {
-  return [ImmersiveItem(), MiniPlayerItem()]
+  return ['immersive', 'miniPlayer'].map(itemType => contextMenuItems[itemType])
 }
 
 //TODO fix the share link
 export const curatorContextMenu = id => {
-  return [ShareItem(id, 'curators'), PropertiesItem(id, 'curators')]
+  return ['share', 'properties'].map(itemType =>
+    contextMenuItems[itemType](id, 'curators')
+  )
 }
 
 //TODO improve types here
 export const historyItemContextMenu = (
-  id: string,
-  subtype: string,
+  id,
+  subtype,
   disabled,
   isLovedState = false,
   isDislikedState = false,
@@ -38,54 +22,53 @@ export const historyItemContextMenu = (
 ) => {
   let items = []
 
+  const addItem = itemType => {
+    const itemConfig = contextMenuItems[itemType](id, subtype)
+    if (itemConfig) {
+      items.push({ ...itemConfig, disabled })
+    }
+  }
+
   if (subtype.includes('stations')) {
-    items = [
-      LoveQuickItem(id, 'stations', disabled, isLovedState),
-      DislikeQuickItem(id, 'stations', disabled, isDislikedState),
-      ShareItem(id, 'stations'),
-      PropertiesItem(id, 'stations')
-    ]
+    ;['loveQuick', 'dislikeQuick', 'share', 'properties'].forEach(addItem)
   } else if (subtype.includes('playlists')) {
-    items = [
-      AddToLibraryQuickItem(id, 'playlists', disabled, inLibraryState),
-      LoveQuickItem(id, 'playlists', disabled, isLovedState),
-      DislikeQuickItem(id, 'playlists', disabled, isDislikedState),
-      PlayNextQuickItem(id, 'playlists'),
-      PlayLastQuickItem(id, 'playlists'),
-      AddToPlaylistItem(id, 'playlists'),
-      ShareItem(id, 'playlists'),
-      PropertiesItem(id, 'playlists')
-    ]
+    ;[
+      'addToLibraryQuick',
+      'loveQuick',
+      'dislikeQuick',
+      'playNextQuick',
+      'playLastQuick',
+      'addToPlaylist',
+      'share',
+      'properties'
+    ].forEach(addItem)
   } else {
-    items = [
-      AddToLibraryQuickItem(id, 'songs', disabled, inLibraryState),
-      LoveQuickItem(id, 'songs', disabled, isLovedState),
-      DislikeQuickItem(id, 'songs', disabled, isDislikedState),
-      PlayNextQuickItem(id, 'songs'),
-      PlayLastQuickItem(id, 'songs'),
-      AddToPlaylistItem(id, 'songs'),
-      CreateStationItem(id, 'songs'),
-      GoToArtistItem(id, 'songs'),
-      GoToAlbumItem(id, 'songs'),
-      ShareItem(id, 'songs'),
-      PropertiesItem(id, 'songs')
-    ]
+    ;[
+      'addToLibraryQuick',
+      'loveQuick',
+      'dislikeQuick',
+      'playNextQuick',
+      'playLastQuick',
+      'addToPlaylist',
+      'createStation',
+      'goToArtist',
+      'goToAlbum',
+      'share',
+      'properties'
+    ].forEach(addItem)
   }
 
   return items
 }
 
-export const artistContextMenu = (id: string, disabled, isFavoritedState) => {
-  return [
-    CreateStationQuickItem(id, 'artists'),
-    FavoriteQuickItem(id, 'artists', disabled, isFavoritedState),
-    ShareItem(id, 'artists'),
-    PropertiesItem(id, 'artists')
-  ]
+export const artistContextMenu = (id, disabled, isFavoritedState) => {
+  return ['createStationQuick', 'favoriteQuick', 'share', 'properties'].map(itemType =>
+    contextMenuItems[itemType](id, 'artists', disabled, isFavoritedState)
+  )
 }
 
 export const songContextMenu = (
-  id: string,
+  id,
   disabled,
   isLovedState = false,
   isDislikedState = false,
@@ -93,157 +76,179 @@ export const songContextMenu = (
 ) => {
   const songType = inLibraryState ? 'library-songs' : 'songs'
   return [
-    AddToLibraryQuickItem(
+    'addToLibraryQuick',
+    'loveQuick',
+    'dislikeQuick',
+    'playNextQuick',
+    'playLastQuick',
+    'addToPlaylist',
+    'createStation',
+    'goToArtist',
+    'goToAlbum',
+    'share',
+    'properties'
+  ].map(itemType =>
+    contextMenuItems[itemType](
       id,
-      inLibraryState ? 'library-songs' : 'songs',
+      songType,
       disabled,
+      isLovedState,
+      isDislikedState,
       inLibraryState
-    ),
-    LoveQuickItem(id, inLibraryState ? 'library-songs' : 'songs', disabled, isLovedState),
-    DislikeQuickItem(
-      id,
-      inLibraryState ? 'library-songs' : 'songs',
-      disabled,
-      isDislikedState
-    ),
-    PlayNextQuickItem(id, songType),
-    PlayLastQuickItem(id, songType),
-    AddToPlaylistItem(id, songType),
-    CreateStationItem(id, songType),
-    GoToArtistItem(id, songType),
-    GoToAlbumItem(id, songType),
-    ShareItem(id, songType),
-    PropertiesItem(id, songType)
-  ]
+    )
+  )
 }
 
 export const mediaItemContextMenu = (
-  id: string,
+  id,
   disabled,
-  subType: string,
+  subType,
   isLovedState = false,
   isDislikedState = false,
   inLibraryState = false
 ) => {
-  let items = []
+  const items = []
 
-  if (subType.includes('stations')) {
-    console.log('station')
-    items = [
-      LoveQuickItem(id, 'stations', disabled, isLovedState),
-      DislikeQuickItem(id, 'stations', disabled, isDislikedState),
-      ShareItem(id, 'stations'),
-      PropertiesItem(id, 'stations')
-    ]
+  const addItem = itemType => {
+    const itemConfig = contextMenuItems[itemType](
+      id,
+      subType,
+      disabled,
+      isLovedState,
+      isDislikedState,
+      inLibraryState
+    )
+    items.push(itemConfig)
+  }
+
+  if (subType === 'stations') {
+    ;['loveQuick', 'dislikeQuick', 'share', 'properties'].forEach(addItem)
   } else if (subType === 'playlists') {
-    items = [
-      AddToLibraryQuickItem(id, 'playlists', disabled, inLibraryState),
-      LoveQuickItem(id, 'playlists', disabled, isLovedState),
-      DislikeQuickItem(id, 'playlists', disabled, isDislikedState),
-      PlayNextQuickItem(id, 'playlists'),
-      PlayLastQuickItem(id, 'playlists'),
-      AddToPlaylistItem(id, 'playlists'),
-      ShuffleItem(id, 'playlists'),
-      ShareItem(id, 'playlists'),
-      PropertiesItem(id, 'playlists')
-    ]
-  } else if (subType.includes('albums')) {
-    items = [
-      AddToLibraryQuickItem(id, subType, disabled, inLibraryState),
-      LoveQuickItem(id, subType, disabled, isLovedState),
-      DislikeQuickItem(id, subType, disabled, isDislikedState),
-      PlayNextQuickItem(id, subType),
-      PlayLastQuickItem(id, subType),
-      AddToPlaylistItem(id, subType),
-      GoToArtistItem(id, subType),
-      ShuffleItem(id, subType),
-      ShareItem(id, subType),
-      PropertiesItem(id, subType)
-    ]
+    ;[
+      'addToLibraryQuick',
+      'loveQuick',
+      'dislikeQuick',
+      'playNextQuick',
+      'playLastQuick',
+      'addToPlaylist',
+      'shuffle',
+      'share',
+      'properties'
+    ].forEach(addItem)
+  } else if (subType === 'albums') {
+    ;[
+      'addToLibraryQuick',
+      'loveQuick',
+      'dislikeQuick',
+      'playNextQuick',
+      'playLastQuick',
+      'addToPlaylist',
+      'goToArtist',
+      'shuffle',
+      'share',
+      'properties'
+    ].forEach(addItem)
   } else {
-    items = [
-      AddToLibraryQuickItem(id, subType, disabled, inLibraryState),
-      LoveQuickItem(id, subType, disabled, isLovedState),
-      DislikeQuickItem(id, subType, disabled, isDislikedState),
-      PlayNextQuickItem(id, subType),
-      PlayLastQuickItem(id, subType),
-      AddToPlaylistItem(id, subType),
-      ShuffleItem(id, subType),
-      ShareItem(id, subType),
-      PropertiesItem(id, subType)
-    ]
+    ;[
+      'addToLibraryQuick',
+      'loveQuick',
+      'dislikeQuick',
+      'playNextQuick',
+      'playLastQuick',
+      'addToPlaylist',
+      'shuffle',
+      'share',
+      'properties'
+    ].forEach(addItem)
   }
 
   return items
 }
 
 export const queueItemContextMenu = (
-  id: string,
+  id,
   disabled,
-  subType: string,
+  subType,
   isLovedState = false,
   isDislikedState = false,
   inLibraryState = false
 ) => {
   return [
-    AddToLibraryQuickItem(id, subType, disabled, inLibraryState),
-    LoveQuickItem(id, subType, disabled, isLovedState),
-    DislikeQuickItem(id, subType, disabled, isDislikedState),
-    PlayNextQuickItem(id, subType),
-    PlayLastQuickItem(id, subType),
-    RemoveFromQueueItem(id, subType),
-    AddToPlaylistItem(id, subType),
-    CreateStationItem(id, subType),
-    GoToArtistItem(id, subType),
-    GoToAlbumItem(id, subType),
-    ShareItem(id, subType),
-    PropertiesItem(id, subType)
-  ]
+    'addToLibraryQuick',
+    'loveQuick',
+    'dislikeQuick',
+    'playNextQuick',
+    'playLastQuick',
+    'removeFromQueue',
+    'addToPlaylist',
+    'createStation',
+    'goToArtist',
+    'goToAlbum',
+    'share',
+    'properties'
+  ].map(itemType =>
+    contextMenuItems[itemType](
+      id,
+      subType,
+      disabled,
+      isLovedState,
+      isDislikedState,
+      inLibraryState
+    )
+  )
 }
 
 export const editorialContextMenu = (
-  id: string,
+  id,
   disabled,
-  subType: string,
+  subType,
   isLovedState,
   isDislikedState,
   inLibraryState
 ) => {
-  let items = []
-  if (subType.includes('curators')) {
-    items = [ShareItem(id, 'curators'), PropertiesItem(id, 'curators')]
-  } else if (subType.includes('stations')) {
-    items = [
-      LoveQuickItem(id, 'stations', disabled, isLovedState),
-      DislikeQuickItem(id, 'stations', disabled, isDislikedState),
-      ShareItem(id, 'stations'),
-      PropertiesItem(id, 'stations')
-    ]
-  } else if (subType.includes('playlists')) {
-    items = [
-      AddToLibraryQuickItem(id, 'playlists', disabled, inLibraryState),
-      LoveQuickItem(id, 'playlists', disabled, isLovedState),
-      DislikeQuickItem(id, 'playlists', disabled, isDislikedState),
-      PlayNextQuickItem(id, 'playlists'),
-      PlayLastQuickItem(id, 'playlists'),
-      AddToPlaylistItem(id, 'playlists'),
-      ShuffleItem(id, 'playlists'),
-      ShareItem(id, 'playlists'),
-      PropertiesItem(id, 'playlists')
-    ]
+  const items = []
+
+  const addItem = itemType => {
+    const itemConfig = contextMenuItems[itemType](
+      id,
+      subType,
+      disabled,
+      isLovedState,
+      isDislikedState,
+      inLibraryState
+    )
+    items.push(itemConfig)
+  }
+
+  if (subType === 'curators') {
+    ;['share', 'properties'].forEach(addItem)
+  } else if (subType === 'stations') {
+    ;['loveQuick', 'dislikeQuick', 'share', 'properties'].forEach(addItem)
+  } else if (subType === 'playlists') {
+    ;[
+      'addToLibraryQuick',
+      'loveQuick',
+      'dislikeQuick',
+      'playNextQuick',
+      'playLastQuick',
+      'addToPlaylist',
+      'shuffle',
+      'share',
+      'properties'
+    ].forEach(addItem)
   } else {
-    items = [
-      AddToLibraryQuickItem(id, subType, disabled, inLibraryState),
-      LoveQuickItem(id, subType, disabled, isLovedState),
-      DislikeQuickItem(id, subType, disabled, isDislikedState),
-      PlayNextQuickItem(id, subType),
-      PlayLastQuickItem(id, subType),
-      AddToPlaylistItem(id, subType),
-      GoToArtistItem(id, subType),
-      ShuffleItem(id, subType),
-      ShareItem(id, subType),
-      PropertiesItem(id, subType)
-    ]
+    ;[
+      'addToLibraryQuick',
+      'loveQuick',
+      'dislikeQuick',
+      'playNextQuick',
+      'playLastQuick',
+      'addToPlaylist',
+      'goToArtist',
+      'shuffle',
+      'share',
+      'properties'
+    ].forEach(addItem)
   }
 
   return items

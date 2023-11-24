@@ -79,6 +79,7 @@ export function ContextMenu(): JSX.Element {
 
   return (
     <div
+      id="contextMenu"
       class={styles.contextMenu}
       style={`top: ${store.app.contextMenu.y}px; left: ${store.app.contextMenu.x}px; display: ${store.app.contextMenu.display}`}
     >

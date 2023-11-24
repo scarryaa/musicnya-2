@@ -30,7 +30,7 @@ let portal = (
     ref={tooltip}
     role="tooltip"
     aria-label="tooltip text"
-    onMouseOver={() => {
+    onMouseEnter={() => {
       local.open = true
       tooltip.style.setProperty('display', 'block')
     }}
