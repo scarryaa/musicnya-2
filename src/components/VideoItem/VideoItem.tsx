@@ -4,11 +4,12 @@ import styles from './VideoItem.module.scss'
 import { faEllipsisH, faPlay } from '@fortawesome/free-solid-svg-icons'
 import { A } from '@solidjs/router'
 import { mkController } from '../../api/mkController'
+import { mkManager } from '../../api/mkManager'
 
 export const VideoItem = ({ item }) => {
   const handlePlayClick = e => {
     e.preventDefault()
-    mkController.playMediaItem(item.id, item.type)
+    mkManager.processItemAndPlay(item.id, item.type)
   }
 
   return (

@@ -7,13 +7,14 @@ import { Utils } from '../../util/util'
 import styles from './SongTableItem.module.scss'
 import { useContextMenu } from '../../composables/useContextMenu'
 import { ContextMenuType } from '../../types/types'
+import { mkManager } from '../../api/mkManager'
 
 export const SongTableItem = ({ track, data, index }) => {
   const { openContextMenu } = useContextMenu()
   return (
     <tr
       onContextMenu={e => openContextMenu(e, track.id, ContextMenuType.Song, data().type)}
-      onDblClick={() => mkController.setQueue(data().id, data().type, index)}
+      onDblClick={() => mkManager.setQueue(data().id, data().type, false, index)}
       class={
         data().type === 'albums' &&
         track.attributes.offers?.length === 1 &&
@@ -31,7 +32,7 @@ export const SongTableItem = ({ track, data, index }) => {
         <span class={styles.songTableItem__number__number}>{index + 1}</span>
         <div
           class={styles.songTableItem__number__playButton}
-          onClick={() => mkController.setQueue(data().id, data().type, index)}
+          onClick={() => mkManager.setQueue(data().id, data().type, false, index)}
         >
           {track.id === store.currentTrack.id ? (
             <Fa icon={faPause} size="1x" color="var(--color-primary)" />

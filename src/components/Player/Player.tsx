@@ -9,18 +9,30 @@ import {
 import { faPauseCircle, faPlayCircle } from '@fortawesome/free-regular-svg-icons'
 import { setStore, store } from '../../stores/store'
 import { mkController } from '../../api/mkController'
+import { mkManager } from '../../api/mkManager'
 
 export const Player = () => {
   const toggleRepeat = () => {
-    setStore('repeatMode', !store.repeatMode)
-    localStorage.setItem('repeatMode', store.repeatMode.toString())
-    mkController.toggleRepeatMode(store.repeatMode)
+    // all , one , none
+    if (store.repeatMode === 'all') {
+      setStore('repeatMode', 'one')
+      localStorage.setItem('repeatMode', 'one')
+      mkManager.setRepeatMode('one' as MusicKit.PlayerRepeatMode)
+    } else if (store.repeatMode === 'one') {
+      setStore('repeatMode', 'none')
+      localStorage.setItem('repeatMode', 'none')
+      mkManager.setRepeatMode('none' as MusicKit.PlayerRepeatMode)
+    } else {
+      setStore('repeatMode', 'all')
+      localStorage.setItem('repeatMode', 'all')
+      mkManager.setRepeatMode('all' as MusicKit.PlayerRepeatMode)
+    }
   }
 
   const toggleShuffle = () => {
     setStore('shuffleMode', !store.shuffleMode)
     localStorage.setItem('shuffleMode', store.shuffleMode.toString())
-    mkController.toggleShuffleMode(store.shuffleMode)
+    mkManager.setShuffle(store.shuffleMode)
   }
 
   const handleInput = e => {
@@ -31,28 +43,28 @@ export const Player = () => {
   }
 
   const handleChange = e => {
-    mkController.seekToTime((e.currentTarget.valueAsNumber / 100) * store.duration)
+    mkManager.seekToTime((e.currentTarget.valueAsNumber / 100) * store.duration)
     setStore('isSeeking', false)
   }
 
   const handleSkipPrevious = () => {
     if (store.currentTime > 5) {
-      mkController.seekToTime(0)
+      mkManager.seekToTime(0)
     } else {
-      mkController.skipToPreviousItem()
+      mkManager.skipToPreviousItem()
     }
   }
 
   const handleSkipNext = () => {
-    mkController.skipToNextItem()
+    mkManager.skipToNextItem()
   }
 
   const handlePause = () => {
-    mkController.pause()
+    mkManager.pause()
   }
 
   const handlePlay = () => {
-    mkController.play()
+    mkManager.play()
   }
 
   return (
@@ -107,7 +119,10 @@ export const Player = () => {
             icon={faRepeat}
             size="1x"
             color={
-              store.repeatMode ? 'var(--color-primary)' : 'var(--color-player-button)'
+              // TODO implement repeat one
+              store.repeatMode === 'all'
+                ? 'var(--color-primary)'
+                : 'var(--color-player-button)'
             }
           />
         </button>

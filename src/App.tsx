@@ -46,6 +46,7 @@ const App: Component = () => {
 
     await mkManager.initializeMusicKit()
     await mkManager.authorize()
+    await mkManager.setUpEvents()
     navigate(Utils.parseSelectedDefaultPage(store.app.general.defaultPage))
 
     await fetchData()

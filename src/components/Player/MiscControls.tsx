@@ -12,8 +12,10 @@ export const MiscControls = () => {
   const [isMuted, setIsMuted] = createSignal(false)
 
   createEffect(() => {
-    const storedVolume = Number(localStorageService.get('volume'))
-    updateVolume(storedVolume ?? 20)
+    setTimeout(() => {
+      const storedVolume = Number(localStorageService.get('volume'))
+      updateVolume(storedVolume ?? 20)
+    }, 1000) // wait for mkManager to initialize
   })
 
   const updateVolume = newVolume => {

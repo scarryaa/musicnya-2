@@ -6,6 +6,7 @@ import { mkController } from '../../api/mkController'
 import { A } from '@solidjs/router'
 import { useContextMenu } from '../../composables/useContextMenu'
 import { ContextMenuType } from '../../types/types'
+import { mkManager } from '../../api/mkManager'
 
 export const EditorialItem = ({ item }) => {
   const childType =
@@ -19,6 +20,12 @@ export const EditorialItem = ({ item }) => {
     item.relationships?.contents?.data?.[0]?.id
 
   const { openContextMenu } = useContextMenu()
+
+  const handlePlayClick = e => {
+    e.preventDefault()
+    e.stopPropagation()
+    mkManager.processItemAndPlay(childId, childType)
+  }
 
   return (
     <div
@@ -58,15 +65,7 @@ export const EditorialItem = ({ item }) => {
           {!isCuratorType && (
             <div
               class={styles.editorialItem__image__container__overlay__playButton}
-              onClick={e => {
-                e.preventDefault()
-                e.stopPropagation()
-                mkController.playMediaItem(
-                  item.relationships.contents.data[0].id,
-                  childType,
-                  item.relationships.contents.data[0]
-                )
-              }}
+              onClick={handlePlayClick}
             >
               <Fa icon={faPlay} size="1x" />
             </div>

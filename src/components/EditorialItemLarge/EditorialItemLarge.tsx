@@ -6,6 +6,7 @@ import Fa from 'solid-fa'
 import { mkController } from '../../api/mkController'
 import { useContextMenu } from '../../composables/useContextMenu'
 import { ContextMenuType } from '../../types/types'
+import { mkManager } from '../../api/mkManager'
 
 // TODO check if context menu works
 export const EditorialItemLarge = ({ item }) => {
@@ -15,7 +16,7 @@ export const EditorialItemLarge = ({ item }) => {
   const { openContextMenu } = useContextMenu()
   const handlePlayClick = e => {
     e.preventDefault()
-    mkController.playMediaItem(item.id, item.type)
+    mkManager.processItemAndPlay(item.id, item.type)
   }
 
   return (

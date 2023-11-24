@@ -8,6 +8,7 @@ import Tooltip from '../Tooltip/Tooltip'
 import { createSignal } from 'solid-js'
 import { useContextMenu } from '../../composables/useContextMenu'
 import { ContextMenuType } from '../../types/types'
+import { mkManager } from '../../api/mkManager'
 
 export const SongItem = ({ item, album, albumId }) => {
   const [inLibrary, setInLibrary] = createSignal(false)
@@ -77,7 +78,7 @@ export const SongItem = ({ item, album, albumId }) => {
           onClick={e => {
             e.preventDefault()
             e.stopPropagation()
-            mkController.playMediaItem(item.id, 'songs')
+            mkManager.processItemAndPlay(item.id, 'songs')
           }}
         >
           <div class={styles.songItem__artwork__container__overlay__playButton}>

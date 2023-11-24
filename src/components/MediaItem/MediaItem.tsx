@@ -7,6 +7,7 @@ import { createEffect, createSignal } from 'solid-js'
 import Tooltip from '../Tooltip/Tooltip'
 import { useContextMenu } from '../../composables/useContextMenu'
 import { ContextMenuType } from '../../types/types'
+import { mkManager } from '../../api/mkManager'
 
 export const MediaItem = ({
   src,
@@ -35,7 +36,7 @@ export const MediaItem = ({
 
   const handlePlayClick = e => {
     e.preventDefault()
-    mkController.playMediaItem(id, type)
+    mkManager.processItemAndPlay(id, type)
   }
 
   return (

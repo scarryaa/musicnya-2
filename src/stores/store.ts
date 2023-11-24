@@ -103,7 +103,9 @@ export const [store, setStore] = createStore({
   isSeeking: false,
   isAuthorized: false,
   shuffleMode: localStorageService.get('shuffleMode') === 'true' || false,
-  repeatMode: localStorageService.get('repeatMode') === 'true' || false,
+  repeatMode:
+    localStorageService.get('repeatMode') || ('none' as MusicKit.PlayerRepeatMode),
+
   library: {
     loading: false,
     loadingOperations: 0,

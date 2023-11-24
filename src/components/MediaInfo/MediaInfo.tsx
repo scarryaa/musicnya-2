@@ -7,17 +7,18 @@ import musicNote from '../../assets/music_note.png'
 import { createEffect, onCleanup } from 'solid-js'
 import { store } from '../../stores/store'
 import { A } from '@solidjs/router'
+import { mkManager } from '../../api/mkManager'
 
 export const MediaInfo = ({ media, artistId }) => {
   console.log(media())
   const handlePlayClick = e => {
     e.preventDefault()
-    mkController.playMediaItem(media().id, media().type)
+    mkManager.processItemAndPlay(media().id, media().type)
   }
 
   const handleShuffleClick = e => {
     e.preventDefault()
-    mkController.shufflePlayMediaItem(media().id, media().type)
+    mkManager.processItemAndPlay(media().id, media().type, true)
   }
 
   const handleBlur = () => {

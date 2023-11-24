@@ -26,8 +26,7 @@ import { createEffect, createSignal } from 'solid-js'
 import { localStorageService } from '../../../services/localStorageService'
 import { Utils } from '../../../util/util'
 import { tauriService } from '../../../services/tauriService'
-import { Lyrics } from '../../Lyrics/Lyrics'
-import { Queue } from '../../Queue/Queue'
+import { mkManager } from '../../../api/mkManager'
 
 export const Player = () => {
   const [isMuted, setIsMuted] = createSignal(false)
@@ -40,7 +39,7 @@ export const Player = () => {
   const updateVolume = newVolume => {
     setIsMuted(newVolume === 0)
     localStorage.setItem('volume', newVolume.toString())
-    mkController.setVolume(newVolume / 100)
+    mkManager.setVolume(newVolume / 100)
     setStore('volume', newVolume)
   }
 
@@ -64,15 +63,26 @@ export const Player = () => {
   }
 
   const toggleRepeat = () => {
-    setStore('repeatMode', !store.repeatMode)
-    localStorage.setItem('repeatMode', store.repeatMode.toString())
-    mkController.toggleRepeatMode(store.repeatMode)
+    // all , one , none
+    if (store.repeatMode === 'all') {
+      setStore('repeatMode', 'one')
+      localStorage.setItem('repeatMode', 'one')
+      mkManager.setRepeatMode('one' as MusicKit.PlayerRepeatMode)
+    } else if (store.repeatMode === 'one') {
+      setStore('repeatMode', 'none')
+      localStorage.setItem('repeatMode', 'none')
+      mkManager.setRepeatMode('none' as MusicKit.PlayerRepeatMode)
+    } else {
+      setStore('repeatMode', 'all')
+      localStorage.setItem('repeatMode', 'all')
+      mkManager.setRepeatMode('all' as MusicKit.PlayerRepeatMode)
+    }
   }
 
   const toggleShuffle = () => {
     setStore('shuffleMode', !store.shuffleMode)
     localStorage.setItem('shuffleMode', store.shuffleMode.toString())
-    mkController.toggleShuffleMode(store.shuffleMode)
+    mkManager.setShuffle(store.shuffleMode)
   }
 
   const handleInput = e => {
@@ -83,16 +93,16 @@ export const Player = () => {
   }
 
   const handleChange = e => {
-    mkController.seekToTime((e.currentTarget.valueAsNumber / 100) * store.duration)
+    mkManager.seekToTime((e.currentTarget.valueAsNumber / 100) * store.duration)
     setStore('isSeeking', false)
   }
 
   const handlePause = () => {
-    mkController.pause()
+    mkManager.pause()
   }
 
   const handlePlay = () => {
-    mkController.play()
+    mkManager.play()
   }
 
   const handleLibraryButton = e => {
@@ -243,7 +253,7 @@ export const Player = () => {
             </button>
             <button
               class={styles.player__controls__button}
-              onClick={mkController.skipToPreviousItem}
+              onClick={mkManager.skipToPreviousItem}
             >
               <Fa icon={faStepBackward} size="lg" />
             </button>
@@ -258,7 +268,7 @@ export const Player = () => {
             )}
             <button
               class={styles.player__controls__button}
-              onClick={mkController.skipToNextItem}
+              onClick={mkManager.skipToNextItem}
             >
               <Fa icon={faStepForward} size="lg" />
             </button>

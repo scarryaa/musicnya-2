@@ -27,6 +27,7 @@ import { setStore, store } from '../../stores/store'
 import { Utils } from '../../util/util'
 import { usePlaylistSubMenu } from '../../composables/usePlaylistSubMenu'
 import { useSubContextMenuState } from '../../composables/useSubContextMenu'
+import { mkManager } from '../../api/mkManager'
 
 const { closeSubContextMenu } = useSubContextMenuState()
 
@@ -118,7 +119,7 @@ export const contextMenuItems = {
     return {
       icon: faShuffle,
       action: () => {
-        mkController.shufflePlayMediaItem(id, type)
+        mkManager.processItemAndPlay(id, type, true)
       },
       isQuickAction: false,
       label: 'Shuffle',
@@ -129,7 +130,7 @@ export const contextMenuItems = {
     return {
       icon: faX,
       action: () => {
-        mkController.removeFromQueue(id)
+        mkManager.removeFromQueue(id)
       },
       isQuickAction: false,
       disabled: false,
@@ -214,7 +215,7 @@ export const contextMenuItems = {
     return {
       icon: faIndent,
       action: () => {
-        mkController.playNext(id, type)
+        mkManager.playNext(id, type)
       },
       isQuickAction: true,
       tooltip: 'Play Next'
@@ -224,7 +225,7 @@ export const contextMenuItems = {
     return {
       icon: faOutdent,
       action: () => {
-        mkController.playLater(id, type)
+        mkManager.playLater(id, type)
       },
       isQuickAction: true,
       tooltip: 'Play Last'
