@@ -44,7 +44,8 @@ describe('mkController', () => {
         name: 'Music',
         build: '1.0.0'
       },
-      sourceType: 24
+      sourceType: 24,
+      suppressErrorDialog: true
     })
     expect(mkController.isInitialized).toBe(true)
   })

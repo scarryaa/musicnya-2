@@ -7,11 +7,14 @@ const config: Config = {
     url: 'https://jestjs.io/',
     userAgent: 'Agent/007'
   },
+  preset: 'ts-jest',
   transform: {
-    '^.+\\.(js|jsx|ts|tsx)$': '@swc/jest'
+    '^.+\\.(js|jsx|ts|tsx)$': 'babel-jest'
   },
+  transformIgnorePatterns: [],
   moduleNameMapper: {
-    '^@solidjs/router$': '<rootDir>/node_modules/@solidjs/router/dist/index.js'
+    '^@solidjs/router$': '<rootDir>/node_modules/@solidjs/router/dist/index.js',
+    '\\.scss$': '<rootDir>/__mocks__/styleMock.ts'
   }
 }
 

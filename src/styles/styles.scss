@@ -85,24 +85,17 @@ h5 {
   @include heading-style(0.9rem);
 }
 
-* {
-  @include custom-scrollbar;
+A,
+button {
+  cursor: default;
 }
 
-.expanded {
-  -webkit-line-clamp: unset !important;
+* {
+  @include custom-scrollbar;
+  font-family: 'Inter' !important;
 }
 
 .disabled {
   opacity: 0.5;
   pointer-events: none;
-}
-
-.linkItemContainer {
-  display: flex;
-  gap: 1rem;
-  flex-direction: row;
-  flex-wrap: wrap;
-  flex: 1;
-  padding: 1.5rem;
 }

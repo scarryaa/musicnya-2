@@ -16,6 +16,10 @@
   overflow: hidden;
 }
 
+.expanded {
+  -webkit-line-clamp: unset !important;
+}
+
 @container main (max-width: 360px) {
   .editorialNotes {
     font-size: 0.8rem;

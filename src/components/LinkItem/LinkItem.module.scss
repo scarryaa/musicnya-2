@@ -14,7 +14,7 @@
   border-radius: $app-border-radius;
   background-color: var(--link-background-color);
   max-width: max-content;
-  transition: background-color 0.2s ease-in-out;
+  transition: background-color $transition-fast ease-in-out;
 
   &:hover {
     cursor: default;

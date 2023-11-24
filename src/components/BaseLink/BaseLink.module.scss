@@ -1,9 +1,9 @@
-.baseLink {
-  cursor: default;
-  width: auto;
-  height: 30px;
+@import '../../styles/mixins/mixins';
 
-  &:hover {
-    text-decoration: underline;
-  }
+$base-link-height: 30px;
+
+.baseLink {
+  width: auto;
+  height: $base-link-height;
+  @include hover-underlined();
 }

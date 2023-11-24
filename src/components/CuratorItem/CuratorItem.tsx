@@ -24,7 +24,7 @@ export const CuratorItem = ({ item }) => {
             class={styles.curatorItem__image__overlay__moreButton}
             onClick={e => openContextMenu(e, item.id, null, item.type)}
           >
-            <Fa icon={faEllipsisH} size="1x" color="white" />
+            <Fa icon={faEllipsisH} size="1x" color="var(--color-white)" />
           </div>
         </div>
         <img

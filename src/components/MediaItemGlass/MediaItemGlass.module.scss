@@ -52,7 +52,7 @@
       &__overlay {
         width: 100%;
         height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
+        background-color: $color-overlay-bg;
         position: absolute;
         top: 0;
         left: 0;
@@ -63,7 +63,7 @@
         justify-content: space-between;
         align-items: flex-end;
         opacity: 0;
-        transition: opacity 0.2s ease-in-out;
+        transition: opacity $transition-fast ease-in-out;
         padding: 0.6rem 0.5rem;
 
         &:hover {
@@ -74,12 +74,12 @@
           display: flex;
           justify-content: center;
           align-items: center;
-          background-color: rgba(0, 0, 0, 0.5);
+          background-color: $color-overlay-bg;
           border-radius: 50%;
           padding: 1rem;
           width: 2rem;
           height: 2rem;
-          transition: background-color 0.2s ease-in-out;
+          transition: background-color $transition-fast ease-in-out;
 
           &:hover {
             background-color: var(--color-primary);
@@ -90,12 +90,12 @@
           display: flex;
           justify-content: center;
           align-items: center;
-          background-color: rgba(0, 0, 0, 0.5);
+          background-color: $color-overlay-bg;
           border-radius: 50%;
           padding: 1rem;
           width: 2rem;
           height: 2rem;
-          transition: background-color 0.2s ease-in-out;
+          transition: background-color $transition-fast ease-in-out;
 
           &:hover {
             background-color: var(--color-primary);

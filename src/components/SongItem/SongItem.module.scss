@@ -4,7 +4,7 @@
   min-width: 250px;
   height: 60px;
   padding: 0.5rem;
-  transition: background-color 0.2s ease-in-out;
+  transition: background-color $transition-fast ease-in-out;
   align-items: center;
   border-radius: $app-border-radius;
   justify-content: space-between;
@@ -32,10 +32,10 @@
       border-radius: $app-border-radius;
       position: absolute;
       opacity: 0;
-      background-color: rgba(0, 0, 0, 0.5);
+      background-color: $color-overlay-bg;
       width: 50px;
       height: 50px;
-      transition: opacity 0.2s ease-in-out;
+      transition: opacity $transition-fast ease-in-out;
 
       &__playButton {
         position: absolute;
@@ -49,7 +49,7 @@
         padding: 1rem;
         width: 2rem;
         height: 2rem;
-        transition: background-color 0.2s ease-in-out;
+        transition: background-color $transition-fast ease-in-out;
       }
     }
   }

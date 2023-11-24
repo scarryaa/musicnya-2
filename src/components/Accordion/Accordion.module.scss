@@ -1,35 +1,36 @@
+@import '../../styles/mixins/mixins';
+
+$color-accordion-bg: #e4e4e4;
+$color-accordion-bg-hover: lighten($color-accordion-bg, 5%);
+$accordion-max-height: 99999px;
+
+$color-accordion-bg-dark: #252525;
+$color-accordion-bg-hover-dark: lighten($color-accordion-bg-dark, 5%);
+
 :root {
-  --color-accordion-background: #e4e4e4;
-  --color-accordion-hover: #f3f3f3;
-  --color-accordion-background: #e4e4e4;
-  --color-accordion-title-text: #444;
+  --color-accordion-bg: #{$color-accordion-bg};
+  --color-accordion-hover: #{$color-accordion-bg-hover};
 }
 
 :root[theme='dark'] {
-  --color-accordion-background: #252525;
-  --color-accordion-hover: #363636;
-  --color-accordion-title-background: #252525;
-  --color-accordion-title-text: #fff;
+  --color-accordion-bg: #{$color-accordion-bg-dark};
+  --color-accordion-hover: #{$color-accordion-bg-hover-dark};
 }
 
 .accordion {
-  background-color: var(--color-accordion-background);
+  background-color: var(--color-accordion-bg);
   border-radius: $app-border-radius;
-  margin-bottom: 1rem;
-  font-size: 0.9rem;
+  margin-bottom: $margin-small;
+  font-size: $font-size-small;
 
   &__title {
     border-radius: $app-border-radius;
     width: 100%;
-    background-color: var(--color-accordion-title-background);
-    color: var(--color-accordion-title-text);
-    padding: 18px;
+    color: var(--color-on-main);
+    padding: $padding-small;
     position: relative;
     text-align: left;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    cursor: default;
+    @include flex-layout(row, space-between, center);
 
     &:focus-visible {
       background-color: var(--color-accordion-hover);
@@ -37,19 +38,19 @@
 
     &:hover {
       background-color: var(--color-accordion-hover);
-      transition: background-color 0.2s ease-in-out;
+      transition: background-color $transition-fast ease-in-out;
     }
   }
 
   &__content {
     visibility: hidden;
     overflow: hidden;
-    transition: max-height 0.3s ease-in-out, opacity 0.3s ease-out;
+    transition: max-height $transition-fast ease-in-out, opacity $transition-fast ease-out;
     max-height: 0;
     opacity: 0;
 
     &--open {
-      max-height: 500px;
+      max-height: $accordion-max-height;
       opacity: 1;
       visibility: visible;
     }

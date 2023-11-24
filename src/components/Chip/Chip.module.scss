@@ -3,7 +3,7 @@
 .chip {
   @include font-style(0.75rem);
   display: inline-block;
-  padding: 0.25rem 0.5rem;
+  padding: $padding-xxsmall $padding-xsmall;
   border-radius: 0.25rem;
   background-color: #e0e0e0;
   color: #000;
@@ -11,5 +11,5 @@
   text-align: center;
   white-space: nowrap;
   vertical-align: baseline;
-  transition: background-color 0.2s ease-in-out;
+  transition: background-color $transition-fast ease-in-out;
 }

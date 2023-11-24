@@ -6,11 +6,11 @@ export const EditorialNotes = ({ data }) => {
   let expandedRef
 
   createEffect(() => {
-    if (store.app.media.expandEditorialNotes) expandedRef.classList.add('expanded')
+    if (store.app.media.expandEditorialNotes) expandedRef.classList.add(styles.expanded)
   })
 
   const handleEditorialNotesClick = () => {
-    expandedRef.classList.toggle('expanded')
+    expandedRef.classList.toggle(styles.expanded)
   }
 
   return (

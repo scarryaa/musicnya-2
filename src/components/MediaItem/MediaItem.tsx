@@ -35,7 +35,6 @@ export const MediaItem = ({
 
   const handlePlayClick = e => {
     e.preventDefault()
-    console.log(id)
     mkController.playMediaItem(id, type)
   }
 
@@ -57,6 +56,7 @@ export const MediaItem = ({
           >
             {!isAppleCurator && (
               <div
+                data-testid="play-button"
                 class={styles.mediaItem__inner__artwork__overlay__playButton}
                 onClick={handlePlayClick}
               >

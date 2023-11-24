@@ -117,7 +117,7 @@ export const MediaSelector = ({ item }) => {
         return null
       } else {
         return (
-          <div class="linkItemContainer">
+          <div class={styles.linkItemContainer}>
             <For each={item.attributes.links}>{item => <LinkItem item={item} />}</For>
           </div>
         )

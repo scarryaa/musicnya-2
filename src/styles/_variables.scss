@@ -7,6 +7,7 @@ $app-footer-height: 70px;
 // ui colors
 $color-scrollbar-bg: #e4e4e4;
 $color-scrollbar-thumb: #c7c7c7;
+$color-overlay-bg: rgba(0, 0, 0, 0.5);
 
 // ui dark colors
 $color-scrollbar-bg-dark: #222222;
@@ -41,3 +42,47 @@ $color-off-white: #f7f7f8;
 $color-off-white-muted: #e4e4e4;
 $color-off-white-muted-2: #c7c7c7;
 $color-link-active: rgba($color-white, 0.2);
+
+// font variables
+$font-family: 'Inter', sans-serif;
+$font-size: 1rem;
+$font-size-xsmall: 0.8rem;
+$font-size-small: 0.9rem;
+$font-size-large: 1.2rem;
+$font-size-xlarge: 1.5rem;
+$font-size-xxlarge: 2rem;
+$font-weight-light: 300;
+$font-weight-regular: 400;
+$font-weight-medium: 500;
+$font-weight-bold: 700;
+$font-weight-xbold: 900;
+
+// margin variables
+$margin-xxsmall: 0.25rem;
+$margin-xsmall: 0.5rem;
+$margin-small: 1rem;
+$margin-medium: 1.5rem;
+$margin-large: 2rem;
+$margin-xlarge: 2.5rem;
+$margin-xxlarge: 3rem;
+
+// padding variables
+$padding-xxsmall: 0.25rem;
+$padding-xsmall: 0.5rem;
+$padding-small: 1rem;
+$padding-medium: 1.5rem;
+$padding-large: 2rem;
+$padding-xlarge: 2.5rem;
+$padding-xxlarge: 3rem;
+
+// transition variables
+$transition-fast: 0.3s;
+$transition-medium: 0.5s;
+$transition-slow: 1s;
+
+// breakpoints
+$breakpoint-small: 540px;
+$breakpoint-medium: 720px;
+$breakpoint-large: 960px;
+$breakpoint-xlarge: 1140px;
+$breakpoint-xxlarge: 1320px;

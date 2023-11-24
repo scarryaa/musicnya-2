@@ -1,5 +1,5 @@
 import * as config from '../../config.json'
-import { addSong, getDB, increasePlayCount } from '../db/db'
+import { increasePlayCount } from '../db/db'
 import { discordService } from '../services/discordService'
 import { fastAverageColorService } from '../services/fastAverageColorService'
 import { setStore, store } from '../stores/store'
