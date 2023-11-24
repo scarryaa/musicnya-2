@@ -1,0 +1,24 @@
+@import '../../../styles/mixins/mixins';
+
+$action-item-border-radius: $app-border-radius / 2;
+
+.actionItem {
+  padding: $padding-xsmall / 1.2 $padding-xsmall;
+  font-size: $font-size-small;
+  @include flex-layout(row, flex-start, center);
+  border-radius: $app-border-radius / 2;
+
+  &__icon {
+    width: 15px;
+    height: 15px;
+    margin-right: $margin-xsmall;
+  }
+
+  &:hover {
+    background: var(--color-main-bg-muted-2);
+  }
+
+  &__label {
+    padding-right: $padding-xsmall;
+  }
+}

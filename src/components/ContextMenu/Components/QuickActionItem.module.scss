@@ -1,8 +1,10 @@
+@import '../../../styles//variables';
+
 .quickActionItem {
-  padding: 0.4rem;
+  padding: $padding-xsmall;
   border-radius: 4px;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.15);
+    background: var(--color-main-bg-muted-2);
   }
 }

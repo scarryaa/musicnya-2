@@ -14,6 +14,8 @@ import { mediaItemContextMenuConfig } from './Configs/mediaItemContextMenuConfig
 import { queueItemContextMenuConfig } from './Configs/queueItemContextMenuConfig'
 import { editorialContextMenuConfig } from './Configs/editorialContextMenuConfig'
 import { QuickActionItem } from './Components/QuickActionItem'
+import { ActionItem } from './Components/ActionItem'
+import { SubContextMenu } from './Components/SubContextMenu'
 
 const contextMenuConfig = {
   [ContextMenuType.App]: appContextMenuConfig,
@@ -84,49 +86,9 @@ export function ContextMenu(): JSX.Element {
         <For each={filterMenuItems(true)}>{item => <QuickActionItem item={item} />}</For>
       </div>
 
-      <For each={filterMenuItems(false)}>
-        {item => (
-          <div
-            class={styles.contextMenu__item}
-            onclick={item.action}
-            onMouseOver={item.onMouseOver}
-            onMouseLeave={item.onMouseLeave}
-          >
-            <Fa icon={item.icon} class={styles.icon} />
-            <span class={styles.label}>{item.label}</span>
-            {item.hasSubMenu && <Fa icon={faChevronRight} class={styles.subMenuIcon} />}
-          </div>
-        )}
-      </For>
+      <For each={filterMenuItems(false)}>{item => <ActionItem item={item} />}</For>
 
-      <div
-        class={styles.contextMenu__subContextMenu}
-        style={`display: ${
-          store.app.subContextMenu.open ? 'block' : 'none'
-        }; top: calc(0px + ${
-          store.app.subContextMenu.y
-        }px); left: 100%; position: absolute; width: 100%; max-height: 200%; overflow-y: auto;`}
-      >
-        <For each={store.app.subContextMenu.items}>
-          {item => (
-            <div
-              class={styles.contextMenu__item}
-              onclick={item.hasSubMenu ? null : item.action}
-              onMouseOver={item.onMouseOver}
-              onMouseLeave={item.onMouseLeave}
-            >
-              <span class={styles.contextMenu__item__icon}>
-                <Fa icon={item.icon} size="1x" color="white" />
-              </span>
-              <span
-                style={`vertical-align: top; margin-left: 0.5rem; margin-top: 6px; text-overflow: ellipsis; overflow: hidden;`}
-              >
-                {item.label}
-              </span>
-            </div>
-          )}
-        </For>
-      </div>
+      <SubContextMenu />
     </div>
   )
 }
