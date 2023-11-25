@@ -200,4 +200,13 @@ export class ArtistsApi {
       return `catalog/${store.countryCode}/${strippedType}/${id}`
     }
   }
+
+  async getCatalogArtistFromLibrary(id: string) {
+    const response = await this.musicKitApiClient.fetchFromMusicKit(
+      `me/library/artists/${id}/catalog`,
+      null
+    )
+
+    return response
+  }
 }

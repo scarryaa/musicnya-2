@@ -6,6 +6,8 @@ import Tooltip from '../Tooltip/Tooltip'
 import { useContextMenu } from '../../composables/useContextMenu'
 import { ContextMenuType } from '../../types/types'
 import { mkManager } from '../../api/MkManager'
+import { createEffect, createSignal } from 'solid-js'
+import { mkApiManager } from '../../api/MkApiManager'
 
 export const MediaItem = ({
   src,
@@ -32,11 +34,20 @@ export const MediaItem = ({
   const isAppleCurator = type === 'apple-curators'
   type === 'library-playlists' ? (type = 'playlists') : type
   Tooltip
+  const [newArtistId, setArtistId] = createSignal(artistId)
 
   const handlePlayClick = e => {
     e.preventDefault()
     mkManager.processItemAndPlay(id, type)
   }
+
+  createEffect(async () => {
+    if (type === 'library-albums') {
+      console.log(artistId)
+      const catalogId = await mkApiManager.getCatalogArtistFromLibrary(artistId)
+      setArtistId(catalogId.data[0].id)
+    }
+  })
 
   return (
     <div
@@ -100,7 +111,7 @@ export const MediaItem = ({
               <A
                 activeClass=""
                 class={styles.mediaItem__inner__info__artists__link}
-                href={`/media/artists/${artistId}`}
+                href={`/media/artists/${newArtistId()}`}
               >
                 <span use:Tooltip={['bottom', artists.join(', '), true, 500]}>
                   {artists.join(', ')}

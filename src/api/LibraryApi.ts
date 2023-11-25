@@ -165,9 +165,10 @@ export class LibraryApi {
    * @param type - The type of the item to retrieve.
    * @returns A Promise that resolves to the response from the API.
    */
-  async getCatalogItemFromLibrary(id: string, type: string) {
+  async getCatalogItemFromLibrary(id: string, type: MusicKit.MediaItemType) {
+    const strippedType = MediaItemTypeService.stripType(type)
     const response = await this.musicKitApiClient.fetchFromMusicKit(
-      `me/library/${type}/${id}/catalog`,
+      `me/library/${strippedType}/${id}/catalog`,
       null
     )
 

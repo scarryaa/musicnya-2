@@ -80,6 +80,10 @@ class MusicKitApiManager {
     return await this.artistsApi.getArtistFromMediaItem(id, type)
   }
 
+  async getCatalogArtistFromLibrary(id) {
+    return await this.artistsApi.getCatalogArtistFromLibrary(id)
+  }
+
   /**
    * Retrieves the credits for a song with the specified ID.
    *
