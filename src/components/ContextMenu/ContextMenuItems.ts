@@ -189,7 +189,8 @@ export const contextMenuItems = {
       disabled: disabled
     }
   },
-  dislikeQuick: (id, type, disabled, isDisliked = false) => {
+  dislikeQuick: (id, type, disabled, isLoved, isDisliked = false) => {
+    console.log(isDisliked)
     return {
       icon: disabled
         ? faThumbsDownRegular
@@ -198,7 +199,7 @@ export const contextMenuItems = {
         : faThumbsDownRegular,
       action: () => {
         isDisliked
-          ? mkApiManager.favoriteItem(id, type)
+          ? mkApiManager.unfavoriteItem(id, type)
           : mkApiManager.dislikeItem(id, type)
       },
       isQuickAction: true,
@@ -206,7 +207,7 @@ export const contextMenuItems = {
       disabled: disabled
     }
   },
-  addToLibraryQuick: (id, type, disabled, isInLibrary = false) => {
+  addToLibraryQuick: (id, type, disabled, isLoved, isDisliked, isInLibrary = false) => {
     return {
       icon: disabled ? faPlus : isInLibrary ? faMinus : faPlus,
       action: () => {

@@ -108,6 +108,7 @@ export const mediaItemContextMenu = (
   inLibraryState = false
 ) => {
   const items = []
+  console.log(inLibraryState, isLovedState, isDislikedState)
 
   const addItem = itemType => {
     const itemConfig = contextMenuItems[itemType](
@@ -149,7 +150,7 @@ export const mediaItemContextMenu = (
       'properties'
     ].forEach(addItem)
   } else if (subType === 'library-albums') {
-    ;[
+    return [
       'addToLibraryQuick',
       'loveQuick',
       'dislikeQuick',
@@ -160,7 +161,16 @@ export const mediaItemContextMenu = (
       'shuffle',
       'share',
       'properties'
-    ].forEach(addItem)
+    ].map(itemType =>
+      contextMenuItems[itemType](
+        id,
+        subType,
+        disabled,
+        isLovedState,
+        isDislikedState,
+        inLibraryState
+      )
+    )
   } else {
     ;[
       'addToLibraryQuick',

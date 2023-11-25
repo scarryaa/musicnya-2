@@ -37,18 +37,14 @@ export class LibraryApi {
    * @returns A Promise that resolves to the response from the server.
    */
   async addToLibrary(id: string, type: 'songs' | 'albums' | 'playlists') {
+    const strippedType = MediaItemTypeService.stripType(type)
     const response = await this.musicKitApiClient.fetchFromMusicKit(
-      `me/library/${type}`,
+      `me/library`,
       {
-        method: 'POST',
-        body: JSON.stringify({
-          data: [
-            {
-              id,
-              type
-            }
-          ]
-        })
+        method: 'POST'
+      },
+      {
+        [`ids[${strippedType}]`]: id
       }
     )
 
@@ -62,19 +58,10 @@ export class LibraryApi {
    * @returns A Promise that resolves to the response from the server.
    */
   async removeFromLibrary(id: string, type: 'songs' | 'albums' | 'playlists') {
+    const strippedType = MediaItemTypeService.stripType(type)
     const response = await this.musicKitApiClient.fetchFromMusicKit(
-      `me/library/${type}`,
-      {
-        method: 'DELETE',
-        body: JSON.stringify({
-          data: [
-            {
-              id,
-              type
-            }
-          ]
-        })
-      }
+      `me/library/${strippedType}/${id}`,
+      { method: 'DELETE' }
     )
 
     return response
@@ -90,13 +77,14 @@ export class LibraryApi {
     const strippedType = MediaItemTypeService.stripType(type)
 
     const response = await this.musicKitApiClient.fetchFromMusicKit(
-      `me/ratings/${strippedType}`,
+      `me/ratings/${type}`,
       null,
       {
         ids: id
       }
     )
 
+    console.log(response)
     return response
   }
 
@@ -110,7 +98,7 @@ export class LibraryApi {
     const strippedType = MediaItemTypeService.stripType(type)
 
     const response = await this.musicKitApiClient.fetchFromMusicKit(
-      `me/ratings/${strippedType}/${id}`,
+      `me/ratings/${type}/${id}`,
       { method: 'PUT', body: JSON.stringify({ attributes: { value: 1 } }) }
     )
 
@@ -127,7 +115,7 @@ export class LibraryApi {
     const strippedType = MediaItemTypeService.stripType(type)
 
     const response = await this.musicKitApiClient.fetchFromMusicKit(
-      `me/ratings/${strippedType}/${id}`,
+      `me/ratings/${type}/${id}`,
       { method: 'DELETE' }
     )
 
@@ -156,17 +144,20 @@ export class LibraryApi {
    * @returns A Promise that resolves with the response from the server.
    */
   async isItemInLibrary(id: string, type: string) {
+    if (type[0] === 'l') return { data: [{ attributes: { inLibrary: true } }] }
+
     const strippedType = MediaItemTypeService.stripType(type)
 
     const response = await this.musicKitApiClient.fetchFromMusicKit(
-      `catalog/${store.countryCode}/${strippedType}/${id}`,
+      `catalog/${store.countryCode}/${strippedType}`,
       null,
       {
         fields: 'inLibrary',
-        [`ids[${type}]`]: id
+        [`ids`]: id
       }
     )
 
+    console.log(response)
     return response
   }
 
