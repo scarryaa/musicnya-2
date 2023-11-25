@@ -5,8 +5,6 @@ import { MetadataApi } from './MetadataApi'
 import { LibraryApi } from './LibraryApi'
 import { PlaylistApi } from './PlaylistApi'
 import { AlbumApi } from './AlbumApi'
-import { MediaItemType } from '../types/types'
-import { DataItem } from '../types/api/common'
 
 class MusicKitApiManager {
   musicKitApiClient: ApiClient | null = null
@@ -121,7 +119,7 @@ class MusicKitApiManager {
    * @param type The type of the item to be added ('songs', 'albums', or 'playlists').
    * @returns A Promise that resolves to the response from the server.
    */
-  async addToLibrary(id: string, type: 'songs' | 'albums' | 'playlists') {
+  async addToLibrary(id: string, type: MusicKit.MediaItemType) {
     return await this.libraryApi.addToLibrary(id, type)
   }
 
@@ -131,7 +129,7 @@ class MusicKitApiManager {
    * @param type The type of the item to be removed ('songs', 'albums', or 'playlists').
    * @returns A Promise that resolves to the response from the server.
    */
-  async removeFromLibrary(id: string, type: 'songs' | 'albums' | 'playlists') {
+  async removeFromLibrary(id: string, type: MusicKit.MediaItemType) {
     return await this.libraryApi.removeFromLibrary(id, type)
   }
 
@@ -168,7 +166,7 @@ class MusicKitApiManager {
   /**
    * Dislikes an item.
    * @param {string} id - The ID of the item.
-   * @param {string} type - The type of the item.
+   * @param {MusicKit.MediaItemType} type - The type of the item.
    * @returns {Promise<any>} - A promise that resolves with the response from the server.
    */
   async dislikeItem(id: string, type: MusicKit.MediaItemType) {
@@ -178,7 +176,7 @@ class MusicKitApiManager {
   /**
    * Checks if an item is in the library.
    * @param {string} id - The ID of the item.
-   * @param {string} type - The type of the item.
+   * @param {MusicKit.MediaItemType} type - The type of the item.
    * @returns {Promise<boolean>} - A promise that resolves to true if the item is in the library, false otherwise.
    */
   async isItemInLibrary(id: string, type: MusicKit.MediaItemType) {
@@ -188,7 +186,7 @@ class MusicKitApiManager {
   /**
    * Retrieves a catalog item from the library id.
    * @param {string} id - The ID of the catalog item.
-   * @param {string} type - The type of the catalog item.
+   * @param {MusicKit.MediaItemType} type - The type of the catalog item.
    * @returns {Promise<any>} - A promise that resolves to the catalog item.
    */
   async getCatalogItemFromLibrary(id: string, type: MusicKit.MediaItemType) {
@@ -198,17 +196,17 @@ class MusicKitApiManager {
   /**
    * Retrieves the library ID from the catalog based on the provided ID and type.
    * @param {string} id - The ID of the item in the catalog.
-   * @param {string} type - The type of the item in the catalog.
+   * @param {MusicKit.MediaItemType} type - The type of the item in the catalog.
    * @returns {Promise<string>} - A promise that resolves with the library ID.
    */
   async getLibraryIdFromCatalog(id: string, type: MusicKit.MediaItemType) {
-    return await this.libraryApi.getLibraryIdFromCatalog<DataItem>(id, type)
+    return await this.libraryApi.getLibraryIdFromCatalog(id, type)
   }
 
   /**
    * Adds an item to a playlist.
    * @param {string} id - The ID of the item to be added.
-   * @param {string} type - The type of the item to be added ('songs', 'albums', or 'playlists').
+   * @param {MusicKit.MediaItemType} type - The type of the item to be added ('songs', 'albums', or 'playlists').
    * @param {string} playlistId - The ID of the playlist.
    */
   async addItemToPlaylist(id: string, type: MusicKit.MediaItemType, playlistId: string) {
@@ -218,10 +216,14 @@ class MusicKitApiManager {
   /**
    * Removes an item from a playlist.
    * @param {string} id - The ID of the item to be removed.
-   * @param {string} type - The type of the item to be removed ('songs', 'albums', or 'playlists').
+   * @param {MusicKit.MediaItemType} type - The type of the item to be removed ('songs', 'albums', or 'playlists').
    * @param {string} playlistId - The ID of the playlist.
    */
-  async removeItemFromPlaylist(id: string, type: MediaItemType, playlistId: string) {
+  async removeItemFromPlaylist(
+    id: string,
+    type: MusicKit.MediaItemType,
+    playlistId: string
+  ) {
     return await this.playlistApi.removeItemFromPlaylist(id, type, playlistId)
   }
 
@@ -259,7 +261,7 @@ class MusicKitApiManager {
    * @param type The type of the item.
    * @returns A promise that resolves to the share link.
    */
-  async getShareLink(id: string, type: MediaItemType) {
+  async getShareLink(id: string, type: MusicKit.MediaItemType) {
     return await this.metadataApi.getShareLink(id, type)
   }
 
@@ -269,7 +271,7 @@ class MusicKitApiManager {
    * @param type The type of the media item.
    * @returns A promise that resolves to the album.
    */
-  async getAlbumFromMediaItem(id: string, type: MediaItemType) {
+  async getAlbumFromMediaItem(id: string, type: MusicKit.MediaItemType) {
     return await this.albumApi.getAlbumFromMediaItem(id, type)
   }
 }

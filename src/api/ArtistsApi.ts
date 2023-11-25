@@ -95,13 +95,11 @@ export class ArtistsApi {
       'ids[artists]': id
     }
 
-    const response = await this.musicKitApiClient.fetchFromMusicKit(
+    await this.musicKitApiClient.fetchFromMusicKit<void>(
       API_ENDPOINTS.favorites,
       { method: 'POST' },
       queryParams
     )
-
-    return response
   }
 
   /**
@@ -120,13 +118,11 @@ export class ArtistsApi {
       'ids[artists]': id
     }
 
-    const response = await this.musicKitApiClient.fetchFromMusicKit(
+    await this.musicKitApiClient.fetchFromMusicKit<void>(
       API_ENDPOINTS.favorites,
       { method: 'DELETE' },
       queryParams
     )
-
-    return response
   }
 
   /**
@@ -157,11 +153,12 @@ export class ArtistsApi {
       >(endpoint, null, {
         ...queryParams
       })
-      console.log(response)
 
       if (MediaItemTypeService.isLibraryType(type)) {
         endpoint = `${API_ENDPOINTS.libraryArtists}/${response.data[0].id}/catalog?l=en-US&platform=web&fields=url`
-        const response2 = await this.musicKitApiClient.fetchFromMusicKit(endpoint, null, {
+        const response2 = await this.musicKitApiClient.fetchFromMusicKit<
+          ApiResponse<DataItem>
+        >(endpoint, null, {
           ...queryParams
         })
         return response2

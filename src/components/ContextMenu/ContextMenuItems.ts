@@ -1,4 +1,5 @@
 import {
+  IconDefinition,
   faHeadphones,
   faHeart,
   faIndent,
@@ -32,12 +33,12 @@ import { mkApiManager } from '../../api/MkApiManager'
 const { closeSubContextMenu } = useSubContextMenuState()
 
 const createMenuItem = (
-  icon,
-  action,
-  label,
+  icon: IconDefinition,
+  action: () => Promise<void> | void,
+  label: string,
   quickAction = false,
   hasSubMenu = false,
-  tooltip?
+  tooltip?: string
 ) => {
   return {
     icon,
@@ -50,7 +51,13 @@ const createMenuItem = (
   }
 }
 
-const createAsyncMenuItem = (icon, asyncAction, label, quickAction = false, tooltip?) => {
+const createAsyncMenuItem = (
+  icon: IconDefinition,
+  asyncAction: () => Promise<void>,
+  label: string,
+  quickAction = false,
+  tooltip?: string
+) => {
   return {
     icon,
     action: async () => {
@@ -71,7 +78,7 @@ const createAsyncMenuItem = (icon, asyncAction, label, quickAction = false, tool
 export const contextMenuItems = {
   immersive: createMenuItem(faUpRightAndDownLeftFromCenter, () => {}, 'Immersive'),
   miniPlayer: createMenuItem(faWindowMaximize, Utils.resizeToMiniPlayer, 'Mini Player'),
-  share: (id, type) =>
+  share: (id: string, type: MusicKit.MediaItemType) =>
     createAsyncMenuItem(
       faShare,
       async () => {
@@ -80,7 +87,7 @@ export const contextMenuItems = {
       },
       'Share'
     ),
-  properties: (id, type) =>
+  properties: (id: string, type: MusicKit.MediaItemType) =>
     createMenuItem(
       faInfoCircle,
       () => {
@@ -88,15 +95,15 @@ export const contextMenuItems = {
       },
       'Properties'
     ),
-  createStation: (id, type) =>
+  createStation: (id: string, type: MusicKit.MediaItemType) =>
     createMenuItem(
       faSatelliteDish,
-      () => {
-        mkManager.setStationQueue(id, type)
+      async () => {
+        await mkManager.setStationQueue(id, type)
       },
       'Create Station'
     ),
-  goToArtist: (id, type) =>
+  goToArtist: (id: string, type: MusicKit.MediaItemType) =>
     createAsyncMenuItem(
       faUser,
       async () => {
@@ -107,7 +114,7 @@ export const contextMenuItems = {
       'Go to Artist'
     ),
 
-  goToAlbum: (id, type) =>
+  goToAlbum: (id: string, type: MusicKit.MediaItemType) =>
     createAsyncMenuItem(
       faRecordVinyl,
       async () => {
@@ -118,20 +125,22 @@ export const contextMenuItems = {
       'Go to Album'
     ),
 
-  shuffle: (id, type) =>
+  shuffle: (id: string, type: MusicKit.MediaItemType) =>
     createMenuItem(
       faShuffle,
-      () => mkManager.processItemAndPlay(id, type, true),
+      async () => mkManager.processItemAndPlay(id, type, true),
       'Shuffle'
     ),
 
-  removeFromQueue: (id, type) =>
-    createAsyncMenuItem(
+  removeFromQueue: (id: string) =>
+    createMenuItem(
       faX,
-      async () => {
-        const returnedId = await mkManager.removeFromQueue(id)
+      () => {
+        const returnedId = mkManager.removeFromQueue(id)
         setStore('app', 'queue', {
-          items: store.app.queue.items.filter((item: any) => item.id !== returnedId)
+          items: store.app.queue.items.filter(
+            (item: MusicKit.MediaItem) => item.id !== returnedId
+          )
         })
       },
       'Remove from Queue'
@@ -145,7 +154,7 @@ export const contextMenuItems = {
     }
   }),
   // Quick actions
-  favoriteQuick: (id, type, disabled, isFavorite = false) =>
+  favoriteQuick: (id: string, type, disabled: boolean, isFavorite = false) =>
     createMenuItem(
       disabled ? faStarRegular : isFavorite ? faStar : faStarRegular,
       () =>
@@ -156,7 +165,7 @@ export const contextMenuItems = {
       isFavorite ? 'Unfavorite' : 'Favorite'
     ),
 
-  createStationQuick: (id, type) =>
+  createStationQuick: (id: string, type: MusicKit.MediaItemType) =>
     createMenuItem(
       faSatelliteDish,
       () => mkManager.setStationQueue(id, type),
@@ -166,7 +175,12 @@ export const contextMenuItems = {
       'Create Station'
     ),
 
-  loveQuick: (id, type, disabled, isLoved = false) =>
+  loveQuick: (
+    id: string,
+    type: MusicKit.MediaItemType,
+    disabled: boolean,
+    isLoved = false
+  ) =>
     createMenuItem(
       disabled ? faHeartRegular : isLoved ? faHeart : faHeartRegular,
       () =>
@@ -179,7 +193,13 @@ export const contextMenuItems = {
       isLoved ? 'Unlove' : 'Love'
     ),
 
-  dislikeQuick: (id, type, disabled, isLoved, isDisliked = false) =>
+  dislikeQuick: (
+    id: string,
+    type: MusicKit.MediaItemType,
+    disabled: boolean,
+    isLoved: boolean,
+    isDisliked = false
+  ) =>
     createMenuItem(
       disabled ? faThumbsDownRegular : isDisliked ? faThumbsDown : faThumbsDownRegular,
       () =>
@@ -192,7 +212,14 @@ export const contextMenuItems = {
       isDisliked ? 'Undislike' : 'Dislike'
     ),
 
-  addToLibraryQuick: (id, type, disabled, isLoved, isDisliked, isInLibrary = false) =>
+  addToLibraryQuick: (
+    id: string,
+    type: MusicKit.MediaItemType,
+    disabled,
+    isLoved,
+    isDisliked,
+    isInLibrary = false
+  ) =>
     createAsyncMenuItem(
       disabled ? faPlus : isInLibrary ? faMinus : faPlus,
       async () => {
@@ -210,7 +237,7 @@ export const contextMenuItems = {
       isInLibrary ? 'Remove from Library' : 'Add to Library'
     ),
 
-  playNextQuick: (id, type) =>
+  playNextQuick: (id: string, type: MusicKit.MediaItemType) =>
     createMenuItem(
       faIndent,
       () => mkManager.playNext(id, type),
@@ -220,7 +247,7 @@ export const contextMenuItems = {
       'Play Next'
     ),
 
-  playLastQuick: (id, type) =>
+  playLastQuick: (id: string, type: MusicKit.MediaItemType) =>
     createMenuItem(
       faOutdent,
       () => mkManager.playLater(id, type),

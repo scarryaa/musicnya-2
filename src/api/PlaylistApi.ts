@@ -23,7 +23,7 @@ export class PlaylistApi {
    * @param {MusicKit.MusicKitInstance} musicKitInstance - The MusicKit instance.
    * @param {ApiClient} musicKitApiClient - The API client for making requests to the music catalog.
    */
-  constructor(musicKitInstance, musicKitApiClient) {
+  constructor(musicKitInstance: MusicKit.MusicKitInstance, musicKitApiClient: ApiClient) {
     this.musicKitInstance = musicKitInstance
     this.musicKitApiClient = musicKitApiClient
   }
@@ -64,7 +64,11 @@ export class PlaylistApi {
    * @param playlistId - The ID of the playlist.
    * @returns A Promise that resolves to the response from the server.
    */
-  async removeItemFromPlaylist(id: string, type: MediaItemType, playlistId: string) {
+  async removeItemFromPlaylist(
+    id: string,
+    type: MusicKit.MediaItemType,
+    playlistId: string
+  ) {
     const strippedType = MediaItemTypeService.stripType(type)
     const response = await this.musicKitApiClient.fetchFromMusicKit(
       `me/library/playlists/${playlistId}/tracks`,

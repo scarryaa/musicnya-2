@@ -184,6 +184,10 @@ class MusicKitManager {
    * @returns The updated array of queue items.
    */
   moveQueueItem = (from: number, to: number): MusicKit.QueueItem[] => {
+    if (this.musicKitInstance === null) {
+      throw new Error('MusicKit instance not initialized')
+    }
+
     this.musicKitInstance.queue._queueItems.splice(
       to,
       0,
@@ -284,7 +288,7 @@ class MusicKitManager {
    * @param type - The type of the media item.
    * @returns void.
    */
-  playLater = async (id: string, type: MediaItemType) => {
+  playLater = async (id: string, type: MusicKit.MediaItemType) => {
     const strippedType = MediaItemTypeService.stripType(type)
 
     await this.musicKitInstance.playLater({

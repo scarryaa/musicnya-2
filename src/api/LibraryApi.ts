@@ -1,6 +1,7 @@
 import { ALBUM_QUERY_PARAMS, API_ENDPOINTS } from '../config/config'
 import { MediaItemTypeService } from '../services/mediaItemTypeService'
 import { store } from '../stores/store'
+import { AlbumData, AlbumResponse } from '../types/api/AlbumResponse'
 import { ApiResponse, DataItem } from '../types/api/common'
 import { ApiClient } from './MkApiClient'
 
@@ -38,7 +39,7 @@ export class LibraryApi {
    * @param type The type of the item to be added ('songs', 'albums', or 'playlists').
    * @returns A Promise that resolves to the response from the server.
    */
-  async addToLibrary(id: string, type: 'songs' | 'albums' | 'playlists') {
+  async addToLibrary(id: string, type: MusicKit.MediaItemType) {
     const strippedType = MediaItemTypeService.stripType(type)
     await this.musicKitApiClient.fetchFromMusicKit<void>(
       API_ENDPOINTS.baseLibrary,
@@ -132,15 +133,42 @@ export class LibraryApi {
   async isItemInLibrary(
     id: string,
     type: MusicKit.MediaItemType
-  ): Promise<{
-    data: [{ attributes: { inLibrary: boolean } }]
-  }> {
-    if (type[0] === 'l') return { data: [{ attributes: { inLibrary: true } }] }
+  ): Promise<AlbumResponse> {
+    if (type[0] === 'l')
+      return {
+        data: [
+          {
+            attributes: {
+              inLibrary: true,
+              name: '',
+              artwork: { url: '', width: 0, height: 0 },
+              artistName: '',
+              contentRating: '',
+              url: '',
+              genreNames: [],
+              isComplete: false,
+              isSingle: false,
+              playParams: { id: '', kind: '' },
+              recordLabel: '',
+              releaseDate: '',
+              trackCount: 0,
+              editorialNotes: { short: '' }
+            },
+            href: '',
+            id: '',
+            relationships: {
+              artists: { data: [], href: '' },
+              tracks: { data: [], href: '' }
+            },
+            type: ''
+          }
+        ]
+      }
 
     const strippedType = MediaItemTypeService.stripType(type)
 
     const response = await this.musicKitApiClient.fetchFromMusicKit<
-      ApiResponse<DataItem>
+      ApiResponse<AlbumData>
     >(
       API_ENDPOINTS.catalog(store.countryCode, strippedType),
       {
@@ -181,10 +209,9 @@ export class LibraryApi {
    * @returns A Promise that resolves to the response from the API.
    */
   async getLibraryIdFromCatalog(id: string, type: string) {
-    const response = await this.musicKitApiClient.fetchFromMusicKit<DataItem>(
-      API_ENDPOINTS.libraryFromCatalog(store.countryCode, type, id),
-      null
-    )
+    const response = await this.musicKitApiClient.fetchFromMusicKit<
+      ApiResponse<DataItem>
+    >(API_ENDPOINTS.libraryFromCatalog(store.countryCode, type, id), null)
 
     console.log(response)
 

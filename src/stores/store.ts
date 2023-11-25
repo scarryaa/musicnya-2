@@ -30,7 +30,7 @@ export const [store, setStore] = createStore({
         }
       }
     },
-    navigate: null,
+    navigate: (path: string) => Navigator,
     isMaximized: false,
     isDarkMode: localStorageService.get('darkMode') === 'true' || false,
     isMiniMode: localStorageService.get('miniMode') === 'true' || false,

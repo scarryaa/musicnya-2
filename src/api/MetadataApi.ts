@@ -2,6 +2,7 @@ import { API_ENDPOINTS } from '../config/config'
 import { MediaItemTypeService } from '../services/mediaItemTypeService'
 import { store } from '../stores/store'
 import { LyricsResponse } from '../types/api/LyricsResponse'
+import { ApiResponse, DataItem } from '../types/api/common'
 import ValidationUtils from '../util/ValidationUtils'
 import { ApiClient } from './MkApiClient'
 
@@ -98,7 +99,9 @@ export class MetadataApi {
   async getShareLink(id: string, type: MusicKit.MediaItemType) {
     const strippedType = MediaItemTypeService.stripType(type)
 
-    const response = await this.musicKitApiClient.fetchFromMusicKit(
+    const response = await this.musicKitApiClient.fetchFromMusicKit<
+      ApiResponse<DataItem>
+    >(
       type.includes('library-')
         ? API_ENDPOINTS.catalogFromLibrary(store.countryCode, strippedType, id)
         : `${API_ENDPOINTS.catalog(store.countryCode, strippedType)}/${id}`,
@@ -108,6 +111,7 @@ export class MetadataApi {
         'ids[artists]': id
       }
     )
+    console.log(response)
 
     return response
   }

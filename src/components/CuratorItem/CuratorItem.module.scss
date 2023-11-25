@@ -6,7 +6,7 @@
   --minSize: 160px;
   --maxSize: 200px;
 
-  @include flex-layout(column, center, center);
+  @include flex-layout(column, unset, flex-start);
   border-radius: $app-border-radius;
 
   &:hover .curatorItem__image__overlay {
