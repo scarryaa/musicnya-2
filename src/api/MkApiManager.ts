@@ -189,6 +189,10 @@ class MusicKitApiManager {
     return await this.libraryApi.getCatalogItemFromLibrary(id, type)
   }
 
+  async getLibraryIdFromCatalog(id, type) {
+    return await this.libraryApi.getLibraryIdFromCatalog(id, type)
+  }
+
   /**
    * Adds an item to a playlist.
    * @param {string} id - The ID of the item to be added.

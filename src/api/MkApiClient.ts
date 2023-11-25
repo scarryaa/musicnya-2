@@ -78,12 +78,14 @@ export class ApiClient {
 
     // Ensure the correct Content-Type is set if there's a body
     if (
+      // add nocache to the url to prevent caching
       options?.body &&
       typeof options.body === 'object' &&
       !(options.body instanceof FormData)
     ) {
       headers['Content-Type'] = headers['Content-Type'] || 'application/json'
       options.body = JSON.stringify(options.body)
+      options.headers.noCache = true
     }
 
     // Set up the fetch options

@@ -22,7 +22,6 @@ import {
   faStar as faStarRegular,
   faWindowMaximize
 } from '@fortawesome/free-regular-svg-icons'
-import { mkController } from '../../api/mkController'
 import { setStore, store } from '../../stores/store'
 import { Utils } from '../../util/util'
 import { usePlaylistSubMenu } from '../../composables/usePlaylistSubMenu'
@@ -32,212 +31,202 @@ import { mkApiManager } from '../../api/MkApiManager'
 
 const { closeSubContextMenu } = useSubContextMenuState()
 
+const createMenuItem = (
+  icon,
+  action,
+  label,
+  quickAction = false,
+  hasSubMenu = false,
+  tooltip?
+) => {
+  return {
+    icon,
+    action,
+    isQuickAction: quickAction,
+    label,
+    hasSubMenu,
+    onMouseEnter: () => closeSubContextMenu(),
+    tooltip
+  }
+}
+
+const createAsyncMenuItem = (icon, asyncAction, label, quickAction = false, tooltip?) => {
+  return {
+    icon,
+    action: async () => {
+      try {
+        await asyncAction()
+      } catch (error) {
+        console.error('Error executing menu action:', error)
+      }
+    },
+    isQuickAction: quickAction,
+    label,
+    onMouseEnter: () => closeSubContextMenu(),
+    tooltip
+  }
+}
+
 // Actions
 export const contextMenuItems = {
-  immersive: {
-    icon: faUpRightAndDownLeftFromCenter,
-    action: () => {},
-    isQuickAction: false,
-    label: 'Immersive',
-    disabled: false,
-    onMouseEnter: () => closeSubContextMenu()
-  },
-  miniPlayer: {
-    icon: faWindowMaximize,
-    action: () => {
-      Utils.resizeToMiniPlayer()
-    },
-    isQuickAction: false,
-    label: 'Mini Player',
-    disabled: false,
-    onMouseEnter: () => closeSubContextMenu()
-  },
-  share: (id, type) => {
-    return {
-      icon: faShare,
-      action: async () => {
-        await mkApiManager.getShareLink(id, type).then(async data => {
-          await navigator.clipboard.writeText(data.data[0].attributes.url)
-        })
+  immersive: createMenuItem(faUpRightAndDownLeftFromCenter, () => {}, 'Immersive'),
+  miniPlayer: createMenuItem(faWindowMaximize, Utils.resizeToMiniPlayer, 'Mini Player'),
+  share: (id, type) =>
+    createAsyncMenuItem(
+      faShare,
+      async () => {
+        const data = await mkApiManager.getShareLink(id, type)
+        await navigator.clipboard.writeText(data.data[0].attributes.url)
       },
-      isQuickAction: false,
-      label: 'Share',
-      onMouseEnter: () => closeSubContextMenu()
-    }
-  },
-  properties: (id, type) => {
-    return {
-      icon: faInfoCircle,
-      action: () => {
+      'Share'
+    ),
+  properties: (id, type) =>
+    createMenuItem(
+      faInfoCircle,
+      () => {
         setStore('app', 'modal', { open: true, type, id })
       },
-      isQuickAction: false,
-      label: 'Properties',
-      onMouseEnter: () => closeSubContextMenu()
-    }
-  },
-  createStation: (id, type) => {
-    return {
-      icon: faSatelliteDish,
-      action: () => {
+      'Properties'
+    ),
+  createStation: (id, type) =>
+    createMenuItem(
+      faSatelliteDish,
+      () => {
         mkManager.setStationQueue(id, type)
       },
-      isQuickAction: false,
-      label: 'Create Station',
-      disabled: false,
-      onMouseEnter: () => closeSubContextMenu()
-    }
-  },
-  goToArtist: (id, type) => {
-    return {
-      icon: faUser,
-      action: async () => {
-        await mkApiManager.getArtistFromMediaItem(id, type).then(data => {
-          console.log(data)
-          store.app.navigate(`/media/artists/${data.data[0].id}`)
-        })
+      'Create Station'
+    ),
+  goToArtist: (id, type) =>
+    createAsyncMenuItem(
+      faUser,
+      async () => {
+        const data = await mkApiManager.getArtistFromMediaItem(id, type)
+        console.log(data)
+        store.app.navigate(`/media/artists/${data.data[0].id}`)
       },
-      isQuickAction: false,
-      label: 'Go to Artist',
-      onMouseEnter: () => closeSubContextMenu()
-    }
-  },
-  goToAlbum: (id, type) => {
-    return {
-      icon: faRecordVinyl,
-      action: async () => {
-        await mkApiManager.getAlbumFromMediaItem(id, type).then(data => {
-          console.log(data)
-          store.app.navigate(`/media/albums/${data.data[0].id}`)
-        })
+      'Go to Artist'
+    ),
+
+  goToAlbum: (id, type) =>
+    createAsyncMenuItem(
+      faRecordVinyl,
+      async () => {
+        const data = await mkApiManager.getAlbumFromMediaItem(id, type)
+        console.log(data)
+        store.app.navigate(`/media/albums/${data.data[0].id}`)
       },
-      isQuickAction: false,
-      label: 'Go to Album',
-      onMouseEnter: () => closeSubContextMenu()
-    }
-  },
-  shuffle: (id, type) => {
-    return {
-      icon: faShuffle,
-      action: () => {
-        mkManager.processItemAndPlay(id, type, true)
-      },
-      isQuickAction: false,
-      label: 'Shuffle',
-      onMouseEnter: () => closeSubContextMenu()
-    }
-  },
-  removeFromQueue: (id, type) => {
-    return {
-      icon: faX,
-      action: async () => {
+      'Go to Album'
+    ),
+
+  shuffle: (id, type) =>
+    createMenuItem(
+      faShuffle,
+      () => mkManager.processItemAndPlay(id, type, true),
+      'Shuffle'
+    ),
+
+  removeFromQueue: (id, type) =>
+    createAsyncMenuItem(
+      faX,
+      async () => {
         const returnedId = await mkManager.removeFromQueue(id)
         setStore('app', 'queue', {
           items: store.app.queue.items.filter((item: any) => item.id !== returnedId)
         })
       },
-      isQuickAction: false,
-      disabled: false,
-      label: 'Remove from Queue',
-      onMouseEnter: () => closeSubContextMenu()
+      'Remove from Queue'
+    ),
+
+  addToPlaylist: (id, type) => ({
+    ...createMenuItem(faHeadphones, () => {}, 'Add to Playlist', false, true),
+    onMouseEnter: e => {
+      const { openPlaylistSubMenu } = usePlaylistSubMenu(e)
+      openPlaylistSubMenu(id, type)
     }
-  },
-  addToPlaylist: (id, type) => {
-    return {
-      icon: faHeadphones,
-      isQuickAction: false,
-      label: 'Add to Playlist',
-      hasSubMenu: true,
-      onMouseEnter: e => {
-        const { openPlaylistSubMenu } = usePlaylistSubMenu(e)
-        openPlaylistSubMenu(id, type)
-      }
-    }
-  },
+  }),
   // Quick actions
-  favoriteQuick: (id, type, disabled, isFavorite = false) => {
-    return {
-      icon: disabled ? faStarRegular : isFavorite ? faStar : faStarRegular,
-      action: () => {
-        isFavorite ? mkApiManager.unfavoriteArtist(id) : mkApiManager.favoriteArtist(id)
-      },
-      isQuickAction: true,
-      tooltip: isFavorite ? 'Unfavorite' : 'Favorite',
-      disabled: disabled
-    }
-  },
-  createStationQuick: (id, type) => {
-    return {
-      icon: faSatelliteDish,
-      action: () => {
-        mkManager.setStationQueue(id, type)
-      },
-      isQuickAction: true,
-      tooltip: 'Create Station'
-    }
-  },
-  loveQuick: (id, type, disabled, isLoved = false) => {
-    return {
-      icon: disabled ? faHeartRegular : isLoved ? faHeart : faHeartRegular,
-      action: () => {
+  favoriteQuick: (id, type, disabled, isFavorite = false) =>
+    createMenuItem(
+      disabled ? faStarRegular : isFavorite ? faStar : faStarRegular,
+      () =>
+        isFavorite ? mkApiManager.unfavoriteArtist(id) : mkApiManager.favoriteArtist(id),
+      isFavorite ? 'Unfavorite' : 'Favorite',
+      true,
+      false,
+      isFavorite ? 'Unfavorite' : 'Favorite'
+    ),
+
+  createStationQuick: (id, type) =>
+    createMenuItem(
+      faSatelliteDish,
+      () => mkManager.setStationQueue(id, type),
+      'Create Station',
+      true,
+      false,
+      'Create Station'
+    ),
+
+  loveQuick: (id, type, disabled, isLoved = false) =>
+    createMenuItem(
+      disabled ? faHeartRegular : isLoved ? faHeart : faHeartRegular,
+      () =>
         isLoved
           ? mkApiManager.unfavoriteItem(id, type)
-          : mkApiManager.favoriteItem(id, type)
-      },
-      isQuickAction: true,
-      tooltip: isLoved ? 'Unlove' : 'Love',
-      disabled: disabled
-    }
-  },
-  dislikeQuick: (id, type, disabled, isLoved, isDisliked = false) => {
-    console.log(isDisliked)
-    return {
-      icon: disabled
-        ? faThumbsDownRegular
-        : isDisliked
-        ? faThumbsDown
-        : faThumbsDownRegular,
-      action: () => {
+          : mkApiManager.favoriteItem(id, type),
+      isLoved ? 'Unlove' : 'Love',
+      true,
+      false,
+      isLoved ? 'Unlove' : 'Love'
+    ),
+
+  dislikeQuick: (id, type, disabled, isLoved, isDisliked = false) =>
+    createMenuItem(
+      disabled ? faThumbsDownRegular : isDisliked ? faThumbsDown : faThumbsDownRegular,
+      () =>
         isDisliked
           ? mkApiManager.unfavoriteItem(id, type)
-          : mkApiManager.dislikeItem(id, type)
+          : mkApiManager.dislikeItem(id, type),
+      isDisliked ? 'Undislike' : 'Dislike',
+      true,
+      false,
+      isDisliked ? 'Undislike' : 'Dislike'
+    ),
+
+  addToLibraryQuick: (id, type, disabled, isLoved, isDisliked, isInLibrary = false) =>
+    createAsyncMenuItem(
+      disabled ? faPlus : isInLibrary ? faMinus : faPlus,
+      async () => {
+        if (isInLibrary && id[0] !== 'l') {
+          const resp = await mkApiManager.getLibraryIdFromCatalog(id, type)
+          await mkApiManager.removeFromLibrary(resp.data[0].id, type)
+        } else if (isInLibrary) {
+          await mkApiManager.removeFromLibrary(id, type)
+        } else {
+          await mkApiManager.addToLibrary(id, type)
+        }
       },
-      isQuickAction: true,
-      tooltip: isDisliked ? 'Undislike' : 'Dislike',
-      disabled: disabled
-    }
-  },
-  addToLibraryQuick: (id, type, disabled, isLoved, isDisliked, isInLibrary = false) => {
-    return {
-      icon: disabled ? faPlus : isInLibrary ? faMinus : faPlus,
-      action: () => {
-        isInLibrary
-          ? mkApiManager.removeFromLibrary(id, type)
-          : mkApiManager.addToLibrary(id, type)
-      },
-      isQuickAction: true,
-      tooltip: isInLibrary ? 'Remove from Library' : 'Add to Library',
-      disabled: disabled
-    }
-  },
-  playNextQuick: (id, type) => {
-    return {
-      icon: faIndent,
-      action: () => {
-        mkManager.playNext(id, type)
-      },
-      isQuickAction: true,
-      tooltip: 'Play Next'
-    }
-  },
-  playLastQuick: (id, type) => {
-    return {
-      icon: faOutdent,
-      action: () => {
-        mkManager.playLater(id, type)
-      },
-      isQuickAction: true,
-      tooltip: 'Play Last'
-    }
-  }
+      isInLibrary ? 'Remove from Library' : 'Add to Library',
+      true,
+      isInLibrary ? 'Remove from Library' : 'Add to Library'
+    ),
+
+  playNextQuick: (id, type) =>
+    createMenuItem(
+      faIndent,
+      () => mkManager.playNext(id, type),
+      'Play Next',
+      true,
+      false,
+      'Play Next'
+    ),
+
+  playLastQuick: (id, type) =>
+    createMenuItem(
+      faOutdent,
+      () => mkManager.playLater(id, type),
+      'Play Last',
+      true,
+      false,
+      'Play Last'
+    )
 }

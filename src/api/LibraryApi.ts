@@ -150,7 +150,9 @@ export class LibraryApi {
 
     const response = await this.musicKitApiClient.fetchFromMusicKit(
       `catalog/${store.countryCode}/${strippedType}`,
-      null,
+      {
+        headers: { 'Cache-Control': 'no-cache' }
+      },
       {
         fields: 'inLibrary',
         [`ids`]: id
@@ -169,8 +171,24 @@ export class LibraryApi {
    * @returns A Promise that resolves to the response from the API.
    */
   async getCatalogItemFromLibrary(id: string, type: string) {
+    const strippedType = MediaItemTypeService.stripType(type)
     const response = await this.musicKitApiClient.fetchFromMusicKit(
-      `me/library/${type}/${id}/catalog`,
+      `me/library/${strippedType}/${id}/catalog`,
+      null
+    )
+
+    return response
+  }
+
+  /**
+   * Retrieves the library ID from the catalog based on the provided ID and type.
+   * @param id The ID of the item in the catalog.
+   * @param type The type of the item in the catalog.
+   * @returns A Promise that resolves to the response from the API.
+   */
+  async getLibraryIdFromCatalog(id: string, type: string) {
+    const response = await this.musicKitApiClient.fetchFromMusicKit(
+      `catalog/${store.countryCode}/${type}/${id}/library`,
       null
     )
 
