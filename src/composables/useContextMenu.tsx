@@ -2,37 +2,11 @@ import { setStore, store } from '../stores/store'
 
 const OUT_OF_VIEW = -10000
 
-export const useContextMenuState = () => {
-  const closeContextMenu = () => {
-    setStore('app', 'contextMenu', {
-      open: false,
-      x: OUT_OF_VIEW,
-      y: OUT_OF_VIEW,
-      id: '',
-      type: null,
-      subType: null,
-      display: 'none'
-    })
-
-    setStore('app', 'subContextMenu', {
-      x: OUT_OF_VIEW,
-      y: OUT_OF_VIEW,
-      items: [],
-      open: false,
-      id: '',
-      type: ''
-    })
-  }
-
-  return { closeContextMenu }
-}
-
-export const useContextMenu = () => {
-  const setContextMenuItems = items => {
+const contextMenuActions = {
+  setContextMenuItems: items => {
     setStore('app', 'contextMenu', 'items', items)
-  }
-
-  const calculatePosition = (e, menuWidth, menuHeight) => {
+  },
+  calculatePosition: (e, menuWidth, menuHeight) => {
     const padding = 10
     const { clientX, clientY } = e
 
@@ -46,9 +20,9 @@ export const useContextMenu = () => {
     y = Math.max(padding, Math.min(y, window.innerHeight - menuHeight - padding))
 
     return { x, y }
-  }
-
-  const openContextMenu = (e, id, type, subType) => {
+  },
+  openContextMenu: (e, id, type, subType) => {
+    console.log()
     setStore('app', 'contextMenu', {
       open: true,
       x: OUT_OF_VIEW,
@@ -62,7 +36,7 @@ export const useContextMenu = () => {
     const menu = document.getElementById('contextMenu')
     if (menu) {
       const { offsetWidth, offsetHeight } = menu
-      const { x, y } = calculatePosition(e, offsetWidth, offsetHeight)
+      const { x, y } = contextMenuActions.calculatePosition(e, offsetWidth, offsetHeight)
 
       setStore('app', 'contextMenu', {
         open: true,
@@ -88,6 +62,31 @@ export const useContextMenu = () => {
       e.stopImmediatePropagation()
     }
   }
-
-  return { openContextMenu, setContextMenuItems }
 }
+
+export const useContextMenuState = () => {
+  const closeContextMenu = () => {
+    setStore('app', 'contextMenu', {
+      open: false,
+      x: OUT_OF_VIEW,
+      y: OUT_OF_VIEW,
+      id: '',
+      type: null,
+      subType: null,
+      display: 'none'
+    })
+
+    setStore('app', 'subContextMenu', {
+      x: OUT_OF_VIEW,
+      y: OUT_OF_VIEW,
+      items: [],
+      open: false,
+      id: '',
+      type: ''
+    })
+  }
+
+  return { closeContextMenu }
+}
+
+export const useContextMenu = () => contextMenuActions

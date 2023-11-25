@@ -53,6 +53,7 @@ export const MediaItem = ({
     <div
       class={styles.mediaItem}
       data-id={id}
+      data-testid="media-item"
       onContextMenu={e => openContextMenu(e, id, ContextMenuType.MediaItem, type)}
     >
       <div class={styles.mediaItem__inner}>

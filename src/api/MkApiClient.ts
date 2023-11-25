@@ -1,4 +1,5 @@
-import { ArtistResponse } from '../types/api/ArtistResponse'
+import { AlbumData, AlbumResponse } from '../types/api/AlbumResponse'
+import { ArtistData, ArtistResponse } from '../types/api/ArtistResponse'
 import { ApiResponse, FetchOptions } from '../types/api/common'
 import { Config } from '../types/common'
 
@@ -55,7 +56,7 @@ export class ApiClient {
     endpoint: string,
     options: FetchOptions = { method: 'GET' },
     queryParams = {}
-  ): Promise<ApiResponse<ArtistResponse>> {
+  ): Promise<ApiResponse<ArtistResponse | AlbumResponse>> {
     // Adjust the return type as per your API response
     let url = `https://amp-api.music.apple.com/v1/${endpoint}`
 
@@ -92,6 +93,6 @@ export class ApiClient {
       throw new Error(`API Call failed: ${response.status}`)
     }
 
-    return response.json() as Promise<ApiResponse<object>>
+    return response.json() as Promise<ApiResponse<AlbumData | ArtistData>>
   }
 }

@@ -10,7 +10,6 @@ export const tauriService = {
     try {
       return await platform()
     } catch (error) {
-      console.error(error)
       return null
     }
   },
@@ -39,7 +38,6 @@ export const tauriService = {
     try {
       return await invoke(command, args)
     } catch (error) {
-      console.error(error)
       return null
     }
   }
