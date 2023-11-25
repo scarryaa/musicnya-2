@@ -1,5 +1,5 @@
 import MusicKit, { mockConfigure, mockAuthorize } from '../__mocks__/musicKit.mock'
-import { mkManager } from '../mkManager'
+import { mkManager } from '../MkManager'
 
 const originalMusicKit = global.MusicKit
 

@@ -6,7 +6,7 @@ import Fa from 'solid-fa'
 import { mkController } from '../../api/mkController'
 import { useContextMenu } from '../../composables/useContextMenu'
 import { ContextMenuType } from '../../types/types'
-import { mkManager } from '../../api/mkManager'
+import { mkManager } from '../../api/MkManager'
 
 // TODO check if context menu works
 export const EditorialItemLarge = ({ item }) => {

@@ -1,3 +1,4 @@
+import { mkApiManager } from '../../../api/MkApiManager'
 import { mkController } from '../../../api/mkController'
 import { Reaction } from '../../../types/types'
 import { historyItemContextMenu } from '../ContextMenuTypes'
@@ -5,8 +6,8 @@ import { historyItemContextMenu } from '../ContextMenuTypes'
 export const historyItemContextMenuConfig = {
   fetchData: async (id, subType) => {
     const [inLibraryState, isLovedState] = await Promise.all([
-      mkController.checkIfInLibrary(id, subType),
-      mkController.checkIfLoved(id, subType)
+      mkApiManager.isItemInLibrary(id, subType),
+      mkApiManager.isItemFavorite(id, subType)
     ])
 
     return {

@@ -92,7 +92,7 @@ export const MediaSelector = ({ item }) => {
     return (
       <MediaItem
         {...commonProps}
-        id={mediaItem.meta?.catalogIds?.[0] || mediaItem.id}
+        id={mediaItem.id}
         artists={[mediaItem.attributes?.artistName]}
         artistId={mediaItem.relationships?.artists?.data?.[0]?.id}
         curator={mediaItem.attributes?.curatorName}

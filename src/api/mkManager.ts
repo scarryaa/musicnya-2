@@ -4,6 +4,9 @@ import { MediaItemTypeService } from '../services/mediaItemTypeService'
 import { setStore, store } from '../stores/store'
 import { ArtistsApi } from './ArtistsApi'
 import { ApiClient } from './MkApiClient'
+import { increasePlayCount } from '../db/db'
+import { Utils } from '../util/util'
+import { MetadataApi } from './MetadataApi'
 
 /**
  * Class representing a MusicKitManager.
@@ -11,8 +14,7 @@ import { ApiClient } from './MkApiClient'
  */
 class MusicKitManager {
   _musicKitInstance: MusicKit.MusicKitInstance | null = null
-  _musicKitApiClient: ApiClient | null = null
-  _artistsApi: ArtistsApi | null = null
+  _metadataApi: MetadataApi | null = null
 
   private _shouldBeArray = (type: string) => {
     if (type === 'musicVideos') return false
@@ -26,11 +28,6 @@ class MusicKitManager {
 
   set musicKitInstance(value) {
     this._musicKitInstance = value
-  }
-
-  constructor() {
-    this._musicKitApiClient = new ApiClient(this.musicKitInstance, config)
-    this._artistsApi = new ArtistsApi(this.musicKitInstance, this._musicKitApiClient)
   }
 
   /**
@@ -47,10 +44,20 @@ class MusicKitManager {
       config.MusicKit.musicUserToken = this._musicKitInstance.musicUserToken
       this.musicKitInstance.autoplayEnabled = store.app.queue.autoplay
       this.musicKitInstance._autoplayEnabled = store.app.queue.autoplay
+      return this._musicKitInstance
     } catch (e) {
       console.error('Failed to initialize MusicKit: ', e)
       throw e
     }
+  }
+
+  async initializeApis() {
+    if (!this._musicKitInstance) {
+      throw new Error('MusicKit instance not initialized')
+    }
+
+    const musicKitApiClient = new ApiClient(this._musicKitInstance, config)
+    this._metadataApi = new MetadataApi(this._musicKitInstance, musicKitApiClient)
   }
 
   /**
@@ -185,6 +192,14 @@ class MusicKitManager {
     this.musicKitInstance.queue._reindex()
 
     return this.musicKitInstance.queue._queueItems
+  }
+
+  /**
+   * Changes the media to the specified index.
+   * @param index - The index of the media to change to.
+   */
+  changeToIndex = async (index: number) => {
+    await this.musicKitInstance.changeToMediaAtIndex(index)
   }
 
   /**
@@ -393,37 +408,36 @@ class MusicKitManager {
       })
     }
 
-    //   Utils.debounce(async () => {
-    //     // TODO implement
-    //     const isLoved = await mkManager.checkIfLoved(e.id, 'songs')
-    //     setStore(
-    //       'currentTrack',
-    //       'loved',
-    //       isLoved.data?.[0]?.attributes?.value === Reaction.Loved
-    //     )
-    //     setStore(
-    //       'currentTrack',
-    //       'disliked',
-    //       isLoved.data?.[0]?.attributes?.value === Reaction.Disliked
-    //     )
+    // Utils.debounce(async () => {
+    //   const isLoved = await mkManager.checkIfLoved(e.id, 'songs')
+    //   setStore(
+    //     'currentTrack',
+    //     'loved',
+    //     isLoved.data?.[0]?.attributes?.value === Reaction.Loved
+    //   )
+    //   setStore(
+    //     'currentTrack',
+    //     'disliked',
+    //     isLoved.data?.[0]?.attributes?.value === Reaction.Disliked
+    //   )
 
-    //     const inLibrary = await mkManager.checkIfInLibrary(e.id, 'songs')
-    //     setStore('currentTrack', 'inLibrary', inLibrary.data?.[0]?.attributes?.inLibrary)
-    //   }, 1000)()
+    //   const inLibrary = await mkManager.checkIfInLibrary(e.id, 'songs')
+    //   setStore('currentTrack', 'inLibrary', inLibrary.data?.[0]?.attributes?.inLibrary)
+    // }, 1000)()
 
-    //   const rawLyricsData = await this.getLyrics(
-    //     e.item.playParams.catalogId ?? e.item.playParams.id
-    //   ).then((response: any) => {
-    //     return response.data[0].attributes.ttml
-    //   })
+    const rawLyricsData = await this._metadataApi
+      .getSongLyrics(event.item.playParams.catalogId ?? event.item.playParams.id)
+      .then((response: any) => {
+        return response.data[0].attributes.ttml
+      })
 
-    //   setStore('currentTrack', {
-    //     lyrics: {
-    //       lyricsArray: Utils.parseTTMLtoJS(rawLyricsData),
-    //       writtenByArray: Utils.stripWrittenBy(rawLyricsData),
-    //       begin: Utils.getLyricsBeginning(rawLyricsData)
-    //     }
-    //   })
+    setStore('currentTrack', {
+      lyrics: {
+        lyricsArray: Utils.parseTTMLtoJS(rawLyricsData),
+        writtenByArray: Utils.stripWrittenBy(rawLyricsData),
+        begin: Utils.getLyricsBeginning(rawLyricsData)
+      }
+    })
   }
 
   /**
@@ -532,16 +546,6 @@ class MusicKitManager {
     } else {
       throw new Error('Unknown shuffle mode')
     }
-  }
-
-  // API
-  /**
-   * Retrieves an artist by their ID.
-   * @param {number} id - The ID of the artist.
-   * @returns {Promise<Artist>} - A promise that resolves to the artist object.
-   */
-  getArtist(id) {
-    return this._artistsApi.getArtist(id)
   }
 }
 

@@ -8,7 +8,8 @@ import Tooltip from '../Tooltip/Tooltip'
 import { createSignal } from 'solid-js'
 import { useContextMenu } from '../../composables/useContextMenu'
 import { ContextMenuType } from '../../types/types'
-import { mkManager } from '../../api/mkManager'
+import { MkManager } from '../../api/MkManager'
+import { mkApiManager } from '../../api/MkApiManager'
 
 export const SongItem = ({ item, album, albumId }) => {
   const [inLibrary, setInLibrary] = createSignal(false)
@@ -17,7 +18,7 @@ export const SongItem = ({ item, album, albumId }) => {
   const { openContextMenu } = useContextMenu()
 
   const handleAddToLibraryClick = e => {
-    mkController.addToLibrary(item.id, 'songs').then(
+    mkApiManager.addToLibrary(item.id, 'songs').then(
       res => {
         if (res) {
           setInLibrary(true)
@@ -30,7 +31,7 @@ export const SongItem = ({ item, album, albumId }) => {
   }
 
   const handleRemoveFromLibraryClick = e => {
-    mkController.removeFromLibrary(libraryId(), 'songs').then(
+    mkApiManager.removeFromLibrary(libraryId(), 'songs').then(
       res => {
         if (res) {
           setInLibrary(false)
@@ -44,7 +45,7 @@ export const SongItem = ({ item, album, albumId }) => {
 
   const handleMouseOver = e => {
     if (checkedInLibrary()) return
-    mkController.checkIfInLibrary(item.id, 'songs').then(
+    mkApiManager.isItemInLibrary(item.id, 'songs').then(
       res => {
         setCheckedInLibrary(true)
         if (res) {

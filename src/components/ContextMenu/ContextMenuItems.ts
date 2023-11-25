@@ -27,7 +27,8 @@ import { setStore, store } from '../../stores/store'
 import { Utils } from '../../util/util'
 import { usePlaylistSubMenu } from '../../composables/usePlaylistSubMenu'
 import { useSubContextMenuState } from '../../composables/useSubContextMenu'
-import { mkManager } from '../../api/mkManager'
+import { mkManager } from '../../api/MkManager'
+import { mkApiManager } from '../../api/MkApiManager'
 
 const { closeSubContextMenu } = useSubContextMenuState()
 
@@ -55,7 +56,7 @@ export const contextMenuItems = {
     return {
       icon: faShare,
       action: async () => {
-        await mkController.getShareLink(id, type).then(async data => {
+        await mkApiManager.getShareLink(id, type).then(async data => {
           await navigator.clipboard.writeText(data.data[0].attributes.url)
         })
       },
@@ -91,7 +92,7 @@ export const contextMenuItems = {
     return {
       icon: faUser,
       action: async () => {
-        await mkController.getArtistFromMediaItem(id, type).then(data => {
+        await mkApiManager.getArtistFromMediaItem(id, type).then(data => {
           console.log(data)
           store.app.navigate(`/media/artists/${data.data[0].id}`)
         })
@@ -105,7 +106,7 @@ export const contextMenuItems = {
     return {
       icon: faRecordVinyl,
       action: async () => {
-        await mkController.getAlbumFromMediaItem(id, type).then(data => {
+        await mkApiManager.getAlbumFromMediaItem(id, type).then(data => {
           console.log(data)
           store.app.navigate(`/media/albums/${data.data[0].id}`)
         })
@@ -158,7 +159,7 @@ export const contextMenuItems = {
     return {
       icon: disabled ? faStarRegular : isFavorite ? faStar : faStarRegular,
       action: () => {
-        isFavorite ? mkController.unfavoriteArtist(id) : mkController.favoriteArtist(id)
+        isFavorite ? mkApiManager.unfavoriteArtist(id) : mkApiManager.favoriteArtist(id)
       },
       isQuickAction: true,
       tooltip: isFavorite ? 'Unfavorite' : 'Favorite',
@@ -179,7 +180,9 @@ export const contextMenuItems = {
     return {
       icon: disabled ? faHeartRegular : isLoved ? faHeart : faHeartRegular,
       action: () => {
-        isLoved ? mkController.unlove(id, type) : mkController.love(id, type)
+        isLoved
+          ? mkApiManager.unfavoriteItem(id, type)
+          : mkApiManager.favoriteItem(id, type)
       },
       isQuickAction: true,
       tooltip: isLoved ? 'Unlove' : 'Love',
@@ -194,7 +197,9 @@ export const contextMenuItems = {
         ? faThumbsDown
         : faThumbsDownRegular,
       action: () => {
-        isDisliked ? mkController.unlove(id, type) : mkController.dislike(id, type)
+        isDisliked
+          ? mkApiManager.favoriteItem(id, type)
+          : mkApiManager.dislikeItem(id, type)
       },
       isQuickAction: true,
       tooltip: isDisliked ? 'Undislike' : 'Dislike',
@@ -206,8 +211,8 @@ export const contextMenuItems = {
       icon: disabled ? faPlus : isInLibrary ? faMinus : faPlus,
       action: () => {
         isInLibrary
-          ? mkController.removeFromLibrary(id, type)
-          : mkController.addToLibrary(id, type)
+          ? mkApiManager.removeFromLibrary(id, type)
+          : mkApiManager.addToLibrary(id, type)
       },
       isQuickAction: true,
       tooltip: isInLibrary ? 'Remove from Library' : 'Add to Library',

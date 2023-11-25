@@ -4,7 +4,7 @@ import styles from './VideoItem.module.scss'
 import { faEllipsisH, faPlay } from '@fortawesome/free-solid-svg-icons'
 import { A } from '@solidjs/router'
 import { mkController } from '../../api/mkController'
-import { mkManager } from '../../api/mkManager'
+import { mkManager } from '../../api/MkManager'
 
 export const VideoItem = ({ item }) => {
   const handlePlayClick = e => {

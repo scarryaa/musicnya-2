@@ -6,6 +6,7 @@ import { Utils } from '../../util/util'
 import styles from './RecentlyAdded.module.scss'
 import musicNote from '../../assets/music_note.png'
 import { MediaItemSkeleton } from '../../components/Skeletons/MediaItemSkeleton'
+import { mkApiManager } from '../../api/MkApiManager'
 
 export const RecentlyAdded = () => {
   const [data, setData] = createSignal([])
@@ -17,8 +18,8 @@ export const RecentlyAdded = () => {
   const fetchMoreData = () => {
     if (fetchingData()) return
     setFetchingData(true)
-    mkController
-      .getRecentlyAdded(data()?.length.toString())
+    mkApiManager
+      .getRecentlyAdded(data()?.length || 0)
       .then(newData => {
         setData([...data(), ...newData.data])
         if (newData.data.length < 25) {

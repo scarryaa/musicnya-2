@@ -11,6 +11,7 @@ import { SwatchSquare } from '../../SwatchSquare/SwatchSquare'
 import { Chip } from '../../Chip/Chip'
 import { mkController } from '../../../api/mkController'
 import { getDB } from '../../../db/db'
+import { mkApiManager } from '../../../api/MkApiManager'
 
 export const Song = () => {
   const [songId, setSongId] = createSignal(store.app.modal.id)
@@ -34,7 +35,7 @@ export const Song = () => {
   createEffect(async () => {
     setCurrentSong(null)
     if (store.app.modal.type.includes('library-')) {
-      const res = await mkController.getCatalogFromLibrary(
+      const res = await mkApiManager.getCatalogItemFromLibrary(
         store.app.modal.id,
         store.app.modal.type
       )
@@ -48,7 +49,7 @@ export const Song = () => {
       setCurrentSong(data.data[0])
       setAudioAnalysis(data.data[0]?.relationships?.['audio-analysis'].data[0])
       setSongCredits(
-        await mkController.getSongCredits(data.data[0].id).then(
+        await mkApiManager.getSongCredits(data.data[0].id).then(
           res => {
             if (res) {
               return res.data

@@ -10,6 +10,7 @@ import { LoadingSpinner } from '../../LoadingSpinner/LoadingSpinner'
 import { SwatchSquare } from '../../SwatchSquare/SwatchSquare'
 import { Chip } from '../../Chip/Chip'
 import { mkController } from '../../../api/mkController'
+import { mkApiManager } from '../../../api/MkApiManager'
 
 export const Artist = () => {
   const [artistId, setArtistId] = createSignal(store.app.modal.id)
@@ -22,7 +23,7 @@ export const Artist = () => {
   createEffect(async () => {
     setCurrentArtist(null)
     if (store.app.modal.type.includes('library-')) {
-      const res = await mkController.getCatalogFromLibrary(
+      const res = await mkApiManager.getCatalogItemFromLibrary(
         store.app.modal.id,
         store.app.modal.type
       )

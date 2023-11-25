@@ -7,7 +7,8 @@ import { Utils } from '../../util/util'
 import styles from './SongTableItem.module.scss'
 import { useContextMenu } from '../../composables/useContextMenu'
 import { ContextMenuType } from '../../types/types'
-import { mkManager } from '../../api/mkManager'
+import { mkManager } from '../../api/MkManager'
+import { mkApiManager } from '../../api/MkApiManager'
 
 export const SongTableItem = ({ track, data, index }) => {
   const { openContextMenu } = useContextMenu()
@@ -84,7 +85,7 @@ export const SongTableItem = ({ track, data, index }) => {
                       }`
                     )
                   : data().type === 'library-playlists'
-                  ? mkController
+                  ? mkApiManager
                       .getArtistFromMediaItem(
                         track.relationships?.catalog?.data?.[0].id,
                         'songs'

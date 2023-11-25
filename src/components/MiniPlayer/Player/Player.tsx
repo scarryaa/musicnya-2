@@ -26,7 +26,8 @@ import { createEffect, createSignal } from 'solid-js'
 import { localStorageService } from '../../../services/localStorageService'
 import { Utils } from '../../../util/util'
 import { tauriService } from '../../../services/tauriService'
-import { mkManager } from '../../../api/mkManager'
+import { mkManager } from '../../../api/MkManager'
+import { mkApiManager } from '../../../api/MkApiManager'
 
 export const Player = () => {
   const [isMuted, setIsMuted] = createSignal(false)
@@ -107,7 +108,7 @@ export const Player = () => {
 
   const handleLibraryButton = e => {
     if (store.currentTrack.inLibrary) {
-      mkController.removeFromLibrary(store.currentTrack.id, 'songs').then(res => {
+      mkApiManager.removeFromLibrary(store.currentTrack.id, 'songs').then(res => {
         if (res) {
           setStore('currentTrack', {
             ...store.currentTrack,
@@ -116,7 +117,7 @@ export const Player = () => {
         }
       })
     } else {
-      mkController.addToLibrary(store.currentTrack.id, 'songs').then(res => {
+      mkApiManager.addToLibrary(store.currentTrack.id, 'songs').then(res => {
         if (res) {
           setStore('currentTrack', {
             ...store.currentTrack,
@@ -129,7 +130,7 @@ export const Player = () => {
 
   const handleLoveButton = e => {
     if (store.currentTrack.loved) {
-      mkController.unlove(store.currentTrack.id, 'songs').then(res => {
+      mkApiManager.unfavoriteItem(store.currentTrack.id, 'songs').then(res => {
         if (res) {
           setStore('currentTrack', {
             ...store.currentTrack,
@@ -138,7 +139,7 @@ export const Player = () => {
         }
       })
     } else {
-      mkController.love(store.currentTrack.id, 'songs').then(res => {
+      mkApiManager.favoriteItem(store.currentTrack.id, 'songs').then(res => {
         if (res) {
           setStore('currentTrack', {
             ...store.currentTrack,
@@ -151,7 +152,7 @@ export const Player = () => {
 
   const handleDislikeButton = e => {
     if (store.currentTrack.disliked) {
-      mkController.unlove(store.currentTrack.id, 'songs').then(res => {
+      mkApiManager.unfavoriteItem(store.currentTrack.id, 'songs').then(res => {
         if (res) {
           setStore('currentTrack', {
             ...store.currentTrack,
@@ -160,7 +161,7 @@ export const Player = () => {
         }
       })
     } else {
-      mkController.dislike(store.currentTrack.id, 'songs').then(res => {
+      mkApiManager.dislikeItem(store.currentTrack.id, 'songs').then(res => {
         if (res) {
           setStore('currentTrack', {
             ...store.currentTrack,

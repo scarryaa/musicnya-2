@@ -6,7 +6,7 @@ import { mkController } from '../../api/mkController'
 import { A } from '@solidjs/router'
 import { useContextMenu } from '../../composables/useContextMenu'
 import { ContextMenuType } from '../../types/types'
-import { mkManager } from '../../api/mkManager'
+import { MkManager } from '../../api/MkManager'
 
 export const EditorialItem = ({ item }) => {
   const childType =

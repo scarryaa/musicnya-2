@@ -7,7 +7,7 @@ import { createEffect, createSignal } from 'solid-js'
 import Tooltip from '../Tooltip/Tooltip'
 import { useContextMenu } from '../../composables/useContextMenu'
 import { ContextMenuType } from '../../types/types'
-import { mkManager } from '../../api/mkManager'
+import { mkManager } from '../../api/MkManager'
 
 export const MediaItem = ({
   src,
@@ -42,6 +42,7 @@ export const MediaItem = ({
   return (
     <div
       class={styles.mediaItem}
+      data-id={id}
       onContextMenu={e => openContextMenu(e, id, ContextMenuType.MediaItem, type)}
     >
       <div class={styles.mediaItem__inner}>

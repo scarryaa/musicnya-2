@@ -3,7 +3,7 @@ import { store } from '../../stores/store'
 import styles from './Lyrics.module.scss'
 import { Utils } from '../../util/util'
 import { mkController } from '../../api/mkController'
-import { mkManager } from '../../api/mkManager'
+import { mkManager } from '../../api/MkManager'
 
 export const Lyrics = () => {
   const [autoScroll, setAutoScroll] = createSignal(true)

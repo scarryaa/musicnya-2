@@ -3,12 +3,13 @@ import styles from './History.module.scss'
 import { mkController } from '../../api/mkController'
 import { QueueItem } from '../QueueItem/QueueItem'
 import { HistoryItem } from '../HistoryItem/HistoryItem'
+import { mkApiManager } from '../../api/MkApiManager'
 
 export const History = () => {
   const [history, setHistory] = createSignal([])
 
   createEffect(() => {
-    mkController.getHistory().then(res => setHistory(res.data))
+    mkApiManager.getRecentSongs().then(res => setHistory(res.data))
   })
 
   return (

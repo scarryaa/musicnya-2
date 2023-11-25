@@ -7,7 +7,7 @@ import { faInfinity } from '@fortawesome/free-solid-svg-icons'
 import { mkController } from '../../api/mkController'
 import { Utils } from '../../util/util'
 import Tooltip from '../Tooltip/Tooltip'
-import { mkManager } from '../../api/mkManager'
+import { mkManager } from '../../api/MkManager'
 
 export const Queue = () => {
   const [queueItems, setQueueItems] = createSignal(store.app.queue.items)

@@ -8,23 +8,25 @@ import { Utils } from '../../util/util'
 import Tooltip from '../Tooltip/Tooltip'
 import { useContextMenu } from '../../composables/useContextMenu'
 import { ContextMenuType } from '../../types/types'
+import { mkManager } from '../../api/MkManager'
+import { mkApiManager } from '../../api/MkApiManager'
 
 export const HistoryItem = ({ item, index }) => {
   const { openContextMenu } = useContextMenu()
 
   const handleDoubleClick = e => {
-    mkController.changeToIndex(index)
+    mkManager.changeToIndex(index)
   }
 
   const handlePlayClick = e => {
-    mkController.changeToIndex(index)
+    mkManager.changeToIndex(index)
   }
 
   const handleAlbumClick = e => {
     e.stopPropagation()
     e.preventDefault()
     e.stopImmediatePropagation()
-    mkController.getAlbumFromMediaItem(item.id, item.type).then(
+    mkApiManager.getAlbumFromMediaItem(item.id, item.type).then(
       res => {
         if (res) {
           store.app.navigate(`/media/albums/${res.data[0].id}`)
@@ -40,7 +42,7 @@ export const HistoryItem = ({ item, index }) => {
     e.stopPropagation()
     e.preventDefault()
     e.stopImmediatePropagation()
-    mkController.getArtistFromMediaItem(item.id, item.type).then(
+    mkApiManager.getArtistFromMediaItem(item.id, item.type).then(
       res => {
         if (res) {
           store.app.navigate(`/media/artists/${res.data[0].id}`)

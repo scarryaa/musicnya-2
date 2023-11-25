@@ -13,10 +13,11 @@ import { fetchBrowse } from '../api/browse'
 import { fetchRadio } from '../api/radio'
 import { fetchVideo } from '../api/video'
 import { fetchRecentlyAdded } from '../api/recentlyAdded'
-import { fetchArtist, fetchArtistDetailed } from '../api/artist'
+import { fetchArtist } from '../api/artist'
 import { fetchLibrarySongDetailed, fetchSongDetailed } from '../api/song'
 import { fetchCuratorDetailed } from '../api/curator'
 import { mkController } from '../api/mkController'
+import { mkApiManager } from '../api/MkApiManager'
 
 export const createStationStore = () => {
   return function (params: { id: string }) {
@@ -203,7 +204,7 @@ export const createModalAlbumStore = () => {
     )
 
     if (params.id.startsWith('l.')) {
-      mkController.getCatalogFromLibrary(params.id, 'library-albums').then(data => {
+      mkApiManager.getCatalogItemFromLibrary(params.id, 'library-albums').then(data => {
         console.log(data)
       })
     }
@@ -263,12 +264,7 @@ export const createModalArtistStore = () => {
   return function (params: { id: string }) {
     const [data] = createResource(
       () => params.id,
-      async () =>
-        await fetchArtistDetailed({
-          devToken: config.MusicKit.token,
-          musicUserToken: MusicKit.getInstance()?.musicUserToken,
-          id: params.id
-        })
+      async () => await mkApiManager.getArtist(params.id)
     )
 
     return data
@@ -279,12 +275,7 @@ export const createArtistStore = () => {
   return function (params: { id: string }) {
     const [data] = createResource(
       () => params.id,
-      async () =>
-        await fetchArtist({
-          devToken: config.MusicKit.token,
-          musicUserToken: MusicKit.getInstance()?.musicUserToken,
-          id: params.id
-        })
+      async () => await mkApiManager.getArtist(params.id)
     )
 
     return data

@@ -14,7 +14,8 @@ import { RelatedArtistsPane } from '../../../components/RelatedArtistsPane/Relat
 import { useContextMenu } from '../../../composables/useContextMenu'
 import { ContextMenuType } from '../../../types/types'
 import { ArtistInfoPane } from './Components/ArtistInfoPane/ArtistInfoPane'
-import { mkManager } from '../../../api/mkManager'
+import { mkManager } from '../../../api/MkManager'
+import { mkApiManager } from '../../../api/MkApiManager'
 
 export const Artist = () => {
   const params = useParams<{ id: string }>()
@@ -62,19 +63,17 @@ export const Artist = () => {
     mkManager.setStationQueue(currentArtist().id, 'artists')
   }
 
-  const handleFavoriteClick = () => {
+  const handleFavoriteClick = async () => {
     if (isFavorited()) {
-      mkController.unfavoriteArtist(currentArtist().id).then(res => {
-        if (res) {
-          setIsFavorited(false)
-        }
-      })
+      const res = await mkApiManager.unfavoriteArtist(currentArtist().id)
+      if (res) {
+        setIsFavorited(false)
+      }
     } else {
-      mkController.favoriteArtist(currentArtist().id).then(res => {
-        if (res) {
-          setIsFavorited(true)
-        }
-      })
+      const res = await mkApiManager.favoriteArtist(currentArtist().id)
+      if (res) {
+        setIsFavorited(true)
+      }
     }
   }
 

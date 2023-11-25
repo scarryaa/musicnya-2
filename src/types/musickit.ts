@@ -229,6 +229,7 @@ declare module MusicKit {
     developerToken: string
     autoplayEnabled: boolean
     _autoplayEnabled: boolean
+    setStationQueue({}: { [x: number]: string[] }): void
 
     // Methods
 
@@ -479,6 +480,8 @@ declare module MusicKit {
     startPlaying: boolean
     /** The number of seconds to seek to in the current queue item after it is created. */
     startTime: number
+    _queueItems: MediaItem[]
+    _reindex(): void
   }
 
   /** {@link MusicKit} on the Web uses the following error codes to describe errors that may occur when using MusicKit, including server and local errors. */

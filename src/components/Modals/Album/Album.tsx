@@ -10,6 +10,7 @@ import { LoadingSpinner } from '../../LoadingSpinner/LoadingSpinner'
 import { SwatchSquare } from '../../SwatchSquare/SwatchSquare'
 import { Chip } from '../../Chip/Chip'
 import { mkController } from '../../../api/mkController'
+import { mkApiManager } from '../../../api/MkApiManager'
 
 export const Album = () => {
   const [albumId, setAlbumId] = createSignal(store.app.modal.id)
@@ -23,8 +24,8 @@ export const Album = () => {
     setCurrentAlbum(null)
     if (store.app.modal.type.includes('library-') && store.app.modal.id[0] === 'l') {
       console.log('getting catalog from library')
-      await mkController
-        .getCatalogFromLibrary(store.app.modal.id, store.app.modal.type)
+      await mkApiManager
+        .getCatalogItemFromLibrary(store.app.modal.id, store.app.modal.type)
         .then(
           res => {
             if (res) {

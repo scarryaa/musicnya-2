@@ -6,7 +6,7 @@ import { mkController } from '../../api/mkController'
 import { setStore, store } from '../../stores/store'
 import { Utils } from '../../util/util'
 import { localStorageService } from '../../services/localStorageService'
-import { mkManager } from '../../api/mkManager'
+import { mkManager } from '../../api/MkManager'
 
 export const MiscControls = () => {
   const [isMuted, setIsMuted] = createSignal(false)

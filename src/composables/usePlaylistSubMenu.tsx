@@ -2,6 +2,7 @@ import { faHeadphones } from '@fortawesome/free-solid-svg-icons'
 import { setStore, store } from '../stores/store'
 import { mkController } from '../api/mkController'
 import { useSubContextMenu, useSubContextMenuState } from './useSubContextMenu'
+import { mkApiManager } from '../api/MkApiManager'
 
 export const usePlaylistSubMenu = e => {
   const { openSubContextMenu } = useSubContextMenu()
@@ -10,7 +11,7 @@ export const usePlaylistSubMenu = e => {
       .filter(playlist => playlist.attributes.canEdit)
       .map(playlist => ({
         icon: faHeadphones,
-        action: () => mkController.addToPlaylist(id, type, playlist.id),
+        action: () => mkApiManager.addItemToPlaylist(id, type, playlist.id),
         label: playlist.attributes.name,
         onMouseEnter: () => {}
       }))

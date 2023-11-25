@@ -148,6 +148,19 @@ export const mediaItemContextMenu = (
       'share',
       'properties'
     ].forEach(addItem)
+  } else if (subType === 'library-albums') {
+    ;[
+      'addToLibraryQuick',
+      'loveQuick',
+      'dislikeQuick',
+      'playNextQuick',
+      'playLastQuick',
+      'addToPlaylist',
+      'goToArtist',
+      'shuffle',
+      'share',
+      'properties'
+    ].forEach(addItem)
   } else {
     ;[
       'addToLibraryQuick',

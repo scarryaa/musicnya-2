@@ -9,6 +9,7 @@ import { faStar } from '@fortawesome/free-solid-svg-icons'
 import { A } from '@solidjs/router'
 import { SongTableSkeleton } from '../Skeletons/SongTableSkeleton'
 import { SongTableItem } from '../SongTableItem/SongTableItem'
+import { mkApiManager } from '../../api/MkApiManager'
 
 export const SongTable = ({ data }) => {
   const [sentinel, setSentinel] = createSignal(null)
@@ -52,7 +53,7 @@ export const SongTable = ({ data }) => {
     entries => {
       if (entries[0].isIntersecting && !isFetchingComplete() && !isFetching()) {
         setIsFetching(true)
-        mkController.fetchMoreTracks(data().id, data().type, tracks().length).then(
+        mkApiManager.fetchMoreTracks(data().id, data().type, tracks().length).then(
           res => {
             if (res && res.data) {
               setTracks([...tracks(), ...res.data])

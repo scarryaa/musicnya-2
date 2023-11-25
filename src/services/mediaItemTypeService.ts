@@ -11,8 +11,6 @@ export class MediaItemTypeService {
    */
   static stripType(type) {
     switch (type) {
-      case 'stations':
-        return type.replace(/s$/, '')
       case 'uploaded-videos':
         return 'uploadedVideos'
       case 'music-videos':
@@ -20,13 +18,20 @@ export class MediaItemTypeService {
       default:
         const mediaItemTypes = Object.values(MediaItemType)
 
-        if (type === MediaItemType.Stations) {
-          return type.replace(/s$/, '')
-        } else if (mediaItemTypes.includes(type)) {
-          return type
+        if (mediaItemTypes.includes(type)) {
+          return type.replace('library-', '')
         } else {
           throw new Error(`Unknown media item type: ${type}`)
         }
     }
+  }
+
+  /**
+   * Checks if the given type is a library type.
+   * @param {string} type - The type to check.
+   * @returns {boolean} - True if the type is a library type, false otherwise.
+   */
+  static isLibraryType(type) {
+    return type.includes('library-')
   }
 }
