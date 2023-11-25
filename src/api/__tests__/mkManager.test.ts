@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import MusicKit, { mockConfigure, mockAuthorize } from '../__mocks__/musicKit.mock'
 import { mkManager } from '../MkManager'
 

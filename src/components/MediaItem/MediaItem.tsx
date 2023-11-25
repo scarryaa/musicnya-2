@@ -1,9 +1,7 @@
 import Fa from 'solid-fa'
 import styles from './MediaItem.module.scss'
 import { faEllipsisH, faPlay } from '@fortawesome/free-solid-svg-icons'
-import { mkController } from '../../api/mkController'
 import { A } from '@solidjs/router'
-import { createEffect, createSignal } from 'solid-js'
 import Tooltip from '../Tooltip/Tooltip'
 import { useContextMenu } from '../../composables/useContextMenu'
 import { ContextMenuType } from '../../types/types'
@@ -33,6 +31,7 @@ export const MediaItem = ({
   const { openContextMenu } = useContextMenu()
   const isAppleCurator = type === 'apple-curators'
   type === 'library-playlists' ? (type = 'playlists') : type
+  Tooltip
 
   const handlePlayClick = e => {
     e.preventDefault()

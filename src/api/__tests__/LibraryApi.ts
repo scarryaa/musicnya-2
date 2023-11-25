@@ -1,6 +1,9 @@
+/* eslint-disable */
+
 import { store } from '../../stores/store'
 import { LibraryApi } from '../LibraryApi'
 import { ApiClient } from '../MkApiClient'
+import MusicKit from '../__mocks__/musicKit.mock'
 
 jest.mock('../MkApiClient')
 jest.mock('../../stores/store')
@@ -37,17 +40,15 @@ describe('LibraryApi', () => {
       const type = 'songs'
       await libraryApi.addToLibrary(id, type)
 
-      expect(mockApiClient.fetchFromMusicKit).toHaveBeenCalledWith(`me/library/${type}`, {
-        method: 'POST',
-        body: JSON.stringify({
-          data: [
-            {
-              id,
-              type
-            }
-          ]
-        })
-      })
+      expect(mockApiClient.fetchFromMusicKit).toHaveBeenCalledWith(
+        `me/library`,
+        {
+          method: 'POST'
+        },
+        {
+          [`ids[${type}]`]: id
+        }
+      )
     })
   })
 
@@ -57,17 +58,12 @@ describe('LibraryApi', () => {
       const type = 'songs'
       await libraryApi.removeFromLibrary(id, type)
 
-      expect(mockApiClient.fetchFromMusicKit).toHaveBeenCalledWith(`me/library/${type}`, {
-        method: 'DELETE',
-        body: JSON.stringify({
-          data: [
-            {
-              id,
-              type
-            }
-          ]
-        })
-      })
+      expect(mockApiClient.fetchFromMusicKit).toHaveBeenCalledWith(
+        `me/library/${type}/${id}`,
+        {
+          method: 'DELETE'
+        }
+      )
     })
   })
 })

@@ -20,7 +20,7 @@ export const historyItemContextMenu = (
   isDislikedState = false,
   inLibraryState = false
 ) => {
-  let items = []
+  const items = []
 
   const addItem = itemType => {
     const itemConfig = contextMenuItems[itemType](id, subtype)

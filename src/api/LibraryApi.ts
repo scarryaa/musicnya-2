@@ -25,7 +25,7 @@ export class LibraryApi {
    * @param {MusicKit.MusicKitInstance} musicKitInstance - The MusicKit instance.
    * @param {ApiClient} musicKitApiClient - The API client for making requests to the music catalog.
    */
-  constructor(musicKitInstance, musicKitApiClient) {
+  constructor(musicKitInstance: MusicKit.MusicKitInstance, musicKitApiClient: ApiClient) {
     this.musicKitInstance = musicKitInstance
     this.musicKitApiClient = musicKitApiClient
   }
@@ -74,8 +74,6 @@ export class LibraryApi {
    * @returns {Promise<any>} - A promise that resolves with the response from the server.
    */
   async isItemFavorite(id: string, type: string) {
-    const strippedType = MediaItemTypeService.stripType(type)
-
     const response = await this.musicKitApiClient.fetchFromMusicKit(
       `me/ratings/${type}`,
       null,
@@ -95,8 +93,6 @@ export class LibraryApi {
    * @returns {Promise<any>} - A promise that resolves with the response from the server.
    */
   async favoriteItem(id: string, type: string) {
-    const strippedType = MediaItemTypeService.stripType(type)
-
     const response = await this.musicKitApiClient.fetchFromMusicKit(
       `me/ratings/${type}/${id}`,
       { method: 'PUT', body: JSON.stringify({ attributes: { value: 1 } }) }
@@ -112,8 +108,6 @@ export class LibraryApi {
    * @returns {Promise<any>} - A promise that resolves with the response from the server.
    */
   async unfavoriteItem(id: string, type: string) {
-    const strippedType = MediaItemTypeService.stripType(type)
-
     const response = await this.musicKitApiClient.fetchFromMusicKit(
       `me/ratings/${type}/${id}`,
       { method: 'DELETE' }
@@ -143,7 +137,7 @@ export class LibraryApi {
    * @param type - The type of the item.
    * @returns A Promise that resolves with the response from the server.
    */
-  async isItemInLibrary(id: string, type: string) {
+  async isItemInLibrary(id: string, type: MusicKit.MediaItemType) {
     if (type[0] === 'l') return { data: [{ attributes: { inLibrary: true } }] }
 
     const strippedType = MediaItemTypeService.stripType(type)
@@ -151,7 +145,8 @@ export class LibraryApi {
     const response = await this.musicKitApiClient.fetchFromMusicKit(
       `catalog/${store.countryCode}/${strippedType}`,
       {
-        headers: { 'Cache-Control': 'no-cache' }
+        headers: { 'Cache-Control': 'no-cache' },
+        method: 'GET'
       },
       {
         fields: 'inLibrary',
@@ -171,9 +166,8 @@ export class LibraryApi {
    * @returns A Promise that resolves to the response from the API.
    */
   async getCatalogItemFromLibrary(id: string, type: string) {
-    const strippedType = MediaItemTypeService.stripType(type)
     const response = await this.musicKitApiClient.fetchFromMusicKit(
-      `me/library/${strippedType}/${id}/catalog`,
+      `me/library/${type}/${id}/catalog`,
       null
     )
 

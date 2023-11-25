@@ -2,7 +2,6 @@ import * as config from '../../config.json'
 import { discordService } from '../services/discordService'
 import { MediaItemTypeService } from '../services/mediaItemTypeService'
 import { setStore, store } from '../stores/store'
-import { ArtistsApi } from './ArtistsApi'
 import { ApiClient } from './MkApiClient'
 import { increasePlayCount } from '../db/db'
 import { Utils } from '../util/util'
@@ -16,12 +15,11 @@ class MusicKitManager {
   _musicKitInstance: MusicKit.MusicKitInstance | null = null
   _metadataApi: MetadataApi | null = null
 
-  private _shouldBeArray = (type: string) => {
-    if (type === 'musicVideos') return false
-    else return true
+  private shouldItemBeArray = (type: string) => {
+    return type !== 'musicVideos'
   }
 
-  get musicKitInstance() {
+  get musicKitInstance(): MusicKit.MusicKitInstance {
     if (!this._musicKitInstance) throw new Error('MusicKit instance not initialized')
     return this._musicKitInstance
   }
@@ -51,7 +49,7 @@ class MusicKitManager {
     }
   }
 
-  async initializeApis() {
+  initializeApis() {
     if (!this._musicKitInstance) {
       throw new Error('MusicKit instance not initialized')
     }
@@ -145,8 +143,8 @@ class MusicKitManager {
   /**
    * Pauses the music playback.
    */
-  pause = async () => {
-    await this.musicKitInstance.pause()
+  pause = () => {
+    this.musicKitInstance.pause()
   }
 
   /**
@@ -167,11 +165,11 @@ class MusicKitManager {
   setQueue = async (
     id: string,
     type: MusicKit.MediaItemType,
-    shuffle: boolean = false,
-    startWith: number = 0
+    shuffle = false,
+    startWith = 0
   ) => {
     await this.musicKitInstance.setQueue({
-      [type]: this._shouldBeArray(type) ? [id] : id,
+      [type]: this.shouldItemBeArray(type) ? [id] : id,
       startWith: shuffle ? Math.floor(Math.random() * 100) : startWith
     })
   }
@@ -248,8 +246,8 @@ class MusicKitManager {
   processItemAndPlay = async (
     id: string,
     type: MusicKit.MediaItemType,
-    shuffle: boolean = false,
-    startWith: number = 0
+    shuffle = false,
+    startWith = 0
   ) => {
     const strippedType = MediaItemTypeService.stripType(type)
 
@@ -269,7 +267,7 @@ class MusicKitManager {
     console.log(id, strippedType)
 
     await this.musicKitInstance.playNext({
-      [strippedType]: this._shouldBeArray(strippedType) ? [id] : id
+      [strippedType]: this.shouldItemBeArray(strippedType) ? [id] : id
     })
     this.setShuffle('off' as unknown as MusicKit.PlayerShuffleMode)
   }
@@ -285,7 +283,7 @@ class MusicKitManager {
     const strippedType = MediaItemTypeService.stripType(type)
 
     await this.musicKitInstance.playLater({
-      [strippedType]: this._shouldBeArray(strippedType) ? [id] : id
+      [strippedType]: this.shouldItemBeArray(strippedType) ? [id] : id
     })
     this.setShuffle('off' as unknown as MusicKit.PlayerShuffleMode)
   }

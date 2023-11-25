@@ -57,5 +57,5 @@ render(
       </Routes>
     </Router>
   ),
-  root!
+  root
 )

@@ -1,5 +1,7 @@
 import { MediaItemTypeService } from '../services/mediaItemTypeService'
 import { store } from '../stores/store'
+import { ArtistData, ArtistResponse } from '../types/api/ArtistResponse'
+import { ApiResponse } from '../types/api/common'
 import ValidationUtils from '../util/ValidationUtils'
 import { ApiClient } from './MkApiClient'
 
@@ -26,7 +28,7 @@ export class ArtistsApi {
    * @param {MusicKit.MusicKitInstance} musicKitInstance - The MusicKit instance.
    * @param {ApiClient} musicKitApiClient - The API client for making requests to the music catalog.
    */
-  constructor(musicKitInstance, musicKitApiClient) {
+  constructor(musicKitInstance: MusicKit.MusicKitInstance, musicKitApiClient: ApiClient) {
     this.musicKitInstance = musicKitInstance
     this.musicKitApiClient = musicKitApiClient
   }
@@ -36,8 +38,9 @@ export class ArtistsApi {
    * @param {string} id - The ID of the artist.
    * @returns {Promise<Object>} - A promise that resolves to the artist's information.
    */
-  async getArtist(id) {
+  async getArtist(id: string): Promise<ArtistResponse> {
     ValidationUtils.validateParam(id, 'artist ID')
+    console.log(id)
 
     const queryParams = {
       include: 'albums,songs',
@@ -68,7 +71,7 @@ export class ArtistsApi {
    * @param {string} id - The ID of the artist.
    * @returns {Promise<any>} - A promise that resolves with the response from the server.
    */
-  async isArtistFavorite(id) {
+  async isArtistFavorite(id: string) {
     ValidationUtils.validateParam(id, 'artist ID')
 
     const queryParams = {
@@ -91,7 +94,7 @@ export class ArtistsApi {
    * @param {string} id - The ID of the artist.
    * @returns {Promise<any>} - A promise that resolves with the response from the server.
    */
-  async favoriteArtist(id) {
+  async favoriteArtist(id: string) {
     ValidationUtils.validateParam(id, 'artist ID')
 
     const queryParams = {
@@ -115,7 +118,7 @@ export class ArtistsApi {
    * @param {string} id - The ID of the artist.
    * @returns {Promise<any>} - A promise that resolves with the response from the server.
    */
-  async unfavoriteArtist(id) {
+  async unfavoriteArtist(id: string) {
     ValidationUtils.validateParam(id, 'artist ID')
 
     if (!id) {
@@ -147,7 +150,7 @@ export class ArtistsApi {
     ValidationUtils.validateParam(
       id,
       'media item ID',
-      param => param && param.trim() !== ''
+      (param: string) => param && param.trim() !== ''
     )
 
     const strippedType = MediaItemTypeService.stripType(type)
@@ -163,7 +166,9 @@ export class ArtistsApi {
       })
 
       if (MediaItemTypeService.isLibraryType(type)) {
-        endpoint = `me/library/artists/${response.data[0].id}/catalog?l=en-US&platform=web&fields=url`
+        endpoint = `me/library/artists/${
+          (response.data[0] as ArtistData).id
+        }/catalog?l=en-US&platform=web&fields=url`
         const response2 = await this.musicKitApiClient.fetchFromMusicKit(endpoint, null, {
           ...queryParams
         })

@@ -22,12 +22,12 @@ export const MediaInfo = ({ media, artistId }) => {
   }
 
   const handleBlur = () => {
-    var video: any = document.getElementById('video')
+    const video: any = document.getElementById('video')
     video.pause()
   }
 
   const handleFocus = () => {
-    var video: any = document.getElementById('video')
+    const video: any = document.getElementById('video')
     video.play()
   }
 
@@ -37,8 +37,8 @@ export const MediaInfo = ({ media, artistId }) => {
       !store.app.media.disableAnimatedArtwork &&
       media()?.attributes?.editorialVideo?.motionDetailSquare?.video
     ) {
-      var video = document.getElementById('video')
-      var hls = new (window as any).Hls()
+      const video = document.getElementById('video')
+      const hls = new (window as any).Hls()
       hls.loadSource(media().attributes?.editorialVideo?.motionDetailSquare?.video, {
         appData: {
           serviceName: 'web-static-video'

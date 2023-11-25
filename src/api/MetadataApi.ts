@@ -23,7 +23,7 @@ export class MetadataApi {
    * @param {MusicKit.MusicKitInstance} musicKitInstance - The MusicKit instance.
    * @param {ApiClient} musicKitApiClient - The API client for making requests to the music catalog.
    */
-  constructor(musicKitInstance, musicKitApiClient) {
+  constructor(musicKitInstance: MusicKit.MusicKitInstance, musicKitApiClient: ApiClient) {
     this.musicKitInstance = musicKitInstance
     this.musicKitApiClient = musicKitApiClient
   }
@@ -35,7 +35,7 @@ export class MetadataApi {
    * @returns A Promise that resolves to the response containing the song credits.
    */
   async getSongCredits(id: string) {
-    ValidationUtils.validateParam(id, 'song ID', id => id.length > 0)
+    ValidationUtils.validateParam(id, 'song ID', (id: string) => id.length > 0)
 
     const response = await this.musicKitApiClient.fetchFromMusicKit(
       `catalog/${store.countryCode}/songs/${id}/credits`
@@ -51,7 +51,7 @@ export class MetadataApi {
    * @returns A Promise that resolves to the response containing the song lyrics.
    */
   async getSongLyrics(id: string) {
-    ValidationUtils.validateParam(id, 'song ID', id => id.length > 0)
+    ValidationUtils.validateParam(id, 'song ID', (id: string) => id.length > 0)
 
     const response = await this.musicKitApiClient.fetchFromMusicKit(
       `catalog/${store.countryCode}/songs/${id}/lyrics`
@@ -93,7 +93,7 @@ export class MetadataApi {
     return response
   }
 
-  async getShareLink(id: string, type: string) {
+  async getShareLink(id: string, type: MusicKit.MediaItemType) {
     const strippedType = MediaItemTypeService.stripType(type)
 
     const response = await this.musicKitApiClient.fetchFromMusicKit(

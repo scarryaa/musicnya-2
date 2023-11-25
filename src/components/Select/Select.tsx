@@ -6,7 +6,7 @@ import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons'
 export const Select = props => {
   const [isOpen, setIsOpen] = createSignal(false)
   const [focusedIndex, setFocusedIndex] = createSignal(0)
-  let optionsRef = []
+  const optionsRef = []
 
   const selectOption = option => {
     props.onSelectedChange(option)

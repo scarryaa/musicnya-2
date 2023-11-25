@@ -9,7 +9,7 @@
  * It is also a global variable on the window object, and a namespace for other utils and enums.
  * @see MusicKit Docs: [Configuring MusicKit on the Web](https://js-cdn.music.apple.com/musickit/v3/docs/iframe.html?path=/story/get-started--page#configuring-musickit-on-the-web)
  * @see {@link MusicKitInstance} for the configured instance. */
-declare module MusicKit {
+declare namespace MusicKit {
   /** The MusicKitConfiguration object is passed to the MusicKit.configure() method above and supports the following properties. */
 
   /** A set of configuration parameters for your app during the authorization flow.

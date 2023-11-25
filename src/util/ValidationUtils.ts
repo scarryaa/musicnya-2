@@ -6,7 +6,7 @@ class ValidationUtils {
    * @param conditions Additional validation conditions (optional).
    * @throws {Error} If the validation fails.
    */
-  static validateParam(param, name, conditions = p => true) {
+  static validateParam(param: string, name: string, conditions = p => true) {
     if (param == null || !conditions(param)) {
       throw new Error(`Invalid ${name}: ${param}`)
     }

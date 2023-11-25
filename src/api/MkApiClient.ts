@@ -1,16 +1,20 @@
+import { ArtistResponse } from '../types/api/ArtistResponse'
+import { ApiResponse, FetchOptions } from '../types/api/common'
+import { Config } from '../types/common'
+
 /**
  * Represents an API client for interacting with the MusicKit API.
  */
 export class ApiClient {
-  _musicKitInstance = null
-  config = null
+  _musicKitInstance: MusicKit.MusicKitInstance = null
+  config: Config
 
   /**
    * Gets the MusicKit instance.
    * @throws {Error} If the MusicKit instance is not set.
    * @returns {Object} The MusicKit instance.
    */
-  get musicKitInstance() {
+  get musicKitInstance(): MusicKit.MusicKitInstance {
     if (!this._musicKitInstance) {
       throw new Error('MusicKit instance not set')
     }
@@ -21,7 +25,7 @@ export class ApiClient {
    * Sets the MusicKit instance.
    * @param {Object} musicKitInstance - The MusicKit instance to set.
    */
-  set musicKitInstance(musicKitInstance) {
+  set musicKitInstance(musicKitInstance: MusicKit.MusicKitInstance) {
     this._musicKitInstance = musicKitInstance
   }
 
@@ -30,7 +34,7 @@ export class ApiClient {
    * @param {Object} musicKitInstance - The MusicKit instance.
    * @param {Object} config - The configuration object.
    */
-  constructor(musicKitInstance, config) {
+  constructor(musicKitInstance: MusicKit.MusicKitInstance, config: Config) {
     this._musicKitInstance = null
     this.musicKitInstance = musicKitInstance
 
@@ -49,63 +53,45 @@ export class ApiClient {
    */
   async fetchFromMusicKit(
     endpoint: string,
-    options: {
-      headers?: any
-      body?: any
-      method: 'GET' | 'POST' | 'PUT' | 'DELETE'
-    } = { method: 'GET' },
+    options: FetchOptions = { method: 'GET' },
     queryParams = {}
-  ) {
+  ): Promise<ApiResponse<ArtistResponse>> {
+    // Adjust the return type as per your API response
     let url = `https://amp-api.music.apple.com/v1/${endpoint}`
 
-    // Handle query parameters
+    // Handling query parameters
     const query = new URLSearchParams({
       ...queryParams,
-      ...{
-        l: 'en-US',
-        platform: 'web'
-      }
+      l: 'en-US',
+      platform: 'web'
     }).toString()
-    if (query) {
-      url += `?${query}`
+    url += query ? `?${query}` : ''
+
+    // Preparing headers
+    const headers = new Headers(options?.headers || {})
+    headers.set('Authorization', `Bearer ${this.config.MusicKit.token}`)
+    headers.set('Music-User-Token', this.config.MusicKit.musicUserToken)
+
+    // Stringify body if it's an object and not FormData
+    let body = options?.body
+    if (body && typeof body === 'object' && !(body instanceof FormData)) {
+      headers.set('Content-Type', 'application/json')
+      body = JSON.stringify(body)
     }
 
-    const headers = {
-      authorization: `Bearer ${this.config.MusicKit.token}`,
-      'music-user-token': this.config.MusicKit.musicUserToken,
-      ...options?.headers
+    // Final fetch options
+    const fetchOptions: RequestInit = {
+      ...options,
+      headers,
+      body
     }
 
-    // Ensure the correct Content-Type is set if there's a body
-    if (
-      // add nocache to the url to prevent caching
-      options?.body &&
-      typeof options.body === 'object' &&
-      !(options.body instanceof FormData)
-    ) {
-      headers['Content-Type'] = headers['Content-Type'] || 'application/json'
-      options.body = JSON.stringify(options.body)
-      options.headers.noCache = true
+    const response = await fetch(url, fetchOptions)
+
+    if (!response.ok) {
+      throw new Error(`API Call failed: ${response.status}`)
     }
 
-    // Set up the fetch options
-    const fetchOptions = { ...options, headers }
-    if (!options?.body) {
-      delete fetchOptions.body // Only include body if it's provided
-    }
-
-    try {
-      // @ts-ignore
-      const response = await fetch(url, fetchOptions)
-
-      if (!response.ok) {
-        throw new Error(`API Call failed: ${response.status}`)
-      }
-
-      return await response.json()
-    } catch (error) {
-      console.log('API call error:', error)
-      throw new Error(error.message)
-    }
+    return response.json() as Promise<ApiResponse<object>>
   }
 }

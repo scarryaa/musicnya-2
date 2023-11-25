@@ -1,22 +1,3 @@
-interface Response {
-  data: [
-    {
-      id: string
-      type: string
-      href: string
-    }
-  ]
-  errors: [
-    {
-      id: string
-      status: string
-      code: string
-      title: string
-      detail: string
-    }
-  ]
-}
-
 export const fetchRecommendations = async ({
   devToken,
   musicUserToken

@@ -6,16 +6,16 @@ import { MediaItemType } from '../types/types'
 export class MediaItemTypeService {
   /**
    * Strips the type of a media item.
-   * @param {string} type - The type of the media item.
+   * @param {MediaItemType} type - The type of the media item.
    * @returns {string} - The stripped type of the media item.
    */
-  static stripType(type) {
+  static stripType(type: MusicKit.MediaItemType): string {
     switch (type) {
       case 'uploaded-videos':
         return 'uploadedVideos'
       case 'music-videos':
         return 'musicVideos'
-      default:
+      default: {
         const mediaItemTypes = Object.values(MediaItemType)
 
         if (mediaItemTypes.includes(type)) {
@@ -23,15 +23,16 @@ export class MediaItemTypeService {
         } else {
           throw new Error(`Unknown media item type: ${type}`)
         }
+      }
     }
   }
 
   /**
    * Checks if the given type is a library type.
-   * @param {string} type - The type to check.
+   * @param {MediaItemType} type - The type to check.
    * @returns {boolean} - True if the type is a library type, false otherwise.
    */
-  static isLibraryType(type) {
+  static isLibraryType(type: MusicKit.MediaItemType): boolean {
     return type.includes('library-')
   }
 }

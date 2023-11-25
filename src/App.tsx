@@ -20,8 +20,6 @@ import { mkApiManager } from './api/MkApiManager'
 
 const App: Component = () => {
   const navigate = useNavigate()
-  initDB()
-  discordService.init()
 
   async function fetchData() {
     const fetchPromises = []
@@ -41,14 +39,17 @@ const App: Component = () => {
   }
 
   createEffect(async () => {
+    await initDB()
+    await discordService.init()
+
     Utils.setDarkMode(localStorageService.get('darkMode') === 'true')
     Utils.disableContextMenu()
 
     const musicKitInst = await mkManager.initializeMusicKit()
-    await mkManager.initializeApis()
-    await mkApiManager.initializeApis(musicKitInst)
+    mkManager.initializeApis()
+    mkApiManager.initializeApis(musicKitInst)
     const authorized = await mkManager.authorize()
-    await mkManager.setUpEvents()
+    mkManager.setUpEvents()
     setStore('isAuthorized', !!authorized)
 
     navigate(Utils.parseSelectedDefaultPage(store.app.general.defaultPage))

@@ -1,5 +1,6 @@
 import { MediaItemTypeService } from '../services/mediaItemTypeService'
 import { store } from '../stores/store'
+import { AlbumData } from '../types/api/AlbumResponse'
 import { ApiClient } from './MkApiClient'
 
 export class AlbumApi {
@@ -22,12 +23,12 @@ export class AlbumApi {
    * @param {MusicKit.MusicKitInstance} musicKitInstance - The MusicKit instance.
    * @param {ApiClient} musicKitApiClient - The API client for making requests to the music catalog.
    */
-  constructor(musicKitInstance, musicKitApiClient) {
+  constructor(musicKitInstance: MusicKit.MusicKitInstance, musicKitApiClient: ApiClient) {
     this.musicKitInstance = musicKitInstance
     this.musicKitApiClient = musicKitApiClient
   }
 
-  async getAlbumFromMediaItem(id: string, type: string) {
+  async getAlbumFromMediaItem(id: string, type: MusicKit.MediaItemType) {
     const strippedType = MediaItemTypeService.stripType(type)
     const response = await this.musicKitApiClient.fetchFromMusicKit(
       type.includes('library-')
@@ -41,7 +42,7 @@ export class AlbumApi {
 
     if (type.includes('library-')) {
       const response2 = await this.musicKitApiClient.fetchFromMusicKit(
-        `me/library/albums/${response.data[0].id}/catalog`,
+        `me/library/albums/${(response.data?.[0] as AlbumData).id}/catalog`,
         null,
         {
           fields: 'url'

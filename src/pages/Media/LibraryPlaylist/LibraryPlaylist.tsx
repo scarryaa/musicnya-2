@@ -10,10 +10,10 @@ import { LoadingSpinner } from '../../../components/LoadingSpinner/LoadingSpinne
 export const LibraryPlaylist = () => {
   const params = useParams<{ id: string }>()
   const [playlistData, setPlaylistData] = createSignal(null)
-  let playlistPage: HTMLDivElement = undefined as unknown as HTMLDivElement
+  const playlistPage: HTMLDivElement = undefined as unknown as HTMLDivElement
 
   createEffect(() => {
-    let newPlaylistData = store.library.playlists.find(
+    const newPlaylistData = store.library.playlists.find(
       playlist => playlist.id === params.id
     )
 

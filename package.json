@@ -11,7 +11,8 @@
     "preview": "vite preview",
     "eslint": "eslint src",
     "eslint:fix": "eslint src --fix",
-    "test": "jest"
+    "test": "jest",
+    "lint": "yarn run eslint"
   },
   "license": "MIT",
   "devDependencies": {

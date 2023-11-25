@@ -14,7 +14,7 @@ declare module 'solid-js' {
 }
 
 // state
-let local = createMutable({
+const local = createMutable({
   open: false,
   position: 'top',
   content: null,
@@ -25,7 +25,7 @@ let local = createMutable({
 let tooltipDelay = 0
 let openTimeoutId
 let tooltip
-let portal = (
+const portal = (
   <div
     ref={tooltip}
     role="tooltip"
@@ -47,7 +47,7 @@ queueMicrotask(() => {
 
 // for when a tooltip style is not defined
 // it reuses the div
-let defaultTooltipStyle = <div class={styles.defaultTooltip}>{local.currentTitle}</div>
+const defaultTooltipStyle = <div class={styles.defaultTooltip}>{local.currentTitle}</div>
 
 // directive
 export default function Tooltip(related, at, wrap) {
@@ -118,10 +118,10 @@ function close() {
 // update when opening
 function update(related, at, title, wrapper, showTooltip) {
   if (!local.open) {
-    let position = at || 'top'
+    const position = at || 'top'
 
     // the current title may have changed
-    let currentTitle =
+    const currentTitle =
       typeof title === 'function'
         ? title()
         : related.title || related.getAttribute('title') || title
@@ -144,8 +144,8 @@ function update(related, at, title, wrapper, showTooltip) {
     )
 
     // get coordinates
-    let t = tooltip.getBoundingClientRect()
-    let r = related.getBoundingClientRect()
+    const t = tooltip.getBoundingClientRect()
+    const r = related.getBoundingClientRect()
 
     let x, y
 
@@ -215,7 +215,7 @@ function update(related, at, title, wrapper, showTooltip) {
 
     // overflow, dont let the tooltip go out of the page
     // margin controls how close to the border it can be
-    let margin = 5
+    const margin = 5
     if (x < margin) {
       x = margin
     } else if (x + t.width + margin >= document.body.clientWidth) {

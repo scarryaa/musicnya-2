@@ -1,4 +1,4 @@
-declare module Window {
+declare namespace Window {
   interface Window {
     Hls: any
   }

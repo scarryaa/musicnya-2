@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 // Mock database structure
 const mockDB = {
   songs: []

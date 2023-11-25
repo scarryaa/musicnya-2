@@ -189,6 +189,12 @@ class MusicKitApiManager {
     return await this.libraryApi.getCatalogItemFromLibrary(id, type)
   }
 
+  /**
+   * Retrieves the library ID from the catalog based on the provided ID and type.
+   * @param {string} id - The ID of the item in the catalog.
+   * @param {string} type - The type of the item in the catalog.
+   * @returns {Promise<string>} - A promise that resolves with the library ID.
+   */
   async getLibraryIdFromCatalog(id, type) {
     return await this.libraryApi.getLibraryIdFromCatalog(id, type)
   }

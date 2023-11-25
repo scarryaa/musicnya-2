@@ -1,7 +1,9 @@
+/* eslint-disable */
+
 import { store } from '../../stores/store'
 import { ArtistsApi } from '../ArtistsApi'
 import { ApiClient } from '../MkApiClient'
-import MusicKit, { mockConfigure, mockAuthorize } from '../__mocks__/musicKit.mock'
+import MusicKit from '../__mocks__/musicKit.mock'
 
 jest.mock('../MkApiClient')
 jest.mock('../../stores/store')
