@@ -368,6 +368,11 @@ declare namespace MusicKit {
 
   type Descriptor = MediaItem | string
 
+  interface QueueItem {
+    isAutoPlay?: boolean
+    item: MediaItem
+  }
+
   class QueueOptions {
     album?: string
     items?: Descriptor[]
@@ -480,7 +485,7 @@ declare namespace MusicKit {
     startPlaying: boolean
     /** The number of seconds to seek to in the current queue item after it is created. */
     startTime: number
-    _queueItems: MediaItem[]
+    _queueItems: QueueItem[]
     _reindex(): void
   }
 
@@ -584,6 +589,9 @@ declare namespace MusicKit {
     | 'curators'
     | 'activities'
     | 'apple-curators'
+    | 'uploaded-videos'
+    | 'uploadedVideos'
+    | 'musicVideos'
 
   /** This class represents a single media item. */
   class MediaItem {
@@ -634,6 +642,11 @@ declare namespace MusicKit {
     playlistArtworkURL?: string
     /** The name of the playlist. */
     playlistName?: string
+    playParams?: {
+      catalogId?: string
+      id: string
+      kind: string
+    }
     /** The URL to an unencrypted preview of the media item. */
     previewURL?: string
     /** The release date of the media item. */

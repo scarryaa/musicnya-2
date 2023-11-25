@@ -6,6 +6,8 @@ import { ApiClient } from './MkApiClient'
 import { increasePlayCount } from '../db/db'
 import { Utils } from '../util/util'
 import { MetadataApi } from './MetadataApi'
+import { MediaItemType, Reaction } from '../types/types'
+import { mkApiManager } from './MkApiManager'
 
 /**
  * Class representing a MusicKitManager.
@@ -181,7 +183,7 @@ class MusicKitManager {
    * @param to - The index where the item should be moved to.
    * @returns The updated array of queue items.
    */
-  moveQueueItem = async (from: number, to: number): Promise<any> => {
+  moveQueueItem = (from: number, to: number): MusicKit.QueueItem[] => {
     this.musicKitInstance.queue._queueItems.splice(
       to,
       0,
@@ -217,7 +219,7 @@ class MusicKitManager {
    */
   setStationQueue = async (id: string, type: MusicKit.MediaItemType) => {
     const strippedType = MediaItemTypeService.stripType(type)
-    await this.musicKitInstance.setStationQueue({ [strippedType]: [id] })
+    this.musicKitInstance.setStationQueue({ [strippedType]: [id] })
     await this.play()
   }
 
@@ -227,9 +229,12 @@ class MusicKitManager {
    * @param id - The ID of the item to be removed.
    * @returns The ID of the removed item.
    */
-  removeFromQueue = async (id: string): Promise<string> => {
+  removeFromQueue = (id: string): string => {
+    console.log(this.musicKitInstance.queue._queueItems)
     this.musicKitInstance.queue._queueItems =
-      this.musicKitInstance.queue._queueItems.filter((item: any) => item.item.id !== id)
+      this.musicKitInstance.queue._queueItems.filter(
+        (item: MusicKit.QueueItem) => item.item.id !== id
+      )
 
     this.musicKitInstance.queue._reindex()
     return id
@@ -279,7 +284,7 @@ class MusicKitManager {
    * @param type - The type of the media item.
    * @returns void.
    */
-  playLater = async (id: string, type: string) => {
+  playLater = async (id: string, type: MediaItemType) => {
     const strippedType = MediaItemTypeService.stripType(type)
 
     await this.musicKitInstance.playLater({
@@ -320,7 +325,7 @@ class MusicKitManager {
    * @param autoplay - A boolean value indicating whether autoplay should be enabled or disabled.
    * @returns The updated value of the autoplayEnabled property.
    */
-  toggleAutoplay = async (autoplay: boolean) => {
+  toggleAutoplay = (autoplay: boolean) => {
     this.musicKitInstance.autoplayEnabled = autoplay
     this.musicKitInstance._autoplayEnabled = autoplay
     return this.musicKitInstance.autoplayEnabled
@@ -352,7 +357,8 @@ class MusicKitManager {
    * Callback function that is called when the state of a media item changes.
    * @param event The event object containing information about the changed media item.
    */
-  mediaItemStateDidChange = (event: any) => {
+  mediaItemStateDidChange = (event: MusicKit.MediaItem) => {
+    console.log(event)
     setStore('currentTrack', {
       id: event.id,
       title: event.attributes.name,
@@ -370,7 +376,8 @@ class MusicKitManager {
    * @param event - The event object.
    * @returns {Promise<void>}
    */
-  nowPlayingItemDidChange = async (event: any) => {
+  nowPlayingItemDidChange = async (event: { item: MusicKit.MediaItem }) => {
+    console.log(event)
     setStore('app', 'queue', {
       index: MusicKit.getInstance().queue.position,
       nextUpIndex: MusicKit.getInstance().queue.position + 1,
@@ -384,7 +391,7 @@ class MusicKitManager {
       MusicKit.getInstance().nowPlayingItem !== undefined &&
       store.app.connectivity.discord.enabled
     ) {
-      discordService.setActivity({
+      await discordService.setActivity({
         details:
           MusicKit.getInstance().nowPlayingItem?.title +
           ' - ' +
@@ -406,26 +413,27 @@ class MusicKitManager {
       })
     }
 
-    // Utils.debounce(async () => {
-    //   const isLoved = await mkManager.checkIfLoved(e.id, 'songs')
-    //   setStore(
-    //     'currentTrack',
-    //     'loved',
-    //     isLoved.data?.[0]?.attributes?.value === Reaction.Loved
-    //   )
-    //   setStore(
-    //     'currentTrack',
-    //     'disliked',
-    //     isLoved.data?.[0]?.attributes?.value === Reaction.Disliked
-    //   )
+    Utils.debounce(async () => {
+      const isLoved = await mkApiManager.isItemFavorite(event.item.id, 'songs')
+      console.log(isLoved)
+      setStore(
+        'currentTrack',
+        'loved',
+        isLoved.data?.[0]?.attributes.value === Reaction.Loved
+      )
+      setStore(
+        'currentTrack',
+        'disliked',
+        isLoved.data?.[0]?.attributes?.value === Reaction.Disliked
+      )
 
-    //   const inLibrary = await mkManager.checkIfInLibrary(e.id, 'songs')
-    //   setStore('currentTrack', 'inLibrary', inLibrary.data?.[0]?.attributes?.inLibrary)
-    // }, 1000)()
+      const inLibrary = await mkApiManager.isItemInLibrary(event.item.id, 'songs')
+      setStore('currentTrack', 'inLibrary', inLibrary.data?.[0]?.attributes?.inLibrary)
+    }, 1000)()
 
     const rawLyricsData = await this._metadataApi
       .getSongLyrics(event.item.playParams.catalogId ?? event.item.playParams.id)
-      .then((response: any) => {
+      .then(response => {
         return response.data[0].attributes.ttml
       })
 
@@ -443,7 +451,7 @@ class MusicKitManager {
    *
    * @param event - The event object containing the updated queue items.
    */
-  queueItemsDidChange = (event: any) => {
+  queueItemsDidChange = (event: MusicKit.MediaItem[]) => {
     setStore('app', 'queue', {
       items: event,
       index: store.app.queue.index,
@@ -456,7 +464,7 @@ class MusicKitManager {
    * Callback function that is called when the playback state changes.
    * @param event - The event object containing information about the playback state.
    */
-  playbackStateDidChange = (event: any) => {
+  playbackStateDidChange = async (event: PlaybackStateDidChangeEvent) => {
     setStore('isPlaying', event.state === 2)
     setStore('isPaused', event.state === 3)
     setStore('isStopped', event.state === 0)
@@ -485,12 +493,12 @@ class MusicKitManager {
       })
 
       if (store.app.connectivity.discord.enabled) {
-        discordService.setActivity(store.app.connectivity.discord.activity)
+        await discordService.setActivity(store.app.connectivity.discord.activity)
       }
     } else {
       setStore('app', 'connectivity', 'discord', 'activity', null)
       if (store.app.connectivity.discord.enabled) {
-        discordService.setActivity(store.app.connectivity.discord.activity)
+        await discordService.setActivity(store.app.connectivity.discord.activity)
       }
     }
   }
@@ -499,7 +507,7 @@ class MusicKitManager {
    * Callback function that is called when the playback duration changes.
    * @param event - The event object containing the new duration.
    */
-  playbackDurationDidChange = (event: any) => {
+  playbackDurationDidChange = (event: PlaybackDurwtionDidChange) => {
     setStore('duration', event.duration)
   }
 
@@ -507,7 +515,8 @@ class MusicKitManager {
    * Callback function that is called when the playback progress changes.
    * @param event - The event object containing the progress information.
    */
-  playbackProgressDidChange = (event: any) => {
+  playbackProgressDidChange = (event: PlaybackProgressDidChange) => {
+    console.log(event)
     setStore('progress', event.progress * 100)
   }
 
@@ -515,11 +524,11 @@ class MusicKitManager {
    * Callback function that is called when the playback time changes.
    * @param event - The event object containing the current playback time.
    */
-  playbackTimeDidChange = (event: any) => {
+  playbackTimeDidChange = async (event: PlaybackTimeDidChange) => {
     setStore('currentTime', event.currentPlaybackTime)
 
     if (store.currentTime > 5 && !store.app.wroteToDb) {
-      increasePlayCount({
+      await increasePlayCount({
         id: store.currentTrack.id,
         artist: store.currentTrack.artist,
         playCount: 1,
@@ -533,13 +542,14 @@ class MusicKitManager {
    * Handles the change in shuffle mode.
    * @param event - The event object containing the new shuffle mode.
    */
-  shuffleModeDidChange = (event: any) => {
+  shuffleModeDidChange = (event: number) => {
+    console.log(event)
     console.log('shuffleModeDidChange', event)
 
     // off, songs
-    if (event.shuffleMode === 0) {
+    if (event === 0) {
       this.setShuffle('off' as unknown as MusicKit.PlayerShuffleMode)
-    } else if (event.shuffleMode === 1) {
+    } else if (event === 1) {
       this.setShuffle('songs' as unknown as MusicKit.PlayerShuffleMode)
     } else {
       throw new Error('Unknown shuffle mode')

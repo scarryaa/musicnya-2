@@ -1,7 +1,8 @@
+import { API_ENDPOINTS, ARTIST_QUERY_PARAMS, BASE_QUERY_PARAMS } from '../config/config'
 import { MediaItemTypeService } from '../services/mediaItemTypeService'
 import { store } from '../stores/store'
-import { ArtistData, ArtistResponse } from '../types/api/ArtistResponse'
-import { ApiResponse } from '../types/api/common'
+import { ApiResponse, DataItem } from '../types/api/common'
+import { ArtistQueryParams, BaseQueryParams } from '../types/config/config'
 import ValidationUtils from '../util/ValidationUtils'
 import { ApiClient } from './MkApiClient'
 
@@ -38,32 +39,28 @@ export class ArtistsApi {
    * @param {string} id - The ID of the artist.
    * @returns {Promise<Object>} - A promise that resolves to the artist's information.
    */
-  async getArtist(id: string): Promise<ArtistResponse> {
+  async getArtist(id: string): Promise<ApiResponse<MusicKit.Artists>> {
     ValidationUtils.validateParam(id, 'artist ID')
     console.log(id)
 
     const queryParams = {
       include: 'albums,songs',
-      l: 'en-US',
-      platform: 'web',
-      views:
-        'featured-release,full-albums,appears-on-albums,featured-albums,featured-on-albums,singles,compilation-albums,live-albums,latest-release,top-music-videos,similar-artists,top-songs,playlists,more-to-see',
-      extend:
-        'centeredFullscreenBackground,artistBio,bornOrFormed,editorialArtwork,editorialVideo,isGroup,origin,inFavorites,hero',
-      'extend[playlists]': 'trackCount',
-      'include[songs]': 'albums',
-      'fields[albums]':
-        'artistName,artistUrl,artwork,contentRating,editorialArtwork,editorialVideo,name,playParams,releaseDate,url,trackCount',
-      'limit[artists:top-songs]': '20',
-      'art[url]': 'f'
+      ...BASE_QUERY_PARAMS,
+      views: ARTIST_QUERY_PARAMS.views,
+      extend: ARTIST_QUERY_PARAMS.extend,
+      'extend[playlists]': ARTIST_QUERY_PARAMS['extend[playlists]'],
+      'art[url]': ARTIST_QUERY_PARAMS['art[url]'],
+      'include[songs]': ARTIST_QUERY_PARAMS['include[songs]'],
+      'fields[albums]': ARTIST_QUERY_PARAMS['fields[albums]'],
+      'limit[artists:top-songs]': ARTIST_QUERY_PARAMS['limit[artists:top-songs]']
     }
 
     const response = await this.musicKitApiClient.fetchFromMusicKit(
-      `catalog/${store.countryCode}/artists/${id}`,
+      API_ENDPOINTS.artistCatalog(store.countryCode, id),
       null,
       queryParams
     )
-    return response
+    return response as ApiResponse<MusicKit.Artists>
   }
 
   /**
@@ -74,16 +71,10 @@ export class ArtistsApi {
   async isArtistFavorite(id: string) {
     ValidationUtils.validateParam(id, 'artist ID')
 
-    const queryParams = {
-      l: 'en-US',
-      platform: 'web',
-      'ids[artists]': id
-    }
-
     const response = await this.musicKitApiClient.fetchFromMusicKit(
-      'me/favorites',
+      API_ENDPOINTS.favorites,
       null,
-      queryParams
+      BASE_QUERY_PARAMS
     )
 
     return response
@@ -97,15 +88,15 @@ export class ArtistsApi {
   async favoriteArtist(id: string) {
     ValidationUtils.validateParam(id, 'artist ID')
 
-    const queryParams = {
-      l: 'en-US',
-      platform: 'web',
-      'art[url]': 'f',
+    const queryParams: BaseQueryParams &
+      Pick<ArtistQueryParams, 'art[url]'> & { 'ids[artists]': string } = {
+      ...BASE_QUERY_PARAMS,
+      'art[url]': ARTIST_QUERY_PARAMS['art[url]'],
       'ids[artists]': id
     }
 
     const response = await this.musicKitApiClient.fetchFromMusicKit(
-      'me/favorites',
+      API_ENDPOINTS.favorites,
       { method: 'POST' },
       queryParams
     )
@@ -130,7 +121,7 @@ export class ArtistsApi {
     }
 
     const response = await this.musicKitApiClient.fetchFromMusicKit(
-      'me/favorites',
+      API_ENDPOINTS.favorites,
       { method: 'DELETE' },
       queryParams
     )
@@ -155,20 +146,21 @@ export class ArtistsApi {
 
     const strippedType = MediaItemTypeService.stripType(type)
     const queryParams = {
-      'fields[artists]':
-        'url,artwork,editorialArtwork,editorialNotes,genreNames,isGroup,name,url'
+      ...BASE_QUERY_PARAMS,
+      'fields[artists]': ARTIST_QUERY_PARAMS['fields[artists]']
     }
 
     try {
       let endpoint = this.constructEndpoint(id, strippedType, type) + '/artists'
-      const response = await this.musicKitApiClient.fetchFromMusicKit(endpoint, null, {
+      const response = await this.musicKitApiClient.fetchFromMusicKit<
+        ApiResponse<DataItem>
+      >(endpoint, null, {
         ...queryParams
       })
+      console.log(response)
 
       if (MediaItemTypeService.isLibraryType(type)) {
-        endpoint = `me/library/artists/${
-          (response.data[0] as ArtistData).id
-        }/catalog?l=en-US&platform=web&fields=url`
+        endpoint = `${API_ENDPOINTS.libraryArtists}/${response.data[0].id}/catalog?l=en-US&platform=web&fields=url`
         const response2 = await this.musicKitApiClient.fetchFromMusicKit(endpoint, null, {
           ...queryParams
         })
@@ -178,7 +170,6 @@ export class ArtistsApi {
       return response
     } catch (error) {
       // Handle or log the error
-      console.log(error)
       throw new Error('Error fetching artist from media item')
     }
   }
@@ -195,15 +186,15 @@ export class ArtistsApi {
     ValidationUtils.validateParam(strippedType, 'stripped type')
 
     if (MediaItemTypeService.isLibraryType(type)) {
-      return `me/library/${strippedType}/${id}`
+      return `${API_ENDPOINTS.baseLibrary}/${strippedType}/${id}`
     } else {
-      return `catalog/${store.countryCode}/${strippedType}/${id}`
+      return `${API_ENDPOINTS.baseCatalog}/${store.countryCode}/${strippedType}/${id}`
     }
   }
 
   async getCatalogArtistFromLibrary(id: string) {
     const response = await this.musicKitApiClient.fetchFromMusicKit(
-      `me/library/artists/${id}/catalog`,
+      `${API_ENDPOINTS.libraryArtists}/${id}/${API_ENDPOINTS.baseCatalog}`,
       null
     )
 

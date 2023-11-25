@@ -1,10 +1,10 @@
+import { ALBUM_QUERY_PARAMS, API_ENDPOINTS } from '../config/config'
 import { MediaItemTypeService } from '../services/mediaItemTypeService'
 import { store } from '../stores/store'
-import { AlbumData } from '../types/api/AlbumResponse'
 import { ApiClient } from './MkApiClient'
 
 export class AlbumApi {
-  _musicKitInstance: MusicKit.MusicKitInstance = null
+  private _musicKitInstance: MusicKit.MusicKitInstance = null
   musicKitApiClient: ApiClient = null
 
   get musicKitInstance() {
@@ -32,20 +32,20 @@ export class AlbumApi {
     const strippedType = MediaItemTypeService.stripType(type)
     const response = await this.musicKitApiClient.fetchFromMusicKit(
       type.includes('library-')
-        ? `me/library/${strippedType}/${id}/albums`
-        : `catalog/${store.countryCode}/${strippedType}/${id}/albums`,
+        ? `${API_ENDPOINTS.baseLibrary}/${strippedType}/${id}/albums`
+        : `${API_ENDPOINTS.albumCatalog(store.countryCode, id)}/albums`,
       null,
       {
-        fields: 'url,artwork,name'
+        fields: ALBUM_QUERY_PARAMS.fields
       }
     )
 
     if (type.includes('library-')) {
       const response2 = await this.musicKitApiClient.fetchFromMusicKit(
-        `me/library/albums/${(response.data?.[0] as AlbumData).id}/catalog`,
+        `${API_ENDPOINTS.albumCatalogFromLibrary(store.countryCode, id)}/albums`,
         null,
         {
-          fields: 'url'
+          fields: ALBUM_QUERY_PARAMS.fields
         }
       )
 

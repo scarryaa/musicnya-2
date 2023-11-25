@@ -1,4 +1,4 @@
-import { For, createEffect } from 'solid-js'
+import { For } from 'solid-js'
 import styles from './MediaSelector.module.scss'
 import { MediaItem } from '../MediaItem/MediaItem'
 import { MediaItemGlass } from '../MediaItemGlass/MediaItemGlass'

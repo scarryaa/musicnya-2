@@ -6,7 +6,7 @@ import { mkController } from '../../api/mkController'
 import styles from './MediaItemGlass.module.scss'
 import { useContextMenu } from '../../composables/useContextMenu'
 import { ContextMenuType } from '../../types/types'
-import { MkManager } from '../../api/MkManager'
+import { MkManager, mkManager } from '../../api/MkManager'
 
 export const MediaItemGlass = ({ src, title, artists, type, id, reason }) => {
   const { openContextMenu } = useContextMenu()

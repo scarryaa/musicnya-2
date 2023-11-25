@@ -1,17 +1,45 @@
-export interface ApiResponse<T> {
+import { Album, Artist, Playlist } from './ItemResponse'
+
+interface ApiResponse<T> {
   data: T[]
   meta?: object
 }
 
-export interface Artwork {
-  bgColor: string
-  height: number
-  textColor1: string
-  textColor2: string
-  textColor3: string
-  textColor4: string
-  url: string
+type DataItem = Artist | Album | Station | Playlist
+
+interface Description {
+  standard: string
+}
+
+interface Artwork {
   width: number
+  url: string
+  height: number
+  textColor3: string
+  textColor2: string
+  textColor4: string
+  textColor1: string
+  bgColor: string
+  hasP3: boolean
+}
+
+interface TrackOrArtistRelationship {
+  href: string
+  data: TrackOrArtistData[]
+}
+
+interface TrackOrArtistData {
+  id: string
+  type: string
+  href: string
+  attributes: TrackOrArtistAttributes
+}
+
+interface TrackOrArtistAttributes {
+  inLibrary: boolean
+  name: string
+  artwork?: Artwork
+  url: string
 }
 
 export interface FetchOptions {
@@ -62,6 +90,7 @@ export interface Preview {
 
 export interface Station {
   data: StationData
+  id: string
 }
 
 export interface StationData {

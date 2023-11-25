@@ -273,7 +273,6 @@ export const createModalArtistStore = () => {
 
 export const createArtistStore = () => {
   return function (params: { id: string }) {
-    console.log(params.id)
     const [data] = createResource(
       () => params.id,
       async () => await mkApiManager.getArtist(params.id)

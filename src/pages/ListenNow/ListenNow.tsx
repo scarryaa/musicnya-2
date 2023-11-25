@@ -15,7 +15,6 @@ export const ListenNow = () => {
       console.log(homeData())
     }
   })
-
   return (
     <div class={styles.listenNow}>
       <Switch fallback={<LoadingSpinner />}>

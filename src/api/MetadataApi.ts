@@ -1,5 +1,7 @@
+import { API_ENDPOINTS } from '../config/config'
 import { MediaItemTypeService } from '../services/mediaItemTypeService'
 import { store } from '../stores/store'
+import { LyricsResponse } from '../types/api/LyricsResponse'
 import ValidationUtils from '../util/ValidationUtils'
 import { ApiClient } from './MkApiClient'
 
@@ -38,7 +40,7 @@ export class MetadataApi {
     ValidationUtils.validateParam(id, 'song ID', (id: string) => id.length > 0)
 
     const response = await this.musicKitApiClient.fetchFromMusicKit(
-      `catalog/${store.countryCode}/songs/${id}/credits`
+      `${API_ENDPOINTS.songCatalog(store.countryCode, id)}/credits`
     )
 
     return response
@@ -53,8 +55,8 @@ export class MetadataApi {
   async getSongLyrics(id: string) {
     ValidationUtils.validateParam(id, 'song ID', (id: string) => id.length > 0)
 
-    const response = await this.musicKitApiClient.fetchFromMusicKit(
-      `catalog/${store.countryCode}/songs/${id}/lyrics`
+    const response = await this.musicKitApiClient.fetchFromMusicKit<LyricsResponse>(
+      `${API_ENDPOINTS.songCatalog(store.countryCode, id)}/lyrics`
     )
 
     return response
@@ -67,7 +69,7 @@ export class MetadataApi {
    */
   async getRecentSongs() {
     const response = await this.musicKitApiClient.fetchFromMusicKit(
-      `me/recent/played/tracks`
+      API_ENDPOINTS.recentSongs
     )
 
     return response
@@ -81,7 +83,7 @@ export class MetadataApi {
    */
   async getRecentlyAdded(offset: number) {
     const response = await this.musicKitApiClient.fetchFromMusicKit(
-      `me/library/recently-added`,
+      API_ENDPOINTS.recentlyAdded,
       null,
       {
         include: 'catalog',
@@ -98,8 +100,8 @@ export class MetadataApi {
 
     const response = await this.musicKitApiClient.fetchFromMusicKit(
       type.includes('library-')
-        ? `me/library/${strippedType}/${id}/catalog`
-        : `catalog/${store.countryCode}/${type}/${id}`,
+        ? API_ENDPOINTS.catalogFromLibrary(store.countryCode, strippedType, id)
+        : `${API_ENDPOINTS.catalog(store.countryCode, strippedType)}/${id}`,
       null,
       {
         fields: 'url',

@@ -12,7 +12,7 @@ import { mkManager } from '../../api/MkManager'
 export const Queue = () => {
   const [queueItems, setQueueItems] = createSignal(store.app.queue.items)
   const [dropTarget, setDropTarget] = createSignal(null)
-  let draggedItem = null
+  let draggedItem: number = null
   const isDropTargetTop = index =>
     dropTarget() && dropTarget().index === index && dropTarget().position === 'top'
   const isDropTargetBottom = index =>
@@ -67,7 +67,7 @@ export const Queue = () => {
     setDropTarget(null)
   }
 
-  const handleDrop = async (e, index) => {
+  const handleDrop = (e: MouseEvent, index: number) => {
     e.preventDefault()
     e.stopPropagation()
 
@@ -76,7 +76,7 @@ export const Queue = () => {
       return
     }
 
-    const newQueue = await mkManager.moveQueueItem(draggedItem, index)
+    const newQueue = mkManager.moveQueueItem(draggedItem, index)
     setStore('app', 'queue', {
       items: newQueue
     })

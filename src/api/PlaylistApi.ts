@@ -1,5 +1,6 @@
 import { MediaItemTypeService } from '../services/mediaItemTypeService'
 import { store } from '../stores/store'
+import { MediaItemType } from '../types/types'
 import { ApiClient } from './MkApiClient'
 
 export class PlaylistApi {
@@ -35,11 +36,7 @@ export class PlaylistApi {
    * @param playlistId - The ID of the playlist.
    * @returns A Promise that resolves to the response from the server.
    */
-  async addItemToPlaylist(
-    id: string,
-    type: 'songs' | 'albums' | 'playlists',
-    playlistId: string
-  ) {
+  async addItemToPlaylist(id: string, type: MusicKit.MediaItemType, playlistId: string) {
     const strippedType = MediaItemTypeService.stripType(type)
     const response = await this.musicKitApiClient.fetchFromMusicKit(
       `me/library/playlists/${playlistId}/tracks`,
@@ -67,11 +64,7 @@ export class PlaylistApi {
    * @param playlistId - The ID of the playlist.
    * @returns A Promise that resolves to the response from the server.
    */
-  async removeItemFromPlaylist(
-    id: string,
-    type: 'songs' | 'albums' | 'playlists',
-    playlistId: string
-  ) {
+  async removeItemFromPlaylist(id: string, type: MediaItemType, playlistId: string) {
     const strippedType = MediaItemTypeService.stripType(type)
     const response = await this.musicKitApiClient.fetchFromMusicKit(
       `me/library/playlists/${playlistId}/tracks`,

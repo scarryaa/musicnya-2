@@ -9,7 +9,9 @@ export class MediaItemTypeService {
    * @param {MediaItemType} type - The type of the media item.
    * @returns {string} - The stripped type of the media item.
    */
-  static stripType(type: MusicKit.MediaItemType): string {
+  static stripType(
+    type: MusicKit.MediaItemType
+  ): 'uploadedVideos' | 'musicVideos' | MusicKit.MediaItemType {
     switch (type) {
       case 'uploaded-videos':
         return 'uploadedVideos'
@@ -18,8 +20,8 @@ export class MediaItemTypeService {
       default: {
         const mediaItemTypes = Object.values(MediaItemType)
 
-        if (mediaItemTypes.includes(type)) {
-          return type.replace('library-', '')
+        if (mediaItemTypes.includes(type as MediaItemType)) {
+          return type.replace('library-', '') as MediaItemType
         } else {
           throw new Error(`Unknown media item type: ${type}`)
         }

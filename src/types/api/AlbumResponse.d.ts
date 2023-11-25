@@ -1,13 +1,27 @@
-import { Artwork, EditorialNotes, PlayParams } from './common'
+import { Artwork, EditorialNotes, PlayParams, TrackOrArtistRelationship } from './common'
 
 interface AlbumResponse {
   data: AlbumData[]
 }
 
 interface AlbumData {
-  attributes: AlbumAttributes
   id: string
   type: string
+  href: string
+  attributes: AlbumAttributes
+  relationships: AlbumRelationships
+}
+
+interface AlbumRelationships {
+  tracks: TrackOrArtistRelationship
+  artists: TrackOrArtistRelationship
+}
+
+interface AlbumAttributes {
+  inLibrary: boolean
+  name: string
+  artwork: Artwork
+  url: string
 }
 
 interface AlbumAttributes {
