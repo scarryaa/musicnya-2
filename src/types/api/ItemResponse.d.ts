@@ -1,5 +1,6 @@
 import { AlbumAttributes } from './AlbumResponse'
 import { ArtistAttributes } from './ArtistResponse'
+import { CuratorAttributes } from './CuratorResponse'
 import { PlaylistAttributes } from './PlaylistResponse'
 import { StationAttributes } from './common'
 
@@ -25,4 +26,10 @@ interface Playlist {
   id: string
   type: 'playlists'
   attributes: PlaylistAttributes
+}
+
+interface Curator {
+  id: string
+  type: 'curators'
+  attributes: CuratorAttributes
 }

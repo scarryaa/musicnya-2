@@ -3,7 +3,6 @@ import styles from './CuratorItem.module.scss'
 import Fa from 'solid-fa'
 import { Utils } from '../../util/util'
 import { A } from '@solidjs/router'
-import { createSignal } from 'solid-js'
 import { useContextMenu } from '../../composables/useContextMenu'
 import { ContextMenuType } from '../../types/types'
 
@@ -16,13 +15,13 @@ export const CuratorItem = ({ item }) => {
       activeClass=""
       class={styles['curator-item']}
       href="#"
-      onContextMenu={e => openContextMenu(e, item.id, null, ContextMenuType.Curator)}
+      onContextMenu={e => openContextMenu(e, item.id, ContextMenuType.Curator, null)}
     >
       <div class={styles['curator-item__image']}>
         <div class={styles['curator-item__image__overlay']}>
           <div
             class={styles['curator-item__image__overlay__moreButton']}
-            onClick={e => openContextMenu(e, item.id, null, item.type)}
+            onClick={e => openContextMenu(e, item.id, ContextMenuType.Curator, null)}
           >
             <Fa icon={faEllipsisH} size="1x" color="var(--color-white)" />
           </div>

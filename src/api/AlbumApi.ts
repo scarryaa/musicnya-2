@@ -1,4 +1,10 @@
-import { ALBUM_QUERY_PARAMS, API_ENDPOINTS } from '../config/config'
+import {
+  ALBUM_QUERY_PARAMS,
+  API_ENDPOINTS,
+  BASE_QUERY_PARAMS,
+  CATALOG_ALBUM_QUERY_PARAMS,
+  LIBRARY_ALBUM_QUERY_PARAMS
+} from '../config/config'
 import { MediaItemTypeService } from '../services/mediaItemTypeService'
 import { store } from '../stores/store'
 import { Album } from '../types/api/ItemResponse'
@@ -30,6 +36,13 @@ export class AlbumApi {
     this.musicKitApiClient = musicKitApiClient
   }
 
+  /**
+   * Retrieves an album from a media item.
+   *
+   * @param id - The ID of the media item.
+   * @param type - The type of the media item.
+   * @returns A promise that resolves to the album response.
+   */
   async getAlbumFromMediaItem(id: string, type: MusicKit.MediaItemType) {
     const strippedType = MediaItemTypeService.stripType(type)
     const response = await this.musicKitApiClient.fetchFromMusicKit<ApiResponse<Album>>(
@@ -53,6 +66,45 @@ export class AlbumApi {
 
       return response2
     }
+
+    return response
+  }
+
+  /**
+   * Retrieves an album from the music catalog.
+   *
+   * @param id - The ID of the album.
+   * @returns A promise that resolves to the album response.
+   */
+  async getAlbum(id: string, additionalQueryParams?: { [key: string]: string }) {
+    const response = await this.musicKitApiClient.fetchFromMusicKit<ApiResponse<Album>>(
+      `${API_ENDPOINTS.albumCatalog(store.countryCode, id)}`,
+      null,
+      {
+        ...BASE_QUERY_PARAMS,
+        ...CATALOG_ALBUM_QUERY_PARAMS,
+        ...additionalQueryParams
+      }
+    )
+
+    return response
+  }
+
+  /**
+   * Retrieves a library album from the music catalog.
+   * @param id The ID of the album.
+   * @returns A promise that resolves to the album response.
+   */
+  async getLibraryAlbum(id: string, additionalQueryParams?: { [key: string]: string }) {
+    const response = await this.musicKitApiClient.fetchFromMusicKit<ApiResponse<Album>>(
+      `${API_ENDPOINTS.albumCatalogFromLibrary(store.countryCode, id)}`,
+      null,
+      {
+        ...BASE_QUERY_PARAMS,
+        ...LIBRARY_ALBUM_QUERY_PARAMS,
+        ...additionalQueryParams
+      }
+    )
 
     return response
   }

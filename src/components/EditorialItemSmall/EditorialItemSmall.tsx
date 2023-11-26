@@ -28,7 +28,7 @@ export const EditorialItemSmall = ({ item }) => {
       onContextMenu={e =>
         openContextMenu(
           e,
-          childId,
+          childId || item.id,
           ContextMenuType.Editorial,
           isCuratorType ? 'curators' : childType
         )

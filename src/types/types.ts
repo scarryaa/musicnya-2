@@ -29,5 +29,7 @@ export enum MediaItemType {
   LibraryPlaylists = 'library-playlists',
   LibrarySongs = 'library-songs',
   UploadedVideos2 = 'uploaded-videos',
-  MusicVideos2 = 'music-videos'
+  MusicVideos2 = 'music-videos',
+  Curators = 'curators',
+  AppleCurators = 'apple-curators'
 }

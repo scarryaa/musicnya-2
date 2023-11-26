@@ -80,8 +80,9 @@ const createAsyncMenuItem = (
 
 // Actions
 export const contextMenuItems = {
-  immersive: createMenuItem(faUpRightAndDownLeftFromCenter, () => {}, 'Immersive'),
-  miniPlayer: createMenuItem(faWindowMaximize, Utils.resizeToMiniPlayer, 'Mini Player'),
+  immersive: () => createMenuItem(faUpRightAndDownLeftFromCenter, () => {}, 'Immersive'),
+  miniPlayer: () =>
+    createMenuItem(faWindowMaximize, Utils.resizeToMiniPlayer, 'Mini Player'),
   share: (id: string, type: MusicKit.MediaItemType) =>
     createAsyncMenuItem(
       faShare,

@@ -44,6 +44,37 @@ export const ALBUM_QUERY_PARAMS: AlbumQueryParams = {
   'fields[artists]': 'url,artwork,editorialArtwork,editorialNotes,genreNames,isGroup,name'
 }
 
+export const CATALOG_ALBUM_QUERY_PARAMS = {
+  'art[url]': 'f',
+  extend: 'editorialArtwork,editorialVideo,trackCount,extendedAssetUrls,offers',
+  'fields[artists]': 'name,url',
+  'fields[curators]': 'name',
+  'fields[record-labels]': 'name,url',
+  include: 'record-labels,artists',
+  'include[music-videos]': 'artists',
+  'include[playlists]': 'curator',
+  'include[songs]': 'artists,composers,albums',
+  'meta[albums:tracks]': 'popularity',
+  views:
+    'appears-on,audio-extras,more-by-artist,other-versions,related-videos,video-extras,you-might-also-like'
+}
+
+export const LIBRARY_ALBUM_QUERY_PARAMS = {
+  'art[url]': 'f',
+  'fields[artists]': 'name,url',
+  includeOnly: 'catalog,artists,tracks',
+  'include[albums]': 'artists,tracks',
+  'include[library-albums]': 'artists,tracks',
+  'include[music-videos]': 'catalog,artists,tracks',
+  l: 'en-US',
+  platform: 'web'
+}
+
+export const MODAL_QUERY_PARAMS = {
+  include: 'audio-analysis,genres,artists,albums,library',
+  extend: 'editorialArtwork,editorialVideo'
+}
+
 export const ARTIST_QUERY_PARAMS: ArtistQueryParams = {
   ...BASE_QUERY_PARAMS,
   include: 'albums,songs',

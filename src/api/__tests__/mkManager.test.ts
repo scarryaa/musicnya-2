@@ -100,19 +100,17 @@ describe('MusicKitManager', () => {
     })
 
     it('sets the shuffleMode correctly', () => {
-      mkManager.setShuffle(true)
+      mkManager.setShuffle(1)
       expect(mockMusicKitInstance.shuffleMode).toBe(1)
 
-      mkManager.setShuffle(false)
+      mkManager.setShuffle(0)
       expect(mockMusicKitInstance.shuffleMode).toBe(0)
     })
 
     it('throws error if MusicKit instance is not initialized', () => {
       mkManager.musicKitInstance = null
 
-      expect(() => mkManager.setShuffle(true)).toThrow(
-        'MusicKit instance not initialized'
-      )
+      expect(() => mkManager.setShuffle(1)).toThrow('MusicKit instance not initialized')
     })
   })
 
@@ -231,7 +229,7 @@ describe('MusicKitManager', () => {
     })
 
     it('calls setQueue on the MusicKit instance', async () => {
-      await mkManager.setQueue('id', 'type')
+      await mkManager.setQueue('id', 'activities')
 
       expect(mockMusicKitInstance.setQueue).toHaveBeenCalledWith({
         type: ['id'],

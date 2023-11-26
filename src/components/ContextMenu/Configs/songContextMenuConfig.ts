@@ -1,6 +1,6 @@
 import { mkApiManager } from '../../../api/MkApiManager'
 import { Reaction } from '../../../types/types'
-import { songContextMenu } from '../ContextMenuTypes'
+import { songContextMenu } from '../Types/SongContextMenu'
 
 export const songContextMenuConfig = {
   fetchData: async (id, subType) => {

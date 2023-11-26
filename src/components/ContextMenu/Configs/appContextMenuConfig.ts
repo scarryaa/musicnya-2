@@ -1,4 +1,4 @@
-import { appContextMenu } from '../ContextMenuTypes'
+import { appContextMenu } from '../Types/AppContextMenu'
 
 export const appContextMenuConfig = {
   createInitialMenuItems: () => appContextMenu()

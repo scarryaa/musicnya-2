@@ -274,6 +274,24 @@ class MusicKitApiManager {
   async getAlbumFromMediaItem(id: string, type: MusicKit.MediaItemType) {
     return await this.albumApi.getAlbumFromMediaItem(id, type)
   }
+
+  /**
+   * Retrieves an album from the music catalog.
+   * @param id The ID of the album.
+   * @returns A promise that resolves to the album.
+   */
+  async getAlbum(id: string, additionalQueryParams?: { [key: string]: string }) {
+    return await this.albumApi.getAlbum(id, additionalQueryParams)
+  }
+
+  /**
+   * Retrieves a library album from the music catalog.
+   * @param id The ID of the album.
+   * @returns A promise that resolves to the album.
+   */
+  async getLibraryAlbum(id: string, additionalQueryParams?: { [key: string]: string }) {
+    return await this.albumApi.getLibraryAlbum(id, additionalQueryParams)
+  }
 }
 
 export const mkApiManager = new MusicKitApiManager()

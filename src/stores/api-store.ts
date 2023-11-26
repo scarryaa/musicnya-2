@@ -1,23 +1,16 @@
 import { createEffect, createResource, createSignal } from 'solid-js'
 import * as config from '../../config.json'
 import { fetchRecommendations } from '../api/home'
-import {
-  fetchAlbum,
-  fetchAlbumDetailed,
-  fetchLibraryAlbum,
-  fetchLibraryAlbumDetailed
-} from '../api/album'
 import { fetchLibraryPlaylist, fetchPlaylist } from '../api/playlist'
 import { fetchStation, fetchStationDetailed } from '../api/station'
 import { fetchBrowse } from '../api/browse'
 import { fetchRadio } from '../api/radio'
 import { fetchVideo } from '../api/video'
 import { fetchRecentlyAdded } from '../api/recentlyAdded'
-import { fetchArtist } from '../api/artist'
 import { fetchLibrarySongDetailed, fetchSongDetailed } from '../api/song'
 import { fetchCuratorDetailed } from '../api/curator'
-import { mkController } from '../api/mkController'
 import { mkApiManager } from '../api/MkApiManager'
+import { MODAL_QUERY_PARAMS } from '../config/config'
 
 export const createStationStore = () => {
   return function (params: { id: string }) {
@@ -195,19 +188,9 @@ export const createModalAlbumStore = () => {
       () => params.id,
       async () =>
         await (params.id.startsWith('l.')
-          ? fetchLibraryAlbumDetailed
-          : fetchAlbumDetailed)({
-          devToken: config.MusicKit.token,
-          musicUserToken: MusicKit.getInstance()?.musicUserToken,
-          id: params.id
-        })
+          ? mkApiManager.getLibraryAlbum(params.id, MODAL_QUERY_PARAMS)
+          : mkApiManager.getAlbum(params.id, MODAL_QUERY_PARAMS))
     )
-
-    if (params.id.startsWith('l.')) {
-      mkApiManager.getCatalogItemFromLibrary(params.id, 'library-albums').then(data => {
-        console.log(data)
-      })
-    }
 
     console.log(data())
     return data
@@ -287,11 +270,9 @@ export const createAlbumStore = () => {
     const [data] = createResource(
       () => params.id,
       async () =>
-        await (params.id.startsWith('l.') ? fetchLibraryAlbum : fetchAlbum)({
-          devToken: config.MusicKit.token,
-          musicUserToken: MusicKit.getInstance()?.musicUserToken,
-          id: params.id
-        })
+        await (params.id.startsWith('l.')
+          ? mkApiManager.getLibraryAlbum(params.id)
+          : mkApiManager.getAlbum(params.id))
     )
 
     return data

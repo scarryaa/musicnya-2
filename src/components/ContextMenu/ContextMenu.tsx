@@ -14,6 +14,7 @@ import { editorialContextMenuConfig } from './Configs/editorialContextMenuConfig
 import { QuickActionItem } from './Components/QuickActionItem'
 import { ActionItem } from './Components/ActionItem'
 import { SubContextMenu } from './Components/SubContextMenu'
+import { curatorContextMenuConfig } from './Configs/curatorContextMenuConfig'
 
 const contextMenuConfig = {
   [ContextMenuType.App]: appContextMenuConfig,
@@ -22,7 +23,8 @@ const contextMenuConfig = {
   [ContextMenuType.Song]: songContextMenuConfig,
   [ContextMenuType.MediaItem]: mediaItemContextMenuConfig,
   [ContextMenuType.QueueItem]: queueItemContextMenuConfig,
-  [ContextMenuType.Editorial]: editorialContextMenuConfig
+  [ContextMenuType.Editorial]: editorialContextMenuConfig,
+  [ContextMenuType.Curator]: curatorContextMenuConfig
 }
 
 //TODO fix editorial item small context menu

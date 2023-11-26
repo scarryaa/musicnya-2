@@ -1,6 +1,6 @@
 import { mkApiManager } from '../../../api/MkApiManager'
 import { Reaction } from '../../../types/types'
-import { mediaItemContextMenu } from '../ContextMenuTypes'
+import { mediaItemContextMenu } from '../Types/MediaItemContextMenu'
 
 export const mediaItemContextMenuConfig = {
   fetchData: async (id, subType) => {

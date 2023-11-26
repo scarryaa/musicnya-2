@@ -6,7 +6,7 @@ import { ApiClient } from './MkApiClient'
 import { increasePlayCount } from '../db/db'
 import { Utils } from '../util/util'
 import { MetadataApi } from './MetadataApi'
-import { MediaItemType, Reaction } from '../types/types'
+import { Reaction } from '../types/types'
 import { mkApiManager } from './MkApiManager'
 
 /**
@@ -343,12 +343,26 @@ class MusicKitManager {
   setUpEvents = () => {
     const eventHandlers = {
       mediaItemStateDidChange: this.mediaItemStateDidChange,
-      nowPlayingItemDidChange: this.nowPlayingItemDidChange,
+      nowPlayingItemDidChange: (event: { item: MusicKit.MediaItem }) => {
+        this.nowPlayingItemDidChange(event).catch(error => {
+          throw error
+        })
+      },
       queueItemsDidChange: this.queueItemsDidChange,
-      playbackStateDidChange: this.playbackStateDidChange,
+      playbackStateDidChange: (event: PlaybackStateDidChangeEvent) => {
+        this.playbackStateDidChange(event).catch(error => {
+          console.error('Error in playbackStateDidChange:', error)
+          throw error
+        })
+      },
       playbackDurationDidChange: this.playbackDurationDidChange,
       playbackProgressDidChange: this.playbackProgressDidChange,
-      playbackTimeDidChange: this.playbackTimeDidChange,
+      playbackTimeDidChange: (event: PlaybackTimeDidChange) => {
+        this.playbackTimeDidChange(event).catch(error => {
+          console.error('Error in playbackTimeDidChange:', error)
+          throw error
+        })
+      },
       shuffleModeDidChange: this.shuffleModeDidChange
     }
 

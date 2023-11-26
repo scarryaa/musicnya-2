@@ -1,6 +1,5 @@
 import { MediaItemTypeService } from '../services/mediaItemTypeService'
 import { store } from '../stores/store'
-import { MediaItemType } from '../types/types'
 import { ApiClient } from './MkApiClient'
 
 export class PlaylistApi {

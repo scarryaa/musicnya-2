@@ -1,5 +1,5 @@
 import { mkApiManager } from '../../../api/MkApiManager'
-import { artistContextMenu } from '../ContextMenuTypes'
+import { artistContextMenu } from '../Types/ArtistContextMenu'
 
 export const artistContextMenuConfig = {
   fetchData: async id => {

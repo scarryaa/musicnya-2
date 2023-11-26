@@ -1,6 +1,6 @@
 import { mkApiManager } from '../../../api/MkApiManager'
 import { Reaction } from '../../../types/types'
-import { queueItemContextMenu } from '../ContextMenuTypes'
+import { queueItemContextMenu } from '../Types/QueueItemContextMenu'
 
 export const queueItemContextMenuConfig = {
   fetchData: async (id, subType) => {

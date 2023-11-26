@@ -1,9 +1,10 @@
 import { mkApiManager } from '../../../api/MkApiManager'
 import { Reaction } from '../../../types/types'
-import { editorialContextMenu } from '../ContextMenuTypes'
+import { editorialContextMenu } from '../Types/EditorialContextMenu'
 
 export const editorialContextMenuConfig = {
   fetchData: async (id, subType) => {
+    console.log(id)
     const [inLibraryState, isLovedState] = await Promise.all([
       mkApiManager.isItemInLibrary(id, subType),
       mkApiManager.isItemFavorite(id, subType)
