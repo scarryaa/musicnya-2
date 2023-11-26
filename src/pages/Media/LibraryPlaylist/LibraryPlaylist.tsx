@@ -29,7 +29,7 @@ export const LibraryPlaylist = () => {
           <LoadingSpinner />
         </Match>
         <Match when={playlistData() && !store.library.loading}>
-          <div class={styles.libraryPlaylist}>
+          <div class={styles['library-playlist']}>
             <MediaInfo media={playlistData} artistId={null} />
           </div>
 

@@ -3,12 +3,13 @@
 }
 
 :root[theme='dark'] {
-  --artwork-background-color: #000000;
+  --artwork-background-color: #000;
 }
 
 .artist {
-  color: var(--color-on-primary);
   --height: 60cqh;
+
+  color: var(--color-on-primary);
   max-width: 100%;
 
   &__artwork {
@@ -23,7 +24,7 @@
       position: absolute;
       width: 100%;
       height: 100%;
-      background: linear-gradient(0deg, rgba(0, 0, 0, 0.5) 10%, transparent 30%);
+      background: linear-gradient(0deg, rgb(0 0 0 / 50%) 10%, transparent 30%);
     }
 
     &__image {
@@ -47,10 +48,10 @@
       justify-content: space-between;
 
       &__title {
-        filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.5));
+        filter: drop-shadow(0 0 10px rgb(0 0 0 / 50%));
         position: absolute;
         left: 3.5rem;
-        bottom: 0rem;
+        bottom: 0;
         color: $color-white;
         max-width: 65%;
       }
@@ -61,8 +62,6 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        background-color: $color-overlay-bg;
-        filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.5));
         border-radius: 50%;
         padding: 1rem;
         width: 2.5rem;
@@ -71,7 +70,7 @@
         background-color: var(--color-primary);
         cursor: default;
         z-index: 1;
-        filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.5));
+        filter: drop-shadow(0 0 10px rgb(0 0 0 / 50%));
 
         &:hover {
           background-color: var(--color-primary-hover);
@@ -127,7 +126,7 @@
         }
 
         &__title {
-          left: 0rem;
+          left: 0;
         }
 
         &__actions {

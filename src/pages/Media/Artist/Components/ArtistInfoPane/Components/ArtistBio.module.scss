@@ -14,5 +14,6 @@
 
 .description {
   @include font-style(0.9rem);
+
   color: var(--description-color);
 }

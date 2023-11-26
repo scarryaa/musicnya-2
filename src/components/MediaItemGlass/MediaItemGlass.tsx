@@ -1,18 +1,33 @@
 import { faPlay, faEllipsisH } from '@fortawesome/free-solid-svg-icons'
 import { A } from '@solidjs/router'
 import Fa from 'solid-fa'
-import { createSignal, For } from 'solid-js'
-import { mkController } from '../../api/mkController'
+import { For } from 'solid-js'
 import styles from './MediaItemGlass.module.scss'
 import { useContextMenu } from '../../composables/useContextMenu'
 import { ContextMenuType } from '../../types/types'
-import { MkManager, mkManager } from '../../api/MkManager'
+import { mkManager } from '../../api/MkManager'
 
-export const MediaItemGlass = ({ src, title, artists, type, id, reason }) => {
+type MediaItemGlassProps = {
+  src: string
+  title: string
+  artists: string[]
+  type: MusicKit.MediaItemType
+  id: string
+  reason: string
+}
+
+export const MediaItemGlass = ({
+  src,
+  title,
+  artists,
+  type,
+  id,
+  reason
+}: MediaItemGlassProps) => {
   const { openContextMenu } = useContextMenu()
-  const handlePlayClick = e => {
+  const handlePlayClick = (e: MouseEvent): void => {
     e.preventDefault()
-    mkManager.processItemAndPlay(id, type)
+    mkManager.processItemAndPlay(id, type).catch(err => console.error(err))
   }
 
   return (

@@ -1,10 +1,8 @@
 import { For, JSX, createEffect, onCleanup, onMount } from 'solid-js'
 import styles from './ContextMenu.module.scss'
 import { store } from '../../stores/store'
-import Fa from 'solid-fa'
-import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import { useContextMenu, useContextMenuState } from '../../composables/useContextMenu'
-import { ContextMenuType, Reaction } from '../../types/types'
+import { ContextMenuType } from '../../types/types'
 import Tooltip from '../Tooltip/Tooltip'
 import { historyItemContextMenuConfig } from './Configs/historyItemContextMenuConfig'
 import { appContextMenuConfig } from './Configs/appContextMenuConfig'
@@ -32,7 +30,7 @@ export function ContextMenu(): JSX.Element {
   const { setContextMenuItems } = useContextMenu()
   const { closeContextMenu } = useContextMenuState()
 
-  const updateMenuItems = async (type, subType) => {
+  const updateMenuItems = async (type: ContextMenuType, subType) => {
     if (!contextMenuConfig[type]) {
       console.error('Unsupported context menu type')
       return

@@ -1,15 +1,9 @@
 import { For, createEffect, createSignal, onCleanup } from 'solid-js'
 import styles from './SongTable.module.scss'
 import { Utils } from '../../util/util'
-import { mkController } from '../../api/mkController'
-import Fa from 'solid-fa'
-import { faEllipsisH, faPause, faPlay } from '@fortawesome/free-solid-svg-icons'
-import { store } from '../../stores/store'
-import { faStar } from '@fortawesome/free-solid-svg-icons'
-import { A } from '@solidjs/router'
 import { SongTableSkeleton } from '../Skeletons/SongTableSkeleton'
 import { SongTableItem } from '../SongTableItem/SongTableItem'
-import { mkApiManager } from '../../api/MkApiManager'
+import { fetchMoreTracks } from '../../api/playlist'
 
 export const SongTable = ({ data }) => {
   const [sentinel, setSentinel] = createSignal(null)
@@ -53,7 +47,7 @@ export const SongTable = ({ data }) => {
     entries => {
       if (entries[0].isIntersecting && !isFetchingComplete() && !isFetching()) {
         setIsFetching(true)
-        mkApiManager.fetchMoreTracks(data().id, data().type, tracks().length).then(
+        fetchMoreTracks(data().id, data().type, tracks().length).then(
           res => {
             if (res && res.data) {
               setTracks([...tracks(), ...res.data])

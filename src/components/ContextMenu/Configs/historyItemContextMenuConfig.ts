@@ -1,5 +1,4 @@
 import { mkApiManager } from '../../../api/MkApiManager'
-import { mkController } from '../../../api/mkController'
 import { Reaction } from '../../../types/types'
 import { historyItemContextMenu } from '../ContextMenuTypes'
 
@@ -16,6 +15,7 @@ export const historyItemContextMenuConfig = {
       isDisliked: isLovedState.data?.[0]?.attributes.value == Reaction.Disliked
     }
   },
+  // TODO fix liking action
   createInitialMenuItems: (id, subType) =>
     historyItemContextMenu(id, subType, true, false, false, false),
   createMenuItems: (id, subType, data) =>

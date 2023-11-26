@@ -9,6 +9,6 @@ export const artistContextMenuConfig = {
       isFavorited: isFavoritedState.data[0].attributes.inFavorites
     }
   },
-  createInitialMenuItems: (id, subType) => artistContextMenu(id, subType, false),
-  createMenuItems: (id, subType, data) => artistContextMenu(id, subType, data.isFavorited)
+  createInitialMenuItems: (id, subType) => artistContextMenu(id, true, false),
+  createMenuItems: (id, subType, data) => artistContextMenu(id, false, data.isFavorited)
 }

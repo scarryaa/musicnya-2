@@ -16,9 +16,9 @@ export const ArtistInfoPane = ({ artist }) => {
   const { attributes } = artist()
 
   return (
-    <div class={styles.artistInfoPane}>
-      <span class={styles.artistInfoPane__header}>About {attributes.name}</span>
-      <div class={styles.artistInfoPane__info}>
+    <div class={styles['artist-info-pane']}>
+      <span class={styles['artist-info-pane__header']}>About {attributes.name}</span>
+      <div class={styles['artist-info-pane__info']}>
         <ArtistBio bio={attributes.artistBio} />
         <div class={styles.artistInfoPane__details}>
           <ArtistDetail title="Hometown" content={attributes.origin} />

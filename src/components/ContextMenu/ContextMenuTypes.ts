@@ -101,7 +101,7 @@ export const songContextMenu = (
 
 export const mediaItemContextMenu = (
   id,
-  disabled,
+  disabled = false,
   subType,
   isLovedState = false,
   isDislikedState = false,

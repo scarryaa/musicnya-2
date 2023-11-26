@@ -1,7 +1,7 @@
 @import '../../../../../../styles/mixins/font-mixins';
 @import '../../../../../../styles/mixins/mixins';
 
-.artistDetail {
+.artist-detail {
   @include flex-layout(column, flex-start, flex-start);
 
   &__title {
@@ -10,7 +10,7 @@
   }
 
   &__description {
-    color: var(--extraInfo-item-color);
+    color: var(--extra-info-item-color);
     font-size: 0.9rem;
   }
 }

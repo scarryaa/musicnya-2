@@ -26,7 +26,7 @@ export const LibraryAlbum = () => {
   return (
     <Switch fallback={<LoadingSpinner />}>
       <Match when={albumData.state === 'ready' && currentAlbum()}>
-        <div class={styles.libraryAlbum}>
+        <div class={styles['library-album']}>
           <MediaInfo
             media={currentAlbum}
             artistId={
@@ -42,11 +42,11 @@ export const LibraryAlbum = () => {
 
         <SongTable data={currentAlbum} />
         {currentAlbum().type === 'library-albums' && (
-          <div class={styles.libraryAlbum__footer}>
+          <div class={styles['library-album__footer']}>
             <BaseLink
-              activeClass={styles.libraryAlbum__footer__showCompleteAlbumLink__active}
+              activeClass={styles['library-album__footer__showCompleteAlbumLink__active']}
               aria-label="Show Complete Album"
-              class={styles.libraryAlbum__footer__showCompleteAlbumLink}
+              class={styles['library-album__footer__showCompleteAlbumLink']}
               href={`/media/albums/${currentAlbum().relationships.catalog.data[0].id}`}
             >
               Show Catalog Album

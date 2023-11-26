@@ -38,6 +38,7 @@ const createMenuItem = (
   label: string,
   quickAction = false,
   hasSubMenu = false,
+  disabled = false,
   tooltip?: string
 ) => {
   return {
@@ -46,6 +47,7 @@ const createMenuItem = (
     isQuickAction: quickAction,
     label,
     hasSubMenu,
+    disabled,
     onMouseEnter: () => closeSubContextMenu(),
     tooltip
   }
@@ -55,6 +57,7 @@ const createAsyncMenuItem = (
   icon: IconDefinition,
   asyncAction: () => Promise<void>,
   label: string,
+  disabled = false,
   quickAction = false,
   tooltip?: string
 ) => {
@@ -69,6 +72,7 @@ const createAsyncMenuItem = (
     },
     isQuickAction: quickAction,
     label,
+    disabled,
     onMouseEnter: () => closeSubContextMenu(),
     tooltip
   }
@@ -162,16 +166,18 @@ export const contextMenuItems = {
       isFavorite ? 'Unfavorite' : 'Favorite',
       true,
       false,
+      disabled,
       isFavorite ? 'Unfavorite' : 'Favorite'
     ),
 
-  createStationQuick: (id: string, type: MusicKit.MediaItemType) =>
+  createStationQuick: (id: string, type: MusicKit.MediaItemType, disabled: boolean) =>
     createMenuItem(
       faSatelliteDish,
       () => mkManager.setStationQueue(id, type),
       'Create Station',
       true,
       false,
+      disabled,
       'Create Station'
     ),
 
@@ -190,6 +196,7 @@ export const contextMenuItems = {
       isLoved ? 'Unlove' : 'Love',
       true,
       false,
+      disabled,
       isLoved ? 'Unlove' : 'Love'
     ),
 
@@ -209,13 +216,14 @@ export const contextMenuItems = {
       isDisliked ? 'Undislike' : 'Dislike',
       true,
       false,
+      disabled,
       isDisliked ? 'Undislike' : 'Dislike'
     ),
 
   addToLibraryQuick: (
     id: string,
     type: MusicKit.MediaItemType,
-    disabled,
+    disabled: boolean,
     isLoved,
     isDisliked,
     isInLibrary = false
@@ -233,27 +241,30 @@ export const contextMenuItems = {
         }
       },
       isInLibrary ? 'Remove from Library' : 'Add to Library',
+      disabled,
       true,
       isInLibrary ? 'Remove from Library' : 'Add to Library'
     ),
 
-  playNextQuick: (id: string, type: MusicKit.MediaItemType) =>
+  playNextQuick: (id: string, type: MusicKit.MediaItemType, disabled: boolean) =>
     createMenuItem(
       faIndent,
       () => mkManager.playNext(id, type),
       'Play Next',
       true,
       false,
+      disabled,
       'Play Next'
     ),
 
-  playLastQuick: (id: string, type: MusicKit.MediaItemType) =>
+  playLastQuick: (id: string, type: MusicKit.MediaItemType, disabled: boolean) =>
     createMenuItem(
       faOutdent,
       () => mkManager.playLater(id, type),
       'Play Last',
       true,
       false,
+      disabled,
       'Play Last'
     )
 }
