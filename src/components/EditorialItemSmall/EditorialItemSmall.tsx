@@ -24,7 +24,7 @@ export const EditorialItemSmall = ({ item }) => {
 
   return (
     <div
-      class={styles.editorialItemSmall}
+      class={styles['editorial-item-small']}
       onContextMenu={e =>
         openContextMenu(
           e,
@@ -34,14 +34,14 @@ export const EditorialItemSmall = ({ item }) => {
         )
       }
     >
-      <div class={styles.editorialItemSmall__imageContainer}>
+      <div class={styles['editorial-item-small__imageContainer']}>
         <A
-          class={styles.editorialItemSmall__imageContainer__overlay}
+          class={styles['editorial-item-small__imageContainer__overlay']}
           href={item.attributes?.link?.url || '/media/a'}
         >
           {showMoreButton && (
             <div
-              class={styles.editorialItemSmall__imageContainer__overlay__moreButton}
+              class={styles['editorial-item-small__imageContainer__overlay__moreButton']}
               onClick={e =>
                 openContextMenu(
                   e,
@@ -56,7 +56,7 @@ export const EditorialItemSmall = ({ item }) => {
           )}
         </A>
         <img
-          class={styles.editorialItemSmall__imageContainer__image}
+          class={styles['editorial-item-small__imageContainer__image']}
           src={Utils.formatArtworkUrl(
             item.attributes?.artwork?.url ||
               item.relationships?.contents?.data?.[0]?.attributes?.editorialArtwork
@@ -68,7 +68,7 @@ export const EditorialItemSmall = ({ item }) => {
           )}
         />
       </div>
-      <div class={styles.editorialItemSmall__title}>
+      <div class={styles['editorial-item-small__title']}>
         {item.attributes?.designTag ||
           item.relationships?.contents?.data?.[0]?.attributes?.name}
       </div>

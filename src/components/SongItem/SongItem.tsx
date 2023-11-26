@@ -3,13 +3,13 @@ import { Utils } from '../../util/util'
 import styles from './SongItem.module.scss'
 import { faEllipsisH, faMinus, faPlay, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { A } from '@solidjs/router'
-import { mkController } from '../../api/mkController'
 import Tooltip from '../Tooltip/Tooltip'
 import { createSignal } from 'solid-js'
 import { useContextMenu } from '../../composables/useContextMenu'
 import { ContextMenuType } from '../../types/types'
-import { MkManager } from '../../api/MkManager'
 import { mkApiManager } from '../../api/MkApiManager'
+
+Tooltip
 
 export const SongItem = ({ item, album, albumId }) => {
   const [inLibrary, setInLibrary] = createSignal(false)
@@ -62,7 +62,7 @@ export const SongItem = ({ item, album, albumId }) => {
 
   return (
     <div
-      class={styles.songItem}
+      class={styles['song-item']}
       onMouseEnter={handleMouseOver}
       onContextMenu={e =>
         openContextMenu(
@@ -73,20 +73,20 @@ export const SongItem = ({ item, album, albumId }) => {
         )
       }
     >
-      <div class={styles.songItem__artwork__container}>
+      <div class={styles['song-item__artwork__container']}>
         <div
-          class={styles.songItem__artwork__container__overlay}
+          class={styles['song-item__artwork__container__overlay']}
           onClick={e => {
             e.preventDefault()
             e.stopPropagation()
             mkManager.processItemAndPlay(item.id, 'songs')
           }}
         >
-          <div class={styles.songItem__artwork__container__overlay__playButton}>
+          <div class={styles['song-item__artwork__container__overlay__play-button']}>
             <Fa icon={faPlay} size="1x" />
           </div>
         </div>
-        <div class={styles.songItem__artwork}>
+        <div class={styles['song-item__artwork']}>
           <img
             src={Utils.formatArtworkUrl(
               item.attributes.artwork.url,
@@ -97,10 +97,10 @@ export const SongItem = ({ item, album, albumId }) => {
             )}
           />
         </div>
-        <div class={styles.songItem__info}>
+        <div class={styles['song-item__info']}>
           <A
             activeClass=""
-            class={styles.songItem__info__title}
+            class={styles['song-item__info__title']}
             href={`/media/albums/${item.relationships?.albums?.data?.[0].id}`}
           >
             {item.attributes.name}
@@ -108,7 +108,7 @@ export const SongItem = ({ item, album, albumId }) => {
           {albumId && (
             <A
               activeClass=""
-              class={styles.songItem__info__artist}
+              class={styles['song-item__info__artist']}
               href={`/media/albums/${item.relationships?.albums?.data?.[0].id}`}
             >
               {item.attributes.albumName}
@@ -117,7 +117,7 @@ export const SongItem = ({ item, album, albumId }) => {
           {!albumId && (
             <A
               activeClass=""
-              class={styles.songItem__info__artist}
+              class={styles['song-item__info__artist']}
               href={`/media/artists/${item.relationships?.artists?.data?.[0]?.id}`}
             >
               {item.attributes.artistName}
@@ -125,11 +125,11 @@ export const SongItem = ({ item, album, albumId }) => {
           )}
         </div>
       </div>
-      <div class={styles.songItem__actions}>
+      <div class={styles['song-item__actions']}>
         {' '}
         {!inLibrary() ? (
           <div
-            class={styles.songItem__actions__addToLibrary}
+            class={styles['song-item__actions__add-to-library']}
             onClick={handleAddToLibraryClick}
             use:Tooltip={['bottom', 'Add to Library']}
           >
@@ -139,14 +139,14 @@ export const SongItem = ({ item, album, albumId }) => {
               color="var(--color-primary)"
               class={
                 !checkedInLibrary()
-                  ? styles.songItem__actions__addToLibrary__disabled
+                  ? styles['song-item__actions__add-to-library__disabled']
                   : ''
               }
             />
           </div>
         ) : (
           <div
-            class={styles.songItem__actions__addToLibrary}
+            class={styles['song-item__actions__add-to-library']}
             onClick={handleRemoveFromLibraryClick}
             use:Tooltip={['bottom', 'Remove from Library']}
           >
@@ -154,7 +154,7 @@ export const SongItem = ({ item, album, albumId }) => {
           </div>
         )}
         <div
-          class={styles.songItem__actions__moreButton}
+          class={styles['song-item__actions__more-button']}
           onClick={e =>
             openContextMenu(
               e,

@@ -1,19 +1,20 @@
+import { JSX } from 'solid-js'
 import styles from './LibraryShell.module.scss'
 
 type LibraryShellProps = {
   title: string
   actions: any
-  children: any
+  children: JSX.Element | JSX.Element[]
 }
 
 export const LibraryShell = ({ children, title, actions }: LibraryShellProps) => {
   return (
-    <div class={styles.libraryShell}>
-      <div class={styles.libraryShell__topBar}>
-        <div class={styles.libraryShell__topBar__title}>{title}</div>
-        <div class={styles.libraryShell__topBar__actions}>{actions}</div>
+    <div class={styles['library-shell']}>
+      <div class={styles['library-shell__top-bar']}>
+        <div class={styles['library-shell__top-bar__title']}>{title}</div>
+        <div class={styles['library-shell__top-bar__actions']}>{actions}</div>
       </div>
-      <div class={styles.libraryShell__content}>{children}</div>
+      <div class={styles['library-shell__content']}>{children}</div>
     </div>
   )
 }

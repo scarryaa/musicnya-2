@@ -117,7 +117,7 @@ export const MediaSelector = ({ item }) => {
         return null
       } else {
         return (
-          <div class={styles.linkItemContainer}>
+          <div class={styles['link-item-container']}>
             <For each={item.attributes.links}>{item => <LinkItem item={item} />}</For>
           </div>
         )
@@ -129,7 +129,7 @@ export const MediaSelector = ({ item }) => {
       return null
     default:
       return (
-        <div class={styles.mediaSelector}>
+        <div class={styles['media-selector']}>
           <Shelf
             header={item.attributes.title?.stringForDisplay}
             topMargin={item.attributes?.display?.kind !== 'MusicNotesHeroShelf'}

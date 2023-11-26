@@ -1,12 +1,11 @@
-.nowPlayingTile {
+.now-playing-tile {
   height: 100%;
-  width: auto;
   display: flex;
   position: absolute;
   width: 100%;
   align-items: center;
 
-  .albumCover {
+  .album-cover {
     img {
       max-height: 50px;
       max-width: 50px;
@@ -17,10 +16,9 @@
     }
   }
 
-  .songInfo {
+  .song-info {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: flex-start;
     height: 100%;
     width: 100%;
@@ -38,8 +36,7 @@
       text-overflow: ellipsis;
       white-space: nowrap;
       width: max-content;
-      align-self: flex-start;
-      justify-self: flex-start;
+      place-self: flex-start flex-start;
       text-align: left;
       max-width: 100%;
       cursor: default;
@@ -57,8 +54,7 @@
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-      align-self: flex-start;
-      justify-self: flex-start;
+      place-self: flex-start flex-start;
       max-width: 100%;
 
       &:hover {

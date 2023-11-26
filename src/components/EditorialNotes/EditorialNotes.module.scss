@@ -6,7 +6,7 @@
   --editorial-notes-color: #b3b3b9;
 }
 
-.editorialNotes {
+.editorial-notes {
   color: var(--editorial-notes-color);
   margin-inline: 1.5rem;
   margin-top: 1rem;
@@ -21,13 +21,13 @@
 }
 
 @container main (max-width: 360px) {
-  .editorialNotes {
+  .editorial-notes {
     font-size: 0.8rem;
   }
 }
 
 @container main (max-width: 540px) {
-  .editorialNotes {
+  .editorial-notes {
     font-size: 0.9rem;
   }
 }

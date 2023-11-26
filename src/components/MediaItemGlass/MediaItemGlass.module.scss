@@ -1,15 +1,15 @@
-.mediaItemGlass {
+.media-item-glass {
   --recommended-chin-height: 68px;
   --size: 19.5vw;
-  --minSize: 210px;
-  --maxSize: 280px;
-  --shelfBackground: rgb(0 0 0 / 5%);
+  --min-size: 210px;
+  --max-size: 280px;
+  --shelf-background: rgb(0 0 0 / 5%);
 
   user-select: none;
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
-  min-width: var(--minSize);
+  min-width: var(--min-size);
   position: relative;
   overflow: hidden;
   border-radius: $app-border-radius;
@@ -18,7 +18,7 @@
     cursor: default;
   }
 
-  &:hover .mediaItemGlass__inner__artwork__overlay {
+  &:hover .media-item-glass__inner__artwork__overlay {
     opacity: 1;
   }
 
@@ -30,18 +30,18 @@
   }
 
   &__inner {
-    max-width: var(--maxSize);
-    min-width: var(--minSize);
+    max-width: var(--max-size);
+    min-width: var(--min-size);
     position: relative;
 
     &__artwork {
       position: relative;
       width: var(--size);
       height: var(--size);
-      max-width: var(--maxSize);
-      max-height: var(--maxSize);
-      min-width: var(--minSize);
-      min-height: var(--minSize);
+      max-width: var(--max-size);
+      max-height: var(--max-size);
+      min-width: var(--min-size);
+      min-height: var(--min-size);
       object-fit: cover;
       border-radius: $app-border-radius $app-border-radius 0 0;
       user-select: none;
@@ -67,7 +67,7 @@
           cursor: default;
         }
 
-        &__playButton {
+        &__play-button {
           display: flex;
           justify-content: center;
           align-items: center;
@@ -83,7 +83,7 @@
           }
         }
 
-        &__moreButton {
+        &__more-button {
           display: flex;
           justify-content: center;
           align-items: center;
@@ -116,10 +116,10 @@
       justify-content: center;
       align-items: center;
       max-width: var(--size);
-      min-width: var(--minSize);
+      min-width: var(--min-size);
       border-bottom-left-radius: $app-border-radius;
       border-bottom-right-radius: $app-border-radius;
-      background-color: var(--shelfBackground);
+      background-color: var(--shelf-background);
       height: var(--recommended-chin-height);
 
       &__inner {
@@ -176,7 +176,7 @@
           width: 100%;
 
           img {
-            min-width: var(--minSize);
+            min-width: var(--min-size);
             width: var(--size);
             height: 100%;
             object-fit: cover;

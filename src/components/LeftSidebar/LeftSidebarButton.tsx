@@ -4,7 +4,8 @@ import Fa from 'solid-fa'
 import { IconDefinition } from '@fortawesome/free-regular-svg-icons'
 import { store } from '../../stores/store'
 import Tooltip from '../Tooltip/Tooltip'
-import { Accessor, createMemo } from 'solid-js'
+import { createMemo } from 'solid-js'
+Tooltip
 
 type LeftSidebarButtonProps = {
   icon: IconDefinition
@@ -29,7 +30,7 @@ export const LeftSidebarButton = ({
 
   const buttonLink = (
     <A
-      class={styles.leftSidebarButton}
+      class={styles['left-sidebar-button']}
       href={href}
       activeClass="active"
       style={{
@@ -37,32 +38,32 @@ export const LeftSidebarButton = ({
       }}
     >
       <Fa
-        class={styles.leftSidebarButton__icon}
+        class={styles['left-sidebar-button__icon']}
         icon={icon}
         size="lg"
         color="var(--color-sidebar-button)"
       />
       {store.app.leftSidebarWidth > 119 && (
-        <span class={styles.leftSidebarButton__text}>{text}</span>
+        <span class={styles['left-sidebar-button__text']}>{text}</span>
       )}
     </A>
   )
 
   const buttonNonLink = (
     <div
-      class={styles.leftSidebarButton}
+      class={styles['left-sidebar-button']}
       style={{
         'justify-content': store.app.leftSidebarWidth > 119 ? 'flex-start' : 'center'
       }}
     >
       <Fa
-        class={styles.leftSidebarButton__icon}
+        class={styles['left-sidebar-button__icon']}
         icon={icon}
         size="lg"
         color="var(--color-sidebar-button)"
       />
       {store.app.leftSidebarWidth > 119 && (
-        <span class={styles.leftSidebarButton__text}>{text}</span>
+        <span class={styles['left-sidebar-button__text']}>{text}</span>
       )}
     </div>
   )

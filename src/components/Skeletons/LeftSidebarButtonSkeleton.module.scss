@@ -1,14 +1,14 @@
 :root {
-  --skeleton-background-color: rgba(0, 0, 0, 0.1);
-  --skeleton-background-color-2: rgba(0, 0, 0, 0.2);
+  --skeleton-background-color: rgb(0 0 0 / 10%);
+  --skeleton-background-color-2: rgb(0 0 0 / 20%);
 }
 
 :root[theme='dark'] {
-  --skeleton-background-color: rgba(255, 255, 255, 0.1);
-  --skeleton-background-color-2: rgba(255, 255, 255, 0.2);
+  --skeleton-background-color: rgb(255 255 255 / 10%);
+  --skeleton-background-color-2: rgb(255 255 255 / 20%);
 }
 
-.skeletonItem {
+.skeleton-item {
   display: flex;
   align-items: center;
   margin-bottom: 10px;
@@ -19,7 +19,7 @@
   animation-timing-function: linear;
 }
 
-.skeletonAvatar {
+.skeleton-avatar {
   width: 40px;
   height: 40px;
   background-color: var(--skeleton-background-color);
@@ -27,7 +27,7 @@
   margin-right: 10px;
 }
 
-.skeletonText {
+.skeleton-text {
   height: 10px;
   background-color: var(--skeleton-background-color);
   flex-grow: 1;
@@ -43,6 +43,7 @@
   0% {
     background-position: -40rem 0;
   }
+
   100% {
     background-position: 40rem 0;
   }

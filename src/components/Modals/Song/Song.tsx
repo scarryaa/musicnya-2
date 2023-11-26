@@ -502,7 +502,7 @@ export const Song = () => {
                     <h3 class={styles.song__details__header}>Info</h3>
                     <div class={styles.song__details__grouping}>
                       <div
-                        id={styles.playCount}
+                        id={styles['play-count']}
                         class={styles.song__details__grouping__header}
                       >
                         <h4 class={styles.song__details__subsubheader}>Play Count</h4>

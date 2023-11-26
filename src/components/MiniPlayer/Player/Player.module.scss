@@ -2,8 +2,8 @@
   --color-mini-player-button: #e7e7e7;
   --color-mini-player-button-hover: #fff;
   --color-mini-player-button-active: #e1e1e1;
-  --vibrant-divider-mini: rgba(235, 235, 245, 0.19);
-  --progress-mini-color: #ffffff;
+  --vibrant-divider-mini: rgb(235 235 245 / 19%);
+  --progress-mini-color: #fff;
 }
 
 .player {
@@ -23,11 +23,10 @@
   &__progress {
     input[type='range'] {
       position: absolute;
-      top: 0px;
+      top: 0;
       left: 0;
       right: 0;
       width: 100%;
-      -webkit-appearance: none;
       appearance: none;
       background: linear-gradient(
         90deg,
@@ -159,7 +158,6 @@
         }
 
         &__slider {
-          -webkit-appearance: none;
           appearance: none;
           background: linear-gradient(
             90deg,

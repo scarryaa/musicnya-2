@@ -1,4 +1,4 @@
-.rightSidebarButton {
+.right-sidebar-button {
   width: 30px;
   height: 30px;
   border-radius: $app-border-radius;
@@ -9,12 +9,12 @@
   z-index: 100;
 
   &:hover {
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: rgb(255 255 255 / 20%);
     cursor: default;
   }
 
   &:active {
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: rgb(0 0 0 / 10%);
   }
 
   &__icon {

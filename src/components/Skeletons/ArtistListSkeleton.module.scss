@@ -8,13 +8,13 @@
   gap: 0.5rem;
 }
 
-.skeletonArtwork {
+.skeleton-artwork {
   min-width: 50px;
   min-height: 50px;
   border-radius: 50%;
 }
 
-.skeletonText {
+.skeleton-text {
   height: 10px;
   width: 70%;
   background-color: var(--skeleton-background-color);
@@ -26,6 +26,7 @@
   0% {
     background-position: -40rem 0;
   }
+
   100% {
     background-position: 40rem 0;
   }

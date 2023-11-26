@@ -4,10 +4,10 @@ import { setStore, store } from '../../stores/store'
 import { QueueItem } from '../QueueItem/QueueItem'
 import Fa from 'solid-fa'
 import { faInfinity } from '@fortawesome/free-solid-svg-icons'
-import { mkController } from '../../api/mkController'
 import { Utils } from '../../util/util'
 import Tooltip from '../Tooltip/Tooltip'
 import { mkManager } from '../../api/MkManager'
+Tooltip
 
 export const Queue = () => {
   const [queueItems, setQueueItems] = createSignal(store.app.queue.items)
@@ -103,12 +103,12 @@ export const Queue = () => {
         bottom: store.app.miniPlayer.open ? '0' : 'unset'
       }}
     >
-      <div class={styles.queue__header}>
-        <button class={styles.queue__header__clear} onClick={handleClearClick}>
+      <div class={styles['queue-header']}>
+        <button class={styles['queue-header-clear']} onClick={handleClearClick}>
           Clear
         </button>
         <button
-          class={styles.queue__header__autoplayButton}
+          class={styles['queue-header-autoplay-button']}
           onClick={handleAutoplayClick}
           use:Tooltip={['bottom', 'Toggle Autoplay']}
         >
@@ -124,21 +124,21 @@ export const Queue = () => {
       </div>
 
       {queueItems().length > 0 && (
-        <div class={styles.queue__content}>
+        <div class={styles['queue-content']}>
           {queueItems().length > store.app.queue.remainingStartIndex && (
             <div>
-              <h4 class={styles.queue__queue}>Queue</h4>
+              <h4 class={styles['queue-queue']}>Queue</h4>
               <For each={queueItems().slice(store.app.queue.remainingStartIndex)}>
                 {(item, index) => (
                   <div
                     classList={{
-                      [styles.dropTargetTop]: isDropTargetTop(
+                      [styles['drop-target-top']]: isDropTargetTop(
                         index() + store.app.queue.remainingStartIndex
                       ),
-                      [styles.dropTargetBottom]: isDropTargetBottom(
+                      [styles['drop-target-bottom']]: isDropTargetBottom(
                         index() + store.app.queue.remainingStartIndex
                       ),
-                      [styles.queue__item]: true
+                      [styles['queue-item']]: true
                     }}
                     draggable={true}
                     onDragStart={e =>

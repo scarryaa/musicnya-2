@@ -1,5 +1,6 @@
-.mediaInfo {
+.media-info {
   --size: 200px;
+
   display: flex;
   position: relative;
 
@@ -20,10 +21,7 @@
     width: var(--size);
     height: var(--size);
     position: absolute;
-    top: 0;
-    left: 0rem;
-    right: 0;
-    bottom: 0;
+    inset: 0;
     z-index: 1;
   }
 
@@ -38,7 +36,7 @@
     &__actions {
       display: flex;
 
-      &__playButton {
+      &__play-button {
         margin-right: 10px;
       }
     }
@@ -74,7 +72,7 @@
 }
 
 @container main (max-width: 540px) {
-  .mediaInfo {
+  .media-info {
     &__artwork {
       width: 150px;
       height: 150px;
@@ -87,7 +85,7 @@
     }
   }
 
-  .mediaInfo__info {
+  .media-info__info {
     margin-left: 1rem;
     padding-right: 1rem;
 
@@ -107,14 +105,14 @@
     }
   }
 
-  .mediaInfo__info__actions {
-    &__playButton {
+  .media-info__info__actions {
+    &__play-button {
       padding: 0.5rem;
       font-size: 0.8rem;
       cursor: default;
     }
 
-    &__shuffleButton {
+    &__shuffle-button {
       padding: 0.5rem;
       font-size: 0.8rem;
       cursor: default;
@@ -123,34 +121,34 @@
 }
 
 @container main (max-width: 360px) {
-  .mediaInfo {
+  .media-info {
     display: flex;
     flex-direction: column;
   }
 
-  .mediaInfo__artwork__container {
+  .media-info__artwork__container {
     position: relative;
     width: 100%;
     height: 100%;
 
-    .mediaInfo__artwork {
+    .media-info__artwork {
       width: 100%;
       height: 100%;
     }
   }
 
-  .mediaInfo__artwork__video {
+  .media-info__artwork__video {
     position: absolute;
     width: 100%;
     height: 100%;
     border-radius: $app-border-radius;
   }
 
-  .mediaInfo__info__text__artist {
+  .media-info__info__text__artist {
     margin-inline: auto;
   }
 
-  .mediaInfo__info {
+  .media-info__info {
     margin-left: 0;
     padding-right: 0;
     margin-top: 1rem;
@@ -162,19 +160,18 @@
     &__actions {
       margin-top: 0.5rem;
 
-      &__playButton {
-        margin-right: 0;
+      &__play-button {
         margin-bottom: 1rem;
         margin-right: 0.5rem;
       }
 
-      &__shuffleButton {
+      &__shuffle-button {
         margin-bottom: 1rem;
       }
     }
   }
 }
 
-.mediaInfo__info__text__artist {
+.media-info__info__text__artist {
   cursor: default;
 }

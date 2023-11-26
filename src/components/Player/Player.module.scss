@@ -1,17 +1,17 @@
 :root {
-  --color-player-button: #000000;
+  --color-player-button: #000;
   --color-player-button-hover: #2c2c2c;
-  --color-player-button-active: #444444;
-  --vibrant-divider: rgba(0, 0, 0, 0.19);
-  --progress-color: #000000;
+  --color-player-button-active: #444;
+  --vibrant-divider: rgb(0 0 0 / 19%);
+  --progress-color: #000;
 }
 
 :root[theme='dark'] {
   --color-player-button: #e7e7e7;
   --color-player-button-hover: #fff;
   --color-player-button-active: #e1e1e1;
-  --vibrant-divider: rgba(235, 235, 245, 0.19);
-  --progress-color: #ffffff;
+  --vibrant-divider: rgb(235 235 245 / 19%);
+  --progress-color: #fff;
 }
 
 .player {
@@ -29,7 +29,7 @@
       left: 0;
       right: 0;
       width: 100%;
-      -webkit-appearance: none;
+      appearance: none;
       appearance: none;
       background: linear-gradient(
         90deg,

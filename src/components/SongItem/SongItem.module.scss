@@ -1,4 +1,4 @@
-.songItem {
+.song-item {
   display: flex;
   flex-direction: row;
   min-width: 250px;
@@ -11,13 +11,13 @@
   position: relative;
 
   &:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgb(255 255 255 / 10%);
 
-    .songItem__artwork__container__overlay {
+    .song-item__artwork__container__overlay {
       opacity: 1;
     }
 
-    .songItem__actions__addToLibrary {
+    .song-item__actions__add-to-library {
       display: flex;
     }
   }
@@ -37,7 +37,7 @@
       height: 50px;
       transition: opacity $transition-fast ease-in-out;
 
-      &__playButton {
+      &__play-button {
         position: absolute;
         top: 50%;
         left: 25px;
@@ -107,7 +107,7 @@
     display: flex;
     flex-direction: row;
 
-    &__addToLibrary {
+    &__add-to-library {
       display: none;
       margin-right: 0.8rem;
 
@@ -118,7 +118,7 @@
       }
     }
 
-    &__moreButton {
+    &__more-button {
       margin-right: 0.2rem;
     }
   }

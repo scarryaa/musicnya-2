@@ -1,32 +1,32 @@
-.mediaItem {
+.media-item {
   --size: 14cqw;
-  --minSize: 160px;
-  --maxSize: 200px;
+  --min-size: 160px;
+  --max-size: 200px;
 
   user-select: none;
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
-  min-width: var(--minSize);
+  min-width: var(--min-size);
   position: relative;
 
-  &:hover .mediaItem__inner__artwork__overlay {
+  &:hover .media-item__inner__artwork__overlay {
     opacity: 1;
   }
 
   &__inner {
-    max-width: var(--maxSize);
-    min-width: var(--minSize);
+    max-width: var(--max-size);
+    min-width: var(--min-size);
     position: relative;
 
     &__artwork {
       position: relative;
       width: var(--size);
       height: var(--size);
-      max-width: var(--maxSize);
-      max-height: var(--maxSize);
-      min-width: var(--minSize);
-      min-height: var(--minSize);
+      max-width: var(--max-size);
+      max-height: var(--max-size);
+      min-width: var(--min-size);
+      min-height: var(--min-size);
       object-fit: cover;
       border-radius: $app-border-radius;
       user-select: none;
@@ -47,7 +47,7 @@
         transition: opacity $transition-fast ease-in-out;
         padding: 0.6rem 0.5rem;
 
-        &__appleCurator {
+        &__apple-curator {
           justify-content: flex-end;
         }
 
@@ -55,7 +55,7 @@
           cursor: default;
         }
 
-        &__playButton {
+        &__play-button {
           display: flex;
           justify-content: center;
           align-items: center;
@@ -71,7 +71,7 @@
           }
         }
 
-        &__moreButton {
+        &__more-button {
           display: flex;
           justify-content: center;
           align-items: center;
@@ -99,7 +99,7 @@
     &__info {
       max-width: var(--size);
       overflow: hidden;
-      min-width: var(--minSize);
+      min-width: var(--min-size);
 
       &__title {
         font-size: 0.9rem;

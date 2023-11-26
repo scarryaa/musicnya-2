@@ -5,7 +5,7 @@ import styles from './RelatedArtistsPane.module.scss'
 
 export const RelatedArtistsPane = ({ artist }) => {
   return (
-    <div class={styles.relatedArtistsPane}>
+    <div class={styles['related-artists-pane']}>
       <Shelf header={artist().views['similar-artists'].attributes.title} topMargin={true}>
         <For each={artist().views['similar-artists'].data}>
           {item => (

@@ -30,7 +30,7 @@
     }
 
     &__subsubheader {
-      margin-bottom: 0rem;
+      margin-bottom: 0;
     }
 
     &__description {
@@ -221,7 +221,7 @@
     }
 
     &__subsubheader {
-      margin-bottom: 0rem;
+      margin-bottom: 0;
     }
 
     &__description {
@@ -259,7 +259,7 @@
   }
 }
 
-#playCount {
+#play-count {
   display: flex;
   flex-direction: row;
   gap: 0.5rem;

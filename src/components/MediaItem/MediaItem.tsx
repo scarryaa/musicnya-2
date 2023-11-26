@@ -51,18 +51,18 @@ export const MediaItem = ({
 
   return (
     <div
-      class={styles.mediaItem}
+      class={styles['media-item']}
       data-id={id}
       data-testid="media-item"
       onContextMenu={e => openContextMenu(e, id, ContextMenuType.MediaItem, type)}
     >
-      <div class={styles.mediaItem__inner}>
-        <div class={styles.mediaItem__inner__artwork}>
+      <div class={styles['media-item__inner']}>
+        <div class={styles['media-item__inner__artwork']}>
           <A
             class={
-              `${styles.mediaItem__inner__artwork__overlay}` +
+              `${styles['media-item__inner__artwork__overlay']}` +
               (isAppleCurator
-                ? ` ${styles.mediaItem__inner__artwork__overlay__appleCurator}`
+                ? ` ${styles['media-item__inner__artwork__overlay__apple-curator']}`
                 : '')
             }
             href={`/media/${type}/${id}`}
@@ -70,48 +70,48 @@ export const MediaItem = ({
             {!isAppleCurator && (
               <div
                 data-testid="play-button"
-                class={styles.mediaItem__inner__artwork__overlay__playButton}
+                class={styles['media-item__inner__artwork__overlay__play-button']}
                 onClick={handlePlayClick}
               >
                 <Fa
                   icon={faPlay}
                   size="1x"
                   color="white"
-                  class={styles.mediaItem__inner__artwork__overlay__playButton__icon}
+                  class={styles['media-item__inner__artwork__overlay__play-button__icon']}
                 />
               </div>
             )}
             <div
-              class={styles.mediaItem__inner__artwork__overlay__moreButton}
+              class={styles['media-item__inner__artwork__overlay__more-button']}
               onClick={e => openContextMenu(e, id, ContextMenuType.MediaItem, type)}
             >
               <Fa
                 icon={faEllipsisH}
                 size="1x"
                 color="white"
-                class={styles.mediaItem__inner__artwork__overlay__moreButton__icon}
+                class={styles['media-item__inner__artwork__overlay__more-button__icon']}
               />
             </div>
           </A>
           <img src={src} />
         </div>
-        <div class={styles.mediaItem__inner__info}>
+        <div class={styles['media-item__inner__info']}>
           <div
-            class={styles.mediaItem__inner__info__title}
+            class={styles['media-item__inner__info__title']}
             use:Tooltip={['bottom', title, true, 500]}
           >
             {title}
           </div>
-          <div class={styles.mediaItem__inner__info__artists}>
+          <div class={styles['media-item__inner__info__artists']}>
             {releaseYear && (
-              <span class={styles.mediaItem__inner__info__artists__year}>
+              <span class={styles['media-item__inner__info__artists__year']}>
                 {releaseYear}
               </span>
             )}
             {artists !== null && (
               <A
                 activeClass=""
-                class={styles.mediaItem__inner__info__artists__link}
+                class={styles['media-item__inner__info__artists__link']}
                 href={`/media/artists/${newArtistId()}`}
               >
                 <span use:Tooltip={['bottom', artists.join(', '), true, 500]}>
@@ -123,7 +123,7 @@ export const MediaItem = ({
               (curatorId ? (
                 <A
                   activeClass=""
-                  class={styles.mediaItem__inner__info__curator_link}
+                  class={styles['media-item__inner__info__curator-link']}
                   href={`/media/artists/${curatorId}`}
                 >
                   <span use:Tooltip={['bottom', curator, true, 500]}>{curator}</span>
@@ -131,7 +131,7 @@ export const MediaItem = ({
               ) : (
                 <span
                   use:Tooltip={['bottom', curator, true, 500]}
-                  class={styles.mediaItem__inner__info__curator}
+                  class={styles['media-item__inner__info__curator']}
                 >
                   {curator}
                 </span>

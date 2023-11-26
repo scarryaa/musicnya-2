@@ -27,16 +27,18 @@ export const LeftSidebarGroup = ({ title, children }) => {
   }
 
   return (
-    <div class={styles.leftSidebarGroup}>
-      <div class={styles.leftSidebarGroup__header} onClick={handleGroupClick}>
-        <div class={styles.leftSidebarGroup__header__title}>{title}</div>
+    <div class={styles['left-sidebar-group']}>
+      <div class={styles['left-sidebar-group__header']} onClick={handleGroupClick}>
+        <div class={styles['left-sidebar-group__header__title']}>{title}</div>
         <Fa
           icon={showChildren() ? faChevronDown : faChevronRight}
           size="xs"
           color="var(--color-sidebar-button)"
         />
       </div>
-      {showChildren() && <div class={styles.leftSidebarGroup__children}>{children}</div>}
+      {showChildren() && (
+        <div class={styles['left-sidebar-group__children']}>{children}</div>
+      )}
     </div>
   )
 }

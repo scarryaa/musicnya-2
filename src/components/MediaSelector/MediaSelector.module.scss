@@ -1,11 +1,7 @@
-.mediaSelector {
-}
-
-.linkItemContainer {
+.link-item-container {
   display: flex;
   gap: 1rem;
-  flex-direction: row;
-  flex-wrap: wrap;
+  flex-flow: row wrap;
   flex: 1;
   padding: 1.5rem;
 }

@@ -45,20 +45,20 @@ export const MiscControls = () => {
   }
 
   return (
-    <div class={styles.miscControls}>
-      <div class={styles.miscControls__progress}>
-        <span class={styles.miscControls__progress__time}>
+    <div class={styles['misc-controls']}>
+      <div class={styles['misc-controls__progress']}>
+        <span class={styles['misc-controls__progress__time']}>
           {store.isSeeking
             ? Utils.formatTime(store.seekTime)
             : Utils.formatTime(store.currentTime)}
         </span>
-        <span class={styles.miscControls__progress__divider}>/</span>
-        <span class={styles.miscControls__progress__time}>
+        <span class={styles['misc-controls__progress__divider']}>/</span>
+        <span class={styles['misc-controls__progress__time']}>
           {Utils.formatTime(store.duration)}
         </span>
       </div>
-      <div class={styles.miscControls__volume}>
-        <button class={styles.miscControls__button} onClick={toggleMute}>
+      <div class={styles['misc-controls__volume']}>
+        <button class={styles['misc-controls__button']} onClick={toggleMute}>
           <Fa icon={isMuted() ? faVolumeMute : faVolumeLow} size="1x" />
         </button>
         <input
@@ -67,7 +67,7 @@ export const MiscControls = () => {
           max="100"
           value={store.volume}
           style={{ '--progress': `${store.volume}%` }}
-          class={styles.miscControls__volumeSlider}
+          class={styles['misc-controls__volume-slider']}
           onInput={e => updateVolume(e.currentTarget.valueAsNumber)}
           onWheel={handleScroll}
         />

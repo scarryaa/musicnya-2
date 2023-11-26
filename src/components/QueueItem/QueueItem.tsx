@@ -1,16 +1,14 @@
-import { A } from '@solidjs/router'
-import { mkController } from '../../api/mkController'
 import { store } from '../../stores/store'
 import { Utils } from '../../util/util'
 import styles from './QueueItem.module.scss'
 import Tooltip from '../Tooltip/Tooltip'
 import Fa from 'solid-fa'
 import { faPlay } from '@fortawesome/free-solid-svg-icons'
-import { createSignal } from 'solid-js'
 import { useContextMenu } from '../../composables/useContextMenu'
 import { ContextMenuType } from '../../types/types'
 import { mkManager } from '../../api/MkManager'
 import { mkApiManager } from '../../api/MkApiManager'
+Tooltip
 
 export const QueueItem = ({ item, index }) => {
   const { openContextMenu } = useContextMenu()
@@ -57,29 +55,29 @@ export const QueueItem = ({ item, index }) => {
 
   return (
     <div
-      class={styles.queueItem}
-      onDblClick={handleDoubleClick}
+      className={styles['queue-item']}
+      onDoubleClick={handleDoubleClick}
       onContextMenu={e =>
         openContextMenu(e, item.id, ContextMenuType.QueueItem, item.type + 's')
       }
     >
-      <div class={styles.queueItem__artwork__container}>
-        <div class={styles.queueItem__artwork__container__overlay}>
+      <div className={styles['queue-item__artwork__container']}>
+        <div className={styles['queue-item__artwork__container__overlay']}>
           <div
-            class={styles.queueItem__artwork__container__overlay__playButton}
+            className={styles['queue-item__artwork__container__overlay__play-button']}
             onClick={handlePlayClick}
           >
             <Fa icon={faPlay} size="1x" color="var(--color-white)" />
           </div>
         </div>
         <img
-          class={styles.queueItem__artwork__container__artwork}
+          className={styles['queue-item__artwork__container__artwork']}
           src={Utils.formatArtworkUrl(item.attributes.artwork.url, 40, 40, 'webp', 'sr')}
         />
       </div>
-      <div class={styles.queueItem__info}>
+      <div className={styles['queue-item__info']}>
         <span
-          class={styles.queueItem__info__title}
+          className={styles['queue-item__info__title']}
           onClick={handleAlbumClick}
           use:Tooltip={[
             'top',
@@ -91,7 +89,7 @@ export const QueueItem = ({ item, index }) => {
           {item.attributes.name}
         </span>
         <span
-          class={styles.queueItem__info__artist}
+          className={styles['queue-item__info__artist']}
           onClick={handleArtistClick}
           use:Tooltip={[
             'top',

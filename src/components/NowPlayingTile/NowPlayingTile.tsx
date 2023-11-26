@@ -6,15 +6,15 @@ import Tooltip from '../Tooltip/Tooltip'
 
 export const NowPlayingTile = () => {
   return (
-    <div class={styles.nowPlayingTile}>
-      <div class={styles.albumCover}>
+    <div className={styles['now-playing-tile']}>
+      <div className={styles['album-cover']}>
         <img src={Utils.formatArtworkUrl(store.currentTrack.artwork, 200)} />
       </div>
-      <div class={styles.songInfo}>
+      <div className={styles['song-info']}>
         <A
           activeClass=""
           href={`/media/${store.currentTrack.parentType}/${store.currentTrack.parentID}`}
-          class={styles.songInfo__title}
+          className={styles['song-info__title']}
         >
           <span
             use:Tooltip={[
@@ -28,7 +28,7 @@ export const NowPlayingTile = () => {
           </span>
         </A>
         <div
-          class={styles.songInfo__artist}
+          className={styles['song-info__artist']}
           use:Tooltip={[
             'top',
             store.currentTrack.artist,

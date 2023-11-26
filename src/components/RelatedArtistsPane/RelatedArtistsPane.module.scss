@@ -3,10 +3,10 @@
 }
 
 :root[theme='dark'] {
-  --background-color: #000000;
+  --background-color: #000;
 }
 
-.relatedArtistsPane {
+.related-artists-pane {
   background-color: var(--background-color);
   display: flex;
   flex-direction: column;

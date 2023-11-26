@@ -120,20 +120,20 @@ export const RightSidebar = () => {
   return (
     <>
       <div
-        class={styles.rightSidebar}
+        class={styles['right-sidebar']}
         style={{ width: `${store.app.rightSidebar.width}px` }}
       >
-        <div class={styles.rightSidebar__innerContainer}>
+        <div class={styles['right-sidebar__inner-container']}>
           {store.app.platform === 'win32' && (
-            <div class={styles.rightSidebar__windowButtons}>
+            <div class={styles['right-sidebar__window-buttons']}>
               <WindowButtons buttonColor={null} buttonIconColor={'var(--color-black)'} />
             </div>
           )}
-          <div class={styles.rightSidebar__buttons}>
-            <button class={styles.rightSidebar__button} onClick={handleQueueClick}>
+          <div class={styles['right-sidebar__buttons']}>
+            <button class={styles['right-sidebar__button']} onClick={handleQueueClick}>
               <RightSidebarButton tooltip="Queue" icon={faBars} />
             </button>
-            <button class={styles.rightSidebar__button} onClick={handleLyricsClick}>
+            <button class={styles['right-sidebar__button']} onClick={handleLyricsClick}>
               <RightSidebarButton tooltip="Lyrics" icon={faQuoteRight} />
             </button>
           </div>
@@ -141,25 +141,31 @@ export const RightSidebar = () => {
             activeClass=""
             href="/settings"
             class={
-              styles.rightSidebar__button + ' ' + styles.rightSidebar__buttonSettings
+              styles['right-sidebar__button'] +
+              ' ' +
+              styles['right-sidebar__button-settings']
             }
           >
             <RightSidebarButton tooltip="Settings" icon={faCog} />
           </A>
-          <div class={styles.rightSidebar__panel}>
+          <div class={styles['right-sidebar__panel']}>
             {store.app.rightSidebar.activePanel === 'queue' && <Queue />}
             {store.app.rightSidebar.activePanel === 'history' && <History />}
             {store.app.rightSidebar.activePanel === 'lyrics' && <Lyrics />}
 
             {(store.app.rightSidebar.activePanel === 'history' ||
               store.app.rightSidebar.activePanel === 'queue') && (
-              <div class={styles.rightSidebar__panel__footer}>
-                <div class={styles.rightSidebar__panel__footer__innerContainer}>
+              <div class={styles['right-sidebar__panel__footer']}>
+                <div class={styles['right-sidebar__panel__footer__inner-container']}>
                   <div
-                    class={styles.rightSidebar__panel__footer__innerContainer__background}
+                    class={
+                      styles['right-sidebar__panel__footer__inner-container__background']
+                    }
                   ></div>
                   <div
-                    class={styles.rightSidebar__panel__footer__innerContainer__button}
+                    class={
+                      styles['right-sidebar__panel__footer__inner-container__button']
+                    }
                     onClick={handleFooterQueueClick}
                     style={
                       store.app.rightSidebar.activePanel === 'queue'
@@ -170,7 +176,9 @@ export const RightSidebar = () => {
                     <Fa icon={faBars} size="1x" color="var(--color-white)" />
                   </div>
                   <div
-                    class={styles.rightSidebar__panel__footer__innerContainer__button}
+                    class={
+                      styles['right-sidebar__panel__footer__inner-container__button']
+                    }
                     onClick={handleFooterHistoryClick}
                     style={
                       store.app.rightSidebar.activePanel === 'history'

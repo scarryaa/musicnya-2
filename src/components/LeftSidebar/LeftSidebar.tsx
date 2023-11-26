@@ -15,9 +15,11 @@ import {
 import { setStore, store } from '../../stores/store'
 import { WindowButtonsMac } from '../WindowButtons/WindowButtons'
 import Tooltip from '../Tooltip/Tooltip'
-import { For, Match, Show, Switch, createSignal } from 'solid-js'
+import { For, Match, Switch } from 'solid-js'
 import { LeftSidebarGroup } from './LeftSidebarGroup'
 import { LeftSidebarButtonSkeleton } from '../Skeletons/LeftSidebarButtonSkeleton'
+
+Tooltip
 
 export const LeftSidebar = () => {
   const smallSidebarButtons = (
@@ -172,21 +174,24 @@ export const LeftSidebar = () => {
   )
 
   return (
-    <div class={styles.leftSidebar} style={{ width: `${store.app.leftSidebarWidth}px` }}>
+    <div
+      class={styles['left-sidebar']}
+      style={{ width: `${store.app.leftSidebarWidth}px` }}
+    >
       {store.app.platform === 'darwin' && (
-        <div class={styles.leftSidebar__windowButtons}>
+        <div class={styles['left-sidebar__windowButtons']}>
           <WindowButtonsMac />
         </div>
       )}
-      <div class={styles.leftSidebar__buttons}>
-        <div class={styles.leftSidebar__buttons__inner}>
+      <div class={styles['left-sidebar__buttons']}>
+        <div class={styles['left-sidebar__buttons__inner']}>
           {store.app.leftSidebarWidth > 119
             ? extendedSidebarButtons
             : smallSidebarButtons}
         </div>
       </div>
       <div
-        class={styles.leftSidebar__handle}
+        class={styles['left-sidebar__handle']}
         onMouseDown={() => {
           const onMouseMove = (e: MouseEvent) => {
             // If the mouse x-position is less than 120, snap to 60px, else calculate the new width with limits

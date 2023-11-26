@@ -1,6 +1,6 @@
 :root {
   --select-background-color: #fff;
-  --select-background-hover-color: rgb(238, 64, 64) 0;
+  --select-background-hover-color: rgb(238 64 64) 0;
   --select-border-color: #ccc;
   --select-border-radius: 4px;
   --select-border-width: 1px;
@@ -38,7 +38,7 @@
     border: 1px solid var(--select-border-color);
     z-index: 1000;
     border-radius: var(--select-border-radius);
-    filter: drop-shadow(0 0 0.75rem rgba(0, 0, 0, 0.2));
+    filter: drop-shadow(0 0 0.75rem rgb(0 0 0 / 20%));
 
     &__option {
       color: var(--select-color);

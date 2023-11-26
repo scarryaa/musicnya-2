@@ -25,9 +25,9 @@ export const MiniPlayer = () => {
   }
 
   return (
-    <div class={styles.miniPlayer}>
+    <div class={styles['mini-player']}>
       <Topbar>
-        <div class={styles.miniPlayer__topbar}>
+        <div class={styles['mini-player__topbar']}>
           {showWindowButtons() && store.app.platform !== 'darwin' && (
             <WindowButtons
               buttonColor={'rgba(40, 40, 40, 0.5)'}
@@ -39,7 +39,7 @@ export const MiniPlayer = () => {
       </Topbar>
       {showWindowButtons() && (
         <button
-          class={styles.miniPlayer__exitButton}
+          class={styles['mini-player__exit-button']}
           onClick={handleExitClick}
           style={{
             left: store.app.platform === 'darwin' ? 'calc(100% - 3rem)' : '1rem'
@@ -48,7 +48,7 @@ export const MiniPlayer = () => {
           <Fa icon={faChevronDown} size="sm" color="var(--color-white)" />
         </button>
       )}
-      <div class={styles.miniPlayer__artwork}>
+      <div class={styles['mini-player__artwork']}>
         <img
           src={Utils.formatArtworkUrl(store.currentTrack.artwork, 400)}
           style={{ opacity: store.currentTrack.artwork ? 1 : 0 }}
@@ -57,7 +57,7 @@ export const MiniPlayer = () => {
       </div>
       {showWindowButtons() && <Player />}
       {store.app.miniPlayer.panelOpen && (
-        <div class={styles.miniPlayer__bottomPane}>
+        <div class={styles['mini-player__bottom-pane']}>
           {store.app.miniPlayer.activePanel === 'queue' && <Queue />}
           {store.app.miniPlayer.activePanel === 'lyrics' && <Lyrics />}
         </div>

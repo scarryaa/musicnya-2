@@ -1,16 +1,16 @@
 :root {
-  --color-sidebar-button: #000000;
-  --color-sidebar-button-hover: rgba(0, 0, 0, 0.1);
-  --color-sidebar-button-active: rgba(0, 0, 0, 0.2);
+  --color-sidebar-button: #000;
+  --color-sidebar-button-hover: rgb(0 0 0 / 10%);
+  --color-sidebar-button-active: rgb(0 0 0 / 20%);
 }
 
 :root[theme='dark'] {
   --color-sidebar-button: #fff;
-  --color-sidebar-button-hover: rgba(255, 255, 255, 0.1);
-  --color-sidebar-button-active: rgba(255, 255, 255, 0.2);
+  --color-sidebar-button-hover: rgb(255 255 255 / 10%);
+  --color-sidebar-button-active: rgb(255 255 255 / 20%);
 }
 
-.leftSidebarButton {
+.left-sidebar-button {
   font-size: 0.9rem;
   width: 100%;
   height: 30px;
@@ -46,8 +46,8 @@
   }
 }
 
-@media screen and (max-height: 449px) {
-  .leftSidebarButton {
+@media screen and (height <= 449px) {
+  .left-sidebar-button {
     justify-content: center;
   }
 }

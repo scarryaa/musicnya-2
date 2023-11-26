@@ -1,7 +1,5 @@
 import { For, createEffect, createSignal } from 'solid-js'
 import styles from './History.module.scss'
-import { mkController } from '../../api/mkController'
-import { QueueItem } from '../QueueItem/QueueItem'
 import { HistoryItem } from '../HistoryItem/HistoryItem'
 import { mkApiManager } from '../../api/MkApiManager'
 

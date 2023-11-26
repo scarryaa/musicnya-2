@@ -4,11 +4,11 @@
 }
 
 :root[theme='dark'] {
-  --link-background-color: #222222;
-  --link-background-color-hover: #444444;
+  --link-background-color: #222;
+  --link-background-color-hover: #444;
 }
 
-.linkItem {
+.link-item {
   display: flex;
   padding: 0.8rem 1rem;
   border-radius: $app-border-radius;
@@ -22,7 +22,6 @@
   }
 
   &__arrow {
-    margin-left: auto;
     display: flex;
     align-items: center;
     justify-content: center;

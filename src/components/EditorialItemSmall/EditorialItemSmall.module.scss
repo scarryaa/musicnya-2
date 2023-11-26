@@ -1,10 +1,4 @@
-.editorialItemSmall {
-  &:hover {
-    .editorialItemSmall__imageContainer__overlay {
-      opacity: 1;
-    }
-  }
-
+.editorial-item-small {
   &__title {
     font-size: 0.8rem;
     margin-top: 0.4rem;
@@ -52,6 +46,12 @@
       min-height: 8rem;
       object-fit: cover;
       border-radius: $app-border-radius;
+    }
+  }
+
+  &:hover {
+    .editorial-item-small__imageContainer__overlay {
+      opacity: 1;
     }
   }
 }

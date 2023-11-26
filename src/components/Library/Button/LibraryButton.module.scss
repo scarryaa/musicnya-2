@@ -1,14 +1,14 @@
 :root {
-  --libraryButton-hover-color: rgba(0, 0, 0, 0.2);
-  --libraryButton-active-color: rgba(0, 0, 0, 0.3);
+  --library-button-hover-color: rgb(0 0 0 / 20%);
+  --library-button-active-color: rgb(0 0 0 / 30%);
 }
 
 :root[theme='dark'] {
-  --libraryButton-hover-color: rgba(255, 255, 255, 0.2);
-  --libraryButton-active-color: rgba(255, 255, 255, 0.3);
+  --library-button-hover-color: rgb(255 255 255 / 20%);
+  --library-button-active-color: rgb(255 255 255 / 30%);
 }
 
-.libraryButton {
+.library-button {
   width: 25px;
   height: 25px;
   border-radius: $app-border-radius;
@@ -18,10 +18,10 @@
   cursor: default;
 
   &:hover {
-    background-color: var(--libraryButton-hover-color);
+    background-color: var(--library-button-hover-color);
   }
 
   &:active {
-    background-color: var(--libraryButton-active-color);
+    background-color: var(--library-button-active-color);
   }
 }

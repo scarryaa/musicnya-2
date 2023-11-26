@@ -1,18 +1,18 @@
 :root {
   --color-sidebar-handle: #bdbdbd;
-  --color-scrollbar-background: rgba(0, 0, 0, 0.4);
-  --color-scrollbar-thumb: rgba(255, 255, 255, 0.4);
+  --color-scrollbar-background: rgb(0 0 0 / 40%);
+  --color-scrollbar-thumb: rgb(255 255 255 / 40%);
   --color-sidebar-left-background: #f2f2f2;
 }
 
 :root[theme='dark'] {
   --color-sidebar-handle: #5e5e5e;
-  --color-scrollbar-background: #222222;
+  --color-scrollbar-background: #222;
   --color-scrollbar-thumb: #41424c;
   --color-sidebar-left-background: #2b2a2a;
 }
 
-.leftSidebar {
+.left-sidebar {
   width: $app-sidebar-width;
   height: calc(100% - $app-footer-height);
   background-color: var(--color-sidebar-left-background);
@@ -21,8 +21,7 @@
   left: 0;
   z-index: 100;
   box-sizing: border-box;
-  overflow-y: hidden;
-  overflow-x: hidden;
+  overflow: hidden hidden;
   padding-top: 80px;
   padding-left: 10px;
 
@@ -39,15 +38,15 @@
     }
   }
 
-  .leftSidebar__buttons {
+  .left-sidebar__buttons {
     height: 100%;
     display: flex;
     flex-direction: column;
-    overflow-y: overlay;
-    overflow-x: hidden;
+    overflow: hidden overlay;
 
     &__inner {
       padding-right: 10px;
+
       &::-webkit-scrollbar {
         background-color: var(--color-scrollbar-background);
         z-index: 999;
@@ -63,12 +62,12 @@
   }
 }
 
-@media screen and (max-height: 423px) {
-  .leftSidebar {
+@media screen and (height <= 423px) {
+  .left-sidebar {
     padding-inline: 0;
   }
 
-  .leftSidebar__buttons {
+  .left-sidebar__buttons {
     vertical-align: center;
   }
 }

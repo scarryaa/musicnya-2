@@ -1,12 +1,12 @@
 :root {
-  --loading-spinner-color: #222222;
+  --loading-spinner-color: #222;
 }
 
 :root[theme='dark'] {
   --loading-spinner-color: #fff;
 }
 
-.loadingSpinner {
+.loading-spinner {
   display: inline-block;
   position: absolute;
   top: 50%;
@@ -25,13 +25,14 @@
     border: 6px solid var(--loading-spinner-color);
     border-color: var(--loading-spinner-color) transparent var(--loading-spinner-color)
       transparent;
-    animation: loadingSpinner 1.2s linear infinite;
+    animation: loading-spinner 1.2s linear infinite;
   }
 
-  @keyframes loadingSpinner {
+  @keyframes loading-spinner {
     0% {
       transform: rotate(0deg);
     }
+
     100% {
       transform: rotate(360deg);
     }

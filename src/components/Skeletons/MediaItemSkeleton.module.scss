@@ -1,35 +1,35 @@
-.skeletonItem {
+.skeleton-item {
   --size: 14cqw;
-  --minSize: 160px;
-  --maxSize: 200px;
+  --min-size: 160px;
+  --max-size: 200px;
+
   display: flex;
   position: relative;
   flex-direction: column;
   width: var(--size);
-  max-width: var(--maxSize);
-  min-width: var(--minSize);
+  max-width: var(--max-size);
+  min-width: var(--min-size);
   height: var(--size);
-  max-height: var(--maxSize);
-  min-height: var(--minSize);
+  max-height: var(--max-size);
+  min-height: var(--min-size);
   border-radius: $app-border-radius;
-
   animation: shimmer 1.2s linear infinite forwards;
 }
 
-.skeletonArtwork {
+.skeleton-artwork {
   position: relative;
   width: var(--size);
   height: var(--size);
-  max-width: var(--maxSize);
-  max-height: var(--maxSize);
-  min-width: var(--minSize);
-  min-height: var(--minSize);
+  max-width: var(--max-size);
+  max-height: var(--max-size);
+  min-width: var(--min-size);
+  min-height: var(--min-size);
   object-fit: cover;
   border-radius: $app-border-radius;
   user-select: none;
 }
 
-.skeletonText {
+.skeleton-text {
   margin-top: 10px;
   display: flex;
   flex-direction: column;
@@ -37,8 +37,8 @@
   border-radius: $app-border-radius;
 }
 
-.skeletonTitle,
-.skeletonArtist {
+.skeleton-title,
+.skeleton-artist {
   height: 10px;
   background-color: var(--skeleton-background-color);
   border-radius: $app-border-radius;
@@ -48,11 +48,11 @@
   }
 }
 
-.skeletonTitle {
+.skeleton-title {
   width: 80%;
 }
 
-.skeletonArtist {
+.skeleton-artist {
   width: 40%;
 }
 
@@ -61,6 +61,7 @@
   0% {
     background-position: -40rem 0;
   }
+
   100% {
     background-position: 40rem 0;
   }

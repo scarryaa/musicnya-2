@@ -33,7 +33,7 @@ export const Lyrics = () => {
         Utils.timecodeToMs(line.getAttribute('data-begin')) <= store.currentTime * 1000 &&
         Utils.timecodeToMs(line.getAttribute('data-end')) > store.currentTime * 1000
       ) {
-        line.classList.add(styles['activeLyric'])
+        line.classList.add(styles['active-lyric'])
 
         if (autoScroll()) {
           lyricsPane.scrollTo({
@@ -43,7 +43,7 @@ export const Lyrics = () => {
           })
         }
       } else {
-        line.classList.remove(styles['activeLyric'])
+        line.classList.remove(styles['active-lyric'])
       }
     })
   }, [store.currentTime, store.currentTrack.lyrics.lyricsArray])

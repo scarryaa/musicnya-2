@@ -1,17 +1,19 @@
 import Fa from 'solid-fa'
 import styles from './LibraryButton.module.scss'
 import Tooltip from '../../Tooltip/Tooltip'
+import { IconDefinition } from '@fortawesome/free-solid-svg-icons'
+Tooltip
 
 type LibraryButtonProps = {
-  faIcon: any
+  faIcon: IconDefinition
   tooltip: string
   onClick: () => void
 }
 
-export const LibraryButton = ({ faIcon, tooltip, onClick }) => {
+export const LibraryButton = ({ faIcon, tooltip, onClick }: LibraryButtonProps) => {
   return (
     <div
-      class={styles.libraryButton}
+      class={styles['library-button']}
       use:Tooltip={['bottom', tooltip, tooltip, 0]}
       onClick={onClick}
     >

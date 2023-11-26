@@ -8,7 +8,7 @@
   --skeleton-background-color-2: #40424d;
 }
 
-.skeletonItem {
+.skeleton-item {
   display: flex;
   align-items: center;
   margin-bottom: 10px;
@@ -19,7 +19,7 @@
   animation-timing-function: linear;
 }
 
-.skeletonText {
+.skeleton-text {
   height: 10px;
   background-color: var(--skeleton-background-color);
   flex-grow: 1;
@@ -35,6 +35,7 @@
   0% {
     background-position: -40rem 0;
   }
+
   100% {
     background-position: 40rem 0;
   }

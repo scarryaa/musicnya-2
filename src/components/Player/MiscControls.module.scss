@@ -1,20 +1,20 @@
 :root {
-  --color-player-button: #000000;
+  --color-player-button: #000;
   --color-player-button-hover: #2c2c2c;
-  --color-player-button-active: #444444;
-  --vibrant-divider: rgba(0, 0, 0, 0.19);
-  --progress-color: #000000;
+  --color-player-button-active: #444;
+  --vibrant-divider: rgb(0 0 0 / 19%);
+  --progress-color: #000;
 }
 
 :root[theme='dark'] {
   --color-player-button: #e7e7e7;
   --color-player-button-hover: #fff;
   --color-player-button-active: #e1e1e1;
-  --vibrant-divider: rgba(235, 235, 245, 0.19);
+  --vibrant-divider: rgb(235 235 245 / 19%);
   --progress-color: #fff;
 }
 
-.miscControls {
+.misc-controls {
   display: flex;
   flex-direction: row;
   position: relative;
@@ -60,8 +60,7 @@
     }
   }
 
-  &__volumeSlider {
-    -webkit-appearance: none;
+  &__volume-slider {
     appearance: none;
     background: linear-gradient(
       90deg,
@@ -80,8 +79,8 @@
   }
 }
 
-@media screen and (max-width: 575px) {
-  .miscControls {
+@media screen and (width <= 575px) {
+  .misc-controls {
     &__progress {
       display: none;
     }

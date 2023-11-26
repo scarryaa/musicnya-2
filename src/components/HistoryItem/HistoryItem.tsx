@@ -1,5 +1,3 @@
-import { createSignal } from 'solid-js'
-import { mkController } from '../../api/mkController'
 import { store } from '../../stores/store'
 import styles from './HistoryItem.module.scss'
 import { faPlay } from '@fortawesome/free-solid-svg-icons'
@@ -10,6 +8,7 @@ import { useContextMenu } from '../../composables/useContextMenu'
 import { ContextMenuType } from '../../types/types'
 import { mkManager } from '../../api/MkManager'
 import { mkApiManager } from '../../api/MkApiManager'
+Tooltip
 
 export const HistoryItem = ({ item, index }) => {
   const { openContextMenu } = useContextMenu()
@@ -56,29 +55,29 @@ export const HistoryItem = ({ item, index }) => {
 
   return (
     <div
-      class={styles.historyItem}
+      class={styles['history-item']}
       onDblClick={handleDoubleClick}
       onContextMenu={e =>
         openContextMenu(e, item.id, ContextMenuType.HistoryItem, item.type)
       }
     >
-      <div class={styles.historyItem__artwork__container}>
-        <div class={styles.historyItem__artwork__container__overlay}>
+      <div class={styles['history-item__artwork__container']}>
+        <div class={styles['history-item__artwork__container__overlay']}>
           <div
-            class={styles.historyItem__artwork__container__overlay__playButton}
+            class={styles['history-item__artwork__container__overlay__playButton']}
             onClick={handlePlayClick}
           >
             <Fa icon={faPlay} size="1x" color="var(--color-white)" />
           </div>
         </div>
         <img
-          class={styles.historyItem__artwork__container__artwork}
+          class={styles['history-item__artwork__container__artwork']}
           src={Utils.formatArtworkUrl(item.attributes.artwork.url, 40, 40, 'webp', 'sr')}
         />
       </div>
-      <div class={styles.historyItem__info}>
+      <div class={styles['history-item__info']}>
         <span
-          class={styles.historyItem__info__title}
+          class={styles['history-item__info__title']}
           onClick={handleAlbumClick}
           use:Tooltip={[
             'top',
@@ -90,7 +89,7 @@ export const HistoryItem = ({ item, index }) => {
           {item.attributes.name}
         </span>
         <span
-          class={styles.historyItem__info__artist}
+          class={styles['history-item__info__artist']}
           onClick={handleArtistClick}
           use:Tooltip={[
             'top',

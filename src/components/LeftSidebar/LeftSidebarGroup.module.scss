@@ -1,14 +1,14 @@
 :root {
-  --left-sidebar-group-header-hover-color: rgba(0, 0, 0, 0.1);
+  --left-sidebar-group-header-hover-color: rgb(0 0 0 / 10%);
   --left-sidebar-group-header-text-color: #818181;
 }
 
 :root[theme='dark'] {
-  --left-sidebar-group-header-hover-color: rgba(255, 255, 255, 0.1);
+  --left-sidebar-group-header-hover-color: rgb(255 255 255 / 10%);
   --left-sidebar-group-header-text-color: #bebebe;
 }
 
-.leftSidebarGroup {
+.left-sidebar-group {
   margin-bottom: 0.2rem;
   color: var(--left-sidebar-group-header-text-color);
   padding-inline: 0.2rem;

@@ -61,7 +61,7 @@ export const MediaInfo = ({ media, artistId }) => {
 
   if (media().type === 'uploaded-videos' || media().type === 'music-videos') {
     return (
-      <div class={styles.mediaInfo}>
+      <div class={styles['media-info']}>
         <img
           src={
             media().attributes.artwork?.url
@@ -71,15 +71,17 @@ export const MediaInfo = ({ media, artistId }) => {
                   300
                 ) || musicNote
           }
-          class={styles.mediaInfo__artwork__video}
+          class={styles['media-info__artwork__video']}
         />
-        <div class={styles.mediaInfo__info}>
-          <div class={styles.mediaInfo__info__text}>
-            <h1 class={styles.mediaInfo__info__text__title}>{media().attributes.name}</h1>
+        <div class={styles['media-info__info']}>
+          <div class={styles['media-info__info__text']}>
+            <h1 class={styles['media-info__info__text__title']}>
+              {media().attributes.name}
+            </h1>
             {media().type !== 'stations' &&
               media().type !== 'music-videos' &&
               media().type !== 'uploaded-videos' && (
-                <h2 class={styles.mediaInfo__info__text__artist}>
+                <h2 class={styles['media-info__info__text__artist']}>
                   {media().attributes.artistName ||
                     media().attributes.curatorName ||
                     media().relationships?.catalog?.data?.[0]?.attributes?.curatorName}
@@ -87,7 +89,7 @@ export const MediaInfo = ({ media, artistId }) => {
               )}
             {media().type === 'music-videos' ||
               (media().type === 'uploaded-videos' && (
-                <h2 class={styles.mediaInfo__info__text__artist}>
+                <h2 class={styles['media-info__info__text__artist']}>
                   {media().attributes.uploadingBrandName}
                 </h2>
               ))}
@@ -96,29 +98,29 @@ export const MediaInfo = ({ media, artistId }) => {
               media().type !== 'stations' &&
               media().type !== 'uploaded-videos' &&
               media().type !== 'music-videos' && (
-                <h3 class={styles.mediaInfo__info__text__genre}>
+                <h3 class={styles['media-info__info__text__genre']}>
                   {media().attributes.genreNames[0]} •{' '}
                   {media().attributes.releaseDate.slice(0, 4)}
                 </h3>
               )}
             {media().type === 'music-videos' ||
               (media().type === 'uploaded-videos' && (
-                <h3 class={styles.mediaInfo__info__text__genre}>
+                <h3 class={styles['media-info__info__text__genre']}>
                   {Utils.formatDate(media().attributes.uploadDate)}
                 </h3>
               ))}
           </div>
-          <div class={styles.mediaInfo__info__actions}>
+          <div class={styles['media-info__info__actions']}>
             <PrimaryButton
               icon={faPlay}
               text="Play"
-              _class={styles.mediaInfo__info__actions__playButton}
+              _class={styles['media-info__info__actions__play-button']}
               onClick={handlePlayClick}
             />
             <PrimaryButton
               icon={faShuffle}
               text="Shuffle"
-              _class={styles.mediaInfo__info__actions__shuffleButton}
+              _class={styles['media-info__info__actions__shuffle-button']}
               onClick={handleShuffleClick}
             />
           </div>
@@ -127,8 +129,8 @@ export const MediaInfo = ({ media, artistId }) => {
     )
   } else {
     return (
-      <div class={styles.mediaInfo}>
-        <div class={styles.mediaInfo__artwork__container}>
+      <div class={styles['media-info']}>
+        <div class={styles['media-info__artwork__container']}>
           <img
             src={
               media().attributes.artwork?.url
@@ -138,19 +140,21 @@ export const MediaInfo = ({ media, artistId }) => {
                     300
                   ) || musicNote
             }
-            class={styles.mediaInfo__artwork}
+            class={styles['media-info__artwork']}
           />
           {media()?.attributes?.editorialVideo?.motionDetailSquare?.video && (
-            <video id="video" class={styles.mediaInfo__artwork__video} loop={true} />
+            <video id="video" class={styles['media-info__artwork__video']} loop={true} />
           )}
         </div>
-        <div class={styles.mediaInfo__info}>
-          <div class={styles.mediaInfo__info__text}>
-            <h1 class={styles.mediaInfo__info__text__title}>{media().attributes.name}</h1>
+        <div class={styles['media-info__info']}>
+          <div class={styles['media-info__info__text']}>
+            <h1 class={styles['media-info__info__text__title']}>
+              {media().attributes.name}
+            </h1>
             {media().type !== 'stations' && (
               <A
                 activeClass=""
-                class={styles.mediaInfo__info__text__artist}
+                class={styles['media-info__info__text__artist']}
                 href={
                   media().attributes.curatorName &&
                   media().relationships?.curator?.data?.[0]?.id
@@ -168,23 +172,23 @@ export const MediaInfo = ({ media, artistId }) => {
             {media().type !== 'playlists' &&
               media().type !== 'library-playlists' &&
               media().type !== 'stations' && (
-                <h3 class={styles.mediaInfo__info__text__genre}>
+                <h3 class={styles['media-info__info__text__genre']}>
                   {media()?.attributes?.genreNames?.[0]} •{' '}
                   {media().attributes?.releaseDate?.slice(0, 4)}
                 </h3>
               )}
           </div>
-          <div class={styles.mediaInfo__info__actions}>
+          <div class={styles['media-info__info__actions']}>
             <PrimaryButton
               icon={faPlay}
               text="Play"
-              _class={styles.mediaInfo__info__actions__playButton}
+              _class={styles['media-info__info__actions__play-button']}
               onClick={handlePlayClick}
             />
             <PrimaryButton
               icon={faShuffle}
               text="Shuffle"
-              _class={styles.mediaInfo__info__actions__shuffleButton}
+              _class={styles['media-info__info__actions__shuffle-button']}
               onClick={handleShuffleClick}
             />
           </div>
