@@ -1,15 +1,14 @@
 :root {
-  --table-hover-color: rgba(0, 0, 0, 0.1);
-  --table-even-color: rgba(0, 0, 0, 0.05);
+  --table-hover-color: rgb(0 0 0 / 10%);
+  --table-even-color: rgb(0 0 0 / 5%);
 }
 
 :root[theme='dark'] {
-  --table-hover-color: rgba(255, 255, 255, 0.1);
-  --table-even-color: rgba(255, 255, 255, 0.05);
+  --table-hover-color: rgb(255 255 255 / 10%);
+  --table-even-color: rgb(255 255 255 / 5%);
 }
 
 .album__tracks {
-  padding-top: 1.5rem;
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -98,34 +97,32 @@
 }
 
 @container main (max-width: 540px) {
-  th {
-    .album__tracks__table__album {
-      display: none;
-    }
-  }
-
   .album__tracks {
-    padding: 0rem;
+    padding: 0;
     padding-top: 1.5rem;
 
     &__info {
       > * {
         font-size: 0.7rem;
       }
-    }
 
-    &__info {
       padding-left: 0.2rem;
     }
 
     &__table {
-      th {
-        font-size: 0.8rem;
-      }
-
       &__album {
         display: none;
       }
+
+      th {
+        font-size: 0.8rem;
+      }
+    }
+  }
+
+  th {
+    .album__tracks__table__album {
+      display: none;
     }
   }
 }

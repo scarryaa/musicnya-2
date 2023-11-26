@@ -1,15 +1,15 @@
 :root {
-  --artists-hover-color: rgba(0, 0, 0, 0.05);
-  --artists-active-color: rgba(0, 0, 0, 0.1);
+  --artists-hover-color: rgb(0 0 0 / 5%);
+  --artists-active-color: rgb(0 0 0 / 10%);
 }
 
 :root[theme='dark'] {
-  --artists-hover-color: rgba(255, 255, 255, 0.05);
-  --artists-active-color: rgba(255, 255, 255, 0.1);
+  --artists-hover-color: rgb(255 255 255 / 5%);
+  --artists-active-color: rgb(255 255 255 / 10%);
 }
 
 .artists {
-  font-family: 'Inter', sans-serif;
+  font-family: Inter, sans-serif;
   color: var(--color-on-primary);
   height: calc(100% - 3.6rem);
   display: flex;
@@ -19,8 +19,7 @@
   &__content {
     height: calc(100% + 3.6rem);
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    flex-flow: row wrap;
     align-content: flex-start;
     gap: 1rem;
     padding: 1rem;

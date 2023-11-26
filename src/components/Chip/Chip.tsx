@@ -1,6 +1,12 @@
 import styles from './Chip.module.scss'
 
-export const Chip = ({ text, backgroundColor, textColor }) => {
+type ChipProps = {
+  text: string
+  backgroundColor: string
+  textColor: string
+}
+
+export const Chip = ({ text, backgroundColor, textColor }: ChipProps) => {
   return (
     <div
       class={styles.chip}

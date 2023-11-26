@@ -10,13 +10,9 @@
 
 .main {
   position: fixed;
-  right: 40px;
-  bottom: 0;
-  top: $app-toolbar-height;
-  left: 0;
+  inset: $app-toolbar-height 40px 0 0;
   margin-bottom: $app-footer-height;
-  overflow-y: auto;
+  overflow: hidden auto;
   container-type: size;
   container-name: main;
-  overflow-x: hidden;
 }

@@ -3,7 +3,6 @@ import { Utils } from '../../util/util'
 import styles from './EditorialItemLarge.module.scss'
 import { faEllipsisH, faPlay } from '@fortawesome/free-solid-svg-icons'
 import Fa from 'solid-fa'
-import { mkController } from '../../api/mkController'
 import { useContextMenu } from '../../composables/useContextMenu'
 import { ContextMenuType } from '../../types/types'
 import { mkManager } from '../../api/MkManager'
@@ -21,28 +20,30 @@ export const EditorialItemLarge = ({ item }) => {
 
   return (
     <div
-      class={styles.editorialItemLarge}
+      class={styles['editorial-item-large']}
       onContextMenu={e =>
         openContextMenu(e, item.id, ContextMenuType.Editorial, item.type)
       }
     >
-      <div class={styles.editorialItemLarge__info}>
-        <div class={styles.editorialItemLarge__info__title}>{item.attributes.name}</div>
+      <div class={styles['editorial-item-large__info']}>
+        <div class={styles['editorial-item-large__info__title']}>
+          {item.attributes.name}
+        </div>
       </div>
-      <div class={styles.editorialItemLarge__thumbnail}>
+      <div class={styles['editorial-item-large__thumbnail']}>
         <A
-          class={styles.editorialItemLarge__thumbnail__overlay}
+          class={styles['editorial-item-large__thumbnail__overlay']}
           href={`/media/${item.type}/${item.id}`}
         >
           <div
-            class={styles.editorialItemLarge__thumbnail__overlay__playButton}
+            class={styles['editoria-item-large__thumbnail__overlay__playButton']}
             onClick={handlePlayClick}
           >
             <Fa icon={faPlay} size="1x" />
           </div>
 
           <div
-            class={styles.editorialItemLarge__thumbnail__overlay__moreButton}
+            class={styles['editorial-item-large__thumbnail__overlay__moreButton']}
             onClick={e =>
               openContextMenu(e, item.id, ContextMenuType.Editorial, item.type)
             }
@@ -50,7 +51,7 @@ export const EditorialItemLarge = ({ item }) => {
             <Fa icon={faEllipsisH} size="1x" />
           </div>
         </A>
-        <div class={styles.editorialItemLarge__thumbnail__gradient}></div>
+        <div class={styles['editorial-item-large__thumbnail__gradient']}></div>
         <img
           src={Utils.formatArtworkUrl(
             item.attributes.plainEditorialCard[
@@ -63,8 +64,8 @@ export const EditorialItemLarge = ({ item }) => {
           )}
         />
       </div>
-      <div class={styles.editorialItemLarge__thumbnail__blurb}>
-        <div class={styles.editorialItemLarge__thumbnail__blurb__blurb}>
+      <div class={styles['editorial-item-large__thumbnail__blurb']}>
+        <div class={styles['editorial-item-large__thumbnail__blurb__blurb']}>
           {item.attributes.plainEditorialNotes?.short}
         </div>
       </div>

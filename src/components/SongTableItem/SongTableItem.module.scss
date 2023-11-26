@@ -1,4 +1,4 @@
-.songTableItem {
+.song-table-item {
   &:hover {
     background-color: var(--table-hover-color) !important;
 
@@ -62,7 +62,6 @@
       top: 12px;
       left: 14px;
       position: absolute;
-      display: flex;
       justify-content: center;
       align-items: center;
       border-radius: 50%;
@@ -148,7 +147,6 @@
     position: relative;
 
     &__moreButton {
-      display: flex;
       justify-content: center;
       align-items: center;
       border-radius: 50%;
@@ -169,7 +167,7 @@
   }
 
   .songTableItem {
-    padding: 0rem;
+    padding: 0;
     padding-top: 1.5rem;
 
     &__number {

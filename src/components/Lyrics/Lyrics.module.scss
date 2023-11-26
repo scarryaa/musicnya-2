@@ -1,11 +1,17 @@
 :root {
-  --lyrics-text-color: #000000;
-  --lyrics-text-color-light: rgb(97, 97, 97);
+  --lyrics-text-color: #000;
+  --lyrics-text-color-light: rgb(97 97 97);
 }
 
 :root[theme='dark'] {
-  --lyrics-text-color: #ffffff;
+  --lyrics-text-color: #fff;
   --lyrics-text-color-light: #dadada;
+}
+
+.blur {
+  span {
+    filter: blur(2px);
+  }
 }
 
 .lyrics {
@@ -16,6 +22,7 @@
   padding-inline: 1rem;
   padding-top: 2rem;
   overflow-y: overlay;
+
   --font-size-relative: 10cqw;
 
   :not(.activeLyric) {
@@ -28,18 +35,17 @@
     &__ellipsis,
     &__text {
       color: var(--lyrics-text-color);
-      font-size: 1rem;
       line-height: 1.5;
       font-weight: 700;
-      font-family: 'Inter';
+      font-family: Inter, sans-serif;
       padding-right: 1rem;
       font-size: clamp(14px, var(--font-size-relative), 22px);
       white-space: pre-wrap;
       word-wrap: break-word;
-      text-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      text-shadow: 0 0 10px rgb(0 0 0 / 30%);
 
       > * {
-        font-family: 'Inter';
+        font-family: Inter, sans-serif;
 
         > * {
           margin-block: 1rem;
@@ -53,8 +59,8 @@
       font-size: 0.8rem;
       font-weight: bold;
       margin-top: 1rem;
-      font-family: 'Inter';
-      text-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+      font-family: Inter, sans-serif;
+      text-shadow: 0 0 4px rgb(0 0 0 / 20%);
 
       &__text {
         filter: none !important;
@@ -67,12 +73,6 @@
     &:last-child {
       padding-bottom: 2rem;
     }
-  }
-}
-
-.blur {
-  span {
-    filter: blur(2px);
   }
 }
 

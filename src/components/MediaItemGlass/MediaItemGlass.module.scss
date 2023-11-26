@@ -3,7 +3,7 @@
   --size: 19.5vw;
   --minSize: 210px;
   --maxSize: 280px;
-  --shelfBackground: rgba(0, 0, 0, 0.05);
+  --shelfBackground: rgb(0 0 0 / 5%);
 
   user-select: none;
   flex-shrink: 0;
@@ -43,10 +43,7 @@
       min-width: var(--minSize);
       min-height: var(--minSize);
       object-fit: cover;
-      border-top-left-radius: $app-border-radius;
-      border-top-right-radius: $app-border-radius;
-      border-bottom-left-radius: 0;
-      border-bottom-right-radius: 0;
+      border-radius: $app-border-radius $app-border-radius 0 0;
       user-select: none;
 
       &__overlay {
@@ -173,7 +170,6 @@
           overflow: hidden;
           opacity: 0.8;
           background-color: black;
-          position: relative;
           inset: 0;
           position: absolute;
           height: 100%;

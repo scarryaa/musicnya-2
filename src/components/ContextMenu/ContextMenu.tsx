@@ -78,10 +78,10 @@ export function ContextMenu(): JSX.Element {
   return (
     <div
       id="contextMenu"
-      class={styles.contextMenu}
+      class={styles['context-menu']}
       style={`top: ${store.app.contextMenu.y}px; left: ${store.app.contextMenu.x}px; display: ${store.app.contextMenu.display}`}
     >
-      <div class={styles.quickActions}>
+      <div class={styles['quick-actions']}>
         <For each={filterMenuItems(true)}>{item => <QuickActionItem item={item} />}</For>
       </div>
 

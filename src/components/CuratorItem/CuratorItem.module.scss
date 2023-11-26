@@ -1,21 +1,19 @@
 @import '../../styles/mixins/mixins';
 @import '../../styles/mixins/font-mixins';
 
-.curatorItem {
+.curator-item {
   --size: 14cqw;
-  --minSize: 160px;
-  --maxSize: 200px;
+  --min-size: 160px;
+  --max-size: 200px;
 
   @include flex-layout(column, unset, flex-start);
-  border-radius: $app-border-radius;
 
-  &:hover .curatorItem__image__overlay {
-    opacity: 1;
-  }
+  border-radius: $app-border-radius;
 
   &__info {
     &__name {
       @include font-style(0.9rem);
+
       margin-top: 0.4rem;
       display: -webkit-box;
       -webkit-line-clamp: 1;
@@ -47,10 +45,10 @@
       position: relative;
       width: var(--size);
       height: var(--size);
-      max-width: var(--maxSize);
-      max-height: var(--maxSize);
-      min-width: var(--minSize);
-      min-height: var(--minSize);
+      max-width: var(--max-size);
+      max-height: var(--max-size);
+      min-width: var(--min-size);
+      min-height: var(--min-size);
       object-fit: cover;
       user-select: none;
     }
@@ -73,6 +71,7 @@
 
       &__moreButton {
         @include flex-layout(row, center, center);
+
         background-color: $color-overlay-bg;
         border-radius: 50%;
         padding: 1rem;
@@ -84,6 +83,11 @@
           background-color: var(--color-primary);
         }
       }
+    }
+
+    /* stylelint-disable-next-line selector-class-pattern */
+    &:hover .curator-item__image__overlay {
+      opacity: 1;
     }
   }
 }

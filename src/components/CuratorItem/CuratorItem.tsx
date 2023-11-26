@@ -14,14 +14,14 @@ export const CuratorItem = ({ item }) => {
   return (
     <A
       activeClass=""
-      class={styles.curatorItem}
+      class={styles['curator-item']}
       href="#"
       onContextMenu={e => openContextMenu(e, item.id, null, ContextMenuType.Curator)}
     >
-      <div class={styles.curatorItem__image}>
-        <div class={styles.curatorItem__image__overlay}>
+      <div class={styles['curator-item__image']}>
+        <div class={styles['curator-item__image__overlay']}>
           <div
-            class={styles.curatorItem__image__overlay__moreButton}
+            class={styles['curator-item__image__overlay__moreButton']}
             onClick={e => openContextMenu(e, item.id, null, item.type)}
           >
             <Fa icon={faEllipsisH} size="1x" color="var(--color-white)" />
@@ -31,9 +31,9 @@ export const CuratorItem = ({ item }) => {
           src={Utils.formatArtworkUrl(item.attributes.artwork.url, 300, 300, 'webp')}
         />
       </div>
-      <div class={styles.curatorItem__info}>
-        <div class={styles.curatorItem__info__name}>{item.attributes.name}</div>
-        <div class={styles.curatorItem__info__curator}>
+      <div class={styles['curator-item__info']}>
+        <div class={styles['curator-item__info__name']}>{item.attributes.name}</div>
+        <div class={styles['curator-item__info__curator']}>
           {item.attributes.showHostName}
         </div>
       </div>

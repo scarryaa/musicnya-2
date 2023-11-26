@@ -67,7 +67,7 @@ const App: Component = () => {
     <>
       {store.app.miniPlayer.open && <MiniPlayer />}
       {!store.app.miniPlayer.open && (
-        <div class="appContainer" right-drawer={store.app.rightSidebar.isExpanded}>
+        <div class="app-container" right-drawer={store.app.rightSidebar.isExpanded}>
           <Topbar />
           <LeftSidebar />
           <RightSidebar />

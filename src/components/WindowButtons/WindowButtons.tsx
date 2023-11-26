@@ -10,17 +10,17 @@ type WindowButtonsProps = {
   buttonIconColor?: string
 }
 
-export const WindowButtons = ({ buttonColor, buttonIconColor }) => {
+export const WindowButtons = ({ buttonColor, buttonIconColor }: WindowButtonsProps) => {
   const onClose = () => {
     appWindow.close()
   }
 
   return (
-    <div class={styles.windowButtons}>
-      <div class={styles.windowButtonsFlexContainer}>
+    <div class={styles['window-buttons']}>
+      <div class={styles['window-buttons-flex-container']}>
         <div>
           <div
-            class={styles.windowButton}
+            class={styles['window-button']}
             id="titlebar-close"
             onClick={onClose}
             style={{

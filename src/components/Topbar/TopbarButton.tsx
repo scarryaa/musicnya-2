@@ -2,6 +2,7 @@ import styles from './TopbarButton.module.scss'
 import Fa from 'solid-fa'
 import { IconDefinition } from '@fortawesome/free-regular-svg-icons'
 import Tooltip from '../Tooltip/Tooltip'
+Tooltip
 
 type TopbarButtonProps = {
   icon: IconDefinition
@@ -17,9 +18,9 @@ export const TopbarButton = ({
   onClick
 }: TopbarButtonProps) => {
   return (
-    <div class={styles.topbarButton} onClick={onClick}>
+    <div class={styles['topbar-button']} onClick={onClick}>
       <Fa
-        class={styles.topbarButton__icon}
+        class={styles['topbar-button__icon']}
         icon={icon}
         size="1x"
         color="var(--color-on-primary)"

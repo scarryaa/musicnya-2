@@ -4,24 +4,28 @@ import styles from './ArtistItem.module.scss'
 import { useContextMenu } from '../../composables/useContextMenu'
 import { ContextMenuType } from '../../types/types'
 
-export const ArtistItem = ({ item }) => {
+type ArtistItemProps = {
+  item: MusicKit.Resource
+}
+
+export const ArtistItem = ({ item }: ArtistItemProps) => {
   const { openContextMenu } = useContextMenu()
 
   return (
     <A
-      class={styles.artistItem}
+      class={styles['artist-item']}
       href={`/media/artists/${item.id}`}
       activeClass=""
       onContextMenu={e => openContextMenu(e, item.id, null, ContextMenuType.Artist)}
     >
-      <div class={styles.artistItem__artwork__container}>
+      <div class={styles['artist-item__artwork__container']}>
         <div class={styles.artistItem__artwork__container__overlay}></div>
         <img
-          class={styles.artistItem__artwork__container__artwork}
+          class={styles['artist-item__artwork__container__artwork']}
           src={Utils.formatArtworkUrl(item.attributes.artwork.url, 200, 200, 'webp')}
         />
       </div>
-      <div class={styles.artistItem__name}>{item.attributes.name}</div>
+      <div class={styles['artist-item__name']}>{item.attributes.name}</div>
     </A>
   )
 }

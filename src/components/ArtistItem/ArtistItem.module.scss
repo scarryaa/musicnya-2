@@ -2,14 +2,8 @@
 
 $artist-item-artwork-size: 150px;
 
-.artistItem {
+.artist-item {
   @include flex-layout(column, center, center, 10px);
-
-  &:hover {
-    .artistItem__artwork__container__overlay {
-      opacity: 1;
-    }
-  }
 
   &__artwork__container {
     position: relative;
@@ -21,7 +15,8 @@ $artist-item-artwork-size: 150px;
     }
 
     &__overlay {
-      @include absolute-full();
+      @include absolute-full;
+
       border-radius: 50%;
       opacity: 0;
       transition: opacity $transition-fast ease-in-out;
@@ -32,5 +27,12 @@ $artist-item-artwork-size: 150px;
   &__name {
     align-self: center;
     text-align: center;
+  }
+
+  &:hover {
+    /* stylelint-disable-next-line selector-class-pattern */
+    .artist-item__artwork__container__overlay {
+      opacity: 1;
+    }
   }
 }

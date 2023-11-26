@@ -2,11 +2,9 @@ import Fa from 'solid-fa'
 import { Utils } from '../../util/util'
 import styles from './EditorialItem.module.scss'
 import { faPlay } from '@fortawesome/free-solid-svg-icons'
-import { mkController } from '../../api/mkController'
 import { A } from '@solidjs/router'
 import { useContextMenu } from '../../composables/useContextMenu'
 import { ContextMenuType } from '../../types/types'
-import { MkManager } from '../../api/MkManager'
 
 export const EditorialItem = ({ item }) => {
   const childType =
@@ -29,33 +27,35 @@ export const EditorialItem = ({ item }) => {
 
   return (
     <div
-      class={styles.editorialItem}
+      class={styles['editorial-item']}
       onContextMenu={e =>
         openContextMenu(e, childId, ContextMenuType.Editorial, childType)
       }
     >
       <div>
-        <span class={styles.editorialItem__designBadge}>
+        <span class={styles['editorial-item__designBadge']}>
           {item.attributes.designBadge}
         </span>
         {item.attributes.designTag ? (
-          <div class={styles.editorialItem__designTag}>{item.attributes.designTag}</div>
+          <div class={styles['editorial-item__designTag']}>
+            {item.attributes.designTag}
+          </div>
         ) : (
           <>
-            <div class={styles.editorialItem__title}>
+            <div class={styles['editorial-item__title']}>
               {item.relationships?.contents?.data?.[0]?.attributes?.name}
             </div>
-            <div class={styles.editorialItem__subtitle}>
+            <div class={styles['editorial-item__subtitle']}>
               {item.relationships?.contents?.data?.[0]?.attributes?.artistName ||
                 item.relationships?.contents?.data?.[0]?.attributes?.curatorName}
             </div>
           </>
         )}
       </div>
-      <div class={styles.editorialItem__image__container}>
-        <div class={styles.editorialItem__image__container__gradient}></div>
+      <div class={styles['editorial-item__image__container']}>
+        <div class={styles['editorial-item__image__container__gradient']}></div>
         <A
-          class={styles.editorialItem__image__container__overlay}
+          class={styles['editorial-item__image__container__overlay']}
           href={
             isCuratorType
               ? `/curator/${item.id}`
@@ -64,15 +64,17 @@ export const EditorialItem = ({ item }) => {
         >
           {!isCuratorType && (
             <div
-              class={styles.editorialItem__image__container__overlay__playButton}
+              class={styles['editorial-item__image__container__overlay__playButton']}
               onClick={handlePlayClick}
             >
               <Fa icon={faPlay} size="1x" />
             </div>
           )}
         </A>
-        <div class={styles.editorialItem__image__container__blurb__container}>
-          <span class={styles.editorialItem__image__container__blurb__container__blurb}>
+        <div class={styles['editorial-item__image__container__blurb__container']}>
+          <span
+            class={styles['editorial-item__image__container__blurb__container__blurb']}
+          >
             {
               item.relationships?.contents?.data?.[0]?.attributes?.plainEditorialNotes
                 ?.short
@@ -80,7 +82,7 @@ export const EditorialItem = ({ item }) => {
           </span>
         </div>
         <img
-          class={styles.editorialItem__image__container__image}
+          class={styles['editorial-item__image__container__image']}
           src={Utils.formatArtworkUrl(
             item.relationships.contents.data[0]?.attributes.editorialArtwork
               ?.subscriptionHero?.url ||

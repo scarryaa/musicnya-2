@@ -1,12 +1,4 @@
-.videoItem {
-  &:hover {
-    cursor: default;
-
-    .videoItem__thumbnail__overlay {
-      opacity: 1;
-    }
-  }
-
+.video-item {
   &__thumbnail {
     position: relative;
 
@@ -67,6 +59,14 @@
       min-height: 7rem;
       max-width: 14rem;
       max-height: 7rem;
+    }
+  }
+
+  &:hover {
+    cursor: default;
+
+    .video-item__thumbnail__overlay {
+      opacity: 1;
     }
   }
 

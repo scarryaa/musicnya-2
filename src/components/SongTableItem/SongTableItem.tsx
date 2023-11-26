@@ -20,19 +20,19 @@ export const SongTableItem = ({ track, data, index }) => {
         data().type === 'albums' &&
         track.attributes.offers?.length === 1 &&
         track.attributes.offers?.[0]?.type === 'preorder'
-          ? styles.songTableItem__unreleased
-          : styles.songTableItem
+          ? styles['song-table-item__unreleased']
+          : styles['song-table-item']
       }
     >
-      <td class={styles.songTableItem__number}>
-        <span class={styles.songTableItem__number__popularity}>
+      <td class={styles['song-table-item__number']}>
+        <span class={styles['song-table-item__number__popularity']}>
           {data().type === 'albums' && track.meta.popularity > 0.7 && (
             <Fa icon={faStar} color="var(--color-on-primary)" size="xs" />
           )}
         </span>
-        <span class={styles.songTableItem__number__number}>{index + 1}</span>
+        <span class={styles['song-table-item__number__number']}>{index + 1}</span>
         <div
-          class={styles.songTableItem__number__playButton}
+          class={styles['song-table-item__number__playButton']}
           onClick={() => mkManager.setQueue(data().id, data().type, false, index)}
         >
           {track.id === store.currentTrack.id ? (
@@ -43,15 +43,15 @@ export const SongTableItem = ({ track, data, index }) => {
         </div>
       </td>
       <td>
-        <div class={styles.songTableItem__title}>
+        <div class={styles['song-table-item__title']}>
           {data().type !== 'albums' && data().type !== 'library-albums' && (
-            <div class={styles.songTableItem__title__albumCover}>
+            <div class={styles['song-table-item__title__albumCover']}>
               <img src={Utils.formatArtworkUrl(track.attributes.artwork.url, 50)} />
             </div>
           )}
-          <div class={styles.songTableItem__title__name__artist}>
+          <div class={styles['song-table-item__title__name__artist']}>
             <span
-              class={styles.songTableItem__title__name__artist__name}
+              class={styles['song-table-item__title__name__artist__name']}
               style={{
                 color:
                   track.id === store.currentTrack.id
@@ -63,10 +63,12 @@ export const SongTableItem = ({ track, data, index }) => {
               {(track.relationships?.catalog?.data?.[0]?.attributes?.contentRating ===
                 'explicit' ||
                 track.attributes.contentRating === 'explicit') && (
-                <span class={styles.songTableItem__title__name__artist__name__explicit}>
+                <span
+                  class={styles['song-table-item__title__name__artist__name__explicit']}
+                >
                   <small
                     class={
-                      styles.songTableItem__title__name__artist__name__explicit__text
+                      styles['song-table-item__title__name__artist__name__explicit__text']
                     }
                   >
                     E
@@ -75,7 +77,7 @@ export const SongTableItem = ({ track, data, index }) => {
               )}
             </span>
             <span
-              class={styles.songTableItem__title__name__artist__artist}
+              class={styles['song-table-item__title__name__artist__artist']}
               onClick={() => {
                 data().type === 'library-albums'
                   ? store.app.navigate(
@@ -111,9 +113,9 @@ export const SongTableItem = ({ track, data, index }) => {
         </div>
       </td>
       {data().type !== 'albums' && data().type !== 'library-albums' && (
-        <td class={styles.songTableItem__album}>
+        <td class={styles['song-table-item__album']}>
           <A
-            class={styles.songTableItem__album__link}
+            class={styles['song-table-item__album__link']}
             href={
               data().type === 'library-playlists'
                 ? `/media/albums/${
@@ -131,10 +133,10 @@ export const SongTableItem = ({ track, data, index }) => {
         </td>
       )}
       <td>
-        <div class={styles.songTableItem__time}>
+        <div class={styles['song-table-item__time']}>
           <span>{Utils.formatTime(track.attributes.durationInMillis / 1000)}</span>
           <div
-            class={styles.songTableItem__time__moreButton}
+            class={styles['song-table-item__time__moreButton']}
             onClick={e => openContextMenu(e, track.id, ContextMenuType.Song, data().type)}
           >
             <Fa icon={faEllipsisH} size="1x" color="var(--color-on-primary)" />

@@ -1,16 +1,16 @@
 :root {
-  --color-topbar-button: #000000;
-  --color-topbar-button-hover: rgba(0, 0, 0, 0.1);
-  --color-topbar-button-active: rgba(0, 0, 0, 0.2);
+  --color-topbar-button: #000;
+  --color-topbar-button-hover: rgb(0 0 0 / 10%);
+  --color-topbar-button-active: rgb(0 0 0 / 20%);
 }
 
 :root[theme='dark'] {
   --color-topbar-button: #fff;
-  --color-topbar-button-hover: rgba(255, 255, 255, 0.1);
-  --color-topbar-button-active: rgba(255, 255, 255, 0.2);
+  --color-topbar-button-hover: rgb(255 255 255 / 10%);
+  --color-topbar-button-active: rgb(255 255 255 / 20%);
 }
 
-.topbarButton {
+.topbar-button {
   font-size: 0.9rem;
   width: 100%;
   height: 30px;

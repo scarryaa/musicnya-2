@@ -2,8 +2,9 @@
 
 $base-link-height: 30px;
 
-.baseLink {
+.base-link {
+  @include hover-underlined;
+
   width: auto;
   height: $base-link-height;
-  @include hover-underlined();
 }

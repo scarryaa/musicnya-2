@@ -1,4 +1,4 @@
-.windowButtons {
+.window-buttons {
   height: 30px;
   user-select: none;
   display: flex;
@@ -9,7 +9,7 @@
   z-index: 99;
   background-color: transparent;
 
-  .windowButtonsFlexContainer {
+  .window-buttons-flex-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -17,13 +17,17 @@
   }
 }
 
-.windowButton {
+.window-button {
   display: inline-flex;
   justify-content: center;
   align-items: center;
   width: 40px;
   height: 30px;
   z-index: 99;
+
+  &:active {
+    background-color: #d1d1d1;
+  }
 
   &:hover {
     background-color: #e1e1e1;
@@ -37,9 +41,5 @@
     &:active {
       background-color: #e0443e;
     }
-  }
-
-  &:active {
-    background-color: #d1d1d1;
   }
 }

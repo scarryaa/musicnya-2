@@ -1,8 +1,8 @@
+@import './mixins/font-mixins';
+@import './mixins/mixins';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import './mixins/font-mixins';
-@import './mixins/mixins';
 
 :root {
   --color-primary: #{$color-primary};
@@ -16,10 +16,8 @@
   --color-on-main: #{$color-on-main};
   --color-on-main-muted: #{$color-on-main-muted};
   --color-link-active: #{$color-link-active};
-
   --color-scrollbar-bg: #{$color-scrollbar-bg};
   --color-scrollbar-thumb: #{$color-scrollbar-thumb};
-
   --color-black: #{$color-black};
   --color-white: #{$color-white};
   --color-off-white: #{$color-off-white};
@@ -36,7 +34,6 @@
   --color-on-primary-muted: #{$color-on-primary-muted-dark};
   --color-on-main: #{$color-on-main-dark};
   --color-on-main-muted: #{$color-on-main-muted-dark};
-
   --color-scrollbar-bg: #{$color-scrollbar-bg-dark};
   --color-scrollbar-thumb: #{$color-scrollbar-thumb-dark};
 }
@@ -48,14 +45,13 @@ body,
   width: 100%;
   background-color: var(--color-main-bg);
   user-select: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
   font-size: 16px;
   border-radius: $app-border-radius;
   overflow: hidden;
+  color: var(--color-on-main);
 }
 
-.appContainer[right-drawer='true'] .main {
+.app-container[right-drawer='true'] .main {
   right: 250px !important;
 }
 
@@ -87,14 +83,15 @@ h5 {
   @include heading-style(0.9rem);
 }
 
-A,
+a,
 button {
   cursor: default;
 }
 
 * {
   @include custom-scrollbar;
-  font-family: 'Inter' !important;
+
+  font-family: Inter, sans-serif !important;
 }
 
 .disabled {

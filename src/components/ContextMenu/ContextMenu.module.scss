@@ -1,8 +1,8 @@
-@import '../../styles/mixins/mixins.scss';
+@import '../../styles/mixins/mixins';
 
 $context-menu-min-width: 150px;
 
-.contextMenu {
+.context-menu {
   position: absolute;
   z-index: $z-index-10;
   border-radius: $app-border-radius;
@@ -14,6 +14,6 @@ $context-menu-min-width: 150px;
   border: 1px solid var(--color-main-bg-muted);
 }
 
-.quickActions {
+.quick-actions {
   @include flex-layout(row, flex-start, flex-start);
 }

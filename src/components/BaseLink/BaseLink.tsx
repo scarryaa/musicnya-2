@@ -1,9 +1,10 @@
 import { A } from '@solidjs/router'
 import styles from './BaseLink.module.scss'
+import { JSX } from 'solid-js'
 
 type BaseLinkProps = {
   href: string
-  children: any
+  children: JSX.Element | JSX.Element[]
   'aria-label': string
   activeClass?: string
   class?: string
@@ -18,7 +19,7 @@ export const BaseLink = ({
 }: BaseLinkProps) => {
   return (
     <A
-      class={`${styles.baseLink} ${additionalClass ?? ''}`}
+      class={`${styles['base-link']} ${additionalClass ?? ''}`}
       activeClass={activeClass}
       aria-label={ariaLabel}
       href={href}

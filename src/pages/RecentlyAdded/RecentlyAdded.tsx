@@ -1,6 +1,4 @@
 import { createSignal, createEffect, onCleanup, Switch, Match, For } from 'solid-js'
-import { mkController } from '../../api/mkController'
-import { LoadingSpinner } from '../../components/LoadingSpinner/LoadingSpinner'
 import { MediaItem } from '../../components/MediaItem/MediaItem'
 import { Utils } from '../../util/util'
 import styles from './RecentlyAdded.module.scss'
@@ -57,9 +55,9 @@ export const RecentlyAdded = () => {
 
   return (
     <div>
-      <div class={styles.recentlyAdded}>
-        <h1 class={styles.recentlyAdded__header}>Recently Added</h1>
-        <div class={styles.recentlyAdded__content}>
+      <div class={styles['recently-added']}>
+        <h1 class={styles['recently-added__header']}>Recently Added</h1>
+        <div class={styles['recently-added__content']}>
           <For each={data()}>
             {item => (
               <MediaItem

@@ -1,6 +1,6 @@
 import { faHeadphones } from '@fortawesome/free-solid-svg-icons'
-import { setStore, store } from '../stores/store'
-import { useSubContextMenu, useSubContextMenuState } from './useSubContextMenu'
+import { store } from '../stores/store'
+import { useSubContextMenu } from './useSubContextMenu'
 import { mkApiManager } from '../api/MkApiManager'
 
 export const usePlaylistSubMenu = e => {

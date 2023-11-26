@@ -1,11 +1,4 @@
-.editorialItemLarge {
-  &:hover {
-    .editorialItemLarge__thumbnail__overlay {
-      opacity: 1;
-      cursor: default;
-    }
-  }
-
+.editorial-item-large {
   &__info {
     margin-bottom: 0.5rem;
   }
@@ -18,7 +11,7 @@
       position: absolute;
       width: 100%;
       height: 100%;
-      background-color: rgba(0, 0, 0, 0.2);
+      background-color: rgb(0 0 0 / 20%);
       top: 0;
       left: 0;
       border-radius: $app-border-radius;
@@ -68,7 +61,7 @@
       position: absolute;
       width: 100%;
       height: 100%;
-      background: linear-gradient(0deg, rgba(0, 0, 0, 0.5) 5%, transparent 30%);
+      background: linear-gradient(0deg, rgb(0 0 0 / 50%) 5%, transparent 30%);
       border-radius: $app-border-radius;
     }
 
@@ -92,6 +85,13 @@
         font-size: 0.8rem;
         color: $color-white !important;
       }
+    }
+  }
+
+  &:hover {
+    .editorial-item-large__thumbnail__overlay {
+      opacity: 1;
+      cursor: default;
     }
   }
 }

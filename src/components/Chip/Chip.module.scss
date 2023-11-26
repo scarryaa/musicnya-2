@@ -1,7 +1,8 @@
-@import '../../styles/mixins/font-mixins.scss';
+@import '../../styles/mixins/font-mixins';
 
 .chip {
   @include font-style(0.75rem);
+
   display: inline-block;
   padding: $padding-xxsmall $padding-xsmall;
   border-radius: 0.25rem;

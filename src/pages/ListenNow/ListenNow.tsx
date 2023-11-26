@@ -16,7 +16,7 @@ export const ListenNow = () => {
     }
   })
   return (
-    <div class={styles.listenNow}>
+    <div class={styles['listen-now']}>
       <Switch fallback={<LoadingSpinner />}>
         <Match when={homeData.state === 'pending'}>
           <LoadingSpinner />
@@ -25,8 +25,8 @@ export const ListenNow = () => {
           <h1>Error</h1>
         </Match>
         <Match when={homeData.state === 'ready'}>
-          <div class={styles.listenNow}>
-            <h1 class={styles.listenNow__header}>Listen Now</h1>
+          <div class={styles['listen-now']}>
+            <h1 class={styles['listen-now__header']}>Listen Now</h1>
             <For each={homeData().data}>{item => <MediaSelector item={item} />}</For>
           </div>
         </Match>

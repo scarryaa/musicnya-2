@@ -3,7 +3,7 @@ import { Reaction } from '../../../types/types'
 import { historyItemContextMenu } from '../ContextMenuTypes'
 
 export const historyItemContextMenuConfig = {
-  fetchData: async (id, subType) => {
+  fetchData: async (id: string, subType: MusicKit.MediaItemType) => {
     const [inLibraryState, isLovedState] = await Promise.all([
       mkApiManager.isItemInLibrary(id, subType),
       mkApiManager.isItemFavorite(id, subType)

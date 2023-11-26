@@ -1,7 +1,8 @@
-@import '../../styles/mixins/mixins.scss';
+@import '../../styles/mixins/mixins';
 
 .topbar {
   @include flex-layout(row, flex-start, center, 0);
+
   position: fixed;
   top: 0;
   height: $app-toolbar-height;

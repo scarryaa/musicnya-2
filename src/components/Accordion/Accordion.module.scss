@@ -1,11 +1,10 @@
 @import '../../styles/mixins/mixins';
 
 $color-accordion-bg: #e4e4e4;
-$color-accordion-bg-hover: lighten($color-accordion-bg, 5%);
+$color-accordion-bg-hover: color.adjust($color-accordion-bg, $lightness: -5%);
 $accordion-max-height: 99999px;
-
 $color-accordion-bg-dark: #252525;
-$color-accordion-bg-hover-dark: lighten($color-accordion-bg-dark, 5%);
+$color-accordion-bg-hover-dark: color.adjust($color-accordion-bg-dark, $lightness: 5%);
 
 :root {
   --color-accordion-bg: #{$color-accordion-bg};
@@ -30,6 +29,7 @@ $color-accordion-bg-hover-dark: lighten($color-accordion-bg-dark, 5%);
     padding: $padding-small;
     position: relative;
     text-align: left;
+
     @include flex-layout(row, space-between, center);
 
     &:focus-visible {
