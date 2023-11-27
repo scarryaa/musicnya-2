@@ -1,3 +1,4 @@
+import { Accessor } from 'solid-js'
 import { localStorageService } from '../services/localStorageService'
 import { tauriService } from '../services/tauriService'
 import { setStore, store } from '../stores/store'
@@ -171,5 +172,13 @@ export class Utils {
     const totalMillis = millis ? parseInt(millis, 10) : 0
 
     return totalSeconds * 1000 + totalMillis
+  }
+
+  static isAccessor(value: string | Accessor<string>): value is Accessor<string> {
+    return typeof value === 'function'
+  }
+
+  static isString(value: string | Accessor<string>): value is string {
+    return typeof value === 'string'
   }
 }

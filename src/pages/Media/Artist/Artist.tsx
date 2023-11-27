@@ -1,5 +1,5 @@
 import { useParams } from '@solidjs/router'
-import { For, Match, Switch, createEffect, createSignal } from 'solid-js'
+import { For, Match, Switch, createEffect, createMemo, createSignal } from 'solid-js'
 import { createArtistStore } from '../../../stores/api-store'
 import { LoadingSpinner } from '../../../components/LoadingSpinner/LoadingSpinner'
 import styles from './Artist.module.scss'
@@ -19,16 +19,24 @@ import { mkApiManager } from '../../../api/MkApiManager'
 export const Artist = () => {
   const params = useParams<{ id: string }>()
   const artistStore = createArtistStore()
-  const artistData = artistStore(params)
+  const [newId, setNewId] = createSignal(params.id)
+  const artistData = createMemo(() => artistStore({ id: newId() }))
 
   const { openContextMenu } = useContextMenu()
   const [currentArtist, setCurrentArtist] = createSignal(null)
   const [isFavorited, setIsFavorited] = createSignal(false)
   const [currentArtistBanner, setCurrentArtistBanner] = createSignal(null)
 
-  createEffect(() => {
+  createEffect(async () => {
+    if (params.id[0] === 'r') {
+      const catalogId = await mkApiManager.getCatalogArtistFromLibrary(params.id)
+      if (catalogId) {
+        setNewId(catalogId.data[0].id)
+      }
+    }
+
     setCurrentArtistBanner(null)
-    const data = artistData()
+    const data = artistData()()
     if (data && data.data && data.data.length > 0) {
       setCurrentArtist(data.data[0])
       setIsFavorited(data.data[0].attributes.inFavorites)
@@ -45,8 +53,8 @@ export const Artist = () => {
 
       sortViews()
     }
-    console.log(artistData())
-  }, [artistData])
+    console.log(artistData()())
+  }, [newId])
 
   const sortViews = () => {
     const viewsOrder = currentArtist().meta.views.order
@@ -78,7 +86,7 @@ export const Artist = () => {
 
   return (
     <Switch fallback={<LoadingSpinner />}>
-      <Match when={artistData.state === 'ready' && currentArtist()}>
+      <Match when={artistData().state === 'ready' && currentArtist()}>
         <div
           class={styles.artist}
           onContextMenu={e =>

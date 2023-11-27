@@ -17,10 +17,11 @@ exports[`MediaItem Snapshot should match snapshot 1`] = `
       >
         <a
           aria-current="page"
-          class="artwork-overlay-link"
+          class="artwork-overlay-link artwork-overlay-link--round-bottom-corners"
           data-testid="artwork-overlay-link"
           href="/media/albums/1"
           link=""
+          style="pointer-events: auto; opacity: 0;"
         >
           <div
             class="artwork-overlay-link-play-button"

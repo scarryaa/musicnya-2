@@ -14,16 +14,23 @@
     inset: 0;
     opacity: 0;
     background-color: $color-overlay-bg;
-    border-radius: $app-border-radius;
+    border-top-left-radius: $app-border-radius;
+    border-top-right-radius: $app-border-radius;
     transition: opacity $transition-fast ease-in-out;
     padding: 0.6rem 0.5rem;
     cursor: default;
+
+    &--round-bottom-corners {
+      border-bottom-left-radius: $app-border-radius;
+      border-bottom-right-radius: $app-border-radius;
+    }
 
     &-flex-end {
       @include flex-layout(row, flex-end, flex-end);
     }
 
     &-play-button {
+      pointer-events: all;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -40,6 +47,7 @@
     }
 
     &-more-button {
+      pointer-events: all;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -53,12 +61,6 @@
       &:hover {
         background-color: var(--color-primary);
       }
-    }
-  }
-
-  &:hover {
-    .artwork-overlay-link {
-      opacity: 1;
     }
   }
 }

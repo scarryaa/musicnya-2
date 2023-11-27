@@ -1,11 +1,12 @@
 import { faPlay, faEllipsisH } from '@fortawesome/free-solid-svg-icons'
 import { A } from '@solidjs/router'
 import Fa from 'solid-fa'
-import { For } from 'solid-js'
+import { For, createSignal } from 'solid-js'
 import styles from './MediaItemGlass.module.scss'
 import { useContextMenu } from '../../composables/useContextMenu'
 import { ContextMenuType } from '../../types/types'
 import { mkManager } from '../../api/MkManager'
+import { ArtworkOverlay, ArtworkOverlayType } from '../ArtworkOverlay/ArtworkOverlay'
 
 type MediaItemGlassProps = {
   src: string
@@ -25,6 +26,12 @@ export const MediaItemGlass = ({
   reason
 }: MediaItemGlassProps) => {
   const { openContextMenu } = useContextMenu()
+  const [isHovering, setIsHovering] = createSignal(false)
+
+  const handleMouseEnter = () => setIsHovering(true)
+
+  const handleMouseLeave = () => setIsHovering(false)
+
   const handlePlayClick = (e: MouseEvent): void => {
     e.preventDefault()
     mkManager.processItemAndPlay(id, type).catch(err => console.error(err))
@@ -35,39 +42,26 @@ export const MediaItemGlass = ({
       class={styles['media-item-glass']}
       href={`/media/${type}/${id}`}
       onContextMenu={e => openContextMenu(e, id, ContextMenuType.MediaItem, type)}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       <span class={styles['media-item-glass__reason']}>{reason}</span>
       <div class={styles['media-item-glass__inner']}>
         <div class={styles['media-item-glass__inner__artwork']}>
-          <div class={styles['media-item-glass__inner__artwork__overlay']}>
-            <div
-              class={styles['media-item-glass__inner__artwork__overlay__play-button']}
-              onClick={handlePlayClick}
-            >
-              <Fa
-                icon={faPlay}
-                size="1x"
-                color="white"
-                class={
-                  styles['media-item-glass__inner__artwork__overlay__play-button__icon']
-                }
-              />
-            </div>
-            <div
-              class={styles['media-item-glass__inner__artwork__overlay__more-button']}
-              onClick={e => openContextMenu(e, id, ContextMenuType.MediaItem, type)}
-            >
-              <Fa
-                icon={faEllipsisH}
-                size="1x"
-                color="white"
-                class={
-                  styles['media-item-glass__inner__artwork__overlay__more-button__icon']
-                }
-              />
-            </div>
-          </div>
-          <img src={src} />
+          <ArtworkOverlay
+            isVisible={isHovering}
+            isLink={false}
+            type={ArtworkOverlayType.PLAY_AND_MORE}
+            moreClick={e => openContextMenu(e, id, ContextMenuType.MediaItem, type)}
+            playClick={handlePlayClick}
+            roundBottomCorners={false}
+          >
+            <img
+              class={styles['media-item-glass__inner__artwork__image']}
+              src={src}
+              alt={title}
+            />
+          </ArtworkOverlay>
         </div>
         <div class={styles['media-item-glass__inner__chin']}>
           <div class={styles['media-item-glass__inner__chin__inner']}>

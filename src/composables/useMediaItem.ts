@@ -17,6 +17,7 @@ const useMediaItem = (type: MediaItemType, id: string, artistId: string) => {
     if (type === 'library-albums') {
       const catalogId = await mkApiManager.getCatalogArtistFromLibrary(artistId)
       setArtistId(catalogId.data[0].id)
+      console.log(catalogId)
     }
   })
 

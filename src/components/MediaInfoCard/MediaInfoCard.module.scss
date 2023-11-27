@@ -1,0 +1,22 @@
+@import '../../styles/mixins/mixins';
+
+.media-info-card {
+  &-title {
+    @include webkit-line-clamp(1);
+
+    font-size: $font-size-small;
+    font-weight: 500;
+    margin-top: 0.4rem;
+    width: 100%;
+    max-width: max-content;
+  }
+
+  &-subtitle {
+    @include webkit-line-clamp(1);
+
+    color: var(--color-on-main-muted);
+    font-size: $font-size-xsmall;
+    width: 100%;
+    max-width: max-content;
+  }
+}
