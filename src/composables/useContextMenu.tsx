@@ -22,7 +22,6 @@ const contextMenuActions = {
     return { x, y }
   },
   openContextMenu: (e, id, type, subType) => {
-    console.log()
     setStore('app', 'contextMenu', {
       open: true,
       x: OUT_OF_VIEW,

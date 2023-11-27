@@ -39,8 +39,10 @@
     "eslint": "8.53.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "4.2.1",
+    "identity-obj-proxy": "^3.0.0",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
+    "jest-html-reporter": "^3.10.2",
     "postcss": "8.4.31",
     "prettier": "2.8.8",
     "sass": "^1.69.5",
@@ -67,6 +69,7 @@
     "discord-auto-rpc": "^1.0.17",
     "express": "^4.18.2",
     "fast-average-color": "^9.4.0",
+    "jest-scss-transform": "^1.0.3",
     "lowdb": "^6.1.1",
     "solid-fa": "^0.2.0",
     "solid-js": "1.8.5"

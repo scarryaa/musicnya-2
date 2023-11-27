@@ -4,7 +4,7 @@ import { faEllipsisH, faPlay } from '@fortawesome/free-solid-svg-icons'
 import { A } from '@solidjs/router'
 import Tooltip from '../Tooltip/Tooltip'
 import { useContextMenu } from '../../composables/useContextMenu'
-import { ContextMenuType } from '../../types/types'
+import { ContextMenuType, MediaItemType } from '../../types/types'
 import { mkManager } from '../../api/MkManager'
 import { createEffect, createSignal } from 'solid-js'
 import { mkApiManager } from '../../api/MkApiManager'
@@ -23,7 +23,7 @@ export const MediaItem = ({
   src: string
   title?: string
   artists: string[]
-  type: string
+  type: MediaItemType
   id: string
   artistId: string
   releaseYear?: number
@@ -36,14 +36,15 @@ export const MediaItem = ({
   Tooltip
   const [newArtistId, setArtistId] = createSignal(artistId)
 
-  const handlePlayClick = e => {
+  const handlePlayClick = (e: MouseEvent) => {
     e.preventDefault()
-    mkManager.processItemAndPlay(id, type)
+    mkManager
+      .processItemAndPlay(id, type)
+      .catch(err => console.error('Error playing item', err))
   }
 
   createEffect(async () => {
     if (type === 'library-albums') {
-      console.log(artistId)
       const catalogId = await mkApiManager.getCatalogArtistFromLibrary(artistId)
       setArtistId(catalogId.data[0].id)
     }
@@ -59,6 +60,7 @@ export const MediaItem = ({
       <div class={styles['media-item__inner']}>
         <div class={styles['media-item__inner__artwork']}>
           <A
+            data-testid="media-item-link"
             class={
               `${styles['media-item__inner__artwork__overlay']}` +
               (isAppleCurator
@@ -83,6 +85,7 @@ export const MediaItem = ({
             )}
             <div
               class={styles['media-item__inner__artwork__overlay__more-button']}
+              data-testid="more-button"
               onClick={e => openContextMenu(e, id, ContextMenuType.MediaItem, type)}
             >
               <Fa

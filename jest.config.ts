@@ -14,8 +14,9 @@ const config: Config = {
   transformIgnorePatterns: [],
   moduleNameMapper: {
     '^@solidjs/router$': '<rootDir>/node_modules/@solidjs/router/dist/index.js',
-    '\\.scss$': '<rootDir>/__mocks__/styleMock.ts'
-  }
+    '\\.module\\.scss$': 'identity-obj-proxy'
+  },
+  reporters: ['default', 'jest-html-reporter']
 }
 
 export default config
