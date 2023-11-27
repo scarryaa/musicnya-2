@@ -1,0 +1,105 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MediaItem Snapshot should match snapshot 1`] = `
+<div
+  class="media-item"
+  data-id="1"
+  data-testid="media-item"
+>
+  <div
+    class="media-item__inner"
+  >
+    <div
+      class="media-item__inner__artwork"
+    >
+      <a
+        aria-current="page"
+        class="media-item__inner__artwork__overlay active"
+        data-testid="media-item-link"
+        href="/media/albums/1"
+        link=""
+      >
+        <div
+          class="media-item__inner__artwork__overlay__play-button"
+          data-testid="play-button"
+        >
+          <svg
+            aria-hidden="true"
+            class="media-item__inner__artwork__overlay__play-button__icon"
+            style="height: 1em; font-size: 1em; vertical-align: -.125em; transform-origin: center; overflow: visible;"
+            viewBox="0 0 384 512"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <g
+              transform="translate(192 256)"
+              transform-origin="96 0"
+            >
+              <g
+                transform="translate(0,0) scale(1,1)"
+              >
+                <path
+                  d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"
+                  fill="white"
+                  transform="translate(-192 -256)"
+                />
+              </g>
+            </g>
+          </svg>
+        </div>
+        <div
+          class="media-item__inner__artwork__overlay__more-button"
+          data-testid="more-button"
+        >
+          <svg
+            aria-hidden="true"
+            class="media-item__inner__artwork__overlay__more-button__icon"
+            style="height: 1em; font-size: 1em; vertical-align: -.125em; transform-origin: center; overflow: visible;"
+            viewBox="0 0 448 512"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <g
+              transform="translate(224 256)"
+              transform-origin="112 0"
+            >
+              <g
+                transform="translate(0,0) scale(1,1)"
+              >
+                <path
+                  d="M8 256a56 56 0 1 1 112 0A56 56 0 1 1 8 256zm160 0a56 56 0 1 1 112 0 56 56 0 1 1 -112 0zm216-56a56 56 0 1 1 0 112 56 56 0 1 1 0-112z"
+                  fill="white"
+                  transform="translate(-224 -256)"
+                />
+              </g>
+            </g>
+          </svg>
+        </div>
+      </a>
+      <img
+        src="test.jpg"
+      />
+    </div>
+    <div
+      class="media-item__inner__info"
+    >
+      <div
+        class="media-item__inner__info__title"
+      />
+      <div
+        class="media-item__inner__info__artists"
+      >
+        
+        <a
+          class="media-item__inner__info__artists__link inactive"
+          href="/media/artists/1"
+          link=""
+        >
+          <span>
+            Artist 1
+          </span>
+        </a>
+        
+      </div>
+    </div>
+  </div>
+</div>
+`;

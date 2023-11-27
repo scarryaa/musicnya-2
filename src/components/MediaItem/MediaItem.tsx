@@ -32,7 +32,7 @@ export const MediaItem = ({
 }) => {
   const { openContextMenu } = useContextMenu()
   const isAppleCurator = type === 'apple-curators'
-  type === 'library-playlists' ? (type = 'playlists') : type
+  type === 'library-playlists' ? (type = MediaItemType.Playlists) : type
   Tooltip
   const [newArtistId, setArtistId] = createSignal(artistId)
 

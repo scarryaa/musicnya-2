@@ -146,6 +146,7 @@ class MusicKitManager {
    * Pauses the music playback.
    */
   pause = () => {
+    if (!this.musicKitInstance) throw new Error('MusicKit instance not initialized')
     this.musicKitInstance.pause()
   }
 
@@ -184,7 +185,7 @@ class MusicKitManager {
    * @returns The updated array of queue items.
    */
   moveQueueItem = (from: number, to: number): MusicKit.QueueItem[] => {
-    if (this.musicKitInstance === null) {
+    if (!this.musicKitInstance) {
       throw new Error('MusicKit instance not initialized')
     }
 

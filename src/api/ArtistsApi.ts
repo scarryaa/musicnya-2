@@ -74,7 +74,7 @@ export class ArtistsApi {
     const response = await this.musicKitApiClient.fetchFromMusicKit(
       API_ENDPOINTS.favorites,
       null,
-      BASE_QUERY_PARAMS
+      { ...BASE_QUERY_PARAMS, 'ids[artists]': id }
     )
 
     return response
@@ -190,10 +190,9 @@ export class ArtistsApi {
   }
 
   async getCatalogArtistFromLibrary(id: string) {
-    const response = await this.musicKitApiClient.fetchFromMusicKit(
-      `${API_ENDPOINTS.libraryArtists}/${id}/${API_ENDPOINTS.baseCatalog}`,
-      null
-    )
+    const response = await this.musicKitApiClient.fetchFromMusicKit<
+      ApiResponse<DataItem>
+    >(`${API_ENDPOINTS.libraryArtists}/${id}/${API_ENDPOINTS.baseCatalog}`, null)
 
     return response
   }

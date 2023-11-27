@@ -1,4 +1,4 @@
-jest.mock('../../stores/store', () => ({
+jest.mock('../../../stores/store', () => ({
   setStore: jest.fn(),
   store: {
     app: {
@@ -24,9 +24,9 @@ jest.mock('../../stores/store', () => ({
   }
 }))
 
-jest.mock('../../composables/useContextMenu')
-jest.mock('../../api/MkApiManager.ts')
-jest.mock('../../api/MkManager.ts')
+jest.mock('../../../composables/useContextMenu')
+jest.mock('../../../api/MkApiManager.ts')
+jest.mock('../../../api/MkManager.ts')
 
 useContextMenu.mockReturnValue({
   openContextMenu: jest.fn()
@@ -52,14 +52,15 @@ mkManager.processItemAndPlay.mockResolvedValue({
   ]
 })
 
-import { MediaItem } from '../MediaItem/MediaItem'
+import { MediaItem } from '../../MediaItem/MediaItem'
 import '@testing-library/jest-dom'
 import { render, screen, fireEvent, waitFor } from '@solidjs/testing-library'
 import { Router } from '@solidjs/router'
-import { ContextMenu } from '../ContextMenu/ContextMenu'
-import { useContextMenu, useContextMenuState } from '../../composables/useContextMenu'
-import { mkApiManager } from '../../api/MkApiManager'
-import { mkManager } from '../../api/MkManager'
+import { ContextMenu } from '../../ContextMenu/ContextMenu'
+import { useContextMenu, useContextMenuState } from '../../../composables/useContextMenu'
+import { mkApiManager } from '../../../api/MkApiManager'
+import { mkManager } from '../../../api/MkManager'
+import { MediaItemType } from '../../../types/types'
 
 describe('MediaItem', () => {
   test('renders MediaItem component correctly', () => {
@@ -68,7 +69,7 @@ describe('MediaItem', () => {
         <MediaItem
           src="test.jpg"
           artists={['Artist 1']}
-          type="album"
+          type={MediaItemType.Albums}
           id="1"
           artistId="1"
         />
@@ -78,13 +79,13 @@ describe('MediaItem', () => {
     expect(screen.getByText('Artist 1')).toBeInTheDocument()
   })
 
-  test('renders MediaItem component correctly when isAppleCurator is true', () => {
+  test('does not render play button when type is AppleCurators', () => {
     render(() => (
       <Router>
         <MediaItem
           src="test.jpg"
           artists={['Artist 1']}
-          type="apple-curators"
+          type={MediaItemType.AppleCurators}
           id="1"
           artistId="1"
         />
@@ -101,7 +102,7 @@ describe('MediaItem', () => {
         <MediaItem
           src="test.jpg"
           artists={['Artist 1']}
-          type="album"
+          type={MediaItemType.Albums}
           id="1"
           artistId="1"
           curator="Curator 1"
@@ -118,7 +119,7 @@ describe('MediaItem', () => {
         <MediaItem
           src="test.jpg"
           artists={['Artist 1']}
-          type="album"
+          type={MediaItemType.Albums}
           id="1"
           artistId="1"
           releaseYear={2021}
@@ -134,7 +135,7 @@ describe('MediaItem', () => {
         <MediaItem
           src="test.jpg"
           artists={['Artist 1']}
-          type="album"
+          type={MediaItemType.Albums}
           id="1"
           artistId="1"
         />
@@ -149,7 +150,7 @@ describe('MediaItem', () => {
         <MediaItem
           src="test.jpg"
           artists={['Artist 1']}
-          type="library-albums"
+          type={MediaItemType.LibraryAlbums}
           id="1"
           artistId="1"
         />
@@ -164,13 +165,29 @@ describe('MediaItem', () => {
         <MediaItem
           src="test.jpg"
           artists={['Artist 1']}
-          type="album"
+          type={MediaItemType.Albums}
           id="1"
           artistId="1"
         />
       </Router>
     ))
     expect(screen.getByText('Artist 1')).toBeInTheDocument()
+  })
+
+  test('renders MediaItem component correctly when artists is missing', () => {
+    render(() => (
+      <Router>
+        <MediaItem
+          artists={null}
+          src="test.jpg"
+          type={MediaItemType.Albums}
+          id="1"
+          artistId="1"
+        />
+      </Router>
+    ))
+    const artistLink = screen.queryByTestId('artist-link')
+    expect(artistLink).not.toBeInTheDocument()
   })
 
   // style test
@@ -180,7 +197,7 @@ describe('MediaItem', () => {
         <MediaItem
           src="test.jpg"
           artists={['Artist 1']}
-          type="apple-curators"
+          type={MediaItemType.AppleCurators}
           id="1"
           artistId="1"
         />
@@ -198,7 +215,7 @@ describe('MediaItem', () => {
         <MediaItem
           src="test.jpg"
           artists={['Artist 1']}
-          type="album"
+          type={MediaItemType.Albums}
           id="1"
           artistId="1"
         />
@@ -216,7 +233,7 @@ describe('MediaItem', () => {
         expect.anything(),
         '1',
         'mediaItem',
-        'album'
+        MediaItemType.Albums
       )
     })
   })
@@ -227,7 +244,7 @@ describe('MediaItem', () => {
         <MediaItem
           src="test.jpg"
           artists={['Artist 1']}
-          type="album"
+          type={MediaItemType.Albums}
           id="1"
           artistId="1"
         />
@@ -245,7 +262,7 @@ describe('MediaItem', () => {
         expect.anything(),
         '1',
         'mediaItem',
-        'album'
+        MediaItemType.Albums
       )
     })
   })
@@ -256,7 +273,7 @@ describe('MediaItem', () => {
         <MediaItem
           src="test.jpg"
           artists={['Artist 1']}
-          type="albums"
+          type={MediaItemType.Albums}
           id="1"
           artistId="1"
         />
@@ -277,7 +294,7 @@ describe('MediaItem', () => {
         <MediaItem
           src="test.jpg"
           artists={['Artist 1']}
-          type="album"
+          type={MediaItemType.Albums}
           id="1"
           artistId="1"
         />
@@ -289,7 +306,74 @@ describe('MediaItem', () => {
     fireEvent.click(playButton)
 
     await waitFor(() => {
-      expect(mkManager.processItemAndPlay).toHaveBeenCalledWith('1', 'album')
+      expect(mkManager.processItemAndPlay).toHaveBeenCalledWith('1', 'albums')
     })
+  })
+})
+
+describe('MediaItem Snapshot', () => {
+  it('should match snapshot', () => {
+    const { container } = render(() => (
+      <Router>
+        <MediaItem
+          src="test.jpg"
+          artists={['Artist 1']}
+          type={MediaItemType.Albums}
+          id="1"
+          artistId="1"
+        />
+      </Router>
+    ))
+    expect(container.firstChild).toMatchSnapshot()
+  })
+})
+
+describe('MediaItem Responsive Tests', () => {
+  const originalInnerWidth = global.innerWidth
+
+  beforeEach(() => {
+    // Reset window dimensions after each test
+    global.innerWidth = originalInnerWidth
+    global.dispatchEvent(new Event('resize'))
+  })
+
+  it('renders correctly on mobile viewports', () => {
+    global.innerWidth = 375 // Mobile width
+    global.dispatchEvent(new Event('resize'))
+
+    render(() => (
+      <Router>
+        <MediaItem
+          artistId="1"
+          id="1"
+          src="test.jpg"
+          artists={['Artist 1']}
+          type={MediaItemType.Albums}
+        />
+      </Router>
+    ))
+
+    expect(screen.getByTestId('play-button')).toBeInTheDocument()
+    expect(screen.getByText('Artist 1')).toBeInTheDocument()
+  })
+
+  it('renders correctly on tablet viewports', () => {
+    global.innerWidth = 768 // Tablet width
+    global.dispatchEvent(new Event('resize'))
+
+    render(() => (
+      <Router>
+        <MediaItem
+          artistId="1"
+          id="1"
+          src="test.jpg"
+          artists={['Artist 1']}
+          type={MediaItemType.Albums}
+        />
+      </Router>
+    ))
+
+    expect(screen.getByTestId('play-button')).toBeInTheDocument()
+    expect(screen.getByText('Artist 1')).toBeInTheDocument()
   })
 })
