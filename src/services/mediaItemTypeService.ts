@@ -11,7 +11,7 @@ export class MediaItemTypeService {
    */
   static stripType(
     type: MusicKit.MediaItemType
-  ): 'uploadedVideos' | 'musicVideos' | MusicKit.MediaItemType | 'apple-curators' {
+  ): 'uploadedVideos' | 'musicVideos' | MusicKit.MediaItemType {
     switch (type) {
       case 'uploaded-videos':
         return 'uploadedVideos'

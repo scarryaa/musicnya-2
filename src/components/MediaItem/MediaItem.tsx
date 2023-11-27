@@ -1,13 +1,10 @@
-import Fa from 'solid-fa'
 import styles from './MediaItem.module.scss'
-import { faEllipsisH, faPlay } from '@fortawesome/free-solid-svg-icons'
 import { A } from '@solidjs/router'
 import Tooltip from '../Tooltip/Tooltip'
 import { useContextMenu } from '../../composables/useContextMenu'
 import { ContextMenuType, MediaItemType } from '../../types/types'
-import { mkManager } from '../../api/MkManager'
-import { createEffect, createSignal } from 'solid-js'
-import { mkApiManager } from '../../api/MkApiManager'
+import useMediaItem from '../../composables/useMediaItem'
+import { ArtworkOverlay, ArtworkOverlayType } from '../ArtworkOverlay/ArtworkOverlay'
 
 export const MediaItem = ({
   src,
@@ -30,25 +27,12 @@ export const MediaItem = ({
   curator?: string
   curatorId?: string
 }) => {
+  Tooltip
   const { openContextMenu } = useContextMenu()
+  const { newArtistId, handlePlayClick } = useMediaItem(type, id, artistId)
+
   const isAppleCurator = type === 'apple-curators'
   type === 'library-playlists' ? (type = MediaItemType.Playlists) : type
-  Tooltip
-  const [newArtistId, setArtistId] = createSignal(artistId)
-
-  const handlePlayClick = (e: MouseEvent) => {
-    e.preventDefault()
-    mkManager
-      .processItemAndPlay(id, type)
-      .catch(err => console.error('Error playing item', err))
-  }
-
-  createEffect(async () => {
-    if (type === 'library-albums') {
-      const catalogId = await mkApiManager.getCatalogArtistFromLibrary(artistId)
-      setArtistId(catalogId.data[0].id)
-    }
-  })
 
   return (
     <div
@@ -59,44 +43,21 @@ export const MediaItem = ({
     >
       <div class={styles['media-item__inner']}>
         <div class={styles['media-item__inner__artwork']}>
-          <A
-            data-testid="media-item-link"
-            class={
-              `${styles['media-item__inner__artwork__overlay']}` +
-              (isAppleCurator
-                ? ` ${styles['media-item__inner__artwork__overlay__apple-curator']}`
-                : '')
+          <ArtworkOverlay
+            type={
+              isAppleCurator ? ArtworkOverlayType.MORE : ArtworkOverlayType.PLAY_AND_MORE
             }
-            href={`/media/${type}/${id}`}
+            isLink={true}
+            link={isAppleCurator ? `/media/curators/${id}` : `/media/${type}/${id}`}
+            playClick={handlePlayClick}
+            moreClick={e => openContextMenu(e, id, ContextMenuType.MediaItem, type)}
           >
-            {!isAppleCurator && (
-              <div
-                data-testid="play-button"
-                class={styles['media-item__inner__artwork__overlay__play-button']}
-                onClick={handlePlayClick}
-              >
-                <Fa
-                  icon={faPlay}
-                  size="1x"
-                  color="white"
-                  class={styles['media-item__inner__artwork__overlay__play-button__icon']}
-                />
-              </div>
-            )}
-            <div
-              class={styles['media-item__inner__artwork__overlay__more-button']}
-              data-testid="more-button"
-              onClick={e => openContextMenu(e, id, ContextMenuType.MediaItem, type)}
-            >
-              <Fa
-                icon={faEllipsisH}
-                size="1x"
-                color="white"
-                class={styles['media-item__inner__artwork__overlay__more-button__icon']}
-              />
-            </div>
-          </A>
-          <img src={src} />
+            <img
+              class={styles['media-item__inner__artwork__image']}
+              src={src}
+              alt={title}
+            />
+          </ArtworkOverlay>
         </div>
         <div class={styles['media-item__inner__info']}>
           <div
@@ -114,6 +75,7 @@ export const MediaItem = ({
             {artists !== null && (
               <A
                 activeClass=""
+                data-testid="artist-link"
                 class={styles['media-item__inner__info__artists__link']}
                 href={`/media/artists/${newArtistId()}`}
               >

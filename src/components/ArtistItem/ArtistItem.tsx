@@ -16,7 +16,7 @@ export const ArtistItem = ({ item }: ArtistItemProps) => {
       class={styles['artist-item']}
       href={`/media/artists/${item.id}`}
       activeClass=""
-      onContextMenu={e => openContextMenu(e, item.id, null, ContextMenuType.Artist)}
+      onContextMenu={e => openContextMenu(e, item.id, ContextMenuType.Artist, null)}
     >
       <div class={styles['artist-item__artwork__container']}>
         <div class={styles.artistItem__artwork__container__overlay}></div>

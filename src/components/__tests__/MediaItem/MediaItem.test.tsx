@@ -190,25 +190,6 @@ describe('MediaItem', () => {
     expect(artistLink).not.toBeInTheDocument()
   })
 
-  // style test
-  test('adds correct class when isAppleCurator is true', () => {
-    render(() => (
-      <Router>
-        <MediaItem
-          src="test.jpg"
-          artists={['Artist 1']}
-          type={MediaItemType.AppleCurators}
-          id="1"
-          artistId="1"
-        />
-      </Router>
-    ))
-    const mediaItemLink = screen.getByTestId('media-item-link')
-    expect(mediaItemLink).toHaveClass(
-      'media-item__inner__artwork__overlay__apple-curator'
-    )
-  })
-
   test('right click on media item opens context menu', async () => {
     render(() => (
       <Router>
@@ -264,27 +245,6 @@ describe('MediaItem', () => {
         'mediaItem',
         MediaItemType.Albums
       )
-    })
-  })
-
-  test('click on media item opens media item page', async () => {
-    render(() => (
-      <Router>
-        <MediaItem
-          src="test.jpg"
-          artists={['Artist 1']}
-          type={MediaItemType.Albums}
-          id="1"
-          artistId="1"
-        />
-      </Router>
-    ))
-
-    const mediaItemLink = screen.getByTestId('media-item-link')
-    fireEvent.click(mediaItemLink)
-
-    await waitFor(() => {
-      expect(screen.getByText('Artist 1')).toBeInTheDocument()
     })
   })
 
