@@ -1,12 +1,4 @@
-:root {
-  --artists-hover-color: rgb(0 0 0 / 5%);
-  --artists-active-color: rgb(0 0 0 / 10%);
-}
-
-:root[theme='dark'] {
-  --artists-hover-color: rgb(255 255 255 / 5%);
-  --artists-active-color: rgb(255 255 255 / 10%);
-}
+@import '../../styles/mixins/mixins';
 
 .artists {
   font-family: Inter, sans-serif;
@@ -16,89 +8,7 @@
   flex-direction: row;
   overflow: visible;
 
-  &__content {
-    height: calc(100% + 3.6rem);
-    display: flex;
-    flex-flow: row wrap;
-    align-content: flex-start;
-    gap: 1rem;
-    padding: 1rem;
-    overflow-y: overlay;
-  }
-
-  &__sidebar {
-    width: 220px;
-    height: 100%;
-    min-width: 220px;
-
-    &__search {
-      margin-left: 1rem;
-      margin-top: 1rem;
-      width: 100%;
-    }
-
-    &__list {
-      margin-top: 1rem;
-      height: 100%;
-      overflow-y: overlay;
-
-      &__skelContainer {
-        width: 100%;
-        height: 100%;
-        padding-right: 10px;
-
-        &__item {
-          padding-left: 1rem;
-          padding-block: 0.5rem;
-          display: flex;
-          flex-direction: row;
-          gap: 0.8rem;
-          align-items: center;
-          justify-content: flex-start;
-        }
-      }
-
-      &__item {
-        padding-left: 1rem;
-        padding-block: 0.5rem;
-        display: flex;
-        flex-direction: row;
-        gap: 0.8rem;
-        align-items: center;
-        justify-content: flex-start;
-
-        &:hover {
-          background-color: var(--artists-hover-color);
-        }
-
-        &__name {
-          font-size: 1rem;
-          font-weight: 500;
-          color: var(--color-on-primary);
-          display: -webkit-box;
-          -webkit-line-clamp: 1;
-          -webkit-box-orient: vertical;
-          overflow: hidden;
-          width: 100%;
-          padding-right: 0.3rem;
-        }
-
-        &__image {
-          width: 50px;
-          height: 50px;
-          min-width: 50px;
-          min-height: 50px;
-          border-radius: 50%;
-          overflow: hidden;
-          position: relative;
-
-          img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-          }
-        }
-      }
-    }
+  &-actions {
+    @include flex-layout(row, flex-end, flex-end, 0.2rem);
   }
 }

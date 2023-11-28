@@ -31,7 +31,6 @@ export const Albums = () => {
           b.relationships.artists.data[0].attributes.name
         )
       case 'date':
-        // @ts-ignore
         return new Date(a.attributes.releaseDate) - new Date(b.attributes.releaseDate)
       case 'genre':
         return a.attributes.genreNames[0].localeCompare(b.attributes.genreName[0])

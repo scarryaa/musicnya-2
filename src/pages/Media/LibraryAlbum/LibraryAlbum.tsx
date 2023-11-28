@@ -1,4 +1,4 @@
-import { A, useParams } from '@solidjs/router'
+import { useParams } from '@solidjs/router'
 import { Match, Switch, createEffect, createSignal } from 'solid-js'
 import { EditorialNotes } from '../../../components/EditorialNotes/EditorialNotes'
 import { LoadingSpinner } from '../../../components/LoadingSpinner/LoadingSpinner'

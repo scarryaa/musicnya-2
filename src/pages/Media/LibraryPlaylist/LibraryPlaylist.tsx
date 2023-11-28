@@ -1,5 +1,5 @@
 import { useParams } from '@solidjs/router'
-import { createSignal, createEffect, Show, Switch, Match } from 'solid-js'
+import { createSignal, createEffect, Switch, Match } from 'solid-js'
 import { MediaInfo } from '../../../components/MediaInfo/MediaInfo'
 import { SongTable } from '../../../components/SongTable/SongTable'
 import { store } from '../../../stores/store'

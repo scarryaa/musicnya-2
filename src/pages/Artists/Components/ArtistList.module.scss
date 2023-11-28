@@ -1,0 +1,22 @@
+@import '../../../styles/mixins/mixins';
+@import '../../../styles/mixins/font-mixins';
+
+$artist-list-width: 220px;
+$artist-list-height: 100%;
+
+.artist-list {
+  width: $artist-list-width;
+  height: $artist-list-height;
+  min-width: $artist-list-width;
+
+  &-search {
+    margin-left: $margin-small;
+    margin-top: $margin-small;
+  }
+
+  &-list {
+    margin-top: $margin-small;
+    height: $artist-list-height;
+    overflow-y: overlay;
+  }
+}

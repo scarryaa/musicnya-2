@@ -1,0 +1,53 @@
+@import '../../../styles/mixins/mixins';
+@import '../../../styles/mixins/font-mixins';
+
+$artist-name-padding: 0.3rem;
+$artist-artwork-size: 50px;
+
+:root {
+  --artists-hover-color: rgb(0 0 0 / 5%);
+  --artists-active-color: rgb(0 0 0 / 10%);
+}
+
+:root[theme='dark'] {
+  --artists-hover-color: rgb(255 255 255 / 5%);
+  --artists-active-color: rgb(255 255 255 / 10%);
+}
+
+.artist-list-item {
+  @include flex-layout(row, flex-start, center, 0.8rem);
+
+  padding-left: $padding-small;
+  padding-block: $padding-xsmall;
+
+  &:hover {
+    background-color: var(--artists-hover-color);
+  }
+
+  &-name {
+    @include font-style(1rem);
+    @include webkit-line-clamp(1);
+
+    color: var(--color-on-primary);
+    width: 100%;
+    overflow: hidden;
+    padding-right: $artist-name-padding;
+  }
+
+  &-artwork {
+    width: $artist-artwork-size;
+    height: $artist-artwork-size;
+    min-width: $artist-artwork-size;
+    min-height: $artist-artwork-size;
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      user-select: none;
+    }
+  }
+}

@@ -28,7 +28,7 @@ const useMediaItem = (
   )
 
   createEffect(async () => {
-    if (type === 'library-albums') {
+    if (type === 'library-albums' && artistId[0] === 'r') {
       const catalogId = await mkApiManager.getCatalogArtistFromLibrary(artistId)
       setArtistId(catalogId.data[0].id)
       console.log(catalogId)
