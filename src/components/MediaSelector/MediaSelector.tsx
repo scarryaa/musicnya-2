@@ -35,8 +35,14 @@ export const MediaSelector = ({ item }) => {
     const commonProps = {
       id: mediaItem.id,
       type: mediaItem.type,
-      title: mediaItem.attributes?.name,
-      src: Utils.formatArtworkUrl(mediaItem.attributes?.artwork?.url || musicNote, 400)
+      title:
+        mediaItem.attributes?.name || mediaItem.attributes?.plainEditorialNotes?.name,
+      src: Utils.formatArtworkUrl(
+        mediaItem.attributes?.artwork?.url ||
+          mediaItem.attributes?.editorialArtwork?.superHeroTall?.url ||
+          musicNote,
+        400
+      )
     }
 
     if (isMusicNotesHeroShelf) {

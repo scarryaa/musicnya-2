@@ -222,7 +222,10 @@ export const createModalCuratorStore = () => {
 
 export const createModalPlaylistStore = () => {
   return function (params: { id: string }) {
-    const [data] = createResource<string, string>(params.id, fetchPlaylist)
+    const [data] = createResource<string, string>(
+      params.id,
+      params.id.includes('p.') ? fetchLibraryPlaylist : fetchPlaylist
+    )
 
     return data
   }
