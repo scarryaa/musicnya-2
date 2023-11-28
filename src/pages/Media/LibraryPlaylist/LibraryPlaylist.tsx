@@ -9,8 +9,7 @@ import { LoadingSpinner } from '../../../components/LoadingSpinner/LoadingSpinne
 
 export const LibraryPlaylist = () => {
   const params = useParams<{ id: string }>()
-  const [playlistData, setPlaylistData] = createSignal(null)
-  const playlistPage: HTMLDivElement = undefined as unknown as HTMLDivElement
+  const [playlistData, setPlaylistData] = createSignal([])
 
   createEffect(() => {
     const newPlaylistData = store.library.playlists.find(
@@ -23,7 +22,7 @@ export const LibraryPlaylist = () => {
   }, [params.id])
 
   return (
-    <div ref={playlistPage}>
+    <div>
       <Switch>
         <Match when={store.library.loading}>
           <LoadingSpinner />

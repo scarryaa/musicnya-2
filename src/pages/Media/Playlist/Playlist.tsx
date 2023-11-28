@@ -11,7 +11,7 @@ import styles from './Playlist.module.scss'
 export const Playlist = () => {
   const params = useParams<{ id: string }>()
   const playlistStore = createPlaylistStore()
-  const playlistData = playlistStore(params)
+  const playlistData = playlistStore(() => params.id)
 
   const [currentPlaylist, setCurrentPlaylist] = createSignal(null)
 
@@ -21,6 +21,7 @@ export const Playlist = () => {
       setCurrentPlaylist(data.data[0])
     }
     console.log(params.id)
+    console.log(playlistData())
   }, [params.id, playlistData()])
 
   return (

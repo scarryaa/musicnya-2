@@ -123,7 +123,7 @@ export const LeftSidebar = () => {
                   tooltip={playlist.attributes.name}
                   text={playlist.attributes.name}
                   icon={faHeadphones}
-                  href={`media/library-playlists/${playlist.id}`}
+                  href={`media/playlists/${playlist.id}`}
                   showTooltip={true}
                 />
               )}
@@ -162,7 +162,7 @@ export const LeftSidebar = () => {
                   tooltip={playlist.attributes.name}
                   text={playlist.attributes.name}
                   icon={faHeadphones}
-                  href={`media/library-playlists/${playlist.id}`}
+                  href={`media/playlists/${playlist.id}`}
                   showTooltip={true}
                 />
               )}

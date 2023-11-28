@@ -1,5 +1,5 @@
 import { useNavigate } from '@solidjs/router'
-import { Component, createEffect, createSignal } from 'solid-js'
+import { Component, createEffect } from 'solid-js'
 import { ContextMenu } from './components/ContextMenu/ContextMenu'
 import { Footer } from './components/Footer/Footer'
 import { LeftSidebar } from './components/LeftSidebar/LeftSidebar'

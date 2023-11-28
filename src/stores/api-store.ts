@@ -222,22 +222,7 @@ export const createModalCuratorStore = () => {
 
 export const createModalPlaylistStore = () => {
   return function (params: { id: string }) {
-    const [data] = createResource<
-      any,
-      {
-        devToken: string
-        musicUserToken: string
-        id: string
-      },
-      string
-    >(
-      {
-        devToken: config.MusicKit.token,
-        musicUserToken: MusicKit.getInstance()?.musicUserToken,
-        id: params.id
-      },
-      fetchPlaylist
-    )
+    const [data] = createResource<string, string>(params.id, fetchPlaylist)
 
     return data
   }
@@ -280,23 +265,16 @@ export const createAlbumStore = () => {
 }
 
 export const createPlaylistStore = () => {
-  return function (params: { id: string }) {
-    const [data] = createResource<
-      any,
-      {
-        devToken: string
-        musicUserToken: string
-        id: string
-      },
-      string
-    >(
-      {
-        devToken: config.MusicKit.token,
-        musicUserToken: MusicKit.getInstance()?.musicUserToken,
-        id: params.id
-      },
-      params.id.substring(0, 2) === 'pl' ? fetchPlaylist : fetchLibraryPlaylist
+  return function (idSignal: () => string) {
+    const [data, { refetch }] = createResource<string, string>(idSignal, id =>
+      id.substring(0, 2) === 'pl' ? fetchPlaylist(id) : fetchLibraryPlaylist(id)
     )
+
+    createEffect(() => {
+      const id = idSignal()
+      console.log(id)
+      refetch()
+    })
 
     return data
   }

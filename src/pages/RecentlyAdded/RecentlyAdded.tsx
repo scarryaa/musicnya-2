@@ -1,4 +1,4 @@
-import { createSignal, createEffect, onCleanup, Switch, Match, For } from 'solid-js'
+import { createSignal, createEffect, onCleanup, For } from 'solid-js'
 import { MediaItem } from '../../components/MediaItem/MediaItem'
 import { Utils } from '../../util/util'
 import styles from './RecentlyAdded.module.scss'

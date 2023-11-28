@@ -1,22 +1,13 @@
 import { store } from '../stores/store'
+import config from '../../config.json'
 
-export const fetchPlaylist = async ({
-  devToken,
-  musicUserToken,
-  id,
-  offset = 0
-}: {
-  devToken: string
-  musicUserToken: string
-  id: string
-  offset?: number
-}) => {
+export const fetchPlaylist = async (id: string) => {
   return await fetch(
     `https://amp-api.music.apple.com/v1/catalog/us/playlists/${id}?l=en-US&l=en-US&platform=web&include=audio-analysis%2Cgenres%2Cartists%2Calbums%2Clibrary%2Clyrics&extend=editorialArtwork%2CeditorialVideo%2ClyricsExcerpt`,
     {
       headers: {
-        authorization: `Bearer ${devToken}`,
-        'music-user-token': musicUserToken
+        authorization: `Bearer ${config.MusicKit.token}`,
+        'music-user-token': config.MusicKit.musicUserToken
       }
     }
   )
@@ -58,21 +49,13 @@ export const fetchMoreTracks = async ({
     })
 }
 
-export const fetchLibraryPlaylist = async ({
-  devToken,
-  musicUserToken,
-  id
-}: {
-  devToken: string
-  musicUserToken: string
-  id: string
-}) => {
+export const fetchLibraryPlaylist = async (id: string) => {
   return await fetch(
     `https://amp-api.music.apple.com/v1/me/library/playlists/${id}?art[url]=f&fields[songs]=artistUrl,artwork,durationInMillis,url&include=catalog,artists,tracks,fields&include[library-playlists]=catalog,tracks,fields,playlists&include[playlists]=curator&include[songs]=artists&l=en-US&omit[resource]=autos&platform=web`,
     {
       headers: {
-        authorization: `Bearer ${devToken}`,
-        'music-user-token': musicUserToken
+        authorization: `Bearer ${config.MusicKit.token}`,
+        'music-user-token': config.MusicKit.musicUserToken
       }
     }
   )
