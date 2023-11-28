@@ -19,6 +19,9 @@ jest.mock('../../../stores/store', () => ({
         open: false,
         id: '',
         type: ''
+      },
+      general: {
+        tooltipDelay: 0
       }
     }
   }

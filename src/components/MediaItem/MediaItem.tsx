@@ -1,13 +1,12 @@
 import styles from './MediaItem.module.scss'
-import { A } from '@solidjs/router'
 import Tooltip from '../Tooltip/Tooltip'
 import { useContextMenu } from '../../composables/useContextMenu'
 import { ContextMenuType, MediaItemType } from '../../types/types'
 import useMediaItem from '../../composables/useMediaItem'
-import { ArtworkOverlay, ArtworkOverlayType } from '../ArtworkOverlay/ArtworkOverlay'
-import { createMemo, createSignal } from 'solid-js'
-import { store } from '../../stores/store'
+import { ArtworkOverlay } from '../ArtworkOverlay/ArtworkOverlay'
 import { MediaInfoCard } from '../MediaInfoCard/MediaInfoCard'
+import useHoverStates from '../../composables/useHoverStates'
+import { ArtworkOverlayType } from '../ArtworkOverlay/Types'
 
 export const MediaItem = ({
   src,
@@ -31,37 +30,39 @@ export const MediaItem = ({
   curatorId?: string
 }) => {
   Tooltip
-  const { openContextMenu } = useContextMenu()
-  const [isHovering, setIsHovering] = createSignal(false)
-  const { newArtistId, handlePlayClick } = useMediaItem(type, id, artistId)
-
-  const handleMouseEnter = () => setIsHovering(true)
-  const handleMouseLeave = () => setIsHovering(false)
-
-  const subtitleLink = createMemo(() =>
-    releaseYear ? '#' : `/media/artists/${newArtistId()}`
+  const { subtitleLink, handlePlayClick, isAppleCurator } = useMediaItem(
+    type,
+    id,
+    artistId,
+    releaseYear
   )
-  const isAppleCurator = type === 'apple-curators'
+  const { openContextMenu } = useContextMenu()
+  const { isHovered, onMouseEnter, onMouseLeave } = useHoverStates()
   type === 'library-playlists' ? (type = MediaItemType.Playlists) : type
 
   return (
     <div
       class={styles['media-item']}
       data-id={id}
+      data-type={type}
       data-testid="media-item"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
       onContextMenu={e => openContextMenu(e, id, ContextMenuType.MediaItem, type)}
     >
       <div class={styles['media-item__inner']}>
         <div class={styles['media-item__inner__artwork']}>
           <ArtworkOverlay
             type={
-              isAppleCurator ? ArtworkOverlayType.MORE : ArtworkOverlayType.PLAY_AND_MORE
+              isAppleCurator()
+                ? ArtworkOverlayType.MORE
+                : ArtworkOverlayType.PLAY_AND_MORE
             }
-            isVisible={isHovering}
+            isVisible={isHovered}
             isLink={true}
-            link={isAppleCurator ? `/media/curators/${id}` : `/media/${type}/${id}`}
+            link={
+              isAppleCurator() ? `/media/curators/${curatorId}` : `/media/${type}/${id}`
+            }
             playClick={handlePlayClick}
             moreClick={e => openContextMenu(e, id, ContextMenuType.MediaItem, type)}
           >
@@ -74,9 +75,9 @@ export const MediaItem = ({
         </div>
         <MediaInfoCard
           title={title}
-          subtitle={releaseYear?.toString() || artists.join(', ') || curator}
-          subtitleLink={releaseYear ? '#' : subtitleLink}
-          titleLink={isAppleCurator ? `/media/curators/${id}` : `/media/${type}/${id}`}
+          subtitle={releaseYear?.toString() || curator || artists?.join(', ')}
+          subtitleLink={releaseYear ? '' : subtitleLink}
+          titleLink={isAppleCurator() ? `/media/curators/${id}` : `/media/${type}/${id}`}
         />
       </div>
     </div>

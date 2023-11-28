@@ -5,6 +5,7 @@ exports[`MediaItem Snapshot should match snapshot 1`] = `
   class="media-item"
   data-id="1"
   data-testid="media-item"
+  data-type="albums"
 >
   <div
     class="media-item__inner"
@@ -21,7 +22,7 @@ exports[`MediaItem Snapshot should match snapshot 1`] = `
           data-testid="artwork-overlay-link"
           href="/media/albums/1"
           link=""
-          style="pointer-events: auto; opacity: 0;"
+          style="pointer-events: auto; opacity: 0; border-radius: 0;"
         >
           <div
             class="artwork-overlay-link-play-button"
@@ -85,27 +86,29 @@ exports[`MediaItem Snapshot should match snapshot 1`] = `
       </div>
     </div>
     <div
-      class="media-item__inner__info"
+      class="media-info-card"
     >
-      <div
-        class="media-item__inner__info__title"
-      />
-      <div
-        class="media-item__inner__info__artists"
+      <a
+        aria-current="page"
+        class="media-info-card-title"
+        href="/media/albums/1"
+        link=""
       >
-        
-        <a
-          class="media-item__inner__info__artists__link inactive"
-          data-testid="artist-link"
-          href="/media/artists/1"
-          link=""
+        <span
+          class="media-info-card-title-link"
+        />
+      </a>
+      <a
+        class="media-info-card-subtitle inactive"
+        href="/media/artists/1"
+        link=""
+      >
+        <span
+          class="media-info-card-subtitle-link"
         >
-          <span>
-            Artist 1
-          </span>
-        </a>
-        
-      </div>
+          Artist 1
+        </span>
+      </a>
     </div>
   </div>
 </div>

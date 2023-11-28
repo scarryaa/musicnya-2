@@ -16,7 +16,6 @@ export const MediaInfoCard = ({
   titleLink?: string
   subtitleLink?: string | Accessor<string>
 }) => {
-  console.log(Utils.isAccessor(subtitleLink))
   Tooltip
 
   return (
@@ -33,7 +32,7 @@ export const MediaInfoCard = ({
       ) : (
         <div class={styles['media-info-card-title']}>{title}</div>
       )}
-      {subtitleLink ? (
+      {subtitleLink !== '' ? (
         <A
           activeClass=""
           class={styles['media-info-card-subtitle']}
@@ -47,7 +46,12 @@ export const MediaInfoCard = ({
           </span>
         </A>
       ) : (
-        <div class={styles['media-info-card-subtitle']}>{subtitle}</div>
+        <div
+          class={styles['media-info-card-subtitle']}
+          use:Tooltip={['bottom', subtitle, true, store.app.general.tooltipDelay]}
+        >
+          {subtitle}
+        </div>
       )}
     </div>
   )

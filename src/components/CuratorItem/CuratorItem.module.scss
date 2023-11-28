@@ -52,42 +52,5 @@
       object-fit: cover;
       user-select: none;
     }
-
-    &__overlay {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      border-radius: $app-border-radius;
-      background-color: $color-overlay-bg;
-      opacity: 0;
-      transition: opacity $transition-fast ease-in-out;
-      padding: 0.6rem 0.5rem;
-      display: flex;
-      flex-direction: row;
-      justify-content: flex-end;
-      align-items: flex-end;
-      cursor: default;
-      z-index: 1;
-
-      &__moreButton {
-        @include flex-layout(row, center, center);
-
-        background-color: $color-overlay-bg;
-        border-radius: 50%;
-        padding: 1rem;
-        width: 2rem;
-        height: 2rem;
-        transition: background-color $transition-fast ease-in-out;
-
-        &:hover {
-          background-color: var(--color-primary);
-        }
-      }
-    }
-
-    /* stylelint-disable-next-line selector-class-pattern */
-    &:hover .curator-item__image__overlay {
-      opacity: 1;
-    }
   }
 }

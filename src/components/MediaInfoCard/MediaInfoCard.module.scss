@@ -18,5 +18,11 @@
     font-size: $font-size-xsmall;
     width: 100%;
     max-width: max-content;
+
+    &-link {
+      &:hover {
+        text-decoration: underline;
+      }
+    }
   }
 }

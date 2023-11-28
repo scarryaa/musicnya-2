@@ -1,12 +1,12 @@
-import { faPlay, faEllipsisH } from '@fortawesome/free-solid-svg-icons'
 import { A } from '@solidjs/router'
-import Fa from 'solid-fa'
-import { For, createSignal } from 'solid-js'
+import { For } from 'solid-js'
 import styles from './MediaItemGlass.module.scss'
 import { useContextMenu } from '../../composables/useContextMenu'
 import { ContextMenuType } from '../../types/types'
 import { mkManager } from '../../api/MkManager'
-import { ArtworkOverlay, ArtworkOverlayType } from '../ArtworkOverlay/ArtworkOverlay'
+import { ArtworkOverlay } from '../ArtworkOverlay/ArtworkOverlay'
+import useHoverStates from '../../composables/useHoverStates'
+import { ArtworkOverlayType } from '../ArtworkOverlay/Types'
 
 type MediaItemGlassProps = {
   src: string
@@ -26,11 +26,7 @@ export const MediaItemGlass = ({
   reason
 }: MediaItemGlassProps) => {
   const { openContextMenu } = useContextMenu()
-  const [isHovering, setIsHovering] = createSignal(false)
-
-  const handleMouseEnter = () => setIsHovering(true)
-
-  const handleMouseLeave = () => setIsHovering(false)
+  const { isHovered, onMouseEnter, onMouseLeave } = useHoverStates()
 
   const handlePlayClick = (e: MouseEvent): void => {
     e.preventDefault()
@@ -42,14 +38,14 @@ export const MediaItemGlass = ({
       class={styles['media-item-glass']}
       href={`/media/${type}/${id}`}
       onContextMenu={e => openContextMenu(e, id, ContextMenuType.MediaItem, type)}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
     >
       <span class={styles['media-item-glass__reason']}>{reason}</span>
       <div class={styles['media-item-glass__inner']}>
         <div class={styles['media-item-glass__inner__artwork']}>
           <ArtworkOverlay
-            isVisible={isHovering}
+            isVisible={isHovered}
             isLink={false}
             type={ArtworkOverlayType.PLAY_AND_MORE}
             moreClick={e => openContextMenu(e, id, ContextMenuType.MediaItem, type)}

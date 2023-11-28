@@ -1,0 +1,504 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ArtworkOverlay Snapshot matches snapshot with MORE type 1`] = `
+<div>
+  <div
+    class="artwork-overlay"
+  >
+    <a
+      aria-current="page"
+      class="artwork-overlay-link artwork-overlay-link--round-bottom-corners"
+      data-testid="artwork-overlay-link"
+      href="/#"
+      link=""
+      style="pointer-events: none; opacity: 1; justify-content: flex-end; border-radius: 0;"
+    >
+      <div
+        class="artwork-overlay-link-more-button"
+        data-testid="more-button"
+      >
+        <svg
+          aria-hidden="true"
+          class="solid-fa"
+          style="height: 1em; font-size: 1em; vertical-align: -.125em; transform-origin: center; overflow: visible;"
+          viewBox="0 0 448 512"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g
+            transform="translate(224 256)"
+            transform-origin="112 0"
+          >
+            <g
+              transform="translate(0,0) scale(1,1)"
+            >
+              <path
+                d="M8 256a56 56 0 1 1 112 0A56 56 0 1 1 8 256zm160 0a56 56 0 1 1 112 0 56 56 0 1 1 -112 0zm216-56a56 56 0 1 1 0 112 56 56 0 1 1 0-112z"
+                fill="var(--color-white)"
+                transform="translate(-224 -256)"
+              />
+            </g>
+          </g>
+        </svg>
+      </div>
+    </a>
+    
+  </div>
+</div>
+`;
+
+exports[`ArtworkOverlay Snapshot matches snapshot with NONE type 1`] = `
+<div>
+  <div
+    class="artwork-overlay"
+  >
+    <a
+      aria-current="page"
+      class="artwork-overlay-link artwork-overlay-link--round-bottom-corners"
+      data-testid="artwork-overlay-link"
+      href="/#"
+      link=""
+      style="pointer-events: none; opacity: 1; border-radius: 0;"
+    />
+    
+  </div>
+</div>
+`;
+
+exports[`ArtworkOverlay Snapshot matches snapshot with PLAY_AND_MORE type 1`] = `
+<div>
+  <div
+    class="artwork-overlay"
+  >
+    <a
+      aria-current="page"
+      class="artwork-overlay-link artwork-overlay-link--round-bottom-corners"
+      data-testid="artwork-overlay-link"
+      href="/#"
+      link=""
+      style="pointer-events: none; opacity: 1; border-radius: 0;"
+    >
+      <div
+        class="artwork-overlay-link-play-button"
+        data-testid="play-button"
+      >
+        <svg
+          aria-hidden="true"
+          class="solid-fa"
+          style="height: 1em; font-size: 1em; vertical-align: -.125em; transform-origin: center; overflow: visible;"
+          viewBox="0 0 384 512"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g
+            transform="translate(192 256)"
+            transform-origin="96 0"
+          >
+            <g
+              transform="translate(0,0) scale(1,1)"
+            >
+              <path
+                d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"
+                fill="var(--color-white)"
+                transform="translate(-192 -256)"
+              />
+            </g>
+          </g>
+        </svg>
+      </div>
+      <div
+        class="artwork-overlay-link-more-button"
+        data-testid="more-button"
+      >
+        <svg
+          aria-hidden="true"
+          class="solid-fa"
+          style="height: 1em; font-size: 1em; vertical-align: -.125em; transform-origin: center; overflow: visible;"
+          viewBox="0 0 448 512"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g
+            transform="translate(224 256)"
+            transform-origin="112 0"
+          >
+            <g
+              transform="translate(0,0) scale(1,1)"
+            >
+              <path
+                d="M8 256a56 56 0 1 1 112 0A56 56 0 1 1 8 256zm160 0a56 56 0 1 1 112 0 56 56 0 1 1 -112 0zm216-56a56 56 0 1 1 0 112 56 56 0 1 1 0-112z"
+                fill="var(--color-white)"
+                transform="translate(-224 -256)"
+              />
+            </g>
+          </g>
+        </svg>
+      </div>
+    </a>
+    
+  </div>
+</div>
+`;
+
+exports[`ArtworkOverlay Snapshot matches snapshot with children 1`] = `
+<div>
+  <div
+    class="artwork-overlay"
+  >
+    <a
+      aria-current="page"
+      class="artwork-overlay-link artwork-overlay-link--round-bottom-corners"
+      data-testid="artwork-overlay-link"
+      href="/#"
+      link=""
+      style="pointer-events: none; opacity: 1; border-radius: 0;"
+    >
+      <div
+        class="artwork-overlay-link-play-button"
+        data-testid="play-button"
+      >
+        <svg
+          aria-hidden="true"
+          class="solid-fa"
+          style="height: 1em; font-size: 1em; vertical-align: -.125em; transform-origin: center; overflow: visible;"
+          viewBox="0 0 384 512"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g
+            transform="translate(192 256)"
+            transform-origin="96 0"
+          >
+            <g
+              transform="translate(0,0) scale(1,1)"
+            >
+              <path
+                d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"
+                fill="var(--color-white)"
+                transform="translate(-192 -256)"
+              />
+            </g>
+          </g>
+        </svg>
+      </div>
+      <div
+        class="artwork-overlay-link-more-button"
+        data-testid="more-button"
+      >
+        <svg
+          aria-hidden="true"
+          class="solid-fa"
+          style="height: 1em; font-size: 1em; vertical-align: -.125em; transform-origin: center; overflow: visible;"
+          viewBox="0 0 448 512"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g
+            transform="translate(224 256)"
+            transform-origin="112 0"
+          >
+            <g
+              transform="translate(0,0) scale(1,1)"
+            >
+              <path
+                d="M8 256a56 56 0 1 1 112 0A56 56 0 1 1 8 256zm160 0a56 56 0 1 1 112 0 56 56 0 1 1 -112 0zm216-56a56 56 0 1 1 0 112 56 56 0 1 1 0-112z"
+                fill="var(--color-white)"
+                transform="translate(-224 -256)"
+              />
+            </g>
+          </g>
+        </svg>
+      </div>
+    </a>
+    <div
+      data-testid="children"
+    />
+  </div>
+</div>
+`;
+
+exports[`ArtworkOverlay Snapshot matches snapshot with link 1`] = `
+<div>
+  <div
+    class="artwork-overlay"
+  >
+    <a
+      class="artwork-overlay-link artwork-overlay-link--round-bottom-corners inactive"
+      data-testid="artwork-overlay-link"
+      href="/media/albums/1"
+      link=""
+      style="pointer-events: auto; opacity: 1; border-radius: 0;"
+    >
+      <div
+        class="artwork-overlay-link-play-button"
+        data-testid="play-button"
+      >
+        <svg
+          aria-hidden="true"
+          class="solid-fa"
+          style="height: 1em; font-size: 1em; vertical-align: -.125em; transform-origin: center; overflow: visible;"
+          viewBox="0 0 384 512"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g
+            transform="translate(192 256)"
+            transform-origin="96 0"
+          >
+            <g
+              transform="translate(0,0) scale(1,1)"
+            >
+              <path
+                d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"
+                fill="var(--color-white)"
+                transform="translate(-192 -256)"
+              />
+            </g>
+          </g>
+        </svg>
+      </div>
+      <div
+        class="artwork-overlay-link-more-button"
+        data-testid="more-button"
+      >
+        <svg
+          aria-hidden="true"
+          class="solid-fa"
+          style="height: 1em; font-size: 1em; vertical-align: -.125em; transform-origin: center; overflow: visible;"
+          viewBox="0 0 448 512"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g
+            transform="translate(224 256)"
+            transform-origin="112 0"
+          >
+            <g
+              transform="translate(0,0) scale(1,1)"
+            >
+              <path
+                d="M8 256a56 56 0 1 1 112 0A56 56 0 1 1 8 256zm160 0a56 56 0 1 1 112 0 56 56 0 1 1 -112 0zm216-56a56 56 0 1 1 0 112 56 56 0 1 1 0-112z"
+                fill="var(--color-white)"
+                transform="translate(-224 -256)"
+              />
+            </g>
+          </g>
+        </svg>
+      </div>
+    </a>
+    
+  </div>
+</div>
+`;
+
+exports[`ArtworkOverlay Snapshot matches snapshot with roundBottomCorners 1`] = `
+<div>
+  <div
+    class="artwork-overlay"
+  >
+    <a
+      aria-current="page"
+      class="artwork-overlay-link artwork-overlay-link--round-bottom-corners"
+      data-testid="artwork-overlay-link"
+      href="/#"
+      link=""
+      style="pointer-events: none; opacity: 1; border-radius: 0;"
+    >
+      <div
+        class="artwork-overlay-link-play-button"
+        data-testid="play-button"
+      >
+        <svg
+          aria-hidden="true"
+          class="solid-fa"
+          style="height: 1em; font-size: 1em; vertical-align: -.125em; transform-origin: center; overflow: visible;"
+          viewBox="0 0 384 512"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g
+            transform="translate(192 256)"
+            transform-origin="96 0"
+          >
+            <g
+              transform="translate(0,0) scale(1,1)"
+            >
+              <path
+                d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"
+                fill="var(--color-white)"
+                transform="translate(-192 -256)"
+              />
+            </g>
+          </g>
+        </svg>
+      </div>
+      <div
+        class="artwork-overlay-link-more-button"
+        data-testid="more-button"
+      >
+        <svg
+          aria-hidden="true"
+          class="solid-fa"
+          style="height: 1em; font-size: 1em; vertical-align: -.125em; transform-origin: center; overflow: visible;"
+          viewBox="0 0 448 512"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g
+            transform="translate(224 256)"
+            transform-origin="112 0"
+          >
+            <g
+              transform="translate(0,0) scale(1,1)"
+            >
+              <path
+                d="M8 256a56 56 0 1 1 112 0A56 56 0 1 1 8 256zm160 0a56 56 0 1 1 112 0 56 56 0 1 1 -112 0zm216-56a56 56 0 1 1 0 112 56 56 0 1 1 0-112z"
+                fill="var(--color-white)"
+                transform="translate(-224 -256)"
+              />
+            </g>
+          </g>
+        </svg>
+      </div>
+    </a>
+    
+  </div>
+</div>
+`;
+
+exports[`ArtworkOverlay Snapshot matches snapshot with rounded set to true 1`] = `
+<div>
+  <div
+    class="artwork-overlay"
+  >
+    <a
+      aria-current="page"
+      class="artwork-overlay-link"
+      data-testid="artwork-overlay-link"
+      href="/#"
+      link=""
+      style="pointer-events: none; opacity: 1; border-radius: 50%;"
+    >
+      <div
+        class="artwork-overlay-link-play-button"
+        data-testid="play-button"
+      >
+        <svg
+          aria-hidden="true"
+          class="solid-fa"
+          style="height: 1em; font-size: 1em; vertical-align: -.125em; transform-origin: center; overflow: visible;"
+          viewBox="0 0 384 512"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g
+            transform="translate(192 256)"
+            transform-origin="96 0"
+          >
+            <g
+              transform="translate(0,0) scale(1,1)"
+            >
+              <path
+                d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"
+                fill="var(--color-white)"
+                transform="translate(-192 -256)"
+              />
+            </g>
+          </g>
+        </svg>
+      </div>
+      <div
+        class="artwork-overlay-link-more-button"
+        data-testid="more-button"
+      >
+        <svg
+          aria-hidden="true"
+          class="solid-fa"
+          style="height: 1em; font-size: 1em; vertical-align: -.125em; transform-origin: center; overflow: visible;"
+          viewBox="0 0 448 512"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g
+            transform="translate(224 256)"
+            transform-origin="112 0"
+          >
+            <g
+              transform="translate(0,0) scale(1,1)"
+            >
+              <path
+                d="M8 256a56 56 0 1 1 112 0A56 56 0 1 1 8 256zm160 0a56 56 0 1 1 112 0 56 56 0 1 1 -112 0zm216-56a56 56 0 1 1 0 112 56 56 0 1 1 0-112z"
+                fill="var(--color-white)"
+                transform="translate(-224 -256)"
+              />
+            </g>
+          </g>
+        </svg>
+      </div>
+    </a>
+    
+  </div>
+</div>
+`;
+
+exports[`ArtworkOverlay Snapshot matches snapshot without roundBottomCorners 1`] = `
+<div>
+  <div
+    class="artwork-overlay"
+  >
+    <a
+      aria-current="page"
+      class="artwork-overlay-link"
+      data-testid="artwork-overlay-link"
+      href="/#"
+      link=""
+      style="pointer-events: none; opacity: 1; border-radius: 0;"
+    >
+      <div
+        class="artwork-overlay-link-play-button"
+        data-testid="play-button"
+      >
+        <svg
+          aria-hidden="true"
+          class="solid-fa"
+          style="height: 1em; font-size: 1em; vertical-align: -.125em; transform-origin: center; overflow: visible;"
+          viewBox="0 0 384 512"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g
+            transform="translate(192 256)"
+            transform-origin="96 0"
+          >
+            <g
+              transform="translate(0,0) scale(1,1)"
+            >
+              <path
+                d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"
+                fill="var(--color-white)"
+                transform="translate(-192 -256)"
+              />
+            </g>
+          </g>
+        </svg>
+      </div>
+      <div
+        class="artwork-overlay-link-more-button"
+        data-testid="more-button"
+      >
+        <svg
+          aria-hidden="true"
+          class="solid-fa"
+          style="height: 1em; font-size: 1em; vertical-align: -.125em; transform-origin: center; overflow: visible;"
+          viewBox="0 0 448 512"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g
+            transform="translate(224 256)"
+            transform-origin="112 0"
+          >
+            <g
+              transform="translate(0,0) scale(1,1)"
+            >
+              <path
+                d="M8 256a56 56 0 1 1 112 0A56 56 0 1 1 8 256zm160 0a56 56 0 1 1 112 0 56 56 0 1 1 -112 0zm216-56a56 56 0 1 1 0 112 56 56 0 1 1 0-112z"
+                fill="var(--color-white)"
+                transform="translate(-224 -256)"
+              />
+            </g>
+          </g>
+        </svg>
+      </div>
+    </a>
+    
+  </div>
+</div>
+`;
