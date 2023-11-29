@@ -7,6 +7,7 @@ import { MenuItem } from '../../Types/MenuItem'
 export const SubContextMenu = () => {
   return (
     <div
+      tabindex={-1}
       id="subContextMenu"
       class={styles['sub-context-menu']}
       style={`display: ${

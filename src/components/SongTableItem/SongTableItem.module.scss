@@ -2,19 +2,19 @@
   &:hover {
     background-color: var(--table-hover-color) !important;
 
-    .songTableItem__number__playButton {
+    .song-table-item__number__playButton {
       display: flex;
     }
 
-    .songTableItem__number__number {
+    .song-table-item__number__number {
       visibility: hidden;
     }
 
-    .songTableItem__time__moreButton {
+    .song-table-item__time__moreButton {
       display: flex;
     }
 
-    .songTableItem__time span {
+    .song-table-item__time span {
       visibility: hidden;
     }
   }
@@ -162,11 +162,11 @@
 }
 
 @container main (max-width: 540px) {
-  .songTableItem__album {
+  .song-table-item__album {
     display: none;
   }
 
-  .songTableItem {
+  .song-table-item {
     padding: 0;
     padding-top: 1.5rem;
 

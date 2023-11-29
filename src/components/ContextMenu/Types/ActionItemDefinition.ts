@@ -6,7 +6,7 @@ export type ActionItemDefinition = {
     action: () => void
     label: string
     hasSubMenu?: boolean
-    onMouseEnter?: (e: MouseEvent, id: string) => void
+    onMouseEnter?: (e: FocusEvent, id: string) => void
     onMouseLeave?: () => void
     id?: string
   }

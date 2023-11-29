@@ -42,6 +42,9 @@ export function ContextMenu(): JSX.Element {
         // if key is enter or space, close context menu
       } else if (e.key === 'Enter' || e.key === ' ') {
         closeContextMenu()
+        // if key is left or right, focus on sub context menu
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+        document.getElementById('subContextMenu')?.focus()
       }
     })
   })

@@ -26,7 +26,7 @@ export const SongTableItem = ({ track, data, index }) => {
     >
       <td class={styles['song-table-item__number']}>
         <span class={styles['song-table-item__number__popularity']}>
-          {data().type === 'albums' && track.meta.popularity > 0.7 && (
+          {data().type === 'albums' && track?.meta?.popularity > 0.7 && (
             <Fa icon={faStar} color="var(--color-on-primary)" size="xs" />
           )}
         </span>
