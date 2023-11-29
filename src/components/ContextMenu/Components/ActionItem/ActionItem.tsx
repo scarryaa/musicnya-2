@@ -2,12 +2,21 @@ import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import styles from './ActionItem.module.scss'
 import Fa from 'solid-fa'
 import { ActionItemDefinition } from '../../Types/ActionItemDefinition'
+import { onSpaceOrEnter } from '../../Helpers/ContextMenuHelpers'
 
 export const ActionItem = ({ item }: ActionItemDefinition) => {
+  const handleKeyDown = (e: KeyboardEvent) => {
+    onSpaceOrEnter(e, item.action)
+  }
+
   return (
     <div
+      tabIndex={0}
       class={styles['action-item']}
       onclick={item.action}
+      onKeyDown={handleKeyDown}
+      onFocus={e => item.onMouseEnter(e, item.id)}
+      onBlur={item.onMouseLeave}
       onMouseEnter={e => item.onMouseEnter(e, item.id)}
       onMouseLeave={item.onMouseLeave}
     >

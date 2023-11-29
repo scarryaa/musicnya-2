@@ -12,7 +12,7 @@ import { queueItemContextMenuConfig } from './Configs/queueItemContextMenuConfig
 import { editorialContextMenuConfig } from './Configs/editorialContextMenuConfig'
 import { SubContextMenu } from './Components/SubContextMenu/SubContextMenu'
 import { curatorContextMenuConfig } from './Configs/curatorContextMenuConfig'
-import { updateMenuItems } from './Helpers/ContextMenuHelpers'
+import { trapFocus, updateMenuItems } from './Helpers/ContextMenuHelpers'
 import { QuickActions } from './Components/QuickActions/QuickActions'
 import { StandardActions } from './Components/StandardActions/StandardActions'
 import { MenuItem } from './Types/MenuItem'
@@ -35,7 +35,26 @@ export function ContextMenu(): JSX.Element {
 
   onMount(() => {
     window.addEventListener('click', closeContextMenu)
-    onCleanup(() => window.removeEventListener('click', closeContextMenu))
+    document.addEventListener('keydown', trapFocus)
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        closeContextMenu()
+        // if key is enter or space, close context menu
+      } else if (e.key === 'Enter' || e.key === ' ') {
+        closeContextMenu()
+      }
+    })
+  })
+  onCleanup(() => {
+    window.removeEventListener('click', closeContextMenu)
+    document.removeEventListener('keydown', trapFocus)
+    document.removeEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        closeContextMenu()
+      } else if (e.key === 'Enter' || e.key === ' ') {
+        closeContextMenu()
+      }
+    })
   })
 
   createEffect(() => {
@@ -49,6 +68,7 @@ export function ContextMenu(): JSX.Element {
       store.app.contextMenu.subType
     ) as MenuItem[]
     setContextMenuItems(initialMenuItems)
+    document.getElementById('contextMenu')?.focus()
 
     if (menuType !== ContextMenuType.Curator && menuType !== ContextMenuType.App) {
       updateMenuItems(
@@ -64,6 +84,7 @@ export function ContextMenu(): JSX.Element {
   return (
     <div
       id="contextMenu"
+      tabIndex={-1}
       class={styles['context-menu']}
       style={`top: ${store.app.contextMenu.y}px; left: ${store.app.contextMenu.x}px; display: ${store.app.contextMenu.display}`}
     >

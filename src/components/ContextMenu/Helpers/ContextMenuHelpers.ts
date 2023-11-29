@@ -1,3 +1,4 @@
+import { setStore } from '../../../stores/store'
 import { contextMenuItems } from '../ContextMenuItems'
 import { MenuItem } from '../Types/MenuItem'
 
@@ -19,7 +20,7 @@ export const generateMenuItems = (
       const itemConfig = contextMenuItems[itemType](
         id,
         subtype as MusicKit.MediaItemType,
-        ...(additionalParams as any)
+        ...additionalParams
       )
       return itemConfig ? { ...itemConfig } : null
     })
@@ -48,4 +49,45 @@ export const updateMenuItems = async (
     data
   )
   setItems(updatedItems)
+}
+
+export const trapFocus = (event: KeyboardEvent) => {
+  const focusableElements =
+    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+  const modal = document.getElementById('contextMenu') // The context menu element
+  const firstFocusableElement = modal.querySelectorAll(focusableElements)[0]
+  const focusableContent = modal.querySelectorAll(focusableElements)
+  const lastFocusableElement = focusableContent[focusableContent.length - 1]
+
+  const isTabPressed = event.key === 'Tab' || event.keyCode === 9
+
+  if (!isTabPressed) {
+    return
+  }
+
+  if (event.shiftKey) {
+    if (document.activeElement === firstFocusableElement) {
+      lastFocusableElement.focus()
+      event.preventDefault()
+    }
+  } else {
+    if (document.activeElement === lastFocusableElement) {
+      firstFocusableElement.focus()
+      event.preventDefault()
+    }
+  }
+}
+
+export const closeContextMenu = () => {
+  setStore('app', 'contextMenu', { open: false, id: null, type: null })
+}
+
+export const onSpaceOrEnter = (event: KeyboardEvent, action: () => void) => {
+  const isSpacePressed = event.key === ' ' || event.keyCode === 32
+  const isEnterPressed = event.key === 'Enter' || event.keyCode === 13
+
+  if (isSpacePressed || isEnterPressed) {
+    event.preventDefault()
+    action()
+  }
 }
