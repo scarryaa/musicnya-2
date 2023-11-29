@@ -29,6 +29,7 @@ import { usePlaylistSubMenu } from '../../composables/usePlaylistSubMenu'
 import { useSubContextMenuState } from '../../composables/useSubContextMenu'
 import { mkManager } from '../../api/MkManager'
 import { mkApiManager } from '../../api/MkApiManager'
+import { MenuItem } from './Types/MenuItem'
 
 const { closeSubContextMenu } = useSubContextMenuState()
 
@@ -40,7 +41,7 @@ const createMenuItem = (
   hasSubMenu = false,
   disabled = false,
   tooltip?: string
-) => {
+): MenuItem => {
   return {
     icon,
     action,
@@ -79,7 +80,14 @@ const createAsyncMenuItem = (
 }
 
 // Actions
-export const contextMenuItems = {
+export const contextMenuItems: Record<
+  string,
+  (
+    id: string,
+    type: MusicKit.MediaItemType,
+    ...additionalParams: [{ [key: string]: boolean }]
+  ) => MenuItem
+> = {
   immersive: () => createMenuItem(faUpRightAndDownLeftFromCenter, () => {}, 'Immersive'),
   miniPlayer: () =>
     createMenuItem(faWindowMaximize, Utils.resizeToMiniPlayer, 'Mini Player'),

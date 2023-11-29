@@ -1,20 +1,9 @@
-import { IconDefinition, faChevronRight } from '@fortawesome/free-solid-svg-icons'
+import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import styles from './ActionItem.module.scss'
 import Fa from 'solid-fa'
+import { ActionItemDefinition } from '../../Types/ActionItemDefinition'
 
-type ActionItemProps = {
-  item: {
-    icon: IconDefinition
-    action: () => void
-    label: string
-    hasSubMenu?: boolean
-    onMouseEnter: (e: MouseEvent, id: string) => void
-    onMouseLeave: () => void
-    id: string
-  }
-}
-
-export const ActionItem = ({ item }: ActionItemProps) => {
+export const ActionItem = ({ item }: ActionItemDefinition) => {
   return (
     <div
       class={styles['action-item']}

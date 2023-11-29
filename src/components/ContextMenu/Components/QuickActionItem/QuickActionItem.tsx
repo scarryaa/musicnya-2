@@ -1,19 +1,11 @@
 import Fa from 'solid-fa'
 import styles from './QuickActionItem.module.scss'
 import Tooltip from '../../../Tooltip/Tooltip'
-import { IconDefinition } from '@fortawesome/free-solid-svg-icons'
+import { QuickActionItemDefinition } from '../../Types/QuickActionItemDefinition'
 
 Tooltip
-type QuickActionItemProps = {
-  item: {
-    icon: IconDefinition
-    action: () => void
-    disabled?: boolean
-    tooltip: string
-  }
-}
 
-export const QuickActionItem = ({ item }: QuickActionItemProps) => {
+export const QuickActionItem = ({ item }: QuickActionItemDefinition) => {
   return (
     <div
       class={`${styles['quick-action-item']} ${item.disabled ? 'disabled' : ''}`}

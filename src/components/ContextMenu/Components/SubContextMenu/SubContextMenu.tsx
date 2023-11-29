@@ -2,6 +2,7 @@ import { For } from 'solid-js'
 import { store } from '../../../../stores/store'
 import styles from './SubContextMenu.module.scss'
 import { ActionItem } from '../ActionItem/ActionItem'
+import { MenuItem } from '../../Types/MenuItem'
 
 export const SubContextMenu = () => {
   return (
@@ -15,8 +16,7 @@ export const SubContextMenu = () => {
       }px)`}
     >
       <For each={store.app.subContextMenu.items}>
-        {/* TODO specify type */}
-        {item => <ActionItem item={item} />}
+        {(item: MenuItem) => <ActionItem item={item} />}
       </For>
     </div>
   )

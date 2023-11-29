@@ -1,6 +1,7 @@
 import { mkApiManager } from '../../../api/MkApiManager'
 import { Reaction } from '../../../types/types'
-import { historyItemContextMenu } from '../Types/HistoryItemContextMenu'
+import { historyItemContextMenu } from '../ContextMenuTypes/HistoryItemContextMenu'
+import { MenuItemData } from '../Types/MenuItemData'
 
 export const historyItemContextMenuConfig = {
   fetchData: async (id: string, subType: MusicKit.MediaItemType) => {
@@ -16,9 +17,9 @@ export const historyItemContextMenuConfig = {
     }
   },
   // TODO fix liking action
-  createInitialMenuItems: (id, subType) =>
+  createInitialMenuItems: (id: string, subType: MusicKit.MediaItemType) =>
     historyItemContextMenu(id, subType, true, false, false, false),
-  createMenuItems: (id, subType, data) =>
+  createMenuItems: (id: string, subType: MusicKit.MediaItemType, data: MenuItemData) =>
     historyItemContextMenu(
       id,
       subType,

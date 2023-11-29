@@ -12,11 +12,12 @@ import { queueItemContextMenuConfig } from './Configs/queueItemContextMenuConfig
 import { editorialContextMenuConfig } from './Configs/editorialContextMenuConfig'
 import { SubContextMenu } from './Components/SubContextMenu/SubContextMenu'
 import { curatorContextMenuConfig } from './Configs/curatorContextMenuConfig'
-import { filterMenuItems, updateMenuItems } from './Helpers/ContextMenuHelpers'
+import { updateMenuItems } from './Helpers/ContextMenuHelpers'
 import { QuickActions } from './Components/QuickActions/QuickActions'
 import { StandardActions } from './Components/StandardActions/StandardActions'
+import { MenuItem } from './Types/MenuItem'
 
-const contextMenuConfig = {
+const contextMenuConfig: Record<ContextMenuType, any> = {
   [ContextMenuType.App]: appContextMenuConfig,
   [ContextMenuType.HistoryItem]: historyItemContextMenuConfig,
   [ContextMenuType.Artist]: artistContextMenuConfig,
@@ -46,17 +47,17 @@ export function ContextMenu(): JSX.Element {
     const initialMenuItems = contextMenuConfig[menuType].createInitialMenuItems(
       store.app.contextMenu.id,
       store.app.contextMenu.subType
-    )
+    ) as MenuItem[]
     setContextMenuItems(initialMenuItems)
 
     if (menuType !== ContextMenuType.Curator && menuType !== ContextMenuType.App) {
       updateMenuItems(
         menuType,
-        store.app.contextMenu.subType,
+        store.app.contextMenu.subType as MusicKit.MediaItemType,
         contextMenuConfig,
         setContextMenuItems,
         store
-      )
+      ).catch(err => console.error(err))
     }
   }, [store.app.contextMenu.id, store.app.contextMenu.type])
 
@@ -66,8 +67,8 @@ export function ContextMenu(): JSX.Element {
       class={styles['context-menu']}
       style={`top: ${store.app.contextMenu.y}px; left: ${store.app.contextMenu.x}px; display: ${store.app.contextMenu.display}`}
     >
-      <QuickActions items={filterMenuItems(store.app.contextMenu.items, true)} />
-      <StandardActions items={filterMenuItems(store.app.contextMenu.items, false)} />
+      <QuickActions />
+      <StandardActions />
 
       <SubContextMenu />
     </div>

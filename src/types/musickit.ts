@@ -1420,6 +1420,7 @@ declare namespace MusicKit {
         bannerUber: Artwork
         storeFlowcase: Artwork
       }
+      inFavorites?: boolean
       genreNames: string[]
       name: string
       url: string

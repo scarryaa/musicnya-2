@@ -1,4 +1,4 @@
-import { curatorContextMenu } from '../Types/CuratorContextMenu'
+import { curatorContextMenu } from '../ContextMenuTypes/CuratorContextMenu'
 
 export const curatorContextMenuConfig = {
   createInitialMenuItems: (id: string) => curatorContextMenu(id),

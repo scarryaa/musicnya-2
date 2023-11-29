@@ -1,9 +1,10 @@
-import { setStore, store } from '../stores/store'
+import { setStore } from '../stores/store'
 
 const OUT_OF_VIEW = -10000
 
 const contextMenuActions = {
   setContextMenuItems: items => {
+    console.log(items)
     setStore('app', 'contextMenu', 'items', items)
   },
   calculatePosition: (e, menuWidth, menuHeight) => {
