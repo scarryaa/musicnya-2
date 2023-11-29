@@ -1,0 +1,16 @@
+@import '../../../styles/mixins/mixins';
+
+.editorial-info-card {
+  @include flex-layout(column, flex-start, flex-start);
+
+  &-title {
+    line-height: 1.2rem;
+    font-size: $font-size-small;
+  }
+
+  &-subtitle {
+    line-height: 1.5rem;
+    font-size: $font-size-xsmall;
+    color: var(--color-on-main-muted);
+  }
+}

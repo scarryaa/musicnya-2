@@ -880,6 +880,132 @@ declare namespace MusicKit {
     views?: Record<string, View<any>>
   }
 
+  interface EditorialItem {
+    item: {
+      attributes: {
+        artwork: MusicKit.Artwork
+        designBadge: string
+        designTag: string
+        editorialElementKind: string
+        doNotFilter: boolean
+        link: string
+        lastModifiedDate: string
+      }
+      id: string
+      relationships: {
+        contents: {
+          data: [
+            {
+              attributes: {
+                artistName: string
+                curatorName: string
+                airTime?: {
+                  start: string
+                  end: string
+                }
+                artwork: MusicKit.Artwork
+                durationInMillis: number
+                editorialArtwork: {
+                  superHeroWide?: MusicKit.Artwork
+                  subscriptionHero?: MusicKit.Artwork
+                  subscriptionCover?: MusicKit.Artwork
+                  superHeroTall?: MusicKit.Artwork
+                }
+                isLive: boolean
+                kind: string
+                mediaKind: string
+                name: string
+                plainEditorialNotes: {
+                  name: string
+                  standard: string
+                  short: string
+                }
+                playParams: {
+                  id: string
+                  kind: string
+                  format: string
+                  hasDrm: boolean
+                  mediaType: number
+                  stationHash: string
+                  streamingKind: number
+                }
+                radioUrl: string
+                requiresSubscription: boolean
+                streamingRadioSubType: string
+                supportedDrms: [string]
+                url: string
+              }
+              href: string
+              id: string
+              type: MusicKit.MediaItemType
+              relationships: {
+                events: {
+                  href: string
+                  data: []
+                }
+                'radio-show': {
+                  href: string
+                  data: [
+                    {
+                      attributes: {
+                        artwork: MusicKit.Artwork
+                        editorialArtwork: {
+                          superHeroWide?: MusicKit.Artwork
+                          subscriptionHero?: MusicKit.Artwork
+                          subscriptionCover?: MusicKit.Artwork
+                          superHeroTall?: MusicKit.Artwork
+                        }
+                        kind: string
+                        name: string
+                        plainEditorialNotes: {
+                          name: string
+                          standard: string
+                          short: string
+                        }
+                        shortName: string
+                        showHostName: string
+                        url: string
+                      }
+                      type: string
+                      href: string
+                      id: string
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+        children: {
+          data: [
+            {
+              attributes: {
+                editorialElementKind: string
+                artwork: MusicKit.Artwork
+                designBadge: string
+                designTag: string
+                doNotFilter: boolean
+                lastModifiedDate: string
+                link: {
+                  label: string
+                  target: string
+                  url: string
+                }
+              }
+              id: string
+              relationships: {
+                contents: {
+                  data: []
+                }
+              }
+              type: MusicKit.MediaItemType
+            }
+          ]
+        }
+      }
+      type: 'editorial-elements'
+    }
+  }
   /**
    * A resource object that represents a storefront, an Apple Music and iTunes Store territory that the content is available in.
    * https://developer.apple.com/documentation/applemusicapi/storefronts

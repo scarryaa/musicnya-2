@@ -1,0 +1,16 @@
+.blurb {
+  position: absolute;
+  bottom: 0;
+  padding-bottom: $padding-xsmall;
+  padding-left: $padding-xsmall;
+  padding-right: $padding-xxlarge;
+  line-height: 1rem;
+  pointer-events: none;
+  z-index: $z-index-1;
+
+  &-text {
+    color: $color-white;
+    font-size: 0.75rem;
+    filter: drop-shadow(0 0 5px rgb(0 0 0 / 50%));
+  }
+}

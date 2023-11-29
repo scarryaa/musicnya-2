@@ -1,101 +1,103 @@
-import Fa from 'solid-fa'
 import { Utils } from '../../util/util'
 import styles from './EditorialItem.module.scss'
-import { faPlay } from '@fortawesome/free-solid-svg-icons'
-import { A } from '@solidjs/router'
 import { useContextMenu } from '../../composables/useContextMenu'
 import { ContextMenuType } from '../../types/types'
+import { mkManager } from '../../api/MkManager'
+import { createMemo } from 'solid-js'
+import { EditorialInfoCard } from './Components/EditorialInfoCard'
+import { ArtworkOverlay } from '../ArtworkOverlay/ArtworkOverlay'
+import { ArtworkOverlayType } from '../ArtworkOverlay/Types'
+import useHoverStates from '../../composables/useHoverStates'
+import { Gradient } from './Components/Gradient'
+import { Blurb } from './Components/Blurb'
 
-export const EditorialItem = ({ item }) => {
-  const childType =
-    item.relationships?.children?.data?.[0]?.type ||
-    item.relationships?.contents?.data?.[0]?.type
-  const isCuratorType =
-    (item.attributes?.editorialElementKind === '320' && item.attributes.link) ||
-    item.relationships?.contents?.data?.[0]?.type === 'apple-curators'
-  const childId =
-    item.relationships?.children?.data?.[0]?.id ||
-    item.relationships?.contents?.data?.[0]?.id
-
+export const EditorialItem = ({ item }: MusicKit.EditorialItem) => {
   const { openContextMenu } = useContextMenu()
+  const { isHovered, onMouseEnter, onMouseLeave } = useHoverStates()
 
-  const handlePlayClick = e => {
-    e.preventDefault()
-    e.stopPropagation()
-    mkManager.processItemAndPlay(childId, childType)
+  const childType = createMemo(
+    () =>
+      item.relationships?.children?.data?.[0]?.type ||
+      item.relationships?.contents?.data?.[0]?.type
+  )
+  const isCuratorType = createMemo(
+    () =>
+      (item.attributes?.editorialElementKind === '320' && item.attributes.link) ||
+      item.relationships?.contents?.data?.[0]?.type === 'apple-curators'
+  )
+  const childId = createMemo(
+    () =>
+      item.relationships?.children?.data?.[0]?.id ||
+      item.relationships?.contents?.data?.[0]?.id
+  )
+
+  const artworkUrl = createMemo(() =>
+    Utils.formatArtworkUrl(
+      item.relationships.contents.data[0]?.attributes.editorialArtwork?.subscriptionHero
+        ?.url ||
+        item.relationships.contents.data[0]?.attributes.editorialArtwork?.superHeroWide
+          ?.url ||
+        item.attributes.artwork?.url ||
+        '',
+      1000,
+      1000,
+      'webp',
+      'none'
+    )
+  )
+
+  const handlePlayClick = (event: MouseEvent) => {
+    event.preventDefault()
+    event.stopPropagation()
+    mkManager.processItemAndPlay(childId(), childType()).catch(err => console.error(err))
   }
 
   return (
     <div
       class={styles['editorial-item']}
       onContextMenu={e =>
-        openContextMenu(e, childId, ContextMenuType.Editorial, childType)
+        openContextMenu(e, childId(), ContextMenuType.Editorial, childType())
       }
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
     >
-      <div>
-        <span class={styles['editorial-item__designBadge']}>
-          {item.attributes.designBadge}
-        </span>
-        {item.attributes.designTag ? (
-          <div class={styles['editorial-item__designTag']}>
-            {item.attributes.designTag}
-          </div>
-        ) : (
-          <>
-            <div class={styles['editorial-item__title']}>
-              {item.relationships?.contents?.data?.[0]?.attributes?.name}
-            </div>
-            <div class={styles['editorial-item__subtitle']}>
-              {item.relationships?.contents?.data?.[0]?.attributes?.artistName ||
-                item.relationships?.contents?.data?.[0]?.attributes?.curatorName}
-            </div>
-          </>
-        )}
-      </div>
-      <div class={styles['editorial-item__image__container']}>
-        <div class={styles['editorial-item__image__container__gradient']}></div>
-        <A
-          class={styles['editorial-item__image__container__overlay']}
-          href={
-            isCuratorType
+      <EditorialInfoCard
+        subtitle={
+          item.relationships?.contents?.data?.[0]?.attributes?.artistName ||
+          item.relationships?.contents?.data?.[0]?.attributes?.curatorName
+        }
+        title={item.relationships?.contents?.data?.[0]?.attributes?.name}
+        designBadge={item.attributes.designBadge}
+        designTag={item.attributes.designTag}
+      />
+      <div class={styles['editorial-item-image-container']}>
+        <ArtworkOverlay
+          isLink={true}
+          type={isCuratorType() ? ArtworkOverlayType.NONE : ArtworkOverlayType.PLAY}
+          link={
+            isCuratorType()
               ? `/curator/${item.id}`
-              : `/media/${childType}/${item.relationships?.contents?.data?.[0]?.id}`
+              : `/media/${childType()}/${item.relationships?.contents?.data?.[0]?.id}`
           }
+          isVisible={isHovered}
+          playClick={handlePlayClick}
         >
-          {!isCuratorType && (
-            <div
-              class={styles['editorial-item__image__container__overlay__playButton']}
-              onClick={handlePlayClick}
-            >
-              <Fa icon={faPlay} size="1x" />
-            </div>
-          )}
-        </A>
-        <div class={styles['editorial-item__image__container__blurb__container']}>
-          <span
-            class={styles['editorial-item__image__container__blurb__container__blurb']}
-          >
-            {
+          <Gradient />
+          <Blurb
+            blurb={
               item.relationships?.contents?.data?.[0]?.attributes?.plainEditorialNotes
                 ?.short
             }
-          </span>
-        </div>
-        <img
-          class={styles['editorial-item__image__container__image']}
-          src={Utils.formatArtworkUrl(
-            item.relationships.contents.data[0]?.attributes.editorialArtwork
-              ?.subscriptionHero?.url ||
-              item.relationships.contents.data[0]?.attributes.editorialArtwork
-                ?.superHeroWide?.url ||
-              item.attributes.artwork?.url,
-            1000,
-            1000,
-            'webp',
-            'none'
-          )}
-          alt=""
-        />
+          />
+          <img
+            class={styles['editorial-item-image-container-image']}
+            src={artworkUrl()}
+            alt={
+              item.relationships?.contents?.data?.[0]?.attributes?.name ||
+              item.attributes.designTag
+            }
+          />
+        </ArtworkOverlay>
       </div>
     </div>
   )

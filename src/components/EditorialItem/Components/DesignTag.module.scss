@@ -1,0 +1,5 @@
+@import '../../../styles/mixins/font-mixins';
+
+.design-tag {
+  @include font-style($font-size-small, 400);
+}

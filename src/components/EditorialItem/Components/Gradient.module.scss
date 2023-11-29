@@ -1,0 +1,7 @@
+@import '../../../styles/mixins/mixins';
+
+.gradient {
+  @include absolute-full;
+
+  background: linear-gradient(transparent, rgb(0 0 0 / 40%));
+}
