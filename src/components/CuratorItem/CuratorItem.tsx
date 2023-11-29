@@ -26,6 +26,8 @@ export const CuratorItem = ({ item }) => {
         <ArtworkOverlay
           isLink={false}
           type={ArtworkOverlayType.MORE}
+          onFocus={onMouseEnter}
+          onBlur={onMouseLeave}
           isVisible={isHovered}
           moreClick={e => openContextMenu(e, item.id, ContextMenuType.Curator, null)}
         >

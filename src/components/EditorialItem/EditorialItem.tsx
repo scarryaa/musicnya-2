@@ -81,6 +81,8 @@ export const EditorialItem = ({ item }: MusicKit.EditorialItem) => {
           }
           isVisible={isHovered}
           playClick={handlePlayClick}
+          onFocus={onMouseEnter}
+          onBlur={onMouseLeave}
         >
           <Gradient />
           <Blurb

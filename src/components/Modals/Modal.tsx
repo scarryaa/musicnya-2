@@ -10,7 +10,6 @@ import { Song } from './Song/Song'
 import { Station } from './Station/Station'
 
 export const Modal = () => {
-  console.log(store.app.modal.type)
   const handleModalClose = () => {
     const modalContent = document.querySelector(`.${styles['modal__content']}`)
     modalContent?.classList.add(styles['--pop-out'])

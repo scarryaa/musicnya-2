@@ -20,3 +20,21 @@ export const generateMenuItems = (
     })
     .filter(item => item !== null)
 }
+
+export const filterMenuItems = (items, isQuickAction) =>
+  items.filter(item => item && item.isQuickAction === isQuickAction)
+
+export const updateMenuItems = async (type, subType, config, setItems, store) => {
+  if (!config[type]) {
+    console.error('Unsupported context menu type')
+    return
+  }
+
+  const data = await config[type].fetchData(store.app.contextMenu.id, subType)
+  const updatedItems = config[type].createMenuItems(
+    store.app.contextMenu.id,
+    subType,
+    data
+  )
+  setItems(updatedItems)
+}

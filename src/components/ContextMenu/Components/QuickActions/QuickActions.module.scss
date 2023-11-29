@@ -1,0 +1,5 @@
+@import '../../../../styles/mixins/mixins';
+
+.quick-actions {
+  @include flex-layout(row, flex-start, flex-start);
+}

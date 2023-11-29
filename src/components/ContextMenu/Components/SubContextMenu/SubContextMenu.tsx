@@ -1,7 +1,7 @@
 import { For } from 'solid-js'
-import { store } from '../../../stores/store'
+import { store } from '../../../../stores/store'
 import styles from './SubContextMenu.module.scss'
-import { ActionItem } from './ActionItem'
+import { ActionItem } from '../ActionItem/ActionItem'
 
 export const SubContextMenu = () => {
   return (

@@ -9,12 +9,16 @@ export const MoreOverlay = ({
   link,
   isVisible,
   moreClick,
+  onFocus,
+  onBlur,
   rounded,
   children,
   roundBottomCorners = true
 }: ArtworkOverlayProps) => (
   <div class={styles['artwork-overlay']}>
     <A
+      onFocus={onFocus}
+      onBlur={onBlur}
       activeClass=""
       href={isLink ? link : '#'}
       data-testid="artwork-overlay-link"
@@ -28,13 +32,15 @@ export const MoreOverlay = ({
         roundBottomCorners ? styles['artwork-overlay-link--round-bottom-corners'] : ''
       }`}
     >
-      <div
+      <button
         class={styles['artwork-overlay-link-more-button']}
         data-testid="more-button"
         onClick={moreClick}
+        onFocus={onFocus}
+        onBlur={onBlur}
       >
         <Fa icon={faEllipsisH} size="1x" color="var(--color-white)" />
-      </div>
+      </button>
     </A>
     {children}
   </div>

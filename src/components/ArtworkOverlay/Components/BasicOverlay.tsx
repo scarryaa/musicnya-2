@@ -7,11 +7,15 @@ export const BasicOverlay = ({
   link,
   children,
   isVisible,
+  onFocus,
+  onBlur,
   rounded = false,
   roundBottomCorners = true
 }: ArtworkOverlayProps) => (
   <div class={styles['artwork-overlay']}>
     <A
+      onFocus={onFocus}
+      onBlur={onBlur}
       data-testid="artwork-overlay-link"
       style={{
         'pointer-events': isLink ? 'auto' : 'none',

@@ -1,9 +1,9 @@
-@import '../../../styles/mixins/mixins';
+@import '../../../../styles/mixins/mixins';
 
 $action-item-border-radius: $app-border-radius / 2;
 
 .action-item {
-  @include flex-layout(row, flex-start, center);
+  @include flex-layout(row, flex, center);
 
   padding: $padding-xsmall / 1.2 $padding-xsmall;
   font-size: $font-size-small;

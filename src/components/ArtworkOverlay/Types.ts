@@ -8,6 +8,8 @@ export type ArtworkOverlayProps = {
   isVisible?: Accessor<boolean>
   playClick?: (e) => void
   moreClick?: (e) => void
+  onFocus?: (e) => void
+  onBlur?: (e) => void
   roundBottomCorners?: boolean
   rounded?: boolean
 }

@@ -9,12 +9,16 @@ export const PlayOverlay = ({
   link,
   isVisible,
   playClick,
+  onFocus,
+  onBlur,
   rounded,
   children,
   roundBottomCorners = true
 }: ArtworkOverlayProps) => (
   <div class={styles['artwork-overlay']}>
     <A
+      onFocus={onFocus}
+      onBlur={onBlur}
       activeClass=""
       href={isLink ? link : '#'}
       data-testid="artwork-overlay-link"
@@ -28,13 +32,15 @@ export const PlayOverlay = ({
         roundBottomCorners ? styles['artwork-overlay-link--round-bottom-corners'] : ''
       }`}
     >
-      <div
+      <button
         class={styles['artwork-overlay-link-play-button']}
         data-testid="play-button"
         onClick={playClick}
+        onFocus={onFocus}
+        onBlur={onBlur}
       >
         <Fa icon={faPlay} size="1x" color="var(--color-white)" />
-      </div>
+      </button>
     </A>
     {children}
   </div>

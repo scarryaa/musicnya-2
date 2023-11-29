@@ -30,6 +30,8 @@ export const ArtistItem = ({ item }: ArtistItemProps) => {
           type={ArtworkOverlayType.NONE}
           rounded={true}
           isVisible={isHovered}
+          onFocus={onMouseEnter}
+          onBlur={onMouseLeave}
         >
           <img
             class={styles['artist-item__artwork__container__artwork']}

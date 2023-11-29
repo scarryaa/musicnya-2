@@ -50,6 +50,8 @@ export const MediaItemGlass = ({
             type={ArtworkOverlayType.PLAY_AND_MORE}
             moreClick={e => openContextMenu(e, id, ContextMenuType.MediaItem, type)}
             playClick={handlePlayClick}
+            onFocus={onMouseEnter}
+            onBlur={onMouseLeave}
             roundBottomCorners={false}
           >
             <img

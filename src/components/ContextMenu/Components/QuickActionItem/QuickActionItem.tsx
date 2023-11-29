@@ -1,6 +1,6 @@
 import Fa from 'solid-fa'
 import styles from './QuickActionItem.module.scss'
-import Tooltip from '../../Tooltip/Tooltip'
+import Tooltip from '../../../Tooltip/Tooltip'
 import { IconDefinition } from '@fortawesome/free-solid-svg-icons'
 
 Tooltip

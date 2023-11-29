@@ -67,6 +67,8 @@ export const MediaItem = ({
             isLink={true}
             link={link()}
             playClick={handlePlayClick}
+            onFocus={onMouseEnter}
+            onBlur={onMouseLeave}
             moreClick={e => openContextMenu(e, id, ContextMenuType.MediaItem, type)}
           >
             <img

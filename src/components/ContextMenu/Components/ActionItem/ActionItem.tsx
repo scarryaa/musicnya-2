@@ -25,7 +25,7 @@ export const ActionItem = ({ item }: ActionItemProps) => {
       <div class={styles['action-item__icon']}>
         <Fa icon={item.icon} size="1x" color="var(--color-on-primary)" />
       </div>
-      <span class={styles.actionItem__label}>{item.label}</span>
+      <span class={styles['action-item__label']}>{item.label}</span>
       {item.hasSubMenu && (
         <Fa icon={faChevronRight} class={styles['action-item__submenuIcon']} />
       )}

@@ -18,13 +18,13 @@ export const TopbarButton = ({
   onClick
 }: TopbarButtonProps) => {
   return (
-    <div class={styles['topbar-button']} onClick={onClick}>
+    <button class={styles['topbar-button']} onClick={onClick}>
       <Fa
         class={styles['topbar-button__icon']}
         icon={icon}
         size="1x"
         color="var(--color-on-primary)"
       />
-    </div>
+    </button>
   )
 }
