@@ -5,9 +5,9 @@ import { faEllipsisH, faMinus, faPlay, faPlus } from '@fortawesome/free-solid-sv
 import { A } from '@solidjs/router'
 import Tooltip from '../Tooltip/Tooltip'
 import { createSignal } from 'solid-js'
-import { useContextMenu } from '../../composables/useContextMenu'
 import { ContextMenuType } from '../../types/types'
 import { mkApiManager } from '../../api/MkApiManager'
+import useNewContextMenu from '../../composables/useNewContextMenu'
 
 Tooltip
 
@@ -15,7 +15,7 @@ export const SongItem = ({ item, album, albumId }) => {
   const [inLibrary, setInLibrary] = createSignal(false)
   const [checkedInLibrary, setCheckedInLibrary] = createSignal(false)
   const [libraryId, setLibraryId] = createSignal(null)
-  const { openContextMenu } = useContextMenu()
+  const { openNewContextMenu } = useNewContextMenu()
 
   const handleAddToLibraryClick = e => {
     mkApiManager.addToLibrary(item.id, 'songs').then(
@@ -65,7 +65,7 @@ export const SongItem = ({ item, album, albumId }) => {
       class={styles['song-item']}
       onMouseEnter={handleMouseOver}
       onContextMenu={e =>
-        openContextMenu(
+        openNewContextMenu(
           e,
           libraryId(),
           ContextMenuType.Song,
@@ -156,7 +156,7 @@ export const SongItem = ({ item, album, albumId }) => {
         <div
           class={styles['song-item__actions__more-button']}
           onClick={e =>
-            openContextMenu(
+            openNewContextMenu(
               e,
               item.id,
               ContextMenuType.Song,

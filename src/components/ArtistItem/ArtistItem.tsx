@@ -6,13 +6,14 @@ import { ContextMenuType } from '../../types/types'
 import { ArtworkOverlay } from '../ArtworkOverlay/ArtworkOverlay'
 import useHoverStates from '../../composables/useHoverStates'
 import { ArtworkOverlayType } from '../ArtworkOverlay/Types'
+import useNewContextMenu from '../../composables/useNewContextMenu'
 
 type ArtistItemProps = {
   item: MusicKit.Resource
 }
 
 export const ArtistItem = ({ item }: ArtistItemProps) => {
-  const { openContextMenu } = useContextMenu()
+  const { openNewContextMenu } = useNewContextMenu()
   const { isHovered, onMouseEnter, onMouseLeave } = useHoverStates()
 
   return (
@@ -20,7 +21,7 @@ export const ArtistItem = ({ item }: ArtistItemProps) => {
       class={styles['artist-item']}
       href={`/media/artists/${item.id}`}
       activeClass=""
-      onContextMenu={e => openContextMenu(e, item.id, ContextMenuType.Artist, null)}
+      onContextMenu={e => openNewContextMenu(e, item.id, ContextMenuType.Artist, null)}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >

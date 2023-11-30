@@ -7,9 +7,10 @@ import useHoverStates from '../../composables/useHoverStates'
 import { ArtworkOverlay } from '../ArtworkOverlay/ArtworkOverlay'
 import { MediaInfoCard } from '../MediaInfoCard/MediaInfoCard'
 import { ArtworkOverlayType } from '../ArtworkOverlay/Types'
+import useNewContextMenu from '../../composables/useNewContextMenu'
 
 export const CuratorItem = ({ item }) => {
-  const { openContextMenu } = useContextMenu()
+  const { openNewContextMenu } = useNewContextMenu()
   const { isHovered, onMouseEnter, onMouseLeave } = useHoverStates()
 
   //TODO add page for this
@@ -18,7 +19,7 @@ export const CuratorItem = ({ item }) => {
       activeClass=""
       class={styles['curator-item']}
       href={`/media/curators/${item.id}`}
-      onContextMenu={e => openContextMenu(e, item.id, ContextMenuType.Curator, null)}
+      onContextMenu={e => openNewContextMenu(e, item.id, ContextMenuType.Curator, null)}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
@@ -29,7 +30,7 @@ export const CuratorItem = ({ item }) => {
           onFocus={onMouseEnter}
           onBlur={onMouseLeave}
           isVisible={isHovered}
-          moreClick={e => openContextMenu(e, item.id, ContextMenuType.Curator, null)}
+          moreClick={e => openNewContextMenu(e, item.id, ContextMenuType.Curator, null)}
         >
           <img
             src={Utils.formatArtworkUrl(item.attributes.artwork.url, 300, 300, 'webp')}

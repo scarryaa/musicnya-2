@@ -2,7 +2,7 @@ import Fa from 'solid-fa'
 import styles from './QuickActionItem.module.scss'
 import Tooltip from '../../../Tooltip/Tooltip'
 import { QuickActionItemDefinition } from '../../Types/QuickActionItemDefinition'
-import { onSpaceOrEnter } from '../../Helpers/ContextMenuHelpers'
+import { onSpaceOrEnter } from '../../../NewContextMenu/Helpers/ContextMenuHelpers'
 
 Tooltip
 

@@ -2,7 +2,7 @@ import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import styles from './ActionItem.module.scss'
 import Fa from 'solid-fa'
 import { ActionItemDefinition } from '../../Types/ActionItemDefinition'
-import { onSpaceOrEnter } from '../../Helpers/ContextMenuHelpers'
+import { onSpaceOrEnter } from '../../../NewContextMenu/Helpers/ContextMenuHelpers'
 
 export const ActionItem = ({ item }: ActionItemDefinition) => {
   const handleKeyDown = (e: KeyboardEvent) => {

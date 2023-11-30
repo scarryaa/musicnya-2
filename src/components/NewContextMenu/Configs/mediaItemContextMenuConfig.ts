@@ -1,7 +1,7 @@
 import { mkApiManager } from '../../../api/MkApiManager'
 import { Reaction } from '../../../types/types'
 import { mediaItemContextMenu } from '../ContextMenuTypes/MediaItemContextMenu'
-import { MenuItemData } from '../Types/MenuItemData'
+import { MenuItemData } from '../../ContextMenu/Types/MenuItemData'
 
 export const mediaItemContextMenuConfig = {
   fetchData: async (id: string, subType: MusicKit.MediaItemType) => {

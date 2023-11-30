@@ -32,10 +32,7 @@ jest.mock('../../../api/MkApiManager.ts')
 jest.mock('../../../api/MkManager.ts')
 
 useContextMenu.mockReturnValue({
-  openContextMenu: jest.fn()
-})
-
-useContextMenuState.mockReturnValue({
+  openContextMenu: jest.fn(),
   closeContextMenu: jest.fn()
 })
 
@@ -60,7 +57,7 @@ import '@testing-library/jest-dom'
 import { render, screen, fireEvent, waitFor } from '@solidjs/testing-library'
 import { Router } from '@solidjs/router'
 import { ContextMenu } from '../../ContextMenu/ContextMenu'
-import { useContextMenu, useContextMenuState } from '../../../composables/useContextMenu'
+import { useContextMenu } from '../../../composables/useContextMenu'
 import { mkApiManager } from '../../../api/MkApiManager'
 import { mkManager } from '../../../api/MkManager'
 import { MediaItemType } from '../../../types/types'

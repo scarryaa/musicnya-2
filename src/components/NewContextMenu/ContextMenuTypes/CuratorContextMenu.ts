@@ -1,5 +1,5 @@
 import { generateMenuItems } from '../Helpers/ContextMenuHelpers'
-import { ContextMenuItem } from '../Types'
+import { ContextMenuItem } from '../Types/Types'
 
 //TODO fix the share link
 export const curatorContextMenu = (id: string) => {

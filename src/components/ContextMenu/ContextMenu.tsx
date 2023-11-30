@@ -1,63 +1,30 @@
-import { JSX, createEffect, onCleanup, onMount } from 'solid-js'
+import { JSX, createEffect, createSignal, onCleanup, onMount } from 'solid-js'
 import styles from './ContextMenu.module.scss'
 import { store } from '../../stores/store'
-import { useContextMenu, useContextMenuState } from '../../composables/useContextMenu'
+import { useContextMenu } from '../../composables/useContextMenu'
 import { ContextMenuType } from '../../types/types'
-import { historyItemContextMenuConfig } from './Configs/historyItemContextMenuConfig'
-import { appContextMenuConfig } from './Configs/appContextMenuConfig'
-import { artistContextMenuConfig } from './Configs/artistContextMenuConfig'
-import { songContextMenuConfig } from './Configs/songContextMenuConfig'
-import { mediaItemContextMenuConfig } from './Configs/mediaItemContextMenuConfig'
-import { queueItemContextMenuConfig } from './Configs/queueItemContextMenuConfig'
-import { editorialContextMenuConfig } from './Configs/editorialContextMenuConfig'
 import { SubContextMenu } from './Components/SubContextMenu/SubContextMenu'
-import { curatorContextMenuConfig } from './Configs/curatorContextMenuConfig'
-import { trapFocus, updateMenuItems } from './Helpers/ContextMenuHelpers'
+import { updateMenuItems } from '../NewContextMenu/Helpers/ContextMenuHelpers'
 import { QuickActions } from './Components/QuickActions/QuickActions'
 import { StandardActions } from './Components/StandardActions/StandardActions'
 import { MenuItem } from './Types/MenuItem'
-
-const contextMenuConfig: Record<ContextMenuType, any> = {
-  [ContextMenuType.App]: appContextMenuConfig,
-  [ContextMenuType.HistoryItem]: historyItemContextMenuConfig,
-  [ContextMenuType.Artist]: artistContextMenuConfig,
-  [ContextMenuType.Song]: songContextMenuConfig,
-  [ContextMenuType.MediaItem]: mediaItemContextMenuConfig,
-  [ContextMenuType.QueueItem]: queueItemContextMenuConfig,
-  [ContextMenuType.Editorial]: editorialContextMenuConfig,
-  [ContextMenuType.Curator]: curatorContextMenuConfig
-}
+import { contextMenuConfig } from '../NewContextMenu/Configs/mainConfig'
 
 //TODO fix editorial item small context menu
 export function ContextMenu(): JSX.Element {
-  const { setContextMenuItems } = useContextMenu()
-  const { closeContextMenu } = useContextMenuState()
+  const [contextMenuElement, setContextMenuElement] = createSignal<HTMLDivElement>()
+  const { setContextMenuItems, trapFocus, closeContextMenu, handleKeyPress } =
+    useContextMenu()
 
   onMount(() => {
     window.addEventListener('click', closeContextMenu)
-    document.addEventListener('keydown', trapFocus)
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Escape') {
-        closeContextMenu()
-        // if key is enter or space, close context menu
-      } else if (e.key === 'Enter' || e.key === ' ') {
-        closeContextMenu()
-        // if key is left or right, focus on sub context menu
-      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
-        document.getElementById('subContextMenu')?.focus()
-      }
-    })
+    contextMenuElement().addEventListener('keydown', trapFocus)
+    contextMenuElement().addEventListener('keydown', handleKeyPress)
   })
   onCleanup(() => {
     window.removeEventListener('click', closeContextMenu)
-    document.removeEventListener('keydown', trapFocus)
-    document.removeEventListener('keydown', e => {
-      if (e.key === 'Escape') {
-        closeContextMenu()
-      } else if (e.key === 'Enter' || e.key === ' ') {
-        closeContextMenu()
-      }
-    })
+    contextMenuElement().removeEventListener('keydown', trapFocus)
+    contextMenuElement().removeEventListener('keydown', handleKeyPress)
   })
 
   createEffect(() => {
@@ -86,6 +53,7 @@ export function ContextMenu(): JSX.Element {
 
   return (
     <div
+      ref={setContextMenuElement}
       id="contextMenu"
       tabIndex={-1}
       class={styles['context-menu']}

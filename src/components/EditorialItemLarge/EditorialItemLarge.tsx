@@ -3,16 +3,16 @@ import { Utils } from '../../util/util'
 import styles from './EditorialItemLarge.module.scss'
 import { faEllipsisH, faPlay } from '@fortawesome/free-solid-svg-icons'
 import Fa from 'solid-fa'
-import { useContextMenu } from '../../composables/useContextMenu'
 import { ContextMenuType } from '../../types/types'
 import { mkManager } from '../../api/MkManager'
+import useNewContextMenu from '../../composables/useNewContextMenu'
 
 // TODO check if context menu works
 export const EditorialItemLarge = ({ item }) => {
   console.log(item)
   const editorialCard = item.meta.editorialCard
 
-  const { openContextMenu } = useContextMenu()
+  const { openNewContextMenu } = useNewContextMenu()
   const handlePlayClick = e => {
     e.preventDefault()
     mkManager.processItemAndPlay(item.id, item.type)
@@ -22,7 +22,7 @@ export const EditorialItemLarge = ({ item }) => {
     <div
       class={styles['editorial-item-large']}
       onContextMenu={e =>
-        openContextMenu(e, item.id, ContextMenuType.Editorial, item.type)
+        openNewContextMenu(e, item.id, ContextMenuType.Editorial, item.type)
       }
     >
       <div class={styles['editorial-item-large__info']}>
@@ -45,7 +45,7 @@ export const EditorialItemLarge = ({ item }) => {
           <div
             class={styles['editorial-item-large__thumbnail__overlay__moreButton']}
             onClick={e =>
-              openContextMenu(e, item.id, ContextMenuType.Editorial, item.type)
+              openNewContextMenu(e, item.id, ContextMenuType.Editorial, item.type)
             }
           >
             <Fa icon={faEllipsisH} size="1x" />

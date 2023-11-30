@@ -10,9 +10,10 @@ import { ArtworkOverlayType } from '../ArtworkOverlay/Types'
 import useHoverStates from '../../composables/useHoverStates'
 import { Gradient } from './Components/Gradient'
 import { Blurb } from './Components/Blurb'
+import useNewContextMenu from '../../composables/useNewContextMenu'
 
 export const EditorialItem = ({ item }: MusicKit.EditorialItem) => {
-  const { openContextMenu } = useContextMenu()
+  const { openNewContextMenu } = useNewContextMenu()
   const { isHovered, onMouseEnter, onMouseLeave } = useHoverStates()
 
   const childType = createMemo(
@@ -56,7 +57,7 @@ export const EditorialItem = ({ item }: MusicKit.EditorialItem) => {
     <div
       class={styles['editorial-item']}
       onContextMenu={e =>
-        openContextMenu(e, childId(), ContextMenuType.Editorial, childType())
+        openNewContextMenu(e, childId(), ContextMenuType.Editorial, childType())
       }
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}

@@ -1,0 +1,7 @@
+@import '../../../../styles/mixins/mixins';
+
+.context-menu-quick-items {
+  @include flex-layout(row, flex-start, center);
+
+  margin-top: 2px;
+}

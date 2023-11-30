@@ -1,12 +1,12 @@
 import { A } from '@solidjs/router'
 import { For } from 'solid-js'
 import styles from './MediaItemGlass.module.scss'
-import { useContextMenu } from '../../composables/useContextMenu'
 import { ContextMenuType } from '../../types/types'
 import { mkManager } from '../../api/MkManager'
 import { ArtworkOverlay } from '../ArtworkOverlay/ArtworkOverlay'
 import useHoverStates from '../../composables/useHoverStates'
 import { ArtworkOverlayType } from '../ArtworkOverlay/Types'
+import useNewContextMenu from '../../composables/useNewContextMenu'
 
 type MediaItemGlassProps = {
   src: string
@@ -25,7 +25,7 @@ export const MediaItemGlass = ({
   id,
   reason
 }: MediaItemGlassProps) => {
-  const { openContextMenu } = useContextMenu()
+  const { openNewContextMenu } = useNewContextMenu()
   const { isHovered, onMouseEnter, onMouseLeave } = useHoverStates()
 
   const handlePlayClick = (e: MouseEvent): void => {
@@ -37,7 +37,7 @@ export const MediaItemGlass = ({
     <A
       class={styles['media-item-glass']}
       href={`/media/${type}/${id}`}
-      onContextMenu={e => openContextMenu(e, id, ContextMenuType.MediaItem, type)}
+      onContextMenu={e => openNewContextMenu(e, id, ContextMenuType.MediaItem, type)}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
@@ -48,7 +48,7 @@ export const MediaItemGlass = ({
             isVisible={isHovered}
             isLink={false}
             type={ArtworkOverlayType.PLAY_AND_MORE}
-            moreClick={e => openContextMenu(e, id, ContextMenuType.MediaItem, type)}
+            moreClick={e => openNewContextMenu(e, id, ContextMenuType.MediaItem, type)}
             playClick={handlePlayClick}
             onFocus={onMouseEnter}
             onBlur={onMouseLeave}

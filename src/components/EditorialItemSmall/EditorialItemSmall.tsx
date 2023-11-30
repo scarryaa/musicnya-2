@@ -3,8 +3,8 @@ import { Utils } from '../../util/util'
 import styles from './EditorialItemSmall.module.scss'
 import Fa from 'solid-fa'
 import { A } from '@solidjs/router'
-import { useContextMenu } from '../../composables/useContextMenu'
 import { ContextMenuType } from '../../types/types'
+import useNewContextMenu from '../../composables/useNewContextMenu'
 
 export const EditorialItemSmall = ({ item }) => {
   const showMoreButton = !item.attributes?.link?.label
@@ -20,13 +20,13 @@ export const EditorialItemSmall = ({ item }) => {
     item.relationships?.children?.data?.[0]?.id ||
     item.relationships?.contents?.data?.[0]?.id
 
-  const { openContextMenu } = useContextMenu()
+  const { openNewContextMenu } = useNewContextMenu()
 
   return (
     <div
       class={styles['editorial-item-small']}
       onContextMenu={e =>
-        openContextMenu(
+        openNewContextMenu(
           e,
           childId || item.id,
           ContextMenuType.Editorial,
@@ -43,7 +43,7 @@ export const EditorialItemSmall = ({ item }) => {
             <div
               class={styles['editorial-item-small__imageContainer__overlay__moreButton']}
               onClick={e =>
-                openContextMenu(
+                openNewContextMenu(
                   e,
                   childId,
                   ContextMenuType.Editorial,

@@ -10,11 +10,11 @@ import { faStar as faStarSolid } from '@fortawesome/free-regular-svg-icons'
 import { Shelf } from '../../../components/Shelf/Shelf'
 import { ViewSelector } from '../../../components/ViewSelector/ViewSelector'
 import { RelatedArtistsPane } from '../../../components/RelatedArtistsPane/RelatedArtistsPane'
-import { useContextMenu } from '../../../composables/useContextMenu'
 import { ContextMenuType } from '../../../types/types'
 import { ArtistInfoPane } from './Components/ArtistInfoPane/ArtistInfoPane'
 import { mkManager } from '../../../api/MkManager'
 import { mkApiManager } from '../../../api/MkApiManager'
+import useNewContextMenu from '../../../composables/useNewContextMenu'
 
 export const Artist = () => {
   const params = useParams<{ id: string }>()
@@ -22,7 +22,7 @@ export const Artist = () => {
   const [newId, setNewId] = createSignal(params.id)
   const artistData = createMemo(() => artistStore({ id: newId() }))
 
-  const { openContextMenu } = useContextMenu()
+  const { openNewContextMenu } = useNewContextMenu()
   const [currentArtist, setCurrentArtist] = createSignal(null)
   const [isFavorited, setIsFavorited] = createSignal(false)
   const [currentArtistBanner, setCurrentArtistBanner] = createSignal(null)
@@ -90,7 +90,7 @@ export const Artist = () => {
         <div
           class={styles.artist}
           onContextMenu={e =>
-            openContextMenu(e, currentArtist().id, ContextMenuType.Artist, null)
+            openNewContextMenu(e, currentArtist().id, ContextMenuType.Artist, null)
           }
         >
           <div class={styles.artist__artwork}>
@@ -127,7 +127,12 @@ export const Artist = () => {
                 <button
                   class={styles.artist__artwork__info__actions__button}
                   onClick={e =>
-                    openContextMenu(e, currentArtist().id, ContextMenuType.Artist, null)
+                    openNewContextMenu(
+                      e,
+                      currentArtist().id,
+                      ContextMenuType.Artist,
+                      null
+                    )
                   }
                 >
                   <Fa icon={faEllipsisH} size="1x" color="var(--color-white)" />

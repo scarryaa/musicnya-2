@@ -4,14 +4,14 @@ import { faPlay } from '@fortawesome/free-solid-svg-icons'
 import Fa from 'solid-fa'
 import { Utils } from '../../util/util'
 import Tooltip from '../Tooltip/Tooltip'
-import { useContextMenu } from '../../composables/useContextMenu'
 import { ContextMenuType } from '../../types/types'
 import { mkManager } from '../../api/MkManager'
 import { mkApiManager } from '../../api/MkApiManager'
+import useNewContextMenu from '../../composables/useNewContextMenu'
 Tooltip
 
 export const HistoryItem = ({ item, index }) => {
-  const { openContextMenu } = useContextMenu()
+  const { openNewContextMenu } = useNewContextMenu()
 
   const handleDoubleClick = e => {
     mkManager.changeToIndex(index)
@@ -58,7 +58,7 @@ export const HistoryItem = ({ item, index }) => {
       class={styles['history-item']}
       onDblClick={handleDoubleClick}
       onContextMenu={e =>
-        openContextMenu(e, item.id, ContextMenuType.HistoryItem, item.type)
+        openNewContextMenu(e, item.id, ContextMenuType.HistoryItem, item.type)
       }
     >
       <div class={styles['history-item__artwork__container']}>

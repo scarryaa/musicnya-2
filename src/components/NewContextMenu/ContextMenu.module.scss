@@ -1,0 +1,15 @@
+@import '../../styles/mixins/mixins';
+
+$context-menu-min-width: 150px;
+
+.context-menu {
+  position: absolute;
+  z-index: $z-index-10;
+  border-radius: $app-border-radius;
+  padding: $padding-xxsmall / 1.5 $padding-xsmall / 1.5;
+  color: var(--color-on-main);
+  box-shadow: $box-shadow-soft-3;
+  min-width: $context-menu-min-width;
+  background: var(--color-main-bg);
+  border: 1px solid var(--color-main-bg-muted);
+}

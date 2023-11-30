@@ -60,5 +60,16 @@ export const useSubContextMenu = () => {
     })
   }
 
-  return { setSubContextMenuItems, openSubContextMenu }
+  const closeSubContextMenu = () => {
+    setStore('app', 'subContextMenu', {
+      x: OUT_OF_VIEW,
+      y: OUT_OF_VIEW,
+      items: [],
+      open: false,
+      id: '',
+      type: ''
+    })
+  }
+
+  return { setSubContextMenuItems, openSubContextMenu, closeSubContextMenu }
 }

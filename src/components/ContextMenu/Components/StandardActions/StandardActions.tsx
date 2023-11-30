@@ -1,6 +1,6 @@
 import { For } from 'solid-js'
 import { store } from '../../../../stores/store'
-import { filterMenuItems } from '../../Helpers/ContextMenuHelpers'
+import { filterMenuItems } from '../../../NewContextMenu/Helpers/ContextMenuHelpers'
 import { ActionItem } from '../ActionItem/ActionItem'
 import { MenuItem } from '../../Types/MenuItem'
 

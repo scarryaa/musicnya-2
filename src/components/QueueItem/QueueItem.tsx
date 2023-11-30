@@ -4,14 +4,14 @@ import styles from './QueueItem.module.scss'
 import Tooltip from '../Tooltip/Tooltip'
 import Fa from 'solid-fa'
 import { faPlay } from '@fortawesome/free-solid-svg-icons'
-import { useContextMenu } from '../../composables/useContextMenu'
 import { ContextMenuType } from '../../types/types'
 import { mkManager } from '../../api/MkManager'
 import { mkApiManager } from '../../api/MkApiManager'
+import useNewContextMenu from '../../composables/useNewContextMenu'
 Tooltip
 
 export const QueueItem = ({ item, index }) => {
-  const { openContextMenu } = useContextMenu()
+  const { openNewContextMenu } = useNewContextMenu()
 
   const handleDoubleClick = e => {
     mkManager.changeToIndex(index)
@@ -58,7 +58,7 @@ export const QueueItem = ({ item, index }) => {
       className={styles['queue-item']}
       onDoubleClick={handleDoubleClick}
       onContextMenu={e =>
-        openContextMenu(e, item.id, ContextMenuType.QueueItem, item.type + 's')
+        openNewContextMenu(e, item.id, ContextMenuType.QueueItem, item.type + 's')
       }
     >
       <div className={styles['queue-item__artwork__container']}>

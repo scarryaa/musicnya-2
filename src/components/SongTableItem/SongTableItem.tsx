@@ -1,20 +1,21 @@
 import { faStar, faPause, faPlay, faEllipsisH } from '@fortawesome/free-solid-svg-icons'
 import { A } from '@solidjs/router'
 import Fa from 'solid-fa'
-import { mkController } from '../../api/mkController'
 import { store } from '../../stores/store'
 import { Utils } from '../../util/util'
 import styles from './SongTableItem.module.scss'
-import { useContextMenu } from '../../composables/useContextMenu'
 import { ContextMenuType } from '../../types/types'
 import { mkManager } from '../../api/MkManager'
 import { mkApiManager } from '../../api/MkApiManager'
+import useNewContextMenu from '../../composables/useNewContextMenu'
 
 export const SongTableItem = ({ track, data, index }) => {
-  const { openContextMenu } = useContextMenu()
+  const { openNewContextMenu } = useNewContextMenu()
   return (
     <tr
-      onContextMenu={e => openContextMenu(e, track.id, ContextMenuType.Song, data().type)}
+      onContextMenu={e =>
+        openNewContextMenu(e, track.id, ContextMenuType.Song, data().type)
+      }
       onDblClick={() => mkManager.setQueue(data().id, data().type, false, index)}
       class={
         data().type === 'albums' &&
@@ -137,7 +138,9 @@ export const SongTableItem = ({ track, data, index }) => {
           <span>{Utils.formatTime(track.attributes.durationInMillis / 1000)}</span>
           <div
             class={styles['song-table-item__time__moreButton']}
-            onClick={e => openContextMenu(e, track.id, ContextMenuType.Song, data().type)}
+            onClick={e =>
+              openNewContextMenu(e, track.id, ContextMenuType.Song, data().type)
+            }
           >
             <Fa icon={faEllipsisH} size="1x" color="var(--color-on-primary)" />
           </div>

@@ -29,7 +29,7 @@ import { usePlaylistSubMenu } from '../../composables/usePlaylistSubMenu'
 import { useSubContextMenuState } from '../../composables/useSubContextMenu'
 import { mkManager } from '../../api/MkManager'
 import { mkApiManager } from '../../api/MkApiManager'
-import { MenuItem } from './Types/MenuItem'
+import { MenuItem } from '../ContextMenu/Types/MenuItem'
 
 const { closeSubContextMenu } = useSubContextMenuState()
 

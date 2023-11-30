@@ -1,9 +1,9 @@
 import { mkApiManager } from '../../../api/MkApiManager'
 import { Reaction } from '../../../types/types'
-import { songContextMenu } from '../ContextMenuTypes/SongContextMenu'
-import { MenuItemData } from '../Types/MenuItemData'
+import { editorialContextMenu } from '../ContextMenuTypes/EditorialContextMenu'
+import { MenuItemData } from '../../ContextMenu/Types/MenuItemData'
 
-export const songContextMenuConfig = {
+export const editorialContextMenuConfig = {
   fetchData: async (id: string, subType: MusicKit.MediaItemType) => {
     const [inLibraryState, isLovedState] = await Promise.all([
       mkApiManager.isItemInLibrary(id, subType),
@@ -16,7 +16,15 @@ export const songContextMenuConfig = {
       isDisliked: isLovedState.data?.[0]?.attributes.value == Reaction.Disliked
     }
   },
-  createInitialMenuItems: (id: string) => songContextMenu(id, true, false, false, false),
+  createInitialMenuItems: (id: string, subType: MusicKit.MediaItemType) =>
+    editorialContextMenu(id, true, subType, false, false, false),
   createMenuItems: (id: string, subType: MusicKit.MediaItemType, data: MenuItemData) =>
-    songContextMenu(id, false, data.isLoved, data.isDisliked, data.inLibrary)
+    editorialContextMenu(
+      id,
+      false,
+      subType,
+      data.isLoved,
+      data.isDisliked,
+      data.inLibrary
+    )
 }

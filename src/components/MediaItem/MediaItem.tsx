@@ -1,6 +1,5 @@
 import styles from './MediaItem.module.scss'
 import Tooltip from '../Tooltip/Tooltip'
-import { useContextMenu } from '../../composables/useContextMenu'
 import { ContextMenuType, MediaItemType } from '../../types/types'
 import useMediaItem from '../../composables/useMediaItem'
 import { ArtworkOverlay } from '../ArtworkOverlay/ArtworkOverlay'
@@ -8,6 +7,7 @@ import { MediaInfoCard } from '../MediaInfoCard/MediaInfoCard'
 import useHoverStates from '../../composables/useHoverStates'
 import { ArtworkOverlayType } from '../ArtworkOverlay/Types'
 import { createMemo } from 'solid-js'
+import useNewContextMenu from '../../composables/useNewContextMenu'
 
 export const MediaItem = ({
   src,
@@ -37,7 +37,7 @@ export const MediaItem = ({
     artistId,
     releaseYear
   )
-  const { openContextMenu } = useContextMenu()
+  const { openNewContextMenu } = useNewContextMenu()
   const { isHovered, onMouseEnter, onMouseLeave } = useHoverStates()
 
   const link = createMemo(() =>
@@ -53,7 +53,7 @@ export const MediaItem = ({
       data-testid="media-item"
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
-      onContextMenu={e => openContextMenu(e, id, ContextMenuType.MediaItem, type)}
+      onContextMenu={e => openNewContextMenu(e, id, ContextMenuType.MediaItem, type)}
     >
       <div class={styles['media-item__inner']}>
         <div class={styles['media-item__inner__artwork']}>
@@ -69,7 +69,9 @@ export const MediaItem = ({
             playClick={handlePlayClick}
             onFocus={onMouseEnter}
             onBlur={onMouseLeave}
-            moreClick={e => openContextMenu(e, id, ContextMenuType.MediaItem, type)}
+            moreClick={(e: MouseEvent) =>
+              openNewContextMenu(e, id, ContextMenuType.MediaItem, type)
+            }
           >
             <img
               class={styles['media-item__inner__artwork__image']}

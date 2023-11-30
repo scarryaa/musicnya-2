@@ -1,18 +1,17 @@
 import styles from './Topbar.module.scss'
 import { Searchbar } from '../Searchbar/Searchbar'
 import { store } from '../../stores/store'
-import { LeftSidebarButton } from '../LeftSidebar/LeftSidebarButton'
 import {
   faChevronLeft,
   faChevronRight,
   faEllipsisH
 } from '@fortawesome/free-solid-svg-icons'
 import { TopbarButton } from './TopbarButton'
-import { useContextMenu } from '../../composables/useContextMenu'
 import { ContextMenuType } from '../../types/types'
+import useNewContextMenu from '../../composables/useNewContextMenu'
 
 export const Topbar = () => {
-  const { openContextMenu } = useContextMenu()
+  const { openNewContextMenu } = useNewContextMenu()
   const handleBackClick = e => {
     window.history.back()
   }
@@ -22,7 +21,7 @@ export const Topbar = () => {
   }
 
   const handleMenuClick = e => {
-    openContextMenu(e, null, ContextMenuType.App, null)
+    openNewContextMenu(e, null, ContextMenuType.App, null)
   }
 
   return (

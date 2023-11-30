@@ -1,7 +1,7 @@
 import { mkApiManager } from '../../../api/MkApiManager'
 import { Reaction } from '../../../types/types'
 import { historyItemContextMenu } from '../ContextMenuTypes/HistoryItemContextMenu'
-import { MenuItemData } from '../Types/MenuItemData'
+import { MenuItemData } from '../../ContextMenu/Types/MenuItemData'
 
 export const historyItemContextMenuConfig = {
   fetchData: async (id: string, subType: MusicKit.MediaItemType) => {
