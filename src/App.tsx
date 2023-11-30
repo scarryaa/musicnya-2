@@ -1,6 +1,5 @@
 import { useNavigate } from '@solidjs/router'
 import { Component, createEffect } from 'solid-js'
-import { ContextMenu } from './components/ContextMenu/ContextMenu'
 import { ContextMenu as NewContextMenu } from './components/NewContextMenu/ContextMenu'
 import { Footer } from './components/Footer/Footer'
 import { LeftSidebar } from './components/LeftSidebar/LeftSidebar'
@@ -74,7 +73,6 @@ const App: Component = () => {
           <RightSidebar />
           <Main />
           <Footer />
-          <ContextMenu />
           <NewContextMenu />
           <Modal />
         </div>

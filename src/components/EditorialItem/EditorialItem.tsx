@@ -1,6 +1,5 @@
 import { Utils } from '../../util/util'
 import styles from './EditorialItem.module.scss'
-import { useContextMenu } from '../../composables/useContextMenu'
 import { ContextMenuType } from '../../types/types'
 import { mkManager } from '../../api/MkManager'
 import { createMemo } from 'solid-js'

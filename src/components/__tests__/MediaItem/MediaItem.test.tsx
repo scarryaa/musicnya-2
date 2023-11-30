@@ -27,13 +27,14 @@ jest.mock('../../../stores/store', () => ({
   }
 }))
 
-jest.mock('../../../composables/useContextMenu')
 jest.mock('../../../api/MkApiManager.ts')
 jest.mock('../../../api/MkManager.ts')
-
-useContextMenu.mockReturnValue({
-  openContextMenu: jest.fn(),
-  closeContextMenu: jest.fn()
+jest.mock('../../../composables/useNewContextMenu.ts')
+useNewContextMenu.mockReturnValue({
+  openNewContextMenu: jest.fn(),
+  closeNewContextMenu: jest.fn(),
+  menuPosition: jest.fn().mockReturnValue({ x: 0, y: 0 }),
+  open: jest.fn().mockReturnValue(true)
 })
 
 mkApiManager.getCatalogArtistFromLibrary.mockResolvedValue({
@@ -56,11 +57,11 @@ import { MediaItem } from '../../MediaItem/MediaItem'
 import '@testing-library/jest-dom'
 import { render, screen, fireEvent, waitFor } from '@solidjs/testing-library'
 import { Router } from '@solidjs/router'
-import { ContextMenu } from '../../ContextMenu/ContextMenu'
-import { useContextMenu } from '../../../composables/useContextMenu'
 import { mkApiManager } from '../../../api/MkApiManager'
 import { mkManager } from '../../../api/MkManager'
 import { MediaItemType } from '../../../types/types'
+import { ContextMenu } from '../../NewContextMenu/ContextMenu'
+import useNewContextMenu from '../../../composables/useNewContextMenu'
 
 describe('MediaItem', () => {
   test('renders MediaItem component correctly', () => {
@@ -207,10 +208,10 @@ describe('MediaItem', () => {
     const mediaItem = screen.getByTestId('media-item')
     fireEvent.contextMenu(mediaItem)
 
-    const { openContextMenu } = useContextMenu()
+    const { openNewContextMenu } = useNewContextMenu()
 
     await waitFor(() => {
-      expect(openContextMenu).toHaveBeenCalledWith(
+      expect(openNewContextMenu).toHaveBeenCalledWith(
         expect.anything(),
         '1',
         'mediaItem',
@@ -236,10 +237,10 @@ describe('MediaItem', () => {
     const moreButton = screen.getByTestId('more-button')
     fireEvent.click(moreButton)
 
-    const { openContextMenu } = useContextMenu()
+    const { openNewContextMenu } = useNewContextMenu()
 
     await waitFor(() => {
-      expect(openContextMenu).toHaveBeenCalledWith(
+      expect(openNewContextMenu).toHaveBeenCalledWith(
         expect.anything(),
         '1',
         'mediaItem',

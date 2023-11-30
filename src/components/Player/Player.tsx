@@ -8,7 +8,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { faPauseCircle, faPlayCircle } from '@fortawesome/free-regular-svg-icons'
 import { setStore, store } from '../../stores/store'
-import { mkController } from '../../api/mkController'
 import { mkManager } from '../../api/MkManager'
 
 export const Player = () => {

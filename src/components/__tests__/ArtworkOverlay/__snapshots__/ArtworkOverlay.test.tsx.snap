@@ -13,7 +13,7 @@ exports[`ArtworkOverlay Snapshot matches snapshot with MORE type 1`] = `
       link=""
       style="pointer-events: none; opacity: 1; justify-content: flex-end; border-radius: 0;"
     >
-      <div
+      <button
         class="artwork-overlay-link-more-button"
         data-testid="more-button"
       >
@@ -39,7 +39,7 @@ exports[`ArtworkOverlay Snapshot matches snapshot with MORE type 1`] = `
             </g>
           </g>
         </svg>
-      </div>
+      </button>
     </a>
     
   </div>
@@ -77,7 +77,7 @@ exports[`ArtworkOverlay Snapshot matches snapshot with PLAY_AND_MORE type 1`] = 
       link=""
       style="pointer-events: none; opacity: 1; border-radius: 0;"
     >
-      <div
+      <button
         class="artwork-overlay-link-play-button"
         data-testid="play-button"
       >
@@ -103,8 +103,8 @@ exports[`ArtworkOverlay Snapshot matches snapshot with PLAY_AND_MORE type 1`] = 
             </g>
           </g>
         </svg>
-      </div>
-      <div
+      </button>
+      <button
         class="artwork-overlay-link-more-button"
         data-testid="more-button"
       >
@@ -130,7 +130,7 @@ exports[`ArtworkOverlay Snapshot matches snapshot with PLAY_AND_MORE type 1`] = 
             </g>
           </g>
         </svg>
-      </div>
+      </button>
     </a>
     
   </div>
@@ -150,7 +150,7 @@ exports[`ArtworkOverlay Snapshot matches snapshot with children 1`] = `
       link=""
       style="pointer-events: none; opacity: 1; border-radius: 0;"
     >
-      <div
+      <button
         class="artwork-overlay-link-play-button"
         data-testid="play-button"
       >
@@ -176,8 +176,8 @@ exports[`ArtworkOverlay Snapshot matches snapshot with children 1`] = `
             </g>
           </g>
         </svg>
-      </div>
-      <div
+      </button>
+      <button
         class="artwork-overlay-link-more-button"
         data-testid="more-button"
       >
@@ -203,7 +203,7 @@ exports[`ArtworkOverlay Snapshot matches snapshot with children 1`] = `
             </g>
           </g>
         </svg>
-      </div>
+      </button>
     </a>
     <div
       data-testid="children"
@@ -224,7 +224,7 @@ exports[`ArtworkOverlay Snapshot matches snapshot with link 1`] = `
       link=""
       style="pointer-events: auto; opacity: 1; border-radius: 0;"
     >
-      <div
+      <button
         class="artwork-overlay-link-play-button"
         data-testid="play-button"
       >
@@ -250,8 +250,8 @@ exports[`ArtworkOverlay Snapshot matches snapshot with link 1`] = `
             </g>
           </g>
         </svg>
-      </div>
-      <div
+      </button>
+      <button
         class="artwork-overlay-link-more-button"
         data-testid="more-button"
       >
@@ -277,7 +277,7 @@ exports[`ArtworkOverlay Snapshot matches snapshot with link 1`] = `
             </g>
           </g>
         </svg>
-      </div>
+      </button>
     </a>
     
   </div>
@@ -297,7 +297,7 @@ exports[`ArtworkOverlay Snapshot matches snapshot with roundBottomCorners 1`] = 
       link=""
       style="pointer-events: none; opacity: 1; border-radius: 0;"
     >
-      <div
+      <button
         class="artwork-overlay-link-play-button"
         data-testid="play-button"
       >
@@ -323,8 +323,8 @@ exports[`ArtworkOverlay Snapshot matches snapshot with roundBottomCorners 1`] = 
             </g>
           </g>
         </svg>
-      </div>
-      <div
+      </button>
+      <button
         class="artwork-overlay-link-more-button"
         data-testid="more-button"
       >
@@ -350,7 +350,7 @@ exports[`ArtworkOverlay Snapshot matches snapshot with roundBottomCorners 1`] = 
             </g>
           </g>
         </svg>
-      </div>
+      </button>
     </a>
     
   </div>
@@ -370,7 +370,7 @@ exports[`ArtworkOverlay Snapshot matches snapshot with rounded set to true 1`] =
       link=""
       style="pointer-events: none; opacity: 1; border-radius: 50%;"
     >
-      <div
+      <button
         class="artwork-overlay-link-play-button"
         data-testid="play-button"
       >
@@ -396,8 +396,8 @@ exports[`ArtworkOverlay Snapshot matches snapshot with rounded set to true 1`] =
             </g>
           </g>
         </svg>
-      </div>
-      <div
+      </button>
+      <button
         class="artwork-overlay-link-more-button"
         data-testid="more-button"
       >
@@ -423,7 +423,7 @@ exports[`ArtworkOverlay Snapshot matches snapshot with rounded set to true 1`] =
             </g>
           </g>
         </svg>
-      </div>
+      </button>
     </a>
     
   </div>
@@ -443,7 +443,7 @@ exports[`ArtworkOverlay Snapshot matches snapshot without roundBottomCorners 1`]
       link=""
       style="pointer-events: none; opacity: 1; border-radius: 0;"
     >
-      <div
+      <button
         class="artwork-overlay-link-play-button"
         data-testid="play-button"
       >
@@ -469,8 +469,8 @@ exports[`ArtworkOverlay Snapshot matches snapshot without roundBottomCorners 1`]
             </g>
           </g>
         </svg>
-      </div>
-      <div
+      </button>
+      <button
         class="artwork-overlay-link-more-button"
         data-testid="more-button"
       >
@@ -496,7 +496,7 @@ exports[`ArtworkOverlay Snapshot matches snapshot without roundBottomCorners 1`]
             </g>
           </g>
         </svg>
-      </div>
+      </button>
     </a>
     
   </div>

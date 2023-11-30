@@ -1,9 +1,9 @@
 import { For, createSignal, onMount } from 'solid-js'
 import { store } from '../../../../stores/store'
 import styles from './SubContextMenu.module.scss'
-import { MenuItem } from '../../../ContextMenu/Types/MenuItem'
 import { useSubContextMenu } from '../../../../composables/useSubContextMenu'
 import { ContextMenuItem } from '../ContextMenuItem/ContextMenuItem'
+import { MenuItem } from '../../../../types/newContextMenu'
 
 export const SubContextMenu = () => {
   const { closeSubContextMenu } = useSubContextMenu()

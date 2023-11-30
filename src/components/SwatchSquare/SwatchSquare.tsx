@@ -1,9 +1,16 @@
 import Tooltip from '../Tooltip/Tooltip'
 import styles from './SwatchSquare.module.scss'
 
-export const SwatchSquare = ({ color, name }) => {
+type SwatchSquareProps = {
+  color: string
+  name: string
+}
+
+export const SwatchSquare = ({ color, name }: SwatchSquareProps) => {
   const handleSwatchClick = () => {
-    navigator.clipboard.writeText(`#${color}`)
+    navigator.clipboard
+      .writeText(`#${color}`)
+      .catch(() => console.log('Failed to copy color to clipboard'))
   }
 
   return (

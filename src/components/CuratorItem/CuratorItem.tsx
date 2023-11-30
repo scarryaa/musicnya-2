@@ -1,7 +1,6 @@
 import styles from './CuratorItem.module.scss'
 import { Utils } from '../../util/util'
 import { A } from '@solidjs/router'
-import { useContextMenu } from '../../composables/useContextMenu'
 import { ContextMenuType } from '../../types/types'
 import useHoverStates from '../../composables/useHoverStates'
 import { ArtworkOverlay } from '../ArtworkOverlay/ArtworkOverlay'

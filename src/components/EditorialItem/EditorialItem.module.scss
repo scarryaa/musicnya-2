@@ -4,11 +4,11 @@
   @include flex-layout(column, space-between, flex-start);
 
   position: relative;
-  flex: 50%;
 
   &-image-container {
     position: relative;
     max-height: 10rem;
+    max-width: 20rem;
 
     &-image {
       border-radius: $app-border-radius;

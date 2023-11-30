@@ -9,7 +9,6 @@ import { setStore, store } from '../../../stores/store'
 import { LoadingSpinner } from '../../LoadingSpinner/LoadingSpinner'
 import { SwatchSquare } from '../../SwatchSquare/SwatchSquare'
 import { Chip } from '../../Chip/Chip'
-import { mkController } from '../../../api/mkController'
 import { mkApiManager } from '../../../api/MkApiManager'
 
 export const Artist = () => {

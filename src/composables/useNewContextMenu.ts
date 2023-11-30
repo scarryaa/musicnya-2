@@ -43,6 +43,7 @@ const useNewContextMenu = () => {
     subType: MusicKit.MediaItemType
   ) => {
     e.preventDefault()
+    e.stopPropagation()
     const menuWidth = 165
     const menuHeight = 200
     const { x, y } = calculatePosition(e, menuWidth, menuHeight)

@@ -15,6 +15,7 @@ import { ArtistInfoPane } from './Components/ArtistInfoPane/ArtistInfoPane'
 import { mkManager } from '../../../api/MkManager'
 import { mkApiManager } from '../../../api/MkApiManager'
 import useNewContextMenu from '../../../composables/useNewContextMenu'
+import { setNewContextMenuStore } from '../../../stores/newContextMenuStore'
 
 export const Artist = () => {
   const params = useParams<{ id: string }>()
@@ -87,12 +88,7 @@ export const Artist = () => {
   return (
     <Switch fallback={<LoadingSpinner />}>
       <Match when={artistData().state === 'ready' && currentArtist()}>
-        <div
-          class={styles.artist}
-          onContextMenu={e =>
-            openNewContextMenu(e, currentArtist().id, ContextMenuType.Artist, null)
-          }
-        >
+        <div class={styles.artist}>
           <div class={styles.artist__artwork}>
             <div class={styles.artist__artwork__gradient}></div>
             <img
@@ -126,14 +122,15 @@ export const Artist = () => {
                 </button>
                 <button
                   class={styles.artist__artwork__info__actions__button}
-                  onClick={e =>
+                  onClick={e => {
+                    setNewContextMenuStore('open', true)
                     openNewContextMenu(
                       e,
                       currentArtist().id,
                       ContextMenuType.Artist,
                       null
                     )
-                  }
+                  }}
                 >
                   <Fa icon={faEllipsisH} size="1x" color="var(--color-white)" />
                 </button>

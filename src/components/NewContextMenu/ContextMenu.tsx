@@ -1,4 +1,4 @@
-import { createEffect, onCleanup, onMount } from 'solid-js'
+import { createEffect, createSignal, onCleanup, onMount } from 'solid-js'
 import useNewContextMenu from '../../composables/useNewContextMenu'
 import { ContextMenuType } from '../../types/types'
 import { ContextMenuItems } from './Components/ContextMenuItems/ContextMenuItems'
@@ -10,6 +10,7 @@ import { newContextMenuStore } from '../../stores/newContextMenuStore'
 import { SubContextMenu } from './Components/SubContextMenu/SubContextMenu'
 
 export const ContextMenu = () => {
+  const [tabbedFromMenuItem, setTabbedFromMenuItem] = createSignal(null as Element | null)
   const { open, menuPosition, closeNewContextMenu, setContextMenuItems } =
     useNewContextMenu()
 
@@ -35,10 +36,18 @@ export const ContextMenu = () => {
       nextElement?.focus()
     } else if (e.key === 'ArrowRight') {
       e.preventDefault()
+      // set the tabbed from menu item to the current menu item
+      setTabbedFromMenuItem(document.activeElement)
+
       // open the sub context menu if the user presses the right arrow key
       const subContextMenu = document.getElementById('subContextMenu')
       const subContextMenuItems = subContextMenu?.querySelectorAll('li')
       subContextMenuItems?.[0].focus()
+    } else if (e.key === 'ArrowLeft') {
+      e.preventDefault()
+      console.log(tabbedFromMenuItem)
+      // return to the tabbed from menu item if the user presses the left arrow key
+      tabbedFromMenuItem()?.focus()
     }
   }
 

@@ -1,7 +1,6 @@
 import { A } from '@solidjs/router'
 import { Utils } from '../../util/util'
 import styles from './ArtistItem.module.scss'
-import { useContextMenu } from '../../composables/useContextMenu'
 import { ContextMenuType } from '../../types/types'
 import { ArtworkOverlay } from '../ArtworkOverlay/ArtworkOverlay'
 import useHoverStates from '../../composables/useHoverStates'

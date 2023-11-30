@@ -19,7 +19,6 @@ import {
   faThumbsDown as faThumbsDownRegular
 } from '@fortawesome/free-regular-svg-icons'
 import Fa from 'solid-fa'
-import { mkController } from '../../../api/mkController'
 import { setStore, store } from '../../../stores/store'
 import styles from './Player.module.scss'
 import { createEffect, createSignal } from 'solid-js'
