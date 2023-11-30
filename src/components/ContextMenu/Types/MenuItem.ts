@@ -11,4 +11,5 @@ export type MenuItem = {
   onMouseLeave?: () => void
   tooltip: string
   id?: string
+  index?: number
 }

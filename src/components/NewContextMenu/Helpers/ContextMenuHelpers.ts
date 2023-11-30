@@ -52,6 +52,11 @@ export const updateMenuItems = async (
   const data = await config[type].fetchData(newContextMenuStore.id, subType)
   const updatedItems = config[type].createMenuItems(newContextMenuStore.id, subType, data)
   setItems(updatedItems)
+
+  // restore focus to the menu
+  setTimeout(() => {
+    document.getElementById('context-menu')?.focus()
+  })
 }
 
 export const onSpaceOrEnter = (event: KeyboardEvent, action: () => void) => {

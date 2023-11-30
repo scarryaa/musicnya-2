@@ -5,6 +5,9 @@ import {
 } from '../stores/newContextMenuStore'
 import { ContextMenuType } from '../types/types'
 import { ContextMenuItem } from '../components/NewContextMenu/Types/Types'
+import { setStore } from '../stores/store'
+
+const OUT_OF_VIEW = -1000
 
 const useNewContextMenu = () => {
   const open = () => newContextMenuStore.open
@@ -49,16 +52,45 @@ const useNewContextMenu = () => {
     setNewContextMenuStore('subtype', subType)
     setNewContextMenuStore('id', id)
     setNewContextMenuStore('open', true)
+
+    setStore('app', 'subContextMenu', {
+      x: OUT_OF_VIEW,
+      y: OUT_OF_VIEW,
+      items: [],
+      open: false,
+      id: '',
+      type: ''
+    })
   }
 
   const closeNewContextMenu = () => {
     setNewContextMenuStore('open', false)
     setNewContextMenuStore('items', [])
     setNewContextMenuStore('id', '')
+
+    setStore('app', 'subContextMenu', {
+      x: OUT_OF_VIEW,
+      y: OUT_OF_VIEW,
+      items: [],
+      open: false,
+      id: '',
+      type: ''
+    })
   }
 
   const updateNewContextMenuItems = (items: MenuItem[]) => {
     setNewContextMenuStore('items', items)
+  }
+
+  const handleSpaceOrEnter = (event: KeyboardEvent, action: () => void) => {
+    const isSpacePressed = event.key === ' ' || event.keyCode === 32
+    const isEnterPressed = event.key === 'Enter' || event.keyCode === 13
+
+    if (isSpacePressed || isEnterPressed) {
+      event.preventDefault()
+      action()
+      closeNewContextMenu()
+    }
   }
 
   return {
@@ -67,7 +99,8 @@ const useNewContextMenu = () => {
     updateNewContextMenuItems,
     setContextMenuItems,
     open,
-    menuPosition
+    menuPosition,
+    handleSpaceOrEnter
   }
 }
 

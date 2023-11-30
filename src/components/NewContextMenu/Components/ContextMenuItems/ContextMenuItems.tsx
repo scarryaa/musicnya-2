@@ -6,7 +6,7 @@ import { newContextMenuStore } from '../../../../stores/newContextMenuStore'
 
 export const ContextMenuItems = () => {
   return (
-    <ul class={styles['context-menu-items']} role="menubar">
+    <ul class={styles['context-menu-items']} role="menu">
       <For each={filterMenuItems(newContextMenuStore.items, false)}>
         {item => <ContextMenuItem item={item} />}
       </For>

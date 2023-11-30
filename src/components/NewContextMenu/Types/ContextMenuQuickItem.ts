@@ -14,4 +14,5 @@ export type ContextMenuQuickItemDefinition = {
     disabled?: boolean
     tooltip: string
   }
+  index?: number
 }

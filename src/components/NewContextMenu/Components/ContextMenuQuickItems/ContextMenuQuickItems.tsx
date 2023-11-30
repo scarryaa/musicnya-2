@@ -6,9 +6,14 @@ import { ContextMenuQuickItem } from '../ContextMenuQuickItem/ContextMenuQuickIt
 
 export const ContextMenuQuickItems = () => {
   return (
-    <ul class={styles['context-menu-quick-items']}>
+    <ul
+      class={styles['context-menu-quick-items']}
+      role="menu"
+      id="context-menu-quick-items"
+      tabIndex={-1}
+    >
       <For each={filterMenuItems(newContextMenuStore.items, true)}>
-        {item => <ContextMenuQuickItem item={item} />}
+        {(item, index) => <ContextMenuQuickItem item={item} index={index()} />}
       </For>
     </ul>
   )
