@@ -4,11 +4,12 @@ import { ContextMenuItemDefinition } from '../components/NewContextMenu/Types/Co
 
 export const [newContextMenuStore, setNewContextMenuStore] = createStore({
   open: false,
-  type: 'app' as ContextMenuType,
+  type: ContextMenuType.App as ContextMenuType,
   subtype: '',
   x: 0,
   y: 0,
   items: [] as ContextMenuItemDefinition[],
   id: '',
-  display: 'block'
+  display: 'block',
+  menuOpenCount: 0
 })

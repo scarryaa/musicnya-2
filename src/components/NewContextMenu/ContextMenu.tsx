@@ -60,16 +60,21 @@ export const ContextMenu = () => {
   })
 
   createEffect(() => {
-    if (!newContextMenuStore.id || !newContextMenuStore.type) {
+    const menuType = newContextMenuStore.type
+
+    if (
+      !newContextMenuStore.open ||
+      !newContextMenuStore.type ||
+      menuType === ContextMenuType.View
+    ) {
       return
     }
-
-    const menuType = newContextMenuStore.type
 
     const initialMenuItems = contextMenuConfig[menuType].createInitialMenuItems(
       newContextMenuStore.id,
       newContextMenuStore.subtype
     )
+
     setContextMenuItems(initialMenuItems)
 
     if (menuType !== ContextMenuType.Curator && menuType !== ContextMenuType.App) {
@@ -87,6 +92,7 @@ export const ContextMenu = () => {
     })
   }, [newContextMenuStore.id, newContextMenuStore.type])
 
+  console.log('ContextMenuItems', newContextMenuStore.items)
   return (
     <div
       tabindex={-1}

@@ -1,7 +1,7 @@
 import { contextMenuItems } from '../ContextMenuItems'
-import { MenuItem } from '../../ContextMenu/Types/MenuItem'
 import { newContextMenuStore } from '../../../stores/newContextMenuStore'
 import { IconDefinition } from '@fortawesome/free-solid-svg-icons'
+import { MenuItem } from '../../../types/newContextMenu'
 
 export interface MenuItemConfig {
   label: string

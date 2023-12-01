@@ -1,4 +1,5 @@
 import { ContextMenuType } from '../../../types/types'
+import { viewContextMenuConfig } from './ViewContextMenuConfig'
 import { appContextMenuConfig } from './appContextMenuConfig'
 import { artistContextMenuConfig } from './artistContextMenuConfig'
 import { curatorContextMenuConfig } from './curatorContextMenuConfig'
@@ -10,6 +11,7 @@ import { songContextMenuConfig } from './songContextMenuConfig'
 
 export const contextMenuConfig: Record<ContextMenuType, any> = {
   [ContextMenuType.App]: appContextMenuConfig,
+  [ContextMenuType.View]: viewContextMenuConfig,
   [ContextMenuType.HistoryItem]: historyItemContextMenuConfig,
   [ContextMenuType.Artist]: artistContextMenuConfig,
   [ContextMenuType.Song]: songContextMenuConfig,

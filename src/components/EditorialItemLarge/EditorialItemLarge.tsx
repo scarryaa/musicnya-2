@@ -13,9 +13,9 @@ export const EditorialItemLarge = ({ item }) => {
   const editorialCard = item.meta.editorialCard
 
   const { openNewContextMenu } = useNewContextMenu()
-  const handlePlayClick = e => {
+  const handlePlayClick = (e: MouseEvent) => {
     e.preventDefault()
-    mkManager.processItemAndPlay(item.id, item.type)
+    mkManager.processItemAndPlay(item.id, item.type).catch(err => console.error(err))
   }
 
   return (
@@ -36,7 +36,7 @@ export const EditorialItemLarge = ({ item }) => {
           href={`/media/${item.type}/${item.id}`}
         >
           <div
-            class={styles['editoria-item-large__thumbnail__overlay__playButton']}
+            class={styles['editorial-item-large__thumbnail__overlay__playButton']}
             onClick={handlePlayClick}
           >
             <Fa icon={faPlay} size="1x" />

@@ -6,11 +6,13 @@ import {
 import { ContextMenuType } from '../types/types'
 import { ContextMenuItem } from '../components/NewContextMenu/Types/Types'
 import { setStore } from '../stores/store'
+import { ContextMenuItemDefinition } from '../components/NewContextMenu/Types/ContextMenuItem'
 
 const OUT_OF_VIEW = -1000
 
 const useNewContextMenu = () => {
   const open = () => newContextMenuStore.open
+  const menuOpenCount = () => newContextMenuStore.menuOpenCount
   const menuPosition = () => ({
     x: newContextMenuStore.x,
     y: newContextMenuStore.y
@@ -36,6 +38,38 @@ const useNewContextMenu = () => {
     return { x, y }
   }
 
+  const openNewContextMenuWithItems = (
+    e: MouseEvent,
+    id: string,
+    items: ContextMenuItemDefinition[],
+    subType: MusicKit.MediaItemType
+  ) => {
+    e.preventDefault()
+    e.stopPropagation()
+    const menuWidth = 165
+    const menuHeight = 200
+    const { x, y } = calculatePosition(e, menuWidth, menuHeight)
+    setNewContextMenuStore('x', x)
+    setNewContextMenuStore('y', y)
+    setNewContextMenuStore('type', ContextMenuType.View)
+    setNewContextMenuStore('subtype', subType)
+    setNewContextMenuStore('id', id)
+    setNewContextMenuStore('open', true)
+    const menuOpenCount = () => newContextMenuStore.menuOpenCount
+    setNewContextMenuStore('menuOpenCount', menuOpenCount() + 1)
+    console.log(items)
+
+    setStore('app', 'subContextMenu', {
+      x: OUT_OF_VIEW,
+      y: OUT_OF_VIEW,
+      items: [],
+      open: false,
+      id: '',
+      type: ''
+    })
+    setNewContextMenuStore('items', items)
+  }
+
   const openNewContextMenu = (
     e: MouseEvent,
     id: string,
@@ -53,6 +87,8 @@ const useNewContextMenu = () => {
     setNewContextMenuStore('subtype', subType)
     setNewContextMenuStore('id', id)
     setNewContextMenuStore('open', true)
+    const menuOpenCount = () => newContextMenuStore.menuOpenCount
+    setNewContextMenuStore('menuOpenCount', menuOpenCount() + 1)
 
     setStore('app', 'subContextMenu', {
       x: OUT_OF_VIEW,
@@ -101,7 +137,9 @@ const useNewContextMenu = () => {
     setContextMenuItems,
     open,
     menuPosition,
-    handleSpaceOrEnter
+    handleSpaceOrEnter,
+    menuOpenCount,
+    openNewContextMenuWithItems
   }
 }
 

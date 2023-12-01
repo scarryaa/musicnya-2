@@ -20,8 +20,8 @@ export const Topbar = () => {
     window.history.forward()
   }
 
-  const handleMenuClick = e => {
-    openNewContextMenu(e, null, ContextMenuType.App, null)
+  const handleMenuClick = (e: MouseEvent) => {
+    openNewContextMenu(e, '', ContextMenuType.App, null)
   }
 
   return (

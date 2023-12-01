@@ -1,4 +1,6 @@
 export enum ContextMenuItem {
+  GRID = 'grid',
+  LIST = 'list',
   IMMERSIVE = 'immersive',
   MINI_PLAYER = 'miniPlayer',
   SHARE = 'share',

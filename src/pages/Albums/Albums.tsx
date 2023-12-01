@@ -8,17 +8,33 @@ import { LibraryButton } from '../../components/Library/Button/LibraryButton'
 import { faArrows, faRefresh, faTableCells } from '@fortawesome/free-solid-svg-icons'
 import { store } from '../../stores/store'
 import { LoadingSpinner } from '../../components/LoadingSpinner/LoadingSpinner'
+import useNewContextMenu from '../../composables/useNewContextMenu'
+import { createViewMenuItem } from '../../components/NewContextMenu/ContextMenuItems'
 
 export const Albums = () => {
+  const { openNewContextMenuWithItems } = useNewContextMenu()
   const [currentView, setCurrentView] = createSignal('grid' as 'grid' | 'list')
   const [currentSort, setCurrentSort] = createSignal(
     'none' as 'name' | 'none' | 'artist' | 'date' | 'genre'
   )
   const [search, setSearch] = createSignal('')
-  console.log(store.library.albums)
+  const changeView = newView => {
+    setCurrentView(newView)
+  }
+
+  const viewMenuItems = [
+    createViewMenuItem(faTableCells, () => changeView('grid'), 'Grid View', 'grid'),
+    createViewMenuItem(faTableCells, () => changeView('list'), 'List View', 'list')
+  ]
 
   const refreshAlbums = () => {
-    store.library.refreshAlbums()
+    store.library.refreshAlbums().catch(e => {
+      console.error(e)
+    })
+  }
+
+  const handleViewClick = (e: MouseEvent) => {
+    openNewContextMenuWithItems(e, '', viewMenuItems, null)
   }
 
   const sortAlbums = (a, b) => {
@@ -56,13 +72,7 @@ export const Albums = () => {
     <div class={styles.albums__actions}>
       <LibraryButton
         faIcon={faTableCells}
-        onClick={() => {
-          if (currentView() === 'grid') {
-            setCurrentView('list')
-          } else {
-            setCurrentView('grid')
-          }
-        }}
+        onClick={(e: MouseEvent) => handleViewClick(e)}
         tooltip="View"
       />
       <LibraryButton

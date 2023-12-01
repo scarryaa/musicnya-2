@@ -15,7 +15,6 @@ import { ArtistInfoPane } from './Components/ArtistInfoPane/ArtistInfoPane'
 import { mkManager } from '../../../api/MkManager'
 import { mkApiManager } from '../../../api/MkApiManager'
 import useNewContextMenu from '../../../composables/useNewContextMenu'
-import { setNewContextMenuStore } from '../../../stores/newContextMenuStore'
 
 export const Artist = () => {
   const params = useParams<{ id: string }>()
@@ -122,15 +121,14 @@ export const Artist = () => {
                 </button>
                 <button
                   class={styles.artist__artwork__info__actions__button}
-                  onClick={e => {
-                    setNewContextMenuStore('open', true)
+                  onClick={e =>
                     openNewContextMenu(
                       e,
                       currentArtist().id,
                       ContextMenuType.Artist,
                       null
                     )
-                  }}
+                  }
                 >
                   <Fa icon={faEllipsisH} size="1x" color="var(--color-white)" />
                 </button>

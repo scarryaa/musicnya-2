@@ -13,7 +13,8 @@ export const enum ContextMenuType {
   MediaItem = 'mediaItem',
   QueueItem = 'queueItem',
   Editorial = 'editorial',
-  App = 'app'
+  App = 'app',
+  View = 'view'
 }
 
 export enum MediaItemType {

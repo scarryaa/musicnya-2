@@ -9,6 +9,6 @@ export type MenuItem = {
   hasSubMenu?: boolean
   onMouseEnter?: (e: MouseEvent, id: string) => void
   onMouseLeave?: () => void
-  tooltip: string
+  tooltip?: string
   id?: string
 }

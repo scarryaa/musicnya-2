@@ -33,6 +33,22 @@ import { MenuItem } from '../../types/newContextMenu'
 
 const { closeSubContextMenu } = useSubContextMenuState()
 
+export const createViewMenuItem = (
+  icon: IconDefinition,
+  callback: (view: string) => void,
+  label: string,
+  view: string,
+  quickAction = false
+) => {
+  return {
+    icon,
+    label,
+    action: () => callback(view),
+    onMouseEnter: () => {},
+    isQuickAction: quickAction
+  }
+}
+
 const createMenuItem = (
   icon: IconDefinition,
   action: () => Promise<void> | void,

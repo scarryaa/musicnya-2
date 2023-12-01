@@ -9,6 +9,7 @@ import { faArrows, faRefresh, faTableCells } from '@fortawesome/free-solid-svg-i
 import { store } from '../../stores/store'
 import { LoadingSpinner } from '../../components/LoadingSpinner/LoadingSpinner'
 import musicNote from '../../assets/music_note.png'
+import { MediaList } from '../../components/MediaList/MediaList'
 
 export const Playlists = () => {
   const [currentView, setCurrentView] = createSignal('grid' as 'grid' | 'list')
@@ -19,7 +20,9 @@ export const Playlists = () => {
   console.log(store.library.playlists)
 
   const refreshPlaylists = () => {
-    store.library.refreshPlaylists()
+    store.library.refreshPlaylists().catch(e => {
+      console.error(e)
+    })
   }
 
   const sortPlaylists = (a, b) => {
@@ -114,7 +117,9 @@ export const Playlists = () => {
             </div>
           </Match>
           <Match when={currentView() === 'list'}>
-            <div class={styles.playlists__list}></div>
+            <div class={styles.playlists__list}>
+              <MediaList />
+            </div>
           </Match>
         </Switch>
       </div>
