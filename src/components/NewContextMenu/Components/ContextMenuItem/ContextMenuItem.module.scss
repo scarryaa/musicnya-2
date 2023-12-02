@@ -35,5 +35,9 @@ $action-item-border-radius: $app-border-radius / 2;
     &-label {
       padding-right: $padding-xsmall;
     }
+
+    &-active-indicator {
+      margin-left: auto;
+    }
   }
 }

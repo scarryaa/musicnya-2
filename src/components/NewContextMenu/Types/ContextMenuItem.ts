@@ -11,5 +11,6 @@ export type ContextMenuItemDefinition = {
     onMouseLeave?: () => void
     onClick?: (e: MouseEvent, id: string) => void
     id?: string
+    active?: boolean
   }
 }

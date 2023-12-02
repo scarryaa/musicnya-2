@@ -2,10 +2,15 @@ import Fa from 'solid-fa'
 import styles from './ContextMenuItem.module.scss'
 import { ContextMenuItemDefinition } from '../../Types/ContextMenuItem'
 import useNewContextMenu from '../../../../composables/useNewContextMenu'
-import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
+import { faCheck, faChevronRight } from '@fortawesome/free-solid-svg-icons'
+import { Divider } from '../Divider/Divider'
 
 export const ContextMenuItem = (props: ContextMenuItemDefinition) => {
   const { handleSpaceOrEnter } = useNewContextMenu()
+
+  if (props.item.label === 'divider') {
+    return <Divider />
+  }
 
   return (
     <li
@@ -20,15 +25,22 @@ export const ContextMenuItem = (props: ContextMenuItemDefinition) => {
       onMouseLeave={props.item.onMouseLeave}
     >
       <div class={styles['context-menu-item-button']} onClick={() => props.item.action()}>
-        <Fa
-          icon={props.item.icon}
-          size="1x"
-          color="var(--color-on-primary)"
-          class={styles['context-menu-item-button-icon']}
-        />
+        {props.item.icon && (
+          <Fa
+            icon={props.item.icon}
+            size="1x"
+            color="var(--color-on-primary)"
+            class={styles['context-menu-item-button-icon']}
+          />
+        )}
         <label class={styles['context-menu-item-button-label']}>{props.item.label}</label>
         {props.item.hasSubMenu && (
           <Fa icon={faChevronRight} size="1x" color="var(--color-on-primary)" />
+        )}
+        {props.item.active && props.item.active() && (
+          <div class={styles['context-menu-item-button-active-indicator']}>
+            <Fa icon={faCheck} size="1x" color="var(--color-on-primary)" />
+          </div>
         )}
       </div>
     </li>

@@ -1,2 +1,35 @@
+@import '../../../../styles/mixins/mixins';
+
 .media-list-item {
+  &-detail {
+    padding-block: 0.3rem;
+    padding-left: 0.5rem;
+
+    img {
+      border-radius: $app-border-radius;
+    }
+
+    @include flex-layout(row, flex-start, center, 1rem);
+  }
+
+  .media-list-item-detail-title-text {
+    @include webkit-line-clamp(1);
+
+    margin-right: 1.5rem;
+    max-width: max-content;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .media-list-item-artist-name-text {
+    @include webkit-line-clamp(1);
+
+    max-width: max-content;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 }

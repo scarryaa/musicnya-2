@@ -30,22 +30,32 @@ import { useSubContextMenuState } from '../../composables/useSubContextMenu'
 import { mkManager } from '../../api/MkManager'
 import { mkApiManager } from '../../api/MkApiManager'
 import { MenuItem } from '../../types/newContextMenu'
+import { Accessor } from 'solid-js'
 
 const { closeSubContextMenu } = useSubContextMenuState()
 
+export const createDivider = () => {
+  return {
+    label: 'divider',
+    isQuickAction: false
+  }
+}
+
 export const createViewMenuItem = (
-  icon: IconDefinition,
   callback: (view: string) => void,
   label: string,
   view: string,
-  quickAction = false
+  quickAction = false,
+  icon?: IconDefinition,
+  active?: boolean | Accessor<boolean>
 ) => {
   return {
     icon,
     label,
     action: () => callback(view),
     onMouseEnter: () => {},
-    isQuickAction: quickAction
+    isQuickAction: quickAction,
+    active
   }
 }
 
