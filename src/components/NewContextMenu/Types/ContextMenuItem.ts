@@ -3,7 +3,7 @@ import { IconDefinition } from '@fortawesome/free-solid-svg-icons'
 export type ContextMenuItemDefinition = {
   item: {
     icon: IconDefinition
-    action: () => void
+    action?: () => void
     label: string
     hasSubMenu?: boolean
     isQuickAction?: boolean

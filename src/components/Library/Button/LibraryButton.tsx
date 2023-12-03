@@ -7,7 +7,7 @@ Tooltip
 type LibraryButtonProps = {
   faIcon: IconDefinition
   tooltip: string
-  onClick: () => void
+  onClick: (e: MouseEvent) => void
 }
 
 export const LibraryButton = ({ faIcon, tooltip, onClick }: LibraryButtonProps) => {

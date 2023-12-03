@@ -1,60 +1,67 @@
-import { Utils } from '../../../../util/util'
 import styles from './MediaListItem.module.scss'
 import { A } from '@solidjs/router'
-import Tooltip from '../../../Tooltip/Tooltip'
 import useNewContextMenu from '../../../../composables/useNewContextMenu'
 import { ContextMenuType } from '../../../../types/types'
+import Tooltip from '../../../Tooltip/Tooltip'
 
-export const MediaListItem = ({ item }: { item: MusicKit.Albums }) => {
+type MediaListItemProps = {
+  id: string
+  type: MusicKit.MediaItemType
+  artwork: string
+  title: string
+  artistName: string
+  artistId: string
+  dateAdded: string
+  releaseDate: string
+}
+
+export const MediaListItem = ({
+  id,
+  type,
+  artwork,
+  title,
+  artistName,
+  artistId,
+  dateAdded,
+  releaseDate
+}: MediaListItemProps) => {
   const { openNewContextMenu } = useNewContextMenu()
 
   return (
     <tr
       class={styles['media-list-item']}
-      onContextMenu={e =>
-        openNewContextMenu(e, item.id, ContextMenuType.MediaItem, 'albums')
-      }
+      onContextMenu={e => openNewContextMenu(e, id, ContextMenuType.MediaItem, type)}
     >
       <td class={styles['media-list-item-detail']}>
-        <img
-          src={Utils.formatArtworkUrl(item.attributes.artwork.url, 50)}
-          alt={`${item.attributes.name} cover`}
-          aria-label={`${item.attributes.name} cover`}
-        />
+        <img src={artwork} alt={`${title} cover`} aria-label={`${title} cover`} />
         <div class={styles['media-list-item-detail-title']}>
           <A
             activeClass=""
-            href={`/media/albums/${item.id}`}
+            href={`/media/playlists/${id}`}
             class={styles['media-list-item-detail-title-text']}
           >
-            <span use:Tooltip={['bottom', item.attributes.name, true, 500]}>
-              {item.attributes.name}
-            </span>
+            <span use:Tooltip={['bottom', title, true, 500]}>{title}</span>
           </A>
         </div>
       </td>
+      {artistName && (
+        <td class={styles['media-list-item-info']}>
+          <div class={styles['media-list-item-artist-name']}>
+            <A
+              activeClass=""
+              href={`/media/artists/${artistId}`}
+              class={styles['media-list-item-artist-name-text']}
+            >
+              <span use:Tooltip={['bottom', artistName, true, 500]}>{artistName}</span>
+            </A>
+          </div>
+        </td>
+      )}
       <td class={styles['media-list-item-info']}>
-        <div class={styles['media-list-item-artist-name']}>
-          <A
-            activeClass=""
-            href={`/media/artists/${item.relationships.artists.data[0].relationships?.catalog.data[0].id}`}
-            class={styles['media-list-item-artist-name-text']}
-          >
-            <span use:Tooltip={['bottom', item.attributes.artistName, true, 500]}>
-              {item.attributes.artistName}
-            </span>
-          </A>
-        </div>
+        <div class={styles['media-list-item-title']}>{releaseDate}</div>
       </td>
       <td class={styles['media-list-item-info']}>
-        <div class={styles['media-list-item-title']}>
-          {Utils.formatDate(item.attributes.dateAdded.slice(0, -10))}
-        </div>
-      </td>
-      <td class={styles['media-list-item-info']}>
-        <div class={styles['media-list-item-title']}>
-          {Utils.formatDate(item.attributes.releaseDate)}
-        </div>
+        <div class={styles['media-list-item-title']}>{dateAdded}</div>
       </td>
     </tr>
   )

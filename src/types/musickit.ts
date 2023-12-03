@@ -1291,6 +1291,7 @@ declare namespace MusicKit {
       playParams?: PlayParameters
       recordLabel?: string
       releaseDate?: string
+      dateAdded?: string
       trackCount: number
       upc?: string
       url: string

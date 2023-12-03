@@ -1,26 +1,27 @@
-import { For } from 'solid-js'
-import { MediaListItem } from './Components/MediaListItem/MediaListItem'
+import { For, JSX } from 'solid-js'
 import styles from './MediaList.module.scss'
 
-export const MediaList = ({
-  headers,
-  items
-}: {
+type MediaItem = {
+  id: string
+  type: string
+}
+
+type MediaListProps = {
   headers: string[]
-  items: () => any[]
-}) => {
+  items: () => MediaItem[]
+  renderItem: (item: MediaItem) => JSX.Element
+}
+
+export const MediaList = ({ headers, items, renderItem }: MediaListProps) => {
   return (
     <table class={styles['media-list']}>
       <thead>
         <tr>
-          <th>Title</th>
-          <th>Artist</th>
-          <th>Date Added</th>
-          <th>Release Date</th>
+          <For each={headers}>{header => <th>{header}</th>}</For>
         </tr>
       </thead>
       <tbody>
-        <For each={items()}>{item => <MediaListItem item={item} />}</For>
+        <For each={items()}>{item => renderItem(item)}</For>
       </tbody>
     </table>
   )

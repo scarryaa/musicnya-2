@@ -1,23 +1,26 @@
-import { For, Match, Switch, createMemo, createSignal } from 'solid-js'
-import { MediaItem } from '../../components/MediaItem/MediaItem'
-import { Utils } from '../../util/util'
+import { createMemo, createSignal } from 'solid-js'
 import styles from './Playlists.module.scss'
 import { LibraryShell } from '../../components/Library/Shell/LibraryShell'
 import { Search } from '../../components/LibraryActions/Search/Search'
 import { LibraryButton } from '../../components/Library/Button/LibraryButton'
-import { faArrows, faRefresh, faTableCells } from '@fortawesome/free-solid-svg-icons'
+import { faList, faRefresh, faTableCells } from '@fortawesome/free-solid-svg-icons'
 import { store } from '../../stores/store'
-import { LoadingSpinner } from '../../components/LoadingSpinner/LoadingSpinner'
-import musicNote from '../../assets/music_note.png'
-import { MediaList } from '../../components/MediaList/MediaList'
+import { PlaylistView } from './Components/PlaylistView/PlaylistView'
+import { ViewMenu } from '../../components/ViewMenu/ViewMenu'
+import { SortMenu } from '../../components/SortMenu/SortMenu'
+import useNewContextMenu from '../../composables/useNewContextMenu'
+import { createViewMenuItem } from '../../components/NewContextMenu/ContextMenuItems'
 
 export const Playlists = () => {
+  const [currentSort, setCurrentSort] = createSignal('name')
+  const [currentSortDirection, setCurrentSortDirection] = createSignal('ascending')
+
+  const { openNewContextMenuWithItems } = useNewContextMenu()
   const [currentView, setCurrentView] = createSignal('grid' as 'grid' | 'list')
-  const [currentSort, setCurrentSort] = createSignal(
-    'none' as 'name' | 'none' | 'artist' | 'date' | 'genre'
-  )
   const [search, setSearch] = createSignal('')
-  console.log(store.library.playlists)
+  const changeView = newView => {
+    setCurrentView(newView)
+  }
 
   const refreshPlaylists = () => {
     store.library.refreshPlaylists().catch(e => {
@@ -25,22 +28,44 @@ export const Playlists = () => {
     })
   }
 
+  const headers = ['Title', 'Date Added', 'Date Modified']
+
+  const viewMenuItems = [
+    createViewMenuItem(() => changeView('grid'), 'Grid', 'grid', false, faTableCells),
+    createViewMenuItem(() => changeView('list'), 'List', 'list', false, faList)
+  ]
+
+  const sortOptions = [
+    { label: 'Name', value: 'name' },
+    { label: 'Date Added', value: 'date-added' },
+    { label: 'Date Modified', value: 'date-modified' }
+  ]
+
   const sortPlaylists = (a, b) => {
     const sort = currentSort()
-    switch (sort) {
-      case 'name':
-        return a.attributes.name.localeCompare(b.attributes.name)
-      case 'artist':
-        return a.relationships.artists.data[0].attributes.name.localeCompare(
-          b.relationships.artists.data[0].attributes.name
-        )
-      case 'date':
-        // @ts-ignore
-        return new Date(a.attributes.releaseDate) - new Date(b.attributes.releaseDate)
-      case 'genre':
-        return a.attributes.genreNames[0].localeCompare(b.attributes.genreName[0])
-      default:
-        return 0
+    const direction = currentSortDirection()
+    if (sort === 'none') {
+      return direction === 'ascending' ? 1 : -1
+    } else if (sort === 'name') {
+      return direction === 'ascending'
+        ? a.attributes.name.localeCompare(b.attributes.name)
+        : b.attributes.name.localeCompare(a.attributes.name)
+    } else if (sort === 'artist') {
+      return direction === 'ascending'
+        ? a.relationships.artists.data[0].attributes.name.localeCompare(
+            b.relationships.artists.data[0].attributes.name
+          )
+        : b.relationships.artists.data[0].attributes.name.localeCompare(
+            a.relationships.artists.data[0].attributes.name
+          )
+    } else if (sort === 'date-added') {
+      return direction === 'ascending'
+        ? a.attributes.dateAdded.localeCompare(b.attributes.dateAdded)
+        : b.attributes.dateAdded.localeCompare(a.attributes.dateAdded)
+    } else if (sort === 'date-modified') {
+      return direction === 'ascending'
+        ? a.attributes.lastModifiedDate.localeCompare(b.attributes.lastModifiedDate)
+        : b.attributes.lastModifiedDate.localeCompare(a.attributes.lastModifiedDate)
     }
   }
 
@@ -53,33 +78,25 @@ export const Playlists = () => {
     return filtered.sort(sortPlaylists)
   })
 
-  const changeSort = e => {
-    setCurrentSort(e.target.value)
+  const handleViewClick = (e: MouseEvent) => {
+    openNewContextMenuWithItems(e, '', viewMenuItems, null)
   }
 
   const actions = (
     <div class={styles.playlists__actions}>
-      <LibraryButton
-        faIcon={faTableCells}
-        onClick={() => {
-          if (currentView() === 'grid') {
-            setCurrentView('list')
-          } else {
-            setCurrentView('grid')
-          }
-        }}
-        tooltip="View"
+      <ViewMenu
+        currentView={currentView}
+        onViewChange={(e: MouseEvent) => handleViewClick(e)}
       />
-      <LibraryButton
-        faIcon={faArrows}
-        onClick={() => {
-          if (currentSort() === 'none') {
-            setCurrentSort('name')
-          } else {
-            setCurrentSort('none')
-          }
+      <SortMenu
+        initialSort={currentSort()}
+        initialSortDirection={currentSortDirection()}
+        sortOptions={sortOptions}
+        onSortChange={(newSort, newDirection) => {
+          setCurrentSort(newSort)
+          setCurrentSortDirection(newDirection)
         }}
-        tooltip="Sort"
+        openNewContextMenuWithItems={openNewContextMenuWithItems}
       />
       <LibraryButton faIcon={faRefresh} onClick={refreshPlaylists} tooltip="Refresh" />
       <Search onInput={e => setSearch(e.target.value)} />
@@ -87,42 +104,11 @@ export const Playlists = () => {
   )
   return (
     <LibraryShell title={'Playlists'} actions={actions}>
-      <div class={styles.playlists}>
-        <Switch>
-          <Match when={store.library.playlists.length === 0}>
-            <LoadingSpinner />
-          </Match>
-          <Match when={currentView() === 'grid'}>
-            <div class={styles.playlists__grid}>
-              <For each={filteredPlaylists()}>
-                {playlist => {
-                  return (
-                    <div class={styles.playlists__item}>
-                      <MediaItem
-                        artistId={null}
-                        artists={[playlist.attributes.artistName]}
-                        id={playlist.id}
-                        src={Utils.formatArtworkUrl(
-                          playlist.attributes?.artwork?.url || musicNote,
-                          400,
-                          400
-                        )}
-                        title={playlist.attributes.name}
-                        type={playlist.type}
-                      />
-                    </div>
-                  )
-                }}
-              </For>
-            </div>
-          </Match>
-          <Match when={currentView() === 'list'}>
-            <div class={styles.playlists__list}>
-              <MediaList />
-            </div>
-          </Match>
-        </Switch>
-      </div>
+      <PlaylistView
+        playlists={filteredPlaylists}
+        headers={headers}
+        currentView={currentView}
+      />
     </LibraryShell>
   )
 }
