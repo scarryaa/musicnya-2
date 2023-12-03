@@ -25,6 +25,7 @@ export const ArtistList = ({
     )
   }
 
+  console.log(artists())
   return (
     <div class={styles['artist-list']}>
       <div class={styles['artist-list-search']}>
