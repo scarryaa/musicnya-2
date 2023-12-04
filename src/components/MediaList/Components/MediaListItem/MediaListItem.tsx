@@ -129,18 +129,6 @@ export const MediaListItem = ({
           class={`${styles['media-list-item-info']} ${timeColumnStyle} ${quinaryClass}`}
         >
           <div class={styles['media-list-item-title']}>{info}</div>
-          <div
-            class={`${styles['media-list-item-more']} ${
-              flex() ? styles['position-override'] : ''
-            }`}
-            onClick={e => openNewContextMenu(e, id, ContextMenuType.MediaItem, type)}
-          >
-            <Fa
-              icon={faEllipsisH}
-              class={styles['media-list-item-more-icon']}
-              color="var(--color-primary)"
-            />
-          </div>
         </td>
       ))}
     </tr>
