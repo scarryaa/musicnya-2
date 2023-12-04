@@ -1,0 +1,9 @@
+.songs-actions {
+  display: flex;
+  flex-direction: row;
+  gap: 0.2rem;
+
+  :nth-child(3) {
+    margin-right: 0.5rem;
+  }
+}

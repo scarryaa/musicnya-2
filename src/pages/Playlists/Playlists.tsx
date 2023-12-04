@@ -28,7 +28,20 @@ export const Playlists = () => {
     })
   }
 
-  const headers = ['Title', 'Date Added', 'Date Modified']
+  const headers = [
+    {
+      label: 'Title',
+      class: 'title-header-class'
+    },
+    {
+      label: 'Date Added',
+      class: 'date-added-header-class'
+    },
+    {
+      label: 'Date Modified',
+      class: 'date-modified-header-class'
+    }
+  ]
 
   const viewMenuItems = [
     createViewMenuItem(() => changeView('grid'), 'Grid', 'grid', false, faTableCells),

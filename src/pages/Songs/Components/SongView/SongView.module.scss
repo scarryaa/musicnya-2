@@ -1,0 +1,26 @@
+.song-view {
+  font-family: Inter, sans-serif;
+  color: var(--color-on-primary);
+  overflow-y: overlay;
+
+  &-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0 1rem;
+  }
+}
+
+@media (width <= 1000px) {
+  .song-artist {
+    display: none;
+  }
+
+  .song-album {
+    display: none;
+  }
+
+  .song-time {
+    width: 70px !important;
+  }
+}

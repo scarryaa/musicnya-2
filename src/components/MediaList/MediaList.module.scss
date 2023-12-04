@@ -23,6 +23,7 @@ $padding: 0.5rem;
       background-color: var(--color-main-bg);
       position: absolute;
       left: 100%;
+      z-index: -1;
       top: 0;
       right: 0;
     }
@@ -64,6 +65,15 @@ $padding: 0.5rem;
   }
 }
 
+.media-list th:nth-child(1),
+.media-list td:nth-child(1) {
+  span {
+    @include webkit-line-clamp(1);
+
+    word-break: break-all;
+  }
+}
+
 .media-list th:nth-child(2),
 .media-list td:nth-child(2) {
   width: 30%;
@@ -92,20 +102,20 @@ $padding: 0.5rem;
   padding-right: 0.5rem;
 }
 
-@media screen and (width < 650px) {
-  .media-list {
-    thead :nth-child(3),
-    tbody td:nth-child(3) {
-      display: none;
-    }
-  }
+.song-time-header-class {
+  width: 70px !important;
 }
 
-@media screen and (width < 900px) {
-  .media-list {
-    thead :nth-child(4),
-    tbody td:nth-child(4) {
-      display: none;
-    }
+@media (width <= 1000px) {
+  .song-artist-header-class {
+    display: none !important;
+  }
+
+  .song-album-header-class {
+    display: none !important;
+  }
+
+  .song-time-header-class {
+    width: 70px !important;
   }
 }

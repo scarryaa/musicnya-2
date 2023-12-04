@@ -16,6 +16,10 @@ export class Utils {
     setStore('app', 'miniPlayer', 'open', true)
   }
 
+  static isTimeFormat = (text: string) => {
+    return /^\d{1,2}:\d{2}(:\d{2})?$/.test(text)
+  }
+
   static resizeToSavedSize = async () => {
     const savedSize = JSON.parse(localStorageService.get('savedWindowSize'))
     console.log(savedSize)

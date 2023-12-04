@@ -165,16 +165,18 @@ class MusicKitManager {
    * @param startWith - Optional. Specifies the starting index of the queue. Default is 0.
    */
   setQueue = async (
-    id: string,
+    id: string | string[],
     type: MusicKit.MediaItemType,
     shuffle = false,
     startWith = 0
   ) => {
     await this.musicKitInstance.setQueue({
-      [type]: this.shouldItemBeArray(type) ? [id] : id,
+      [type]: this.shouldItemBeArray(type) ? [...id] : id,
       startWith: shuffle ? Math.floor(Math.random() * 100) : startWith
     })
   }
+
+  setQueueFromArra
 
   /**
    * Moves a queue item from one position to another in the music queue.

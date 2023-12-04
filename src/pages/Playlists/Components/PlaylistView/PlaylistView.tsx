@@ -20,12 +20,15 @@ export const PlaylistView = ({ currentView, playlists, headers }: PlaylistViewPr
     <MediaListItem
       id={item.id}
       type={item.type}
-      artwork={Utils.formatArtworkUrl(item.attributes?.artwork?.url || musicNote, 50)}
-      artistName={item.attributes.artistName}
-      title={item.attributes.name}
-      dateAdded={Utils.formatDate(item.attributes.dateAdded.slice(0, -10))}
-      releaseDate={Utils.formatDate(item.attributes.lastModifiedDate.slice(0, -10))}
-      artistId={null}
+      imageUrl={Utils.formatArtworkUrl(item.attributes?.artwork?.url || musicNote, 50)}
+      secondaryText={null}
+      primaryText={item.attributes.name}
+      additionalInfo={[
+        Utils.formatDate(item.attributes.dateAdded.slice(0, -10)),
+        Utils.formatDate(item.attributes.lastModifiedDate.slice(0, -10))
+      ]}
+      url={`/media/playlists/${item.id}`}
+      secondaryUrl={null}
     />
   )
 

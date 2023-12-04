@@ -18,12 +18,15 @@ export const AlbumView = ({ currentView, albums, headers }: AlbumViewProps) => {
     <MediaListItem
       id={item.id}
       type={item.type}
-      artwork={Utils.formatArtworkUrl(item.attributes.artwork.url, 50)}
-      artistName={item.attributes.artistName}
-      title={item.attributes.name}
-      dateAdded={Utils.formatDate(item.attributes.dateAdded.slice(0, -10))}
-      releaseDate={Utils.formatDate(item.attributes.releaseDate)}
-      artistId={item.relationships.artists.data[0].relationships.catalog.data[0].id}
+      imageUrl={Utils.formatArtworkUrl(item.attributes.artwork.url, 50)}
+      secondaryText={item.attributes.artistName}
+      primaryText={item.attributes.name}
+      additionalInfo={[
+        Utils.formatDate(item.attributes.dateAdded.slice(0, -10)),
+        Utils.formatDate(item.attributes.releaseDate)
+      ]}
+      url={`/media/albums/${item.id}`}
+      secondaryUrl={`/media/artists/${item.relationships.artists.data[0].relationships.catalog.data[0].id}`}
     />
   )
 

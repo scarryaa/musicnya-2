@@ -5,6 +5,7 @@ import { artistService } from '../services/artistService'
 import { localStorageService } from '../services/localStorageService'
 import { ContextMenuType } from '../types/types'
 import { tauriService } from '../services/tauriService'
+import { songService } from '../services/songService'
 
 export const [store, setStore] = createStore({
   app: {
@@ -130,7 +131,17 @@ export const [store, setStore] = createStore({
     },
     async refreshSongs() {
       setStore('library', 'songs', [])
-      await store.library.refreshSongs()
+      store.library.incrementLoadingOperations()
+
+      const songsData = await songService.fetchAllLibrarySongs(0)
+
+      console.log(songsData)
+      setStore('library', 'songs', songsData)
+      localStorage.setItem(
+        'library',
+        JSON.stringify({ ...store.library, songs: songsData })
+      )
+      store.library.decrementLoadingOperations()
     },
     async refreshAlbums() {
       try {

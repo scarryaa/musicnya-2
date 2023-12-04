@@ -22,7 +22,24 @@ export const Albums = () => {
     setCurrentView(newView)
   }
 
-  const headers = ['Title', 'Artist', 'Release Date', 'Date Added']
+  const headers = [
+    {
+      label: 'Title',
+      class: 'name-header-class'
+    },
+    {
+      label: 'Artist',
+      class: 'artist-header-class'
+    },
+    {
+      label: 'Release Date',
+      class: 'release-date-header-class'
+    },
+    {
+      label: 'Date Added',
+      class: 'date-added-header-class'
+    }
+  ]
 
   const viewMenuItems = [
     createViewMenuItem(() => changeView('grid'), 'Grid', 'grid', false, faTableCells),

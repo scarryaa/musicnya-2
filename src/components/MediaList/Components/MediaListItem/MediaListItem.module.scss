@@ -1,6 +1,8 @@
 @import '../../../../styles/mixins/mixins';
 
 .media-list-item {
+  position: relative;
+
   &-detail {
     padding-block: 0.3rem;
     padding-left: 0.5rem;
@@ -12,6 +14,19 @@
     }
 
     @include flex-layout(row, flex-start, center, 1rem);
+  }
+
+  &-more {
+    position: absolute;
+    right: 12px;
+    top: 10px;
+    display: none;
+  }
+
+  &:hover {
+    .media-list-item-more {
+      display: block;
+    }
   }
 
   .media-list-item-detail-title-text {
@@ -28,10 +43,33 @@
   .media-list-item-artist-name-text {
     @include webkit-line-clamp(1);
 
+    color: var(--color-on-primary-muted);
     max-width: max-content;
 
     &:hover {
       text-decoration: underline;
     }
   }
+
+  .media-list-item-title-text {
+    @include webkit-line-clamp(1);
+
+    max-width: max-content;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.time-style {
+  width: 70px !important;
+}
+
+.artist-small-text {
+  font-size: $font-size-xsmall;
+}
+
+.position-override {
+  top: 18px !important;
 }

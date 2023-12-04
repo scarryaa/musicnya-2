@@ -21,6 +21,7 @@ import { Artist } from './pages/Media/Artist/Artist'
 import { Playlists } from './pages/Playlists/Playlists'
 import { Artists } from './pages/Artists/Artists'
 import './styles/styles.scss'
+import { Songs } from './pages/Songs/Songs'
 
 const root = document.getElementById('root')
 
@@ -52,6 +53,7 @@ render(
           <Route path="/albums" component={Albums} />
           <Route path="/playlists" component={Playlists} />
           <Route path="/artists" component={Artists} />
+          <Route path="/songs" component={Songs} />
           <Route path="*" component={NotFound} />
         </Route>
       </Routes>
